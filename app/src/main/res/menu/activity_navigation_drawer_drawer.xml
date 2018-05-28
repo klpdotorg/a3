@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/vector_profile"
+            android:title="@string/Profile" />
+        <item
+            android:id="@+id/nav_download"
+            android:icon="@drawable/vector_download"
+            android:title="@string/download" />
+        <item
+            android:id="@+id/nav_language"
+            android:icon="@drawable/vector_language"
+            android:title="@string/changeLanguage" />
+
+        <item
+            android:id="@+id/nav_downloadQuestionSet"
+            android:icon="@drawable/vector_download"
+            android:title="@string/downloadQuestion" />
+
+    </group>
+
+    <item android:title="Settings">
+        <menu>
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/vector_logout"
+                android:title="@string/action_logout" />
+
+        </menu>
+    </item>
+
+</menu>

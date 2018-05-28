@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="30dp"
+    android:orientation="vertical"
+    tools:context="com.akshara.assessment.a3.DownloadQuestionSetActivity">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:text="@string/string_select_language" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/spn_back"
+        android:minHeight="35dp"
+        android:layout_marginBottom="10dp">
+        <Spinner
+            android:id="@+id/spn_language"
+            android:layout_width="match_parent"
+            android:gravity="center|left"
+            android:layout_height="match_parent"
+            android:entries="@array/array_language"
+             />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:text="@string/string_select_subject" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/spn_back"
+        android:minHeight="35dp"
+        android:layout_marginBottom="10dp">
+        <Spinner
+            android:id="@+id/spn_subject"
+            android:layout_width="match_parent"
+            android:gravity="center|left"
+            android:layout_height="match_parent"
+            android:entries="@array/array_subject"
+            />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:text="@string/string_select_grade" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/spn_back"
+        android:minHeight="35dp"
+        android:layout_marginBottom="10dp">
+        <Spinner
+            android:id="@+id/spn_selectGrade"
+            android:layout_width="match_parent"
+            android:gravity="center|left"
+            android:layout_height="match_parent"
+            android:entries="@array/array_grade"
+            />
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:text="@string/string_select_AsseesmentType" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/spn_back"
+        android:minHeight="35dp"
+        android:layout_marginBottom="10dp">
+        <Spinner
+            android:id="@+id/spn_selectAssessment"
+            android:layout_width="match_parent"
+            android:gravity="center|left"
+            android:layout_height="match_parent"
+            android:entries="@array/array_assessment_type"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="40dp">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/btn_roundedrect"
+            android:textColor="@color/btnTextColor"
+            android:textSize="15sp"
+            android:id="@+id/btnDownloadQuestion"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:text="Download Question set"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

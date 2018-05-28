@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.akshara.assessment.a3">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:name=".A3Application"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/app_logo"
+        android:supportsRtl="true"
+        android:theme="@style/A3Theme">
+        <activity
+            android:name=".SpalashScreenActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/A3Theme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/A3Theme" />
+        <activity
+            android:name=".ForgotPasswordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/A3Theme" />
+        <activity
+            android:name=".ForgotPasswordOTP"
+            android:screenOrientation="portrait"
+            android:theme="@style/A3Theme" />
+        <activity
+            android:name=".OTP_VarifyActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/A3Theme" />
+        <activity
+            android:name=".UserRegistrationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/A3Theme" />
+        <activity
+            android:name=".LanguageSelectionActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/A3Theme" />
+        <activity
+            android:name=".BoundaryLoaderActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/A3Theme" />
+        <activity
+            android:name=".StudentListMainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/A3Theme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".UpdateProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/A3Theme" />
+        <activity
+            android:name=".GradeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/A3Theme" />
+        <activity
+            android:name=".NavigationDrawerActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/A3Theme.NoActionBar" />
+        <activity
+            android:name=".UtilsPackage.AppSettings"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/A3Theme" />
+        <activity
+            android:name=".DownloadQuestionSetActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/A3Theme" />
+        <activity
+            android:name=".AssessmentSelectActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/A3Theme" />
+        <activity android:name=".AssessmentSelectorActivity"></activity>
+
+
+
+
+
+
+
+
+        <activity
+            android:name="com.gka.akshara.assesseasy.MainActivity"
+            android:screenOrientation="landscape">
+
+        </activity>
+        <activity
+            android:name="com.gka.akshara.assesseasy.qp_arithmetic_add"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity android:name="com.gka.akshara.assesseasy.animpage1" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
+        <activity android:name="com.gka.akshara.assesseasy.qp_arithmetic_subtract" />
+        <activity android:name="com.gka.akshara.assesseasy.qp_arithmetic_multiply" />
+        <activity android:name="com.gka.akshara.assesseasy.qp_arithmetic_division_wholenumber" />
+        <activity android:name="com.gka.akshara.assesseasy.assessment_manager" />
+        <activity android:name="com.gka.akshara.assesseasy.qp_arithmetic_division_withreminder" />
+        <activity android:name="com.gka.akshara.assesseasy.qp_fib_text" />
+        <activity android:name="com.gka.akshara.assesseasy.finalpage_boywins" />
+        <activity android:name="com.gka.akshara.assesseasy.finalpage_rabbitwins" />
+        <activity android:name="com.gka.akshara.assesseasy.qp_mcq_text" />
+        <activity android:name="com.gka.akshara.assesseasy.qp_mcq_image_text" />
+        <activity android:name="com.gka.akshara.assesseasy.qp_fib_image_text" />
+        <activity android:name="com.gka.akshara.assesseasy.qp_mtf_text_blank" />
+        <activity android:name="com.gka.akshara.assesseasy.qp_mtf_text_text" />
+        <activity android:name="com.gka.akshara.assesseasy.qp_mtf_text_image" />
+        <activity android:name="com.gka.akshara.assesseasy.qp_mtf_image_image" />
+        <activity android:name="com.gka.akshara.assesseasy.qp_mtf_image_blank" />
+        <activity android:name="com.gka.akshara.assesseasy.qp_truefalse_text" />
+        <activity android:name="com.gka.akshara.assesseasy.qp_truefalse_text_image" />
+        <activity android:name="com.gka.akshara.assesseasy.qp_mtf_image_text" />
+        <activity android:name="com.gka.akshara.assesseasy.qp_mcq_image" />
+        <activity
+            android:name="com.gka.akshara.assesseasy.qp_arithmetic_multiply_horiz"
+            android:label="@string/title_activity_qp_arithmetic_multiply_horiz"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.gka.akshara.assesseasy.qp_mcq_image_image"
+            android:label="@string/title_activity_qp_mcq_image_image"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.gka.akshara.assesseasy.messagedisplay"
+            android:label="@string/title_activity_messagedisplay"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+
+
+
+
+
+
+
+
+    </application>
+
+</manifest>

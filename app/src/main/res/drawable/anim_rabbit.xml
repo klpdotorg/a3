@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android">
+    android:oneshot="true">
+    <item
+        android:drawable="@drawable/anim_rabb1"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/anim_rabb2"
+        android:duration="10" />
+    <item
+        android:drawable="@drawable/anim_rabb3"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/anim_rabb4"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/anim_rabb5"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/anim_rabb6"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/anim_rabb7"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/anim_rabb8"
+        android:duration="50" />
+
+</animation-list>

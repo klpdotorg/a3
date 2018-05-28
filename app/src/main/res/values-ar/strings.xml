@@ -1,0 +1,197 @@
+<resources>
+
+    <string name="app_name_ext">Akshara Assessment App</string>
+
+    <string name="mobilehint">Mobile Number</string>
+    <string name="hintPassword">Password</string>
+    <string name="btnLogin">LOGIN</string>
+    <string name="btnForgotPassword">Forgot Password ?</string>
+    <string name="btnRegister">Register</string>
+    <string name="entermobilenumber">Enter mobile number</string>
+    <string name="enter10digitmobilenumber">Enter 10 digit mobile number</string>
+    <string name="enterPassword">Enter password</string>
+    <string name="oops">Oops some thing went wrong. Please try again</string>
+    <string name="userLoging">User loging ...</string>
+    <string name="error_field_required">Required feild</string>
+    <string name="netWorkError">Network error..Please check internet and try again</string>
+    <string name="login">LOGIN</string>
+    <string name="invalidOTP">Invalid OTP</string>
+    <string name="otpSentonNumber">OTP has been sent to you on your mobile phone</string>
+    <string name="enterOTPCode">ENTER OTP CODE</string>
+    <string name="passwordChanged">Your password has been changed successfully</string>
+    <string name="new_Password">NEW PASSWORD</string>
+    <string name="forgotPasswordqu">Forgot your password ?</string>
+    <string name="enterMobileNumber">Enter your mobile number</string>
+    <string name="sendOTP">Send OTP</string>
+    <string name="OK">OK</string>
+    <string name="resetPassword">Reset Password</string>
+    <string name="enter_ten_digit_number">Enter 10 digit phone number</string>
+    <string name="enter_valid_email_or_Phone">Please enter valid mobile number</string>
+    <string name="authenticating">Authenticating...</string>
+    <string name="resettingpassword">Resetting your password...</string>
+    <string name="prompt_enter_password">PASSWORD</string>
+    <string name="prompt_verify_password">RE-ENTER PASSWORD</string>
+    <string name="first_name"> FIRST NAME</string>
+    <string name="last_name">LAST NAME</string>
+    <string name="mobile_number">MOBILE NUMBER</string>
+    <string name="action_register">REGISTER</string>
+    <string name="confirmPassword">CONFIRM PASSWORD</string>
+    <string name="dob">DOB (DD-MM-YYYY)</string>
+    <string name="prompt_enter_email1_">E-MAIL (OPTIONAL)</string>
+    <string name="register">REGISTER</string>
+    <string name="doesnotmatcherwithpass">This field is required and must match the value entered in the password field</string>
+    <string name="pleaseSelectrespondanttypequestion">Select respondent type</string>
+    <string name="pleaseSelectrespondanttype">SELECT RESPONDENT TYPE</string>
+    <string name="enterValidDate">Enter valid date format(DD-MM-YYYY)</string>
+    <string name="signupsuccess">You have been successfully signed up. Please Login.</string>
+    <string name="enter_valid_email">Please enter valid email id</string>
+    <string name="pleaseEnterValidOTP">Please enter valid OTP</string>
+    <string name="stateLoadingFailed">State details loading failed. Please try again</string>
+
+    <string name="selectStateForLanguage">Select state</string>
+    <string name="selectLanguageForLanguage">Select language</string>
+    <string name="selectYourState">---- Select state ----</string>
+    <string name="selectYourLanguage">---- Select language ----</string>
+    <string name="selectState">Please select your  state</string>
+
+    <string name="Submit">Submit</string>
+    <string name="Cancel">Cancel</string>
+    <string name="Ok">OK</string>
+    <string name="Ok_">OK</string>
+    <string name="nextbutton">Next</string>
+    <string name="next">Next</string>
+    <string name="english">English</string>
+    <string name="districtDownloaded">districts downloaded</string>
+    <string name="districtDataLoadingFailed">District data loading failed.Please try again</string>
+    <string name="pleaseSelectsurveyLanguage">Please select your state and language</string>
+    <string name="prompt_district">Select District</string>
+    <string name="prompt_block">Select Block</string>
+    <string name="prompt_cluster">Select Cluster</string>
+    <string name="downloadDistrcitData">Note : Download required district data</string>
+    <string name="downloadDistrcitDataNext">Note : download district level data to navigate next screen</string>
+    <string name="selectblock">--Select Block--</string>
+    <string name="blockandCLusterdownloaded">district: blocks and clusters  downloaded</string>
+    <string name="response_neutral">OK</string>
+    <string name="response_positive">Yes</string>
+    <string name="response_negative">No</string>
+    <string name="loadingStateDistrict">state districts loading..</string>
+    <string name="districtblockloading">district: blocks loading...</string>
+    <string name="districtClusterLoading">district: clusters loading...</string>
+    <string name="districtsSchoolLoading">district schools loading. It will take few minutes for download to complete. Thanks for your patience !!!</string>
+    <string name="districtLeveldataLoadedSchussfully">District level data loaded successfully</string>
+    <string name="pleaseLoadDataforSelectedState">Please load district data for selected state</string>
+    <string name="doyouwantToLogout">Are you sure you want to log out?</string>
+    <string name="districtDataAlreadyFound">district: blocks and clusters already downloaded. Do you want to re-download?</string>
+
+    <string name="blockDataAlreadyFound">block data already downloaded. Do you want to re-download?</string>
+    <string name="blockSchoolLoading">block: schools loading. It will take few minutes for download to complete. Thanks for your patience !!!</string>
+    <string name="blockLeveldataLoadedSchussfully">block level data loaded successfully</string>
+    <string name="action_logout">Logout</string>
+    <string name="selectDistrict">--Select District--</string>
+    <string name="clusterDataLoadingFailed">Cluster data loading failed.Please try again</string>
+    <string name="schoolloadingfailed">Schools data loading failed.Please try again</string>
+    <string name="blocksDataLoadingFailed">Blocks data loading failed.Please try again</string>
+    <string name="noschoolfound">Schools not found currently</string>
+    <string name="noblock">Blocks not found</string>
+    <string name="noClusterfound">Clusters not found</string>
+    <string name="selectGrade">SELECT GRADE</string>
+    <string name="selectProgramorSubject">Select Program/Subject</string>
+    <string name="selectGradetext">SELECT GRADE</string>
+
+    <string name="selectLanguage">Please select application language</string>
+
+    <string-array name="program">
+
+        <item>SELECT PROGRAM / SUBJECT</item>
+        <item>English</item>
+        <item>Mathematics</item>
+    </string-array>
+
+
+    <string-array name="grade">
+
+
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+    <string name="title_activity_navigation_drawer">NavigationDrawerActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="Profile">Profile</string>
+    <string name="download">Download</string>
+    <string name="changeLanguage">Change language</string>
+    <string name="prompt_user_role">USER ROLE</string>
+    <string name="update">Update</string>
+    <string name="updateProfile">Update Profile</string>
+    <string name="profileUpdationFailed">Profile updation failed..Please try later</string>
+    <string name="profileUpdatedSuccessfully">Profile updated successfully</string>
+    <string name="updating_profile">Updating profile...</string>
+    <string name="urdu">Urdu</string>
+    <string name="selectCluster">-- Select Cluster --</string>
+    <string name="stuFirstName">First Name</string>
+    <string name="stuLastName">Last Name</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="registerStudent">Register Student</string>
+    <string name="registerstudent">Register</string>
+    <string name="errorFirstName">enter student first name</string>
+    <string name="errorLastName">enter student last name</string>
+    <string name="errorStudentId">enter student ID</string>
+    <string name="clusterSchoolLoading">cluster: schools loading. It will take few minutes for download to complete. Thanks for your patience !!!</string>
+    <string name="clusterLeveldataLoadedSchussfully">cluster level schools loaded successfully</string>
+    <string name="clusterDataAlreadyFound">cluster schools already downloaded. Do you want to re-download?</string>
+    <string name="school">SCHOOLS</string>
+    <string name="prompt_school">Select School</string>
+    <string name="selectSchool">-- Select School --</string>
+    <string name="schoolStudentDownloaded">school student downloaded successfully</string>
+    <string name="loadingStudent">Students details loading...</string>
+    <string name="students_downloaded">%1$s students details loaded</string>
+    <string name="string_select_language">Select Language</string>
+    <string name="downloadQuestion">Download Question set</string>
+    <string name="string_select_subject">Select Subject</string>
+    <string name="string_select_grade">Select Grade</string>
+    <string name="string_select_AsseesmentType">Select Assessment Type</string>
+    <string name="institution_id">Institution Id</string>
+    <string name="status">Status</string>
+    <string name="academic_year">Academic Year</string>
+    <string name="schoolsnotfoundforcluster">Schools not available for selected cluster</string>
+    <string name="registeredblocksnotfound">Registered blocks not found for selected district</string>
+
+    <string-array name="array_language">
+        <item>English</item>
+        <item>Kannada</item>
+        <item>Urdu</item>
+    </string-array>
+    <string-array name="array_subject">
+        <item>English</item>
+        <item>Maths</item>
+
+    </string-array>
+    <string-array name="array_grade">
+        <item>1st Grade</item>
+        <item>2nd Grade</item>
+        <item>3rd Grade</item>
+        <item>4th Grade</item>
+        <item>5th Grade</item>
+
+    </string-array>
+
+    <string-array name="array_assessment_type">
+        <item>FA1</item>
+        <item>FA2</item>
+        <item>FA3</item>
+        <item>FA4</item>
+        <item>FA5</item>
+        <item>FA6</item>
+        <item>SA1</item>
+        <item>SA2</item>
+
+    </string-array>
+</resources>

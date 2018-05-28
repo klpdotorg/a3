@@ -1,0 +1,70 @@
+apply plugin: 'com.android.application'
+
+
+android {
+    compileSdkVersion 26
+
+    flavorDimensions "default"
+    defaultConfig {
+        applicationId "com.akshara.assessment.a3"
+        minSdkVersion 19
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+        }
+    }
+
+    repositories {
+        jcenter()
+
+
+        maven { url "https://maven.google.com" }
+    }
+
+    productFlavors {
+        dev {
+            applicationId 'com.akshara.assessment.a3.dev'
+            resValue "string", "app_name", "GKA Assessment App"
+            buildConfigField 'String', 'HOST', '"https://dev.ilp.org.in"'
+            //    buildConfigField 'String', 'HOST', '"http://next.ilp.org.in"'
+        }
+        production {
+            applicationId 'com.akshara.assessment.a3.production'
+            resValue "string", "app_name", "GKA Assessment App"
+            buildConfigField 'String', 'HOST', '"https://staging.ilp.org.in"'
+
+        }
+        local {
+            applicationId 'com.akshara.assessment.a3.local'
+            resValue "string", "app_name", "GKA Assessment App"
+            buildConfigField 'String', 'HOST', '"https://dev.ilp.org.in"'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    implementation 'com.android.support:design:26.1.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.yahoo.squidb:squidb:3.2.3'
+    implementation 'com.yahoo.squidb:squidb-annotations:3.2.3'
+    implementation 'com.yahoo.squidb:squidb-android:3.2.3'
+    // For Android projects only
+    annotationProcessor 'com.yahoo.squidb:squidb-processor:3.2.3'
+    implementation 'com.android.support:cardview-v7:26.1.0'
+    implementation 'com.android.support:recyclerview-v7:26.1.0'
+}

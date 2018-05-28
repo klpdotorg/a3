@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.akshara.assessment.a3.NavigationDrawerActivity"
+    tools:showIn="@layout/app_bar_navigation_drawer">
+
+
+
+    <LinearLayout
+
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        >
+
+
+
+
+
+        <LinearLayout
+            android:id="@+id/ll_select_boundary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/prompt_district" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/spn_back"
+                android:minHeight="35dp"
+                android:layout_marginBottom="10dp">
+                <Spinner
+                    android:id="@+id/select_district"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/txBlock"
+                android:text="@string/prompt_block" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/spn_back"
+                android:minHeight="35dp"
+                android:layout_marginBottom="10dp">
+            <Spinner
+                android:id="@+id/select_block"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+               />
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/txCluster"
+                android:text="@string/prompt_cluster" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/spn_back"
+                android:minHeight="35dp"
+                android:layout_marginBottom="10dp">
+            <Spinner
+                android:id="@+id/select_cluster"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+            </LinearLayout>
+
+
+
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linBackSchool"
+            android:background="@color/newColorbck"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/school"
+                android:padding="5dp"
+                android:textColor="#000000"
+                android:gravity="center"
+                android:textSize="18sp"/>
+        </LinearLayout>
+        <ListView
+            android:id="@+id/school_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>

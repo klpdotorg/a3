@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="qp_add_questiontext">20sp</dimen>
+    <dimen name="qp_add_numbers">30sp</dimen>
+
+    <dimen name="qp_subtract_questiontext">20sp</dimen>
+    <dimen name="qp_subtract_numbers">30sp</dimen>
+
+    <dimen name="qp_multiply_questiontext">20sp</dimen>
+    <dimen name="qp_multiply_numbers">30sp</dimen>
+
+    <dimen name="qp_divisionwhole_questiontext">20sp</dimen>
+    <dimen name="qp_divisionwhole_quotienttopmargin">16dp</dimen>
+
+    <dimen name="qp_divisionreminder_questiontext">18sp</dimen>
+    <dimen name="qp_divisionreminder_numbers">35sp</dimen>
+    <dimen name="qp_divisionreminder_quotientremind">30sp</dimen>
+    <dimen name="qp_divisionreminder_quotienttopmargin">8dp</dimen>
+    <dimen name="qp_divisionreminder_divisortopmargin">0dp</dimen>
+
+    <dimen name="qp_fib_text_questiontext">22sp</dimen>
+    <dimen name="qp_fib_text_answer">30sp</dimen>
+
+    <dimen name="qp_fib_image_text_questiontext">20sp</dimen>
+    <dimen name="qp_fib_image_text_answer">25sp</dimen>
+
+    <dimen name="qp_mcq_text_questiontext">20sp</dimen>
+    <dimen name="qp_mcq_text_option">25sp</dimen>
+    <dimen name="qp_mcq_text_leftrightpadding">10dp</dimen>
+    <dimen name="qp_mcq_text_layoutmargin">15dp</dimen>
+
+    <dimen name="qp_mtf_horizontal_questiontext">18sp</dimen>
+    <dimen name="qp_mtf_horizontal_options">25sp</dimen>
+
+    <dimen name="qp_mtf_vertical_questiontext">20sp</dimen>
+    <dimen name="qp_mtf_vertical_options">20sp</dimen>
+
+    <dimen name="qp_truefalse_questiontext">20sp</dimen>
+    <dimen name="qp_truefalse_option">25sp</dimen>
+
+    <dimen name="mtf_optionbox_image_padding">4dp</dimen>
+    <dimen name="mcq_optionbox_image_padding">4dp</dimen>
+
+    <dimen name="mtf_horizontal_optionbox_sidemargin">8dp</dimen>
+    <dimen name="mtf_horizontal_optionbox_topmargin">8dp</dimen>
+    <dimen name="mtf_vertical_optionbox_sidemargin">8dp</dimen>
+    <dimen name="mtf_vertical_optionbox_topmargin">8dp</dimen>
+
+    <dimen name="finalscore_textsize">35sp</dimen>
+
+</resources>

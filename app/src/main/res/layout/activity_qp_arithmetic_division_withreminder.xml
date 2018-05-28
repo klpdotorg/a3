@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ConstraintLayout_parent_arithmeticdivisionwithreminder"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.gka.akshara.assesseasy.qp_arithmetic_division_withreminder">
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_top1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.02" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_bottom1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.83" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_left1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_right1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.90" />
+
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_top2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.18" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_bottom2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.80" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_left2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.20" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_right2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.80" />
+
+
+    <ImageButton
+        android:id="@+id/buttonNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:background="#00000000"
+        android:onClick="clickedNext"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_bottom1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline_top1"
+        app:srcCompat="@drawable/next_arrow" />
+
+    <ImageButton
+        android:id="@+id/buttonBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="#00000000"
+        android:onClick="clickedBack"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_bottom1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline_top1"
+        app:srcCompat="@drawable/back_arrow" />
+
+
+    <android.inputmethodservice.KeyboardView
+        android:id="@+id/aenumberkbd"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/guideline_bottom1" />
+
+    <TextView
+        android:id="@+id/textViewQuestionText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/bg_questiontext"
+        android:text=""
+        android:gravity="fill_vertical"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/qp_divisionreminder_questiontext"
+        android:textStyle="bold"
+        android:typeface="sans"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/insideconstraintlayout"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right2"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left2"
+        app:layout_constraintTop_toTopOf="@+id/guideline_top1" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/insideconstraintlayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:background="@drawable/bg_wa_divwholenumber"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_bottom2"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right2"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left2"
+        app:layout_constraintTop_toTopOf="@+id/guideline_top2">
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_top3"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.15" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_bottom3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.95" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_left3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.10" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_right3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.70" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/insideconstraintlayout1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="@dimen/qp_divisionreminder_quotienttopmargin"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_bottom3"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_right3"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left3"
+            app:layout_constraintTop_toTopOf="@+id/guideline_top3">
+
+            <EditText
+                android:id="@+id/editTextQuotient"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/editboxbgblue"
+                android:inputType="textNoSuggestions|number"
+                android:text=""
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/qp_divisionreminder_quotientremind"
+                android:textStyle="bold"
+                android:typeface="sans"
+                app:layout_constraintBottom_toTopOf="@+id/textViewDividend"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textViewDividend"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewDividend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/divisionquotientsign"
+                android:gravity="center"
+                android:paddingTop="4dp"
+                android:text=""
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="@dimen/qp_divisionreminder_numbers"
+                android:textStyle="bold"
+                android:typeface="sans"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextQuotient" />
+
+
+        <EditText
+            android:id="@+id/editTextReminder"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/editboxbgblue"
+            android:ems="10"
+            android:inputType="textNoSuggestions|number"
+            android:singleLine="true"
+            android:textAlignment="center"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/qp_divisionreminder_quotientremind"
+            android:textStyle="bold"
+            android:typeface="sans"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textViewDividend"
+            app:layout_constraintTop_toBottomOf="@+id/textViewDividend" />
+
+        <TextView
+            android:id="@+id/textViewDivisor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="@dimen/qp_divisionreminder_divisortopmargin"
+            android:text=""
+            android:textAlignment="textEnd"
+            android:textColor="#000000"
+            android:textSize="@dimen/qp_divisionreminder_numbers"
+            android:textStyle="bold"
+            android:typeface="sans"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewDividend"
+            app:layout_constraintEnd_toStartOf="@+id/textViewDividend"
+            app:layout_constraintTop_toTopOf="@+id/textViewDividend" />
+
+        </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+
+    <View
+        android:id="@+id/dummyViewForFocus"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
+</android.support.constraint.ConstraintLayout>

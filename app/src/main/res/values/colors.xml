@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimaryToolbar">#0097A7</color>
+    <color name="colorPrimaryDarkStatus">#00BCD4</color>
+    <color name="colorAccentViews">#006064</color>
+
+
+    <color name="background">#E0F7FA</color>
+
+
+    <color name="btnNoraml">#0097A7</color>
+    <color name="btnPress">#006064</color>
+
+    <color name="colorBrandTurquoise">#0097A7</color>
+    <color name="btnNoramlPlain">#330097A7</color>
+    <color name="btnPressPlain">#99006064</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="newColorbck">#330097A7</color>
+    <color name="btnTextColor">#FFFFFF</color>
+
+
+
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303f9f</color>
+    <color name="colorAccent">#ff4081</color>
+</resources>

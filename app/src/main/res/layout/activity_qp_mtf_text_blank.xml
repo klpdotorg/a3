@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ConstraintLayout_parent_mtftextblank"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.gka.akshara.assesseasy.qp_mtf_text_blank">
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_top1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_bottom1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_left1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_right1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.90" />
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_top2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_bottom2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.75" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_left2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.10" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_right2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.80" />
+
+
+
+    <ImageButton
+        android:id="@+id/buttonNext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:background="#00000000"
+        android:onClick="clickedNext"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_bottom1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline_top1"
+        app:srcCompat="@drawable/next_arrow" />
+
+    <ImageButton
+        android:id="@+id/buttonBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="#00000000"
+        android:onClick="clickedBack"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_bottom1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline_top1"
+        app:srcCompat="@drawable/back_arrow" />
+
+
+    <TextView
+        android:id="@+id/textViewQuestionText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_questiontext"
+        android:gravity="fill_vertical"
+        android:text="Match the boxes"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/qp_mtf_horizontal_questiontext"
+        android:textStyle="bold"
+        android:typeface="sans"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_top2"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right1"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left1"
+        app:layout_constraintTop_toTopOf="@+id/guideline_top1" />
+
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_pillar1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.10" />
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_pillar2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.30" />
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_pillar3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.50" />
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_pillar4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.70" />
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_pillar5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.90" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_beam1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.35" />
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_beam2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.50" />
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_beam3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.60" />
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_beam4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.75" />
+
+
+    <TextView
+        android:id="@+id/textViewOption1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="@dimen/mtf_horizontal_optionbox_sidemargin"
+        android:layout_marginStart="@dimen/mtf_horizontal_optionbox_sidemargin"
+        android:layout_marginTop="@dimen/mtf_horizontal_optionbox_topmargin"
+        android:background="@drawable/optionbox"
+        android:gravity="fill_vertical"
+        android:text=""
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/qp_mtf_horizontal_options"
+        android:textStyle="bold"
+        android:typeface="sans"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_beam2"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_pillar2"
+        app:layout_constraintStart_toEndOf="@+id/guideline_pillar1"
+        app:layout_constraintTop_toTopOf="@+id/guideline_beam1" />
+
+    <TextView
+        android:id="@+id/textViewOption2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="@dimen/mtf_horizontal_optionbox_sidemargin"
+        android:layout_marginStart="@dimen/mtf_horizontal_optionbox_sidemargin"
+        android:layout_marginTop="@dimen/mtf_horizontal_optionbox_topmargin"
+        android:background="@drawable/optionbox"
+        android:gravity="fill_vertical"
+        android:text=""
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/qp_mtf_horizontal_options"
+        android:textStyle="bold"
+        android:typeface="sans"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_beam2"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_pillar3"
+        app:layout_constraintStart_toEndOf="@+id/guideline_pillar2"
+        app:layout_constraintTop_toTopOf="@+id/guideline_beam1" />
+
+    <TextView
+        android:id="@+id/textViewOption3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="@dimen/mtf_horizontal_optionbox_sidemargin"
+        android:layout_marginStart="@dimen/mtf_horizontal_optionbox_sidemargin"
+        android:layout_marginTop="@dimen/mtf_horizontal_optionbox_topmargin"
+        android:background="@drawable/optionbox"
+        android:gravity="fill_vertical"
+        android:text=""
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/qp_mtf_horizontal_options"
+        android:textStyle="bold"
+        android:typeface="sans"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_beam2"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_pillar4"
+        app:layout_constraintStart_toEndOf="@+id/guideline_pillar3"
+        app:layout_constraintTop_toTopOf="@+id/guideline_beam1" />
+
+
+    <TextView
+        android:id="@+id/textViewOption4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="@dimen/mtf_horizontal_optionbox_sidemargin"
+        android:layout_marginStart="@dimen/mtf_horizontal_optionbox_sidemargin"
+        android:layout_marginTop="@dimen/mtf_horizontal_optionbox_topmargin"
+        android:background="@drawable/optionbox"
+        android:gravity="fill_vertical"
+        android:text=""
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/qp_mtf_horizontal_options"
+        android:textStyle="bold"
+        android:typeface="sans"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_beam2"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_pillar5"
+        app:layout_constraintStart_toEndOf="@+id/guideline_pillar4"
+        app:layout_constraintTop_toTopOf="@+id/guideline_beam1" />
+
+
+
+
+    <TextView
+        android:id="@+id/textViewBlankbox1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="@dimen/mtf_horizontal_optionbox_sidemargin"
+        android:layout_marginStart="@dimen/mtf_horizontal_optionbox_sidemargin"
+        android:layout_marginTop="@dimen/mtf_horizontal_optionbox_topmargin"
+        android:background="@drawable/mtfmiddlebox"
+        android:gravity="fill_vertical"
+        android:text=""
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/qp_mtf_horizontal_options"
+        android:textStyle="bold"
+        android:typeface="sans"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_beam4"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_pillar2"
+        app:layout_constraintStart_toEndOf="@+id/guideline_pillar1"
+        app:layout_constraintTop_toTopOf="@+id/guideline_beam3" />
+
+    <TextView
+        android:id="@+id/textViewBlankbox2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="@dimen/mtf_horizontal_optionbox_sidemargin"
+        android:layout_marginStart="@dimen/mtf_horizontal_optionbox_sidemargin"
+        android:layout_marginTop="@dimen/mtf_horizontal_optionbox_topmargin"
+        android:background="@drawable/mtfmiddlebox"
+        android:gravity="fill_vertical"
+        android:text=""
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/qp_mtf_horizontal_options"
+        android:textStyle="bold"
+        android:typeface="sans"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_beam4"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_pillar3"
+        app:layout_constraintStart_toEndOf="@+id/guideline_pillar2"
+        app:layout_constraintTop_toTopOf="@+id/guideline_beam3" />
+
+    <TextView
+        android:id="@+id/textViewBlankbox3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="@dimen/mtf_horizontal_optionbox_sidemargin"
+        android:layout_marginStart="@dimen/mtf_horizontal_optionbox_sidemargin"
+        android:layout_marginTop="@dimen/mtf_horizontal_optionbox_topmargin"
+        android:background="@drawable/mtfmiddlebox"
+        android:gravity="fill_vertical"
+        android:text=""
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/qp_mtf_horizontal_options"
+        android:textStyle="bold"
+        android:typeface="sans"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_beam4"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_pillar4"
+        app:layout_constraintStart_toEndOf="@+id/guideline_pillar3"
+        app:layout_constraintTop_toTopOf="@+id/guideline_beam3" />
+
+
+    <TextView
+        android:id="@+id/textViewBlankbox4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="@dimen/mtf_horizontal_optionbox_sidemargin"
+        android:layout_marginStart="@dimen/mtf_horizontal_optionbox_sidemargin"
+        android:layout_marginTop="@dimen/mtf_horizontal_optionbox_topmargin"
+        android:background="@drawable/mtfmiddlebox"
+        android:gravity="fill_vertical"
+        android:text=""
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/qp_mtf_horizontal_options"
+        android:textStyle="bold"
+        android:typeface="sans"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_beam4"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_pillar5"
+        app:layout_constraintStart_toEndOf="@+id/guideline_pillar4"
+        app:layout_constraintTop_toTopOf="@+id/guideline_beam3" />
+
+</android.support.constraint.ConstraintLayout>

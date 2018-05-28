@@ -1,0 +1,197 @@
+<resources>
+
+    <string name="app_name_ext">Akshara Assessment App</string>
+
+    <string name="mobilehint">ಮೊಬೈಲ್ ಸಂಖ್ಯೆ</string>
+    <string name="hintPassword">ಪಾಸ್ವರ್ಡ್</string>
+    <string name="btnLogin">ಲಾಗಿನ್</string>
+    <string name="btnForgotPassword">ಪಾಸ್ವರ್ಡ್ ಮರೆತು ಹೋಯಿತೇ?</string>
+    <string name="btnRegister">ರಿಜಿಸ್ಟರ್</string>
+    <string name="entermobilenumber">ನಿಮ್ಮಮೊಬೈಲ್ ನಂಬರ್</string>
+    <string name="enter10digitmobilenumber">ನಿಮ್ಮಮೊಬೈಲ್ ನಂಬರ್</string>
+    <string name="enterPassword">ಪಾಸ್ವರ್ಡ್ ಅನ್ನು ಹಾಕಿ</string>
+    <string name="oops">ಓ ಹೊ ಏನೋ ಸಮಸ್ಯೆ ಕಂಡು ಬಂದಂತಿದೆ.  ಪುನಃ ಪ್ರಯತ್ನಿಸಿ </string>
+    <string name="userLoging">ಬಳಕೆದಾರ ಲಾಗಿನ್ ...</string>
+    <string name="error_field_required">ಅಗತ್ಯವಿರುವ ಮಾಹಿತಿ</string>
+    <string name="netWorkError">ನೆಟ್ವರ್ಕ್ ನಲ್ಲಿ ದೋಷ ಕಂಡುಬಂದಿದೆ. ದಯವಿಟ್ಟು ಅಂತರ್ಜಾಲ ಕನೆಕ್ಷನ್ ಪರಿಶೀಲಿಸಿ.</string>
+    <string name="login">ಲಾಗಿನ್</string>
+    <string name="invalidOTP">ಅಮಾನ್ಯ OTP</string>
+    <string name="otpSentonNumber">ನಿಮ್ಮ ಮೊಬೈಲ್ ಫೋನ್ನಲ್ಲಿ OTP ನಿಮಗೆ ಕಳುಹಿಸಲಾಗಿದೆ</string>
+    <string name="enterOTPCode">OTP ಕೋಡ್ ನಮೂದಿಸಿ</string>
+    <string name="passwordChanged">ನಿಮ್ಮ ಪಾಸ್ವರ್ಡ್ ಅನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಬದಲಾಯಿಸಲಾಗಿದೆ</string>
+    <string name="new_Password">ಹೊಸ ಪಾಸ್ವರ್ಡ್</string>
+    <string name="forgotPasswordqu">ನಿಮ್ಮ ಪಾಸ್ವರ್ಡ್ ಮರೆತಿರಾ?</string>
+    <string name="enterMobileNumber">Enter your mobile number</string>
+    <string name="sendOTP">OTP ಕಳುಹಿಸಿ</string>
+    <string name="OK">ಓಕೆ</string>
+    <string name="resetPassword">ರಿಸೆಟ್ ಪಾಸ್ವರ್ಡ್</string>
+    <string name="enter_ten_digit_number">ಮೊಬೈಲ್ ನಂಬರ್ ನಮೂದಿಸಿ</string>
+    <string name="enter_valid_email_or_Phone">ದಯವಿಟ್ಟು ಸರಿಯಾದ ಫೋನ್ ನಂಬರ್ ಹಾಕಿ</string>
+    <string name="authenticating">ದೃಢೀಕರಿಸಲಾಗುತ್ತಿದೆ …</string>
+    <string name="resettingpassword">ನಿಮ್ಮ ಪಾಸ್ವರ್ಡ್ ಅನ್ನು ಮರುಹೊಂದಿಸಲಾಗುತ್ತಿದೆ</string>
+    <string name="prompt_enter_password">ಪಾಸ್ವರ್ಡ್</string>
+    <string name="prompt_verify_password">ಪಾಸ್ವರ್ಡ್ ಇನ್ನೊಮ್ಮೆ ಹಾಕಿ</string>
+    <string name="first_name">ಹೆಸರು</string>
+    <string name="last_name">ಉಪನಾಮ</string>
+    <string name="mobile_number">ಮೊಬೈಲ್ ಸಂಖ್ಯೆ</string>
+    <string name="action_register">ರಿಜಿಸ್ಟರ್</string>
+    <string name="confirmPassword">ಪಾಸ್ವರ್ಡ್ ದೃಢೀಕರಿಸಿ</string>
+    <string name="dob">ಜನ್ಮ ದಿನಾಂಕ (DD-MM-YYYY)</string>
+    <string name="prompt_enter_email1_">ಇಮೇಲ್ ವಿಳಾಸ (ಕಡ್ಡಾಯವಲ್ಲ)</string>
+    <string name="register">ರಿಜಿಸ್ಟರ್</string>
+    <string name="doesnotmatcherwithpass">ಈ ಕ್ಷೇತ್ರವು ಅಗತ್ಯವಿದೆ ಮತ್ತು ಪಾಸ್ವರ್ಡ್ನೊಂದಿಗೆ ಹೊಂದಾಣಿಕೆಯಾಗುತ್ತಿಲ್ಲ</string>
+    <string name="pleaseSelectrespondanttypequestion">ಪ್ರತಿಕ್ರಿಯೆಗಾರ ಆಯ್ಕೆ ಮಾಡಿ</string>
+    <string name="pleaseSelectrespondanttype">ಪ್ರತಿಕ್ರಿಯೆಗಾರ ಆಯ್ಕೆ ಮಾಡಿ</string>
+    <string name="enterValidDate">ದಯವಿಟ್ಟು ಸರಿಯಾದ ದಿನಾಂಕವನ್ನು ಬಳಸಿರಿ(DD-MM-YYYY)</string>
+    <string name="signupsuccess">ನೀವು ಯಶಸ್ವಿಯಾಗಿ ಸೈನ್ ಅಪ್ ಮಾಡಿದ್ದೀರಿ. ದಯವಿಟ್ಟು ಲಾಗಿನ್ ಮಾಡಿ.</string>
+    <string name="enter_valid_email">ದಯವಿಟ್ಟು ಮಾನ್ಯವಾದ ಇಮೇಲ್ ವಿಳಾಸವನ್ನು ನಮೂದಿಸಿ</string>
+    <string name="pleaseEnterValidOTP">ದಯವಿಟ್ಟು ಸರಿಯಾದ OTP ಯನ್ನು ನಮೂದಿಸಿ</string>
+    <string name="stateLoadingFailed">ಈ ಕ್ಷಣದಲ್ಲಿ ರಾಜ್ಯದ ಮಾಹಿತಿಯನ್ನು ಲೋಡ್ ಮಾಡಲು ಆಗುತ್ತಿಲ್ಲ. ದಯವಿಟ್ಟು ಪುನಃ ಪ್ರಯತ್ನಿಸಿ.</string>
+
+    <string name="selectStateForLanguage">ರಾಜ್ಯವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ</string>
+    <string name="selectLanguageForLanguage">ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
+    <string name="selectYourState">---- ರಾಜ್ಯವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ ----</string>
+    <string name="selectYourLanguage">---- ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ ----</string>
+    <string name="selectState">ದಯವಿಟ್ಟು ನಿಮ್ಮ ರಾಜ್ಯವನ್ನು ಆಯ್ಕೆ ಮಾಡಿ</string>
+
+    <string name="Submit">ಸಭ್ಮಿಟ್</string>
+    <string name="Cancel">ಕ್ಯಾನ್ಸಲ್</string>
+    <string name="Ok">ಓಕೆ</string>
+    <string name="Ok_">ಓಕೆ</string>
+    <string name="nextbutton">ಮುಂದಿನ</string>
+    <string name="next">ಮುಂದಿನ</string>
+    <string name="english">English</string>
+    <string name="districtDownloaded">ಜಿಲ್ಲೆಗಳು ಡೌನ್ಲೋಡ್ ಮಾಡಲ್ಪಟ್ಟಿದೆ</string>
+    <string name="districtDataLoadingFailed">ಈ ಕ್ಷಣದಲ್ಲಿ ಜಿಲ್ಲೆಯ ಮಾಹಿತಿಯನ್ನು ಲೋಡ್ ಮಾಡಲು ಆಗುತ್ತಿಲ್ಲ. ದಯವಿಟ್ಟು ಪುನಃ ಪ್ರಯತ್ನಿಸಿ</string>
+    <string name="pleaseSelectsurveyLanguage">ದಯವಿಟ್ಟು ನಿಮ್ಮ ರಾಜ್ಯ ಮತ್ತು ಭಾಷೆ ಆಯ್ಕೆಮಾಡಿ</string>
+    <string name="prompt_district">ಜಿಲ್ಲೆ ಆಯ್ಕೆ ಮಾಡಿ</string>
+    <string name="prompt_block">ಬ್ಲಾಕ್ ಆಯ್ಕೆ ಮಾಡಿ</string>
+    <string name="prompt_cluster">ಕ್ಲಸ್ಟರ್ ಆಯ್ಕೆ ಮಾಡಿ</string>
+    <string name="downloadDistrcitData">ಗಮನಿಸಿ: ಅಗತ್ಯ ಜಿಲ್ಲೆಯ ಡೇಟಾವನ್ನು ಡೌನ್ಲೋಡ್ ಮಾಡಿ</string>
+    <string name="downloadDistrcitDataNext">ಗಮನಿಸಿ: ಮುಂದಿನ ಹಂತಕ್ಕೆ ನ್ಯಾವಿಗೇಟ್ ಮಾಡಲು ಜಿಲ್ಲೆಯ ಮಟ್ಟದ ಡೇಟಾವನ್ನು ಡೌನ್ಲೋಡ್ ಮಾಡಿ</string>
+    <string name="selectblock">--ಬ್ಲಾಕ್ ಆಯ್ಕೆ ಮಾಡಿ--</string>
+    <string name="blockandCLusterdownloaded">ಜಿಲ್ಲೆಯ: ಬ್ಲಾಕ್ಗಳು ​​ಮತ್ತು ಕ್ಲಸ್ಟರ್ಗಳು ಡೌನ್ಲೋಡ್ ಮಾಡಲ್ಪಟ್ಟವು</string>
+    <string name="response_neutral">ಓಕೆ</string>
+    <string name="response_positive">ಹೌದು</string>
+    <string name="response_negative">ಇಲ್ಲ</string>
+    <string name="loadingStateDistrict">ರಾಜ್ಯದ ಜಿಲ್ಲೆಗಳು ಲೋಡ್ ಆಗುತ್ತಿವೆ …</string>
+    <string name="districtblockloading">ಜಿಲ್ಲಾ: ಬ್ಲಾಕ್ ಗಳು ಲೋಡ್ ಆಗುತ್ತಿದೆ …</string>
+    <string name="districtClusterLoading">ಜಿಲ್ಲಾ: ಕ್ಲಸ್ಟರ್ ಲೋಡ್ ಆಗುತ್ತಿದೆ …</string>
+    <string name="districtsSchoolLoading">ಜಿಲ್ಲಾ ಶಾಲೆಗಳು ಲೋಡ್ ಆಗುತ್ತಿದೆ .ದಯವಿಟ್ಟು ನಿರೀಕ್ಷಿಸಿ. ಮಾಹಿತಿಯನ್ನು ಡೌನ್ಲೋಡ್ ಮಾಡಲು ಸ್ವಲ್ಪ ಸಮಯ ಬೇಕಾಗಬಹುದು. ನಿಮ್ಮ ತಾಳ್ಮೆಗೆ ಧನ್ಯವಾದಗಳು.</string>
+    <string name="districtLeveldataLoadedSchussfully">ಜಿಲ್ಲಾ ಮಟ್ಟದ ಡೇಟಾವನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಲೋಡ್ ಮಾಡಲಾಗಿದೆ</string>
+    <string name="pleaseLoadDataforSelectedState">ಆಯ್ಕೆಮಾಡಿದ ರಾಜ್ಯಕ್ಕಾಗಿ ಜಿಲ್ಲಾ ಡೇಟಾವನ್ನು ಲೋಡ್ ಮಾಡಿ</string>
+    <string name="doyouwantToLogout">ಲಾಗ್ ಔಟ್ ಮಾಡಲು ನೀವು ಖಚಿತವಾಗಿ ಬಯಸುವಿರಾ?</string>
+    <string name="districtDataAlreadyFound">district: blocks and clusters already downloaded. Do you want to re-download?</string>
+
+    <string name="blockDataAlreadyFound">block data already downloaded. Do you want to re-download?</string>
+    <string name="blockSchoolLoading">block: schools loading. It will take few minutes for download to complete. Thanks for your patience !!!</string>
+    <string name="blockLeveldataLoadedSchussfully">ಬ್ಲಾಕ್ ಮಟ್ಟದ ಡೇಟಾವನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಲೋಡ್ ಮಾಡಲಾಗಿದೆ</string>
+    <string name="action_logout">ಲಾಗ್ ಔಟ್</string>
+    <string name="selectDistrict">--ಜಿಲ್ಲೆ ಆಯ್ಕೆ ಮಾಡಿ--</string>
+    <string name="clusterDataLoadingFailed">ಕ್ಲಸ್ಟರ್ ಮಾಹಿತಿ ಲೋಡ್ ಆಗಲು ವಿಫಲಗೊಂಡಿದೆ. ದಯವಿಟ್ಟು ಪುನಃ ಪ್ರಯತ್ನಿಸಿ</string>
+    <string name="schoolloadingfailed">ಶಾಲೆಯ ದಾಖಲೆ ಲೋಡ್ ಆಗಲು ವಿಫಲಗೊಂಡಿದೆ. ದಯವಿಟ್ಟು ಪುನಃ ಪ್ರಯತ್ನಿಸಿ</string>
+    <string name="blocksDataLoadingFailed">ಬ್ಲಾಕ್ ಹಂತದ ವಿವರ ಲೋಡ್ ಆಗಲು ವಿಫಲಗೊಂಡಿದೆ. ದಯವಿಟ್ಟು ಪುನಃ ಪ್ರಯತ್ನಿಸಿ</string>
+    <string name="noschoolfound">ಶಾಲೆಗಳು ಪ್ರಸ್ತುತ ಕಂಡುಬಂದಿಲ್ಲ</string>
+    <string name="noblock">ಬ್ಲಾಕ್ಗಳು ​​ಕಂಡುಬಂದಿಲ್ಲ</string>
+    <string name="noClusterfound">ಕ್ಲಸ್ಟರ್ಗಳು ಕಂಡುಬಂದಿಲ್ಲ</string>
+    <string name="selectGrade">ಗ್ರೇಡ್ ಆಯ್ಕೆಮಾಡಿ</string>
+    <string name="selectProgramorSubject">ಪ್ರೋಗ್ರಾಂ ಅಥವಾ ವಿಷಯ ಆಯ್ಕೆಮಾಡಿ</string>
+    <string name="selectGradetext">ಗ್ರೇಡ್ ಆಯ್ಕೆಮಾಡಿ</string>
+
+    <string name="selectLanguage">ನಿಮ್ಮ ಭಾಷೆಯನ್ನು ಆಯ್ಕೆ ಮಾಡಿ</string>
+
+    <string-array name="program">
+
+        <item>SELECT PROGRAM / SUBJECT</item>
+        <item>English</item>
+        <item>Maths</item>
+    </string-array>
+
+
+    <string-array name="grade">
+
+
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+    <string name="title_activity_navigation_drawer">NavigationDrawerActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">ಸೆಟ್ಟಿಂಗ್ಸ್</string>
+    <string name="Profile">ಪ್ರೊಫೈಲ್</string>
+    <string name="download">ಡೌನ್ಲೋಡ್</string>
+    <string name="changeLanguage">ಭಾಷೆ ಬದಲಾಯಿಸಿ</string>
+    <string name="prompt_user_role">ಬಳಕೆದಾರರ ಪಾತ್ರ</string>
+    <string name="update">ನವೀಕರಿಸಿ</string>
+    <string name="updateProfile">ಪ್ರೊಫೈಲ್ ನವೀಕರಿಸಿ</string>
+    <string name="profileUpdationFailed">ಪಪ್ರೊಫೈಲ್ ಅಪ್ಡೇಟ್ ವಿಫಲವಾಗಿದೆ. ದಯವಿಟ್ಟು ಇನ್ನೊಮ್ಮೆ ಪ್ರಯತ್ನಿಸಿ</string>
+    <string name="profileUpdatedSuccessfully">ಪ್ರೊಫೈಲ್ ಅನ್ನು ಯಶಸ್ವಿಯಾಗಿ ನವೀಕರಿಸಲಾಗಿದೆ</string>
+    <string name="updating_profile">ಪ್ರೊಫೈಲ್ ನವೀಕರಿಸಲಾಗುತ್ತಿದೆ …</string>
+    <string name="urdu">Urdu</string>
+    <string name="selectCluster">-- Select Cluster --</string>
+    <string name="stuFirstName">ಹೆಸರು</string>
+    <string name="stuLastName">ಉಪನಾಮ</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="registerStudent">Register Student</string>
+    <string name="registerstudent">ರಿಜಿಸ್ಟರ್</string>
+    <string name="errorFirstName">enter student first name</string>
+    <string name="errorLastName">enter student last name</string>
+    <string name="errorStudentId">enter student ID</string>
+    <string name="clusterSchoolLoading">cluster: schools loading. It will take few minutes for download to complete. Thanks for your patience !!!</string>
+    <string name="clusterLeveldataLoadedSchussfully">cluster level schools loaded successfully</string>
+    <string name="clusterDataAlreadyFound">cluster schools already downloaded. Do you want to re-download?</string>
+    <string name="school">SCHOOLS</string>
+    <string name="prompt_school">Select School</string>
+    <string name="selectSchool">-- Select School --</string>
+    <string name="schoolStudentDownloaded">school student downloaded successfully</string>
+    <string name="loadingStudent">Students details loading...</string>
+    <string name="students_downloaded">%1$s students details loaded</string>
+    <string name="string_select_language">Select Language</string>
+    <string name="downloadQuestion">Download Question set</string>
+    <string name="string_select_subject">Select Subject</string>
+    <string name="string_select_grade">Select Grade</string>
+    <string name="string_select_AsseesmentType">Select Assessment Type</string>
+    <string name="institution_id">Institution Id</string>
+    <string name="status">Status</string>
+    <string name="academic_year">Academic Year</string>
+    <string name="schoolsnotfoundforcluster">Schools not available for selected cluster</string>
+    <string name="registeredblocksnotfound">Registered blocks not found for selected district</string>
+    <string-array name="array_language">
+        <item>English</item>
+        <item>Kannada</item>
+        <item>Urdu</item>
+    </string-array>
+    <string-array name="array_subject">
+        <item>English</item>
+        <item>Mathematics</item>
+
+    </string-array>
+
+    <string-array name="array_grade">
+        <item>1st Grade</item>
+        <item>2nd Grade</item>
+        <item>3rd Grade</item>
+        <item>4th Grade</item>
+        <item>5th Grade</item>
+
+    </string-array>
+
+    <string-array name="array_assessment_type">
+        <item>FA1</item>
+        <item>FA2</item>
+        <item>FA3</item>
+        <item>FA4</item>
+        <item>FA5</item>
+        <item>FA6</item>
+        <item>SA1</item>
+        <item>SA2</item>
+
+    </string-array>
+</resources>
