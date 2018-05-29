@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -45,6 +46,16 @@ public class AssessmentSelectorActivity extends AppCompatActivity {
 
 
         database = new KontactDatabase(this);
+
+    //   asssessmentSelectorAdapter.notifyDataSetChanged();
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        questionSetTables.clear();
         Query quesryQuestionSet = Query.select().from(QuestionSetTable.TABLE)
                 .where(QuestionSetTable.GRADE_NAME.eqCaseInsensitive(gradeName))
                 .orderBy(QuestionSetTable.ID_QUESTIONSET.asc());
@@ -52,14 +63,14 @@ public class AssessmentSelectorActivity extends AppCompatActivity {
         if (questionsetCursor != null) {
             while (questionsetCursor.moveToNext()) {
 
-              QuestionSetTable questionSetTable=new QuestionSetTable(questionsetCursor);
-              questionSetTables.add(questionSetTable);
+                QuestionSetTable questionSetTable=new QuestionSetTable(questionsetCursor);
+                questionSetTables.add(questionSetTable);
 
             }
         }
-         asssessmentSelectorAdapter=new AsssessmentSelectorAdapter(this,questionSetTables);
-            recycler.setAdapter(asssessmentSelectorAdapter);
-            asssessmentSelectorAdapter.notifyDataSetChanged();
+
+        asssessmentSelectorAdapter=new AsssessmentSelectorAdapter(this,questionSetTables);
+        recycler.setAdapter(asssessmentSelectorAdapter);
     }
 
     @Override

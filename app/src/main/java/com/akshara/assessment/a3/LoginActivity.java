@@ -191,10 +191,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                     userLoginInfo.getString("mobile_no"),
                                     userLoginInfo.getString("dob"),
                                     users);
-
-
-                             Intent intent = new Intent(LoginActivity.this, BoundaryLoaderActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, BoundaryLoaderActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        intent.putExtra("LOGIN",true);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
                         finish();

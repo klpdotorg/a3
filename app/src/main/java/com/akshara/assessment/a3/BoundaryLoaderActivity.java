@@ -56,6 +56,7 @@ public class BoundaryLoaderActivity extends BaseActivity implements OnItemSelect
     boolean flagForState, flagForDistrict, flagForblock,flagForCluster,flagForSchool;
     CardView linLayState;
     Button btnNext;
+    boolean LOGIN=false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,7 +79,7 @@ public class BoundaryLoaderActivity extends BaseActivity implements OnItemSelect
         select_district.setOnItemSelectedListener(this);
          select_cluster.setOnItemSelectedListener(this);
         select_school.setOnItemSelectedListener(this);
-
+        LOGIN=getIntent().getBooleanExtra("LOGIN",false);
         final String statePersonalKey = mSession.getStateSelection();
         SquidCursor<State> stateCursor = db.query(State.class, listStateQuery);
         stateList = new ArrayList<>();
@@ -508,10 +509,12 @@ int schoolId=Integer.parseInt(((StringWithTags) select_school.getSelectedItem())
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                Intent intent=new Intent(getApplicationContext(),NavigationDrawerActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+                if(!LOGIN) {
+                    Intent intent = new Intent(getApplicationContext(), NavigationDrawerActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+                }
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -556,11 +559,12 @@ int schoolId=Integer.parseInt(((StringWithTags) select_school.getSelectedItem())
 
     @Override
     public void onBackPressed() {
+        if(!LOGIN){
         super.onBackPressed();
         Intent intent=new Intent(getApplicationContext(),NavigationDrawerActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
-        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);}
     }
 
     private void loadSchooldataForBlock(final long id, String stateKey, long distId, String token,long blockId) {
