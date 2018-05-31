@@ -71,7 +71,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:digits="0123456789"
+
                 android:paddingLeft="10dp"
                 android:hint="@string/stuFirstName"
                 android:singleLine="true" />
@@ -88,7 +88,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:digits="0123456789"
+
                 android:paddingLeft="10dp"
                 android:hint="@string/stuLastName"
 

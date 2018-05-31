@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -21,92 +22,85 @@ import java.util.Date;
 public class RegisterStudentActivity extends android.support.v4.app.Fragment {
 
 
-    EditText edtStsId,edtFirstName,edtStuLastName;
+    EditText edtStsId, edtFirstName, edtStuLastName;
     RadioGroup studentGender;
-
-
+    Button btnRegisterstudent;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.studentregistration, container, false);
+        View view = inflater.inflate(R.layout.studentregistration, container, false);
 
-        studentGender=view.findViewById(R.id.studentGender);
-        edtStsId=view.findViewById(R.id.edtStsId);
-        edtFirstName=view.findViewById(R.id.edtFirstName);
-        edtStuLastName=view.findViewById(R.id.edtStuLastName);
+        studentGender = view.findViewById(R.id.studentGender);
+        edtStsId = view.findViewById(R.id.edtStsId);
+        edtFirstName = view.findViewById(R.id.edtFirstName);
+        edtStuLastName = view.findViewById(R.id.edtStuLastName);
+        btnRegisterstudent=view.findViewById(R.id.btnRegisterstudent);
 
-  //  Toast.makeText(getActivity(),getAcademicYear()+"",Toast.LENGTH_SHORT).show();
+
+
+        btnRegisterstudent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                validation();
+
+            }
+        });
+        //  Toast.makeText(getActivity(),getAcademicYear()+"",Toast.LENGTH_SHORT).show();
         return view;
     }
 
 
-    private boolean validation()
-    {
-      String firstName=edtFirstName.getText().toString().trim();
-      String lastName=edtStuLastName.getText().toString().trim();
-      String studentId=edtStsId.getText().toString().trim();
-      boolean gender=studentGender.isSelected();
-      if(TextUtils.isEmpty(studentId))
-      {
-          edtFirstName.setError(getResources().getString(R.string.errorStudentId));
-          edtFirstName.requestFocus();
-          return false;
-      }
-      else if(TextUtils.isEmpty(firstName))
-      {
-          edtFirstName.setError(getResources().getString(R.string.errorFirstName));
-          edtFirstName.requestFocus();
-          return false;
+    private boolean validation() {
+        String firstName = edtFirstName.getText().toString().trim();
+        String lastName = edtStuLastName.getText().toString().trim();
+        String studentId = edtStsId.getText().toString().trim();
+        boolean gender = studentGender.getCheckedRadioButtonId() == -1?false:true;
+        if (TextUtils.isEmpty(studentId)) {
+            edtStsId.setError(getResources().getString(R.string.errorStudentId));
+            edtStsId.requestFocus();
+            return false;
+        } else if (TextUtils.isEmpty(firstName)) {
+            edtFirstName.setError(getResources().getString(R.string.errorFirstName));
+            edtFirstName.requestFocus();
+            return false;
 
-      }else if(TextUtils.isEmpty(lastName))
-      {
-          edtStuLastName.setError(getResources().getString(R.string.errorLastName));
-          edtStuLastName.requestFocus();
-          return false;
-      }
-      else if(!gender)
-      {
-          Toast.makeText(getActivity(),"select gender",Toast.LENGTH_SHORT).show();
-          return false;
-      }
-      else
-      {
-          return true;
-      }
+        } else if (TextUtils.isEmpty(lastName)) {
+            edtStuLastName.setError(getResources().getString(R.string.errorLastName));
+            edtStuLastName.requestFocus();
+            return false;
+        } else if (!gender) {
 
-
-
+            Toast.makeText(getActivity(), "select gender", Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            return true;
+        }
 
 
     }
 
 
-    public String getAcademicYear()
-    {
+    public String getAcademicYear() {
 
         DateFormat df = new SimpleDateFormat("yy"); // Just the year, with 2 digits
-         df.format(Calendar.getInstance().getTime());
+        df.format(Calendar.getInstance().getTime());
         Calendar cal = Calendar.getInstance();
-        int month =cal.get(Calendar.MONTH)+1;
-        String academic="";
-        if(month<6)
-        {
-           int year=Integer.parseInt( df.format(Calendar.getInstance().getTime()));
-            academic=(year-1)+""+year;
+        int month = cal.get(Calendar.MONTH) + 1;
+        String academic = "";
+        if (month < 6) {
+            int year = Integer.parseInt(df.format(Calendar.getInstance().getTime()));
+            academic = (year - 1) + "" + year;
             //Previous + current
-        }else {
+        } else {
             //current+ next
-            int year=Integer.parseInt( df.format(Calendar.getInstance().getTime()));
-             academic=year+""+(year+1);
+            int year = Integer.parseInt(df.format(Calendar.getInstance().getTime()));
+            academic = year + "" + (year + 1);
         }
         return academic;
-
-
-
-
 
 
     }

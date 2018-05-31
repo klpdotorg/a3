@@ -32,19 +32,19 @@ android {
     productFlavors {
         dev {
             applicationId 'com.akshara.assessment.a3.dev'
-            resValue "string", "app_name", "GKA Assessment App"
+            resValue "string", "app_name", "Akshara Assessment-Dev"
             buildConfigField 'String', 'HOST', '"https://dev.ilp.org.in"'
             //    buildConfigField 'String', 'HOST', '"http://next.ilp.org.in"'
         }
         production {
             applicationId 'com.akshara.assessment.a3.production'
-            resValue "string", "app_name", "GKA Assessment App"
+            resValue "string", "app_name", "Akshara Assessment"
             buildConfigField 'String', 'HOST', '"https://staging.ilp.org.in"'
 
         }
         local {
             applicationId 'com.akshara.assessment.a3.local'
-            resValue "string", "app_name", "GKA Assessment App"
+            resValue "string", "app_name", "Akshara Assessment"
             buildConfigField 'String', 'HOST', '"https://dev.ilp.org.in"'
         }
     }

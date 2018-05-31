@@ -21,6 +21,7 @@ import com.akshara.assessment.a3.QuestionSetPojos.QuestionSetPojos;
 import com.akshara.assessment.a3.QuestionSetPojos.Questiondatum;
 import com.akshara.assessment.a3.QuestionSetPojos.Questionset;
 import com.akshara.assessment.a3.R;
+import com.akshara.assessment.a3.SchoolDataPojo.Grade;
 import com.akshara.assessment.a3.SchoolDataPojo.SchoolDataPojo;
 import com.akshara.assessment.a3.StudentPojopack.Result;
 import com.akshara.assessment.a3.StudentPojopack.SchoolStudentPojo;
@@ -28,6 +29,7 @@ import com.akshara.assessment.a3.UserRolePack.UserRolesPojos;
 import com.akshara.assessment.a3.UtilsPackage.SchoolStateInterface;
 import com.akshara.assessment.a3.UtilsPackage.SessionManager;
 import com.akshara.assessment.a3.db.Boundary;
+import com.akshara.assessment.a3.db.InstititeGradeIdTable;
 import com.akshara.assessment.a3.db.KontactDatabase;
 import com.akshara.assessment.a3.db.QuestionDataTable;
 import com.akshara.assessment.a3.db.QuestionSetDetailTable;
@@ -441,12 +443,23 @@ public class A3NetWorkCalls {
 
         for (int i = 0; i < response.body().getFeatures().size(); i++) {
 
-
+           // Log.d("shri",i+"");
             School schol = new School();
             schol.setId(response.body().getFeatures().get(i).getProperties().getId());
             schol.setName(response.body().getFeatures().get(i).getProperties().getName());
             schol.setBoundaryId(response.body().getFeatures().get(i).getProperties().getBoundary().getId());
             schol.setDise(response.body().getFeatures().get(i).getProperties().getDiseCode() + "");
+
+           // Log.d("shri",response.body().getFeatures().get(i).getProperties().getGrades().size()+"===="+clusterId);
+            for(Grade grade: response.body().getFeatures().get(i).getProperties().getGrades())
+            {
+                InstititeGradeIdTable gradeIdTable=new InstititeGradeIdTable();
+                gradeIdTable.setId(grade.getGrpid());
+                gradeIdTable.setSchoolId(response.body().getFeatures().get(i).getProperties().getId());
+                gradeIdTable.setGradeName(grade.getGrpname());
+                db.insertNew(gradeIdTable);
+
+            }
 
 
             try {

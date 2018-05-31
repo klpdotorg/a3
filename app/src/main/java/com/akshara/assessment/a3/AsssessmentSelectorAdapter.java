@@ -48,16 +48,16 @@ public class AsssessmentSelectorAdapter extends RecyclerView.Adapter{
     public int getItemViewType(int position) {
         if(questionSetTables!=null&&questionSetTables.size()>0)
         {
-            Log.d("shri","DATA");
+
         return DATA;
         }
-        Log.d("shri","EMPTY");
+
         return EMPTY;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Log.d("Shri","ONCREATE");
+
         switch (viewType) {
             case DATA:
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.assessment_adapter_lay, parent, false);

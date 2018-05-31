@@ -37,6 +37,12 @@ private Integer category;
 @SerializedName("dise")
 @Expose
 private Integer dise;
+
+    @SerializedName("grades")
+    @Expose
+    private List<Grade> grades = null;
+
+
 @SerializedName("dise_code")
 @Expose
 private Long diseCode;
@@ -285,6 +291,20 @@ return lastVerifiedYear;
 public void setLastVerifiedYear(Object lastVerifiedYear) {
 this.lastVerifiedYear = lastVerifiedYear;
 }
+
+    public List<Grade> getGrades() {
+        return grades;
+    }
+
+    public void setGrades(List<Grade> grades) {
+        this.grades = grades;
+    }
+
+
+
+
+
+
 
 public List<String> getInstitutionLanguages() {
 return institutionLanguages;
