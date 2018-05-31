@@ -110,7 +110,7 @@
                 android:src="@drawable/boy" />
 
             <RadioButton
-                android:id="@+id/radio_pirates"
+                android:id="@+id/male"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="50dp"
@@ -123,7 +123,7 @@
                 android:src="@drawable/girl" />
 
             <RadioButton
-                android:id="@+id/radio_ninjas"
+                android:id="@+id/female"
                 android:layout_width="wrap_content"
 
                 android:layout_height="wrap_content"

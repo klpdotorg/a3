@@ -6,13 +6,17 @@ import com.akshara.assessment.a3.ClusterPojos.ClusterDetailPojo;
 import com.akshara.assessment.a3.DistrictPojos.DistrictPojos;
 import com.akshara.assessment.a3.Pojo.ForgotPassswordOtpPojo;
 import com.akshara.assessment.a3.Pojo.QuestionSetPojo;
+import com.akshara.assessment.a3.Pojo.RegisterStudentPojo;
 import com.akshara.assessment.a3.Pojo.RegstrationResponsePojo;
 import com.akshara.assessment.a3.Pojo.ResetPasswordPojo;
 import com.akshara.assessment.a3.QuestionSetPojos.QuestionSetPojos;
 import com.akshara.assessment.a3.SchoolDataPojo.SchoolDataPojo;
 import com.akshara.assessment.a3.StudentPojopack.SchoolStudentPojo;
 import com.akshara.assessment.a3.UserRolePack.UserRolesPojos;
+import com.akshara.assessment.a3.regstdrespPojo.RegisterStdPojoResp;
 
+
+import java.util.ArrayList;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -23,6 +27,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Url;
 
 public interface ApiInterface {
@@ -98,8 +103,15 @@ public interface ApiInterface {
     @GET
     Call<SchoolStudentPojo> getStudentAtClusterLevel(@Url String url);
 
-  @POST
+    @POST
     Call<QuestionSetPojos> getQuestionset(@Url String url, @Body QuestionSetPojo questionset);
+
+    @POST("/api/v1/studentgroups/{id}/students/")
+    Call<RegisterStdPojoResp> registerStudent(@Path("id") long id,
+                                              @Header("Authorization") String authHeader,
+                                              @Body ArrayList<RegisterStudentPojo> pojo);
+
+
 
 
 }

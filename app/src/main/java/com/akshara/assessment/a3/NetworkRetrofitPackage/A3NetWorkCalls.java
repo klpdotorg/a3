@@ -15,6 +15,7 @@ import com.akshara.assessment.a3.ErrorPojoPackage.InvalidOTp;
 import com.akshara.assessment.a3.Pojo.ForgotPassswordOtpPojo;
 
 import com.akshara.assessment.a3.Pojo.QuestionSetPojo;
+import com.akshara.assessment.a3.Pojo.RegisterStudentPojo;
 import com.akshara.assessment.a3.Pojo.ResetPasswordPojo;
 import com.akshara.assessment.a3.QuestionSetPojos.Question;
 import com.akshara.assessment.a3.QuestionSetPojos.QuestionSetPojos;
@@ -39,6 +40,7 @@ import com.akshara.assessment.a3.db.Respondent;
 import com.akshara.assessment.a3.db.School;
 import com.akshara.assessment.a3.db.State;
 import com.akshara.assessment.a3.db.StudentTable;
+import com.akshara.assessment.a3.regstdrespPojo.RegisterStdPojoResp;
 import com.google.gson.Gson;
 import com.yahoo.squidb.data.SquidCursor;
 import com.yahoo.squidb.sql.Query;
@@ -47,6 +49,7 @@ import com.yahoo.squidb.sql.Update;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 import okhttp3.ResponseBody;
@@ -399,8 +402,8 @@ public class A3NetWorkCalls {
 
                 if (response.isSuccessful()) {
 
-                    if(response.body().getCount()>0) {
-                         try {
+                    if (response.body().getCount() > 0) {
+                        try {
                             double totalRecordsCount = response.body().getCount();
                             double resposeSingle = response.body().getFeatures().size();
                             double temp = Double.parseDouble((resposeSingle / totalRecordsCount) + "");
@@ -415,7 +418,7 @@ public class A3NetWorkCalls {
 
 
                         parseSchoolData(response, clusterId, distId, stateInterface, token, blockId);
-                    }else {
+                    } else {
                         stateInterface.failed(context.getResources().getString(R.string.schoolsnotfoundforcluster));
 
                     }
@@ -443,17 +446,16 @@ public class A3NetWorkCalls {
 
         for (int i = 0; i < response.body().getFeatures().size(); i++) {
 
-           // Log.d("shri",i+"");
+            // Log.d("shri",i+"");
             School schol = new School();
             schol.setId(response.body().getFeatures().get(i).getProperties().getId());
             schol.setName(response.body().getFeatures().get(i).getProperties().getName());
             schol.setBoundaryId(response.body().getFeatures().get(i).getProperties().getBoundary().getId());
             schol.setDise(response.body().getFeatures().get(i).getProperties().getDiseCode() + "");
 
-           // Log.d("shri",response.body().getFeatures().get(i).getProperties().getGrades().size()+"===="+clusterId);
-            for(Grade grade: response.body().getFeatures().get(i).getProperties().getGrades())
-            {
-                InstititeGradeIdTable gradeIdTable=new InstititeGradeIdTable();
+            // Log.d("shri",response.body().getFeatures().get(i).getProperties().getGrades().size()+"===="+clusterId);
+            for (Grade grade : response.body().getFeatures().get(i).getProperties().getGrades()) {
+                InstititeGradeIdTable gradeIdTable = new InstititeGradeIdTable();
                 gradeIdTable.setId(grade.getGrpid());
                 gradeIdTable.setSchoolId(response.body().getFeatures().get(i).getProperties().getId());
                 gradeIdTable.setGradeName(grade.getGrpname());
@@ -523,6 +525,7 @@ public class A3NetWorkCalls {
         for (int i = 0; i < response.getResults().size(); i++) {
             String garde = response.getResults().get(i).getClasses().get(0).getName();
             int gradeInt = Integer.parseInt(garde);
+
             if (gradeInt > 0 && gradeInt <= 5) {
                 Result result = response.getResults().get(i);
                 StudentTable table = new StudentTable();
@@ -534,7 +537,7 @@ public class A3NetWorkCalls {
                 table.setStatus(result.getStatus());
                 table.setMt(result.getMt());
                 table.setStudentGrade(gradeInt);
-
+                table.setUid(result.getUid());
                 table.setInstitution(result.getInstitution());
                 table.setMiddleName(result.getMiddleName());
                 db.insertNew(table);
@@ -578,7 +581,7 @@ public class A3NetWorkCalls {
             public void onResponse(Call<BlockDetailPojo> call, Response<BlockDetailPojo> response) {
 
                 if (response.isSuccessful()) {
-                    if(response.body().getCount()>0) {
+                    if (response.body().getCount() > 0) {
                         try {
                             double totalRecordsCount = response.body().getCount();
                             double resposeSingle = response.body().getResults().size();
@@ -594,8 +597,7 @@ public class A3NetWorkCalls {
                             //execption
                         }
                         parseBlockDataToDb(response, stateInterface, statekey, isDataAlreadyDownloaded, token);
-                    }
-                    else {
+                    } else {
                         stateInterface.failed(context.getResources().getString(R.string.registeredblocksnotfound));
 
                     }
@@ -829,13 +831,13 @@ public class A3NetWorkCalls {
             @Override
             public void onResponse(Call<QuestionSetPojos> call, Response<QuestionSetPojos> response) {
 
-                if (response.isSuccessful() && response.code() == 200&&response.body().getStatus().equalsIgnoreCase("success")) {
-                   parseQuestionSet(response.body());
-                   currentStateInterface.setSuccess("Successfully question set downloaded");
+                if (response.isSuccessful() && response.code() == 200 && response.body().getStatus().equalsIgnoreCase("success")) {
+                    parseQuestionSet(response.body());
+                    currentStateInterface.setSuccess("Successfully question set downloaded");
                 } else {
-                    if(response.body().getDescription()!=null&&!response.body().getDescription().equalsIgnoreCase("")) {
+                    if (response.body().getDescription() != null && !response.body().getDescription().equalsIgnoreCase("")) {
                         currentStateInterface.setFailed(response.body().getDescription());
-                    }else {
+                    } else {
                         currentStateInterface.setFailed("Failure in server response format");
                     }
                 }
@@ -844,6 +846,39 @@ public class A3NetWorkCalls {
             @Override
             public void onFailure(Call<QuestionSetPojos> call, Throwable t) {
                 currentStateInterface.setFailed(getFailureMessage(t));
+            }
+        });
+
+
+    }
+
+
+    public void registerStudentservice(long groupId, String authorization, ArrayList<RegisterStudentPojo> pojo, final CurrentStateInterface currentStateInterface) {
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<RegisterStdPojoResp> api = apiInterface.registerStudent(groupId, authorization, pojo);
+        api.enqueue(new Callback<RegisterStdPojoResp>() {
+            @Override
+            public void onResponse(Call<RegisterStdPojoResp> call, Response<RegisterStdPojoResp> response) {
+
+                if (response.isSuccessful()) {
+                    currentStateInterface.setSuccess("Student registration successfull");
+                  } else {
+                    try {
+                         currentStateInterface.setFailed( response.errorBody().string());
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        currentStateInterface.setFailed("Student registration Failed");
+
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<RegisterStdPojoResp> call, Throwable t) {
+                currentStateInterface.setFailed(getFailureMessage(t));
+                Toast.makeText(context, "Failure", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -866,18 +901,16 @@ public class A3NetWorkCalls {
                     .where(QuestionSetTable.ID_QUESTIONSET.eq(questionSetTable.getIdQuestionset()));
             int val = db.update(questionsetUpdate);
             Log.d("shri", "Updated:" + val);
-            if(val>0)
-            {
+            if (val > 0) {
                 //delete Question & data
-            int questionint=    db.deleteWhere(QuestionTable.class,QuestionTable.ID_QUESTIONSET.eq(questionSetTable.getIdQuestionset()));
+                int questionint = db.deleteWhere(QuestionTable.class, QuestionTable.ID_QUESTIONSET.eq(questionSetTable.getIdQuestionset()));
                 Log.d("shri", "deleted:" + questionint);
-             int quesDataInt=   db.deleteWhere(QuestionDataTable.class,QuestionDataTable.ID_QUESTIONSET.eq(questionSetTable.getIdQuestionset()));
+                int quesDataInt = db.deleteWhere(QuestionDataTable.class, QuestionDataTable.ID_QUESTIONSET.eq(questionSetTable.getIdQuestionset()));
                 Log.d("shri", "deleted:" + quesDataInt);
 
-                int quesSetDetailInt=   db.deleteWhere(QuestionSetDetailTable.class,QuestionSetDetailTable.ID_QUESTIONSET.eq(questionSetTable.getIdQuestionset()));
+                int quesSetDetailInt = db.deleteWhere(QuestionSetDetailTable.class, QuestionSetDetailTable.ID_QUESTIONSET.eq(questionSetTable.getIdQuestionset()));
                 Log.d("shri", "deleted QuestionsetDetail:" + quesSetDetailInt);
             }
-
 
 
         } else {
@@ -894,7 +927,7 @@ public class A3NetWorkCalls {
             //LOAD QUESTION SET
             for (int i = 0; i < questionSetDataObj.getQuestionsets().size(); i++) {
 
-                 QuestionSetTable questionSetTable = new QuestionSetTable();
+                QuestionSetTable questionSetTable = new QuestionSetTable();
                 Questionset questionset = questionSetDataObj.getQuestionsets().get(i);
                 questionSetTable.setIdQuestionset(Integer.parseInt(questionset.getIdQuestionset()));
                 questionSetTable.setQsetTitle(questionset.getTitle());
@@ -929,7 +962,7 @@ public class A3NetWorkCalls {
 
                     boolean b = db.persist(questionTable);
 
-                    QuestionSetDetailTable questionSetDetailTable=new QuestionSetDetailTable();
+                    QuestionSetDetailTable questionSetDetailTable = new QuestionSetDetailTable();
                     questionSetDetailTable.setIdQuestionset(Integer.parseInt(questionset.getIdQuestionset()));
                     questionSetDetailTable.setIdQuestion(question.getIdQuestion());
 
