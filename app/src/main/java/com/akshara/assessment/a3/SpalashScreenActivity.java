@@ -50,7 +50,7 @@ public class SpalashScreenActivity extends BaseActivity {
         btnInternt= findViewById(R.id.btnInternt);
         btnInternt.setVisibility(View.GONE);
 Log.d("shri", this.getLocalClassName());
-        dailog = (ProgressBar)findViewById(R.id.progressBar);
+        dailog = findViewById(R.id.progressBar);
         //dailog = ProgressUtil.showProgress(SpalashScreenActivity.this, getResources().getString(R.string.authenticating));
     //   dailog=new ProgressDialog(SpalashScreenActivity.this);
     //dailog.setProgressStyle();

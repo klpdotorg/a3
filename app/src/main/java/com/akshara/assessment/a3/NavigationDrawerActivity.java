@@ -66,21 +66,21 @@ DBHelper dbHelper;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation_drawer);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
        getSupportActionBar().setTitle("Select School");
         sessionManager = new SessionManager(getApplicationContext());
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View headerView = navigationView.getHeaderView(0);
-        navHeader = (TextView) headerView.findViewById(R.id.navHeader);
-        navMobile = (TextView) headerView.findViewById(R.id.navMobile);
+        navHeader = headerView.findViewById(R.id.navHeader);
+        navMobile = headerView.findViewById(R.id.navMobile);
 
 
         db = ((A3Application) getApplicationContext()).getDb();
@@ -92,7 +92,7 @@ DBHelper dbHelper;
 
 
         //
-        sp_district = (Spinner) findViewById(R.id.select_district);
+        sp_district = findViewById(R.id.select_district);
         sp_block = findViewById(R.id.select_block);
         sp_cluster = findViewById(R.id.select_cluster);
 
@@ -126,7 +126,7 @@ DBHelper dbHelper;
     @Override
     public void onBackPressed() {
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
@@ -213,7 +213,7 @@ DBHelper dbHelper;
             alertDailog.show();
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -338,7 +338,7 @@ DBHelper dbHelper;
 // create alert dialog
         final AlertDialog alertDialog = alertDialogBuilder.create();
 
-        final Spinner mSpinner= (Spinner) promptsView
+        final Spinner mSpinner= promptsView
 
                 .findViewById(R.id.spn_grade);
 

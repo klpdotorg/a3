@@ -28,11 +28,11 @@ public class DownloadQuestionSetActivity extends AppCompatActivity {
         setContentView(R.layout.activity_download_question_set);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Download Question set");
-        btnDownloadQuestion = (Button) findViewById(R.id.btnDownloadQuestion);
-        spn_language = (Spinner) findViewById(R.id.spn_language);
-        spn_subject = (Spinner) findViewById(R.id.spn_subject);
-        spn_selectGrade = (Spinner) findViewById(R.id.spn_selectGrade);
-        spn_selectAssessment = (Spinner) findViewById(R.id.spn_selectAssessment);
+        btnDownloadQuestion = findViewById(R.id.btnDownloadQuestion);
+        spn_language = findViewById(R.id.spn_language);
+        spn_subject = findViewById(R.id.spn_subject);
+        spn_selectGrade = findViewById(R.id.spn_selectGrade);
+        spn_selectAssessment = findViewById(R.id.spn_selectAssessment);
 
 
         btnDownloadQuestion.setOnClickListener(new View.OnClickListener() {

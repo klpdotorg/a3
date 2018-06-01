@@ -35,7 +35,7 @@ private String mt;
 private String status;
 @SerializedName("institution")
 @Expose
-private Integer institution;
+private long institution;
 @SerializedName("classes")
 @Expose
 private List<Class> classes = null;
@@ -118,7 +118,7 @@ public void setStatus(String status) {
 this.status = status;
 }
 
-public Integer getInstitution() {
+public long getInstitution() {
 return institution;
 }
 

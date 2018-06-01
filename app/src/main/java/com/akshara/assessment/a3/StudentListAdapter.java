@@ -3,6 +3,7 @@ package com.akshara.assessment.a3;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,7 @@ class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.Student
     public void onBindViewHolder(StudentViewHolder holder, final int position) {
 
        holder.txtStudent.setText(students.get(position).name+" "+students.get(position).lastName);
-
+        Log.d("shri",students.get(position).stsid+":"+students.get(position).name);
        holder.txtStudentID.setText("STS ID: "
                +(students.get(position).uid!=null &&
                !students.get(position).equals("")?students.get(position).uid:"NA"));

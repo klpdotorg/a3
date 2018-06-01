@@ -1,14 +1,18 @@
 package com.akshara.assessment.a3;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -20,14 +24,9 @@ import java.util.List;
 public class StudentListMainActivity extends AppCompatActivity {
 
 
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
-    String title;
-    private int[] tabIcons = {
-            R.drawable.students,
-            R.drawable.add_student
 
-    };
+    String title;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,28 +36,14 @@ public class StudentListMainActivity extends AppCompatActivity {
         title=getIntent().getStringExtra("A3APP_GRADESTRING");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(title);
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
+        setupNavigationView();
 
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
-        setupTabIcons();
-    }
-
-    private void setupTabIcons() {
-       tabLayout.getTabAt(0).setIcon(null);
-    tabLayout.getTabAt(1).setIcon(null);
 
 
     }
 
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new StudentListFragment(), "STUDENTS");
-        adapter.addFrag(new RegisterStudentActivity(), "ADD STUDENT");
 
-        viewPager.setAdapter(adapter);
-    }
+
 
     @Override
     public void onBackPressed() {
@@ -77,33 +62,54 @@ public class StudentListMainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    private void setupNavigationView() {
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        if (bottomNavigationView != null) {
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
-
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        public void addFrag(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
+            // Select first menu item by default and show Fragment accordingly.
+            Menu menu = bottomNavigationView.getMenu();
+            selectFragment(menu.getItem(0));
+            bottomNavigationView.setItemIconTintList(null);
+            // Set action to perform when any menu-item is selected.
+            bottomNavigationView.setOnNavigationItemSelectedListener(
+                    new BottomNavigationView.OnNavigationItemSelectedListener() {
+                        @Override
+                        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                            selectFragment(item);
+                            return false;
+                        }
+                    });
         }
     }
+
+    protected void selectFragment(MenuItem item) {
+
+        item.setChecked(true);
+
+        switch (item.getItemId()) {
+            case R.id.action_studentList:
+                // Action to perform when Home Menu item is selected.
+                pushFragment(new StudentListFragment());
+                break;
+            case R.id.action_register:
+                // Action to perform when Bag Menu item is selected.
+                pushFragment(new RegisterStudentActivity());
+                break;
+
+        }
+    }
+    protected void pushFragment(Fragment fragment) {
+        if (fragment == null)
+            return;
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragmentManager != null) {
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            if (ft != null) {
+                ft.replace(R.id.rootLayout, fragment);
+                ft.commit();
+            }
+        }
+    }
+
 }

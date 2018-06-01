@@ -19,6 +19,7 @@ import com.akshara.assessment.a3.NetworkRetrofitPackage.A3NetWorkCalls;
 import com.akshara.assessment.a3.NetworkRetrofitPackage.CurrentStateInterface;
 import com.akshara.assessment.a3.Pojo.RegisterStudentPojo;
 import com.akshara.assessment.a3.UtilsPackage.DailogUtill;
+import com.akshara.assessment.a3.UtilsPackage.SessionManager;
 import com.akshara.assessment.a3.db.InstititeGradeIdTable;
 import com.akshara.assessment.a3.db.KontactDatabase;
 import com.akshara.assessment.a3.db.StudentTable;
@@ -46,7 +47,7 @@ public class RegisterStudentActivity extends android.support.v4.app.Fragment {
     ProgressDialog progressDialog;
     static String gradeString = "";
     SquidCursor<InstititeGradeIdTable> gradeIdCursor;
-
+    SessionManager sessionManager;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -58,6 +59,7 @@ public class RegisterStudentActivity extends android.support.v4.app.Fragment {
         edtStsId = view.findViewById(R.id.edtStsId);
         edtFirstName = view.findViewById(R.id.edtFirstName);
         edtStuLastName = view.findViewById(R.id.edtStuLastName);
+        sessionManager=new SessionManager(getActivity().getApplicationContext());
         btnRegisterstudent = view.findViewById(R.id.btnRegisterstudent);
         database = new KontactDatabase(activity);
         institution = activity.getIntent().getLongExtra("A3APP_INSTITUTIONID", 0);
@@ -82,7 +84,7 @@ public class RegisterStudentActivity extends android.support.v4.app.Fragment {
 
                     String firstName = edtFirstName.getText().toString().trim();
                     String lastName = edtStuLastName.getText().toString().trim();
-                    final RadioButton rb = (RadioButton) getActivity().findViewById(studentGender.getCheckedRadioButtonId());
+                    final RadioButton rb = getActivity().findViewById(studentGender.getCheckedRadioButtonId());
                     String gender = rb.getText().toString().trim().toLowerCase();
                     String stsId = edtStsId.getText().toString().trim();
                     RegisterStudentPojo studentPojo =
@@ -100,7 +102,7 @@ public class RegisterStudentActivity extends android.support.v4.app.Fragment {
                     ArrayList<RegisterStudentPojo> list = new ArrayList<>();
                     list.add(studentPojo);
                     initPorgresssDialogForSchool();
-                    new A3NetWorkCalls(activity).registerStudentservice(groupId, "Token f68deebe2fa4f85ec53ea012197dd66cc2b785cb", list, new CurrentStateInterface() {
+                    new A3NetWorkCalls(activity).registerStudentservice(groupId, sessionManager.getToken(), list, new CurrentStateInterface() {
                         @Override
                         public void setSuccess(String message) {
                             finishProgress();
@@ -148,7 +150,7 @@ public class RegisterStudentActivity extends android.support.v4.app.Fragment {
         String firstName = edtFirstName.getText().toString().trim();
         String lastName = edtStuLastName.getText().toString().trim();
         String studentId = edtStsId.getText().toString().trim();
-        boolean gender = studentGender.getCheckedRadioButtonId() == -1 ? false : true;
+        boolean gender = studentGender.getCheckedRadioButtonId() != -1;
         if (TextUtils.isEmpty(studentId)) {
             edtStsId.setError(getResources().getString(R.string.errorStudentId));
             edtStsId.requestFocus();

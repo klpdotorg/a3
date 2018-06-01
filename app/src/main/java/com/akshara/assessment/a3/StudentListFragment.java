@@ -45,15 +45,20 @@ public class StudentListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.studentslist, container, false);
-        student_list_recycler = (RecyclerView) view.findViewById(R.id.student_list_recycler);
+        student_list_recycler = view.findViewById(R.id.student_list_recycler);
         activity = (StudentListMainActivity) getActivity();
         studentTableList = new ArrayList<>();
-        edtStudentSearch = (EditText) view.findViewById(R.id.edtStudentSearch);
+        edtStudentSearch = view.findViewById(R.id.edtStudentSearch);
         studentsTemp = new ArrayList<>();
         institution = activity.getIntent().getLongExtra("A3APP_INSTITUTIONID", 0);
         gradeString = activity.getIntent().getStringExtra("A3APP_GRADESTRING");
         grade = activity.getIntent().getIntExtra("A3APP_GRADEID", 0);
-        Toast.makeText(activity,"Institution:"+institution+"\nGrade:"+grade,Toast.LENGTH_SHORT).show();
+        if(institution==0||grade==0)
+        {
+            Toast.makeText(activity,"Institution:"+institution+"\nGrade:"+grade,Toast.LENGTH_SHORT).show();
+
+            activity.finish();
+        }
         students = new ArrayList<StudentPojo>();
         database = new KontactDatabase(activity);
         Query listStudent = Query.select().from(StudentTable.TABLE)

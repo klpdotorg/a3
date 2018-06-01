@@ -70,7 +70,7 @@ public class BoundaryLoaderActivity extends BaseActivity implements OnItemSelect
         select_cluster = findViewById(R.id.select_cluster);
         select_school = findViewById(R.id.select_school);
         linLayState = findViewById(R.id.linLayState);
-        btnNext = (Button) findViewById(R.id.btnNext);
+        btnNext = findViewById(R.id.btnNext);
         getSupportActionBar().setTitle("Download Students");
         select_district = findViewById(R.id.select_district);
         Query listStateQuery = Query.select().from(State.TABLE).orderBy(State.STATE.asc());
@@ -792,7 +792,7 @@ int schoolId=Integer.parseInt(((StringWithTags) select_school.getSelectedItem())
 
     public void checkCluster()
     {
-        if (select_block.getSelectedItemPosition()!=0&&(StringWithTags)select_block.getSelectedItem() != null) {
+        if (select_block.getSelectedItemPosition()!=0&& select_block.getSelectedItem() != null) {
             fill_dropdown(1, R.id.select_cluster, Integer.parseInt(((StringWithTags)select_block.getSelectedItem()).id.toString()), ((StatePojo) select_state.getSelectedItem()).getStateKey());
 
         } else {

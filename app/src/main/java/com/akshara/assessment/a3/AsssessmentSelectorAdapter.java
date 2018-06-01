@@ -165,8 +165,8 @@ public class AsssessmentSelectorAdapter extends RecyclerView.Adapter{
         TextView tv_message;
         public AssessmentViewHolderEmpty(View itemView) {
             super(itemView);
-            tv_message=(TextView)itemView.findViewById(R.id.tv_message);
-            btnOKGo=(Button) itemView.findViewById(R.id.btnOKGo);
+            tv_message= itemView.findViewById(R.id.tv_message);
+            btnOKGo= itemView.findViewById(R.id.btnOKGo);
 
 
         }

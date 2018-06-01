@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_studentList"
+        android:icon="@drawable/classroom"
+        android:title="STUDENT LIST"/>
+
+    <item
+        android:id="@+id/action_register"
+        android:icon="@drawable/study"
+        android:title="ADD STUDENT"/>
+
+
+
+</menu>

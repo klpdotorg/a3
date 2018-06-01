@@ -128,13 +128,7 @@ public class UserRegistrationActivity extends BaseActivity  implements MultiSele
                 UserRegistrationActivity.this, R.layout.regspinner, userTypeNames) {
             @Override
             public boolean isEnabled(int position) {
-                if (position == 0) {
-                    // Disable the first item from Spinner
-                    // First item will be use for hint
-                    return false;
-                } else {
-                    return true;
-                }
+                return position != 0;
             }
 
             @Override
@@ -156,13 +150,7 @@ public class UserRegistrationActivity extends BaseActivity  implements MultiSele
                 UserRegistrationActivity.this, R.layout.programview, getResources().getStringArray(R.array.program)) {
             @Override
             public boolean isEnabled(int position) {
-                if (position == 0) {
-                    // Disable the first item from Spinner
-                    // First item will be use for hint
-                    return false;
-                } else {
-                    return true;
-                }
+                return position != 0;
             }
 
             @Override

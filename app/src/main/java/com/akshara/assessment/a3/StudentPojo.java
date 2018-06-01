@@ -4,8 +4,8 @@ public class StudentPojo {
 
     String name;
     String gender,lastName;
-long stsid;
-String uid;
+    long stsid;
+    String uid;
     public StudentPojo(String name, String gender,String lastName,long stsid,String uid) {
         this.name=name;
         this.gender=gender;

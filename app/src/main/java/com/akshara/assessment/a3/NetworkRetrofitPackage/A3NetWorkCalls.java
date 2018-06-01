@@ -96,6 +96,9 @@ public class A3NetWorkCalls {
                 } else if (response.code() == 400) {
                     //email or password invalid
                     currentStateInterface.setFailed(A3Errors.loginErrorHandle(response.errorBody()).getNonFieldErrors().get(0));
+                } else if (response.code() == 500) {
+                    //email or password invalid
+                    currentStateInterface.setFailed(funInternalServerError());
                 } else {
                     //email or password invalid
                     currentStateInterface.setFailed(context.getResources().getString(R.string.oops));
@@ -134,6 +137,9 @@ public class A3NetWorkCalls {
                             stateInterface.setFailed(context.getResources().getString(R.string.oops));
                         }
 
+                    } else if (response.code() == 500) {
+                        //email or password invalid
+                        stateInterface.setFailed(funInternalServerError());
                     } else {
                         stateInterface.setFailed(context.getResources().getString(R.string.oops));
                     }
@@ -169,6 +175,9 @@ public class A3NetWorkCalls {
                         stateInterface.setFailed(context.getResources().getString(R.string.oops));
                     }
 
+                } else if (response.code() == 500) {
+                    //email or password invalid
+                    stateInterface.setFailed(funInternalServerError());
                 } else {
                     stateInterface.setFailed(context.getResources().getString(R.string.oops));
                 }
@@ -205,6 +214,9 @@ public class A3NetWorkCalls {
                     stateInterface.setFailed(message);
 
 
+                } else if (response.code() == 500) {
+                    //email or password invalid
+                    stateInterface.setFailed(funInternalServerError());
                 } else {
                     stateInterface.setFailed(context.getResources().getString(R.string.oops) + "");
                 }
@@ -237,6 +249,9 @@ public class A3NetWorkCalls {
                     stateInterface.setSuccess("success");
 
 
+                } else if (response.code() == 500) {
+                    //email or password invalid
+                    stateInterface.setFailed(funInternalServerError());
                 } else {
 
                     stateInterface.setFailed(context.getResources().getString(R.string.stateLoadingFailed));
@@ -313,6 +328,9 @@ public class A3NetWorkCalls {
                 if (response.isSuccessful()) {
                     AddDataToDistrcit(response, stateKey, stateInterface);
 
+                } else if (response.code() == 500) {
+                    //email or password invalid
+                    stateInterface.setFailed(funInternalServerError());
                 } else {
                     stateInterface.setFailed(context.getResources().getString(R.string.districtDataLoadingFailed));
 
@@ -422,7 +440,11 @@ public class A3NetWorkCalls {
                         stateInterface.failed(context.getResources().getString(R.string.schoolsnotfoundforcluster));
 
                     }
-                } else {
+                } else if (response.code() == 500) {
+                    //email or password invalid
+                    stateInterface.failed(funInternalServerError());
+                }
+                else {
 
                     stateInterface.failed(context.getResources().getString(R.string.schoolloadingfailed));
 
@@ -507,7 +529,11 @@ public class A3NetWorkCalls {
                 if (response.isSuccessful()) {
                     parseStudent(response.body(), schoolId, stateInterface);
 
-                } else {
+                }else if (response.code() == 500) {
+                    //email or password invalid
+                    stateInterface.failed(funInternalServerError());
+                }
+                else {
                     stateInterface.failed("student downloading failed");
                 }
 
@@ -601,7 +627,12 @@ public class A3NetWorkCalls {
                         stateInterface.failed(context.getResources().getString(R.string.registeredblocksnotfound));
 
                     }
-                } else {
+                }
+                else if (response.code() == 500) {
+                    //email or password invalid
+                    stateInterface.failed(funInternalServerError());
+                }
+                else {
 
                     //Exception
                     stateInterface.failed(context.getResources().getString(R.string.blocksDataLoadingFailed));
@@ -691,7 +722,13 @@ public class A3NetWorkCalls {
 
 
                     parseClusterDataToDb(response, distId, stateInterface, stateKey, isDataAlreadyDownloaded, token);
-                } else {
+                }
+                else if (response.code() == 500) {
+                    //email or password invalid
+                    stateInterface.failed(funInternalServerError());
+                }
+
+                else {
 
                     stateInterface.failed(context.getResources().getString(R.string.clusterDataLoadingFailed));
                     //   Toast.makeText(getApplicationContext(), "Ex", Toast.LENGTH_SHORT).show();
@@ -789,7 +826,12 @@ public class A3NetWorkCalls {
                         stateInterface.setFailed(context.getResources().getString(R.string.profileUpdationFailed));
                     }
 
-                } else {
+                }
+                else if (response.code() == 500) {
+                    //email or password invalid
+                    stateInterface.setFailed(funInternalServerError());
+                }
+                else {
 
                     stateInterface.setFailed(context.getResources().getString(R.string.profileUpdationFailed));
 
@@ -834,7 +876,11 @@ public class A3NetWorkCalls {
                 if (response.isSuccessful() && response.code() == 200 && response.body().getStatus().equalsIgnoreCase("success")) {
                     parseQuestionSet(response.body());
                     currentStateInterface.setSuccess("Successfully question set downloaded");
-                } else {
+                }else if (response.code() == 500) {
+                    //email or password invalid
+                    currentStateInterface.setFailed(funInternalServerError());
+                }
+                else {
                     if (response.body().getDescription() != null && !response.body().getDescription().equalsIgnoreCase("")) {
                         currentStateInterface.setFailed(response.body().getDescription());
                     } else {
@@ -859,15 +905,24 @@ public class A3NetWorkCalls {
         api.enqueue(new Callback<RegisterStdPojoResp>() {
             @Override
             public void onResponse(Call<RegisterStdPojoResp> call, Response<RegisterStdPojoResp> response) {
-
+                //Toast.makeText(context, response.code() + "", Toast.LENGTH_SHORT).show();
                 if (response.isSuccessful()) {
-                    currentStateInterface.setSuccess("Student registration successfull");
-                  } else {
+                    if (response.body() != null && response.body().getCount() > 0) {
+                        storeregistredStudent(response.body());
+                        currentStateInterface.setSuccess("Student registration successfull");
+                    }
+                }
+                else if (response.code() == 500) {
+                    //email or password invalid
+                    currentStateInterface.setFailed(funInternalServerError());
+                }
+
+                else {
                     try {
-                         currentStateInterface.setFailed( response.errorBody().string());
+                        currentStateInterface.setFailed(response.errorBody().string());
 
                     } catch (IOException e) {
-                        e.printStackTrace();
+
                         currentStateInterface.setFailed("Student registration Failed");
 
                     }
@@ -878,11 +933,38 @@ public class A3NetWorkCalls {
             @Override
             public void onFailure(Call<RegisterStdPojoResp> call, Throwable t) {
                 currentStateInterface.setFailed(getFailureMessage(t));
-                Toast.makeText(context, "Failure", Toast.LENGTH_SHORT).show();
+
             }
         });
 
 
+    }
+
+    private void storeregistredStudent(RegisterStdPojoResp response) {
+
+
+        for (int i = 0; i < response.getResults().size(); i++) {
+            String garde = response.getResults().get(i).getClasses().get(0).getName();
+            int gradeInt = Integer.parseInt(garde);
+
+
+            com.akshara.assessment.a3.regstdrespPojo.Result result = response.getResults().get(i);
+            StudentTable table = new StudentTable();
+            table.setId(result.getId());
+            table.setFirstName(result.getFirstName());
+            table.setLastName(result.getLastName());
+            table.setDob(result.getDob());
+            table.setGender(result.getGender());
+            table.setStatus(result.getStatus());
+            table.setMt(result.getMt());
+            table.setStudentGrade(gradeInt);
+            table.setUid(result.getUid());
+            table.setInstitution(result.getInstitution());
+            table.setMiddleName(result.getMiddleName());
+            db.insertNew(table);
+
+
+        }
     }
 
 
@@ -925,76 +1007,85 @@ public class A3NetWorkCalls {
         if (questionSetDataObj.getStatus().equalsIgnoreCase("success")) {
 
             //LOAD QUESTION SET
-            for (int i = 0; i < questionSetDataObj.getQuestionsets().size(); i++) {
+            if (questionSetDataObj.getQuestionsets() != null) {
+                for (int i = 0; i < questionSetDataObj.getQuestionsets().size(); i++) {
 
-                QuestionSetTable questionSetTable = new QuestionSetTable();
-                Questionset questionset = questionSetDataObj.getQuestionsets().get(i);
-                questionSetTable.setIdQuestionset(Integer.parseInt(questionset.getIdQuestionset()));
-                questionSetTable.setQsetTitle(questionset.getTitle());
-                questionSetTable.setQsetName(questionset.getTitle());
-                questionSetTable.setLanguageName(questionset.getLanguage());
-                questionSetTable.setSubjectName(questionset.getSubject());
-                questionSetTable.setGradeName(questionset.getGrade());
-                questionSetTable.setAssesstypeName(questionset.getAssessmenttype());
+                    QuestionSetTable questionSetTable = new QuestionSetTable();
+                    Questionset questionset = questionSetDataObj.getQuestionsets().get(i);
+                    questionSetTable.setIdQuestionset(Integer.parseInt(questionset.getIdQuestionset()));
+                    questionSetTable.setQsetTitle(questionset.getTitle());
+                    questionSetTable.setQsetName(questionset.getTitle());
+                    questionSetTable.setLanguageName(questionset.getLanguage());
+                    questionSetTable.setSubjectName(questionset.getSubject());
+                    questionSetTable.setGradeName(questionset.getGrade());
+                    questionSetTable.setAssesstypeName(questionset.getAssessmenttype());
 
-                //INSERT QUESTION SET
-                insertQuestionSetIntoDB(questionSetTable);
+                    //INSERT QUESTION SET
+                    insertQuestionSetIntoDB(questionSetTable);
+                    if (questionset.getQuestions() != null) {
+                        //LOAD QUESTIONS
+                        for (int j = 0; j < questionset.getQuestions().size(); j++) {
+                            Question question = questionset.getQuestions().get(j);
+                            QuestionTable questionTable = new QuestionTable();
 
-                //LOAD QUESTIONS
-                for (int j = 0; j < questionset.getQuestions().size(); j++) {
-                    Question question = questionset.getQuestions().get(j);
-                    QuestionTable questionTable = new QuestionTable();
+                            questionTable.setIdQuestion(question.getIdQuestion());
+                            questionTable.setIdQuestionset(Integer.parseInt(questionset.getIdQuestionset()));
+                            questionTable.setQuestionTitle(question.getTitle());
+                            questionTable.setQuestionText(question.getText());
+                            // questionTable.setCorrectAnswer(question.getC());
+                            questionTable.setLanguageName(question.getLanguage());
+                            questionTable.setSubjectName(question.getSubject());
+                            questionTable.setGradeName(question.getGrade());
+                            questionTable.setLevelName(question.getLevel());
+                            questionTable.setQuestiontypeName(question.getQuestiontype());
+                            questionTable.setQuestiontempltypeName(question.getQuestiontempltype());
+                            questionTable.setAssesstypeName(question.getAssessmenttype());
+                            questionTable.setConceptName(question.getConcept());
+                            questionTable.setMconceptName(question.getMicroconcept());
 
-                    questionTable.setIdQuestion(question.getIdQuestion());
-                    questionTable.setIdQuestionset(Integer.parseInt(questionset.getIdQuestionset()));
-                    questionTable.setQuestionTitle(question.getTitle());
-                    questionTable.setQuestionText(question.getText());
-                    // questionTable.setCorrectAnswer(question.getC());
-                    questionTable.setLanguageName(question.getLanguage());
-                    questionTable.setSubjectName(question.getSubject());
-                    questionTable.setGradeName(question.getGrade());
-                    questionTable.setLevelName(question.getLevel());
-                    questionTable.setQuestiontypeName(question.getQuestiontype());
-                    questionTable.setQuestiontempltypeName(question.getQuestiontempltype());
-                    questionTable.setAssesstypeName(question.getAssessmenttype());
-                    questionTable.setConceptName(question.getConcept());
-                    questionTable.setMconceptName(question.getMicroconcept());
+                            boolean b = db.persist(questionTable);
 
-                    boolean b = db.persist(questionTable);
+                            QuestionSetDetailTable questionSetDetailTable = new QuestionSetDetailTable();
+                            questionSetDetailTable.setIdQuestionset(Integer.parseInt(questionset.getIdQuestionset()));
+                            questionSetDetailTable.setIdQuestion(question.getIdQuestion());
 
-                    QuestionSetDetailTable questionSetDetailTable = new QuestionSetDetailTable();
-                    questionSetDetailTable.setIdQuestionset(Integer.parseInt(questionset.getIdQuestionset()));
-                    questionSetDetailTable.setIdQuestion(question.getIdQuestion());
+                            db.persist(questionSetDetailTable);
+                            Log.d("shri", "Insert Question:" + b);
+                            //LOAD OPTIONS FOR THE QUESTION
+                            if (question.getQuestiondata() != null) {
+                                for (int k = 0; k < question.getQuestiondata().size(); k++) {
+                                    Questiondatum questionData = question.getQuestiondata().get(k);
+                                    QuestionDataTable questionDataTable = new QuestionDataTable();
+                                    questionDataTable.setIdQuestion(questionData.getIdQuestion());
+                                    questionDataTable.setIdQuestionset(Integer.parseInt(questionset.getIdQuestionset()));
 
-                    db.persist(questionSetDetailTable);
-                    Log.d("shri", "Insert Question:" + b);
-                    //LOAD OPTIONS FOR THE QUESTION
-                    for (int k = 0; k < question.getQuestiondata().size(); k++) {
-                        Questiondatum questionData = question.getQuestiondata().get(k);
-                        QuestionDataTable questionDataTable = new QuestionDataTable();
-                        questionDataTable.setIdQuestion(questionData.getIdQuestion());
-                        questionDataTable.setIdQuestionset(Integer.parseInt(questionset.getIdQuestionset()));
+                                    questionDataTable.setName(questionData.getName());
+                                    questionDataTable.setLabel(questionData.getLabel());
+                                    questionDataTable.setDatatype(questionData.getDatatype());
+                                    questionDataTable.setRole(questionData.getRole());
+                                    questionDataTable.setPosition(questionData.getPosition());
+                                    questionDataTable.setVal(questionData.getVal());
+                                    questionDataTable.setFilecontentBase64(questionData.getFilecontentBase64());
 
-                        questionDataTable.setName(questionData.getName());
-                        questionDataTable.setLabel(questionData.getLabel());
-                        questionDataTable.setDatatype(questionData.getDatatype());
-                        questionDataTable.setRole(questionData.getRole());
-                        questionDataTable.setPosition(questionData.getPosition());
-                        questionDataTable.setVal(questionData.getVal());
-                        questionDataTable.setFilecontentBase64(questionData.getFilecontentBase64());
+                                    boolean b1 = db.persist(questionDataTable);
+                                    Log.d("shri", "Insert Question data:" + b1);
 
-                        boolean b1 = db.persist(questionDataTable);
-                        Log.d("shri", "Insert Question data:" + b1);
+                                }
+                            }
 
+
+                        }
                     }
 
-
                 }
-
-
             }
 
 
         }
+    }
+
+
+    public String funInternalServerError() {
+        return "Internal Server Error. Please try later";
     }
 }

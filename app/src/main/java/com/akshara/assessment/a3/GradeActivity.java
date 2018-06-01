@@ -34,10 +34,10 @@ public class GradeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.temp2);
-        tvSchoolName=(TextView)findViewById(R.id.tvSchoolName);
+        tvSchoolName= findViewById(R.id.tvSchoolName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Select Grades");
-        RecyclerView list1 = (RecyclerView) findViewById(R.id.recyclerview);
+        RecyclerView list1 = findViewById(R.id.recyclerview);
         final LinearLayoutManager mLayoutManager;
         database = new KontactDatabase(this);
         listData=new ArrayList<>();
