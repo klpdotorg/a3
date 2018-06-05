@@ -18,7 +18,7 @@ import com.yahoo.squidb.sql.Query;
 
 import java.util.ArrayList;
 
-public class AssessmentSelectorActivity extends AppCompatActivity {
+public class AssessmentSelectorActivity extends BaseActivity {
 
 
     KontactDatabase database;

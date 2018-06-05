@@ -203,14 +203,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
                         else {
 
-                        // update Profile
-                         /*   Intent intent=new Intent(getApplicationContext(), UpdateProfileBeforeLoginActivity.class);
+                        //update Profile
+                          Intent intent=new Intent(getApplicationContext(), UpdateProfileBeforeLoginActivity.class);
                             intent.putExtra("firstName",userLoginInfo.getString("first_name"));
                             intent.putExtra("lastName",   userLoginInfo.getString("last_name"));
                             intent.putExtra("mobile", userLoginInfo.getString("mobile_no"));
                             intent.putExtra("email",userLoginInfo.getString("email"));
                             intent.putExtra("token", userLoginInfo.getString("token"));
-                            startActivity(intent);*/
+
+                            startActivity(intent);
+                            finish();
 
                         }
 

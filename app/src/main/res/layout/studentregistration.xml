@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="@color/background"
+    android:paddingTop="20dp"
     android:layout_height="match_parent">
 <ScrollView
     android:layout_width="match_parent"
@@ -10,8 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="5dp"
-   android:paddingLeft="20dp"
-        android:paddingRight="20dp"
+  android:layout_marginRight="20dp"
+
+        android:background="#FFFDE7"
+      android:layout_marginLeft="20dp"
         android:orientation="vertical">
 
         <TextView
@@ -21,6 +25,7 @@
             android:background="@drawable/rounded_rect_top"
             android:gravity="center"
             android:minHeight="35dp"
+            android:textColor="@color/btnTextColor"
             android:text="@string/registerStudent"
             android:textAllCaps="true"
             android:textSize="20sp" />
@@ -149,7 +154,7 @@
                 android:textSize="20sp"
                 android:id="@+id/btnRegisterstudent"
                 android:textStyle="bold"
-
+                android:textColor="@color/btnTextColor"
                 android:background="@drawable/btn_roundedrect"
                 android:text="@string/registerstudent" />
 

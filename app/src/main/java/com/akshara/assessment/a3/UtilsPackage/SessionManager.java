@@ -9,6 +9,7 @@ import com.akshara.assessment.a3.LoginActivity;
 import com.akshara.assessment.a3.R;
 import com.akshara.assessment.a3.SpalashScreenActivity;
 import com.akshara.assessment.a3.db.Boundary;
+import com.akshara.assessment.a3.db.InstititeGradeIdTable;
 import com.akshara.assessment.a3.db.KontactDatabase;
 import com.akshara.assessment.a3.db.QuestionDataTable;
 import com.akshara.assessment.a3.db.QuestionSetDetailTable;
@@ -302,8 +303,9 @@ public class SessionManager {
         db.deleteAll(QuestionTable.class);
         db.deleteAll(Respondent.class);
         db.deleteAll(State.class);
-        _context.getSharedPreferences("Navigationboundary", MODE_PRIVATE).edit().clear();
-        _context.getSharedPreferences("loader", MODE_PRIVATE).edit().clear();
+        db.deleteAll(InstititeGradeIdTable.class);
+        _context.getSharedPreferences("Navigationboundary", MODE_PRIVATE).edit().clear().commit();
+        _context.getSharedPreferences("loader", MODE_PRIVATE).edit().clear().commit();
 
 
         logoutUser();

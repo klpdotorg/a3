@@ -3,6 +3,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="@color/background"
     android:layout_height="match_parent">
 
 
@@ -18,10 +19,10 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="20dp"
-
             android:gravity="center"
-            android:orientation="vertical">
+
+            android:orientation="vertical"
+            android:paddingTop="20dp">
 
             <ImageView
 
@@ -36,53 +37,50 @@
                 android:src="@drawable/user_avatar" />
 
 
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-                <android.support.design.widget.TextInputLayout
+                <EditText
+                    android:id="@+id/edtFirstName"
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"
+
+                    android:gravity="center|left"
+                    android:hint="@string/first_name"
+                    android:imeOptions="actionNext"
+                    android:maxLength="16"
+                    android:maxLines="1"
+
+                    android:singleLine="true"
+                    android:textSize="16sp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edtLastName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                   >
-
-                    <EditText
-                        android:id="@+id/edtFirstName"
-                        android:layout_width="match_parent"
-
-                        android:layout_height="wrap_content"
-
-                        android:imeOptions="actionNext"
-                        android:gravity="center|left"
-                        android:hint="@string/first_name"
-                        android:maxLength="16"
-                        android:maxLines="1"
-
-                        android:singleLine="true"
-                        android:textSize="16sp" />
-                </android.support.design.widget.TextInputLayout>
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    >
-
-                    <EditText
-                        android:id="@+id/edtLastName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
 
 
-                        android:gravity="center|left"
-                        android:hint="@string/last_name"
-                        android:maxLength="16"
-                        android:maxLines="1"
-                        android:imeOptions="actionNext"
-                        android:singleLine="true"
-                        android:textSize="16sp" />
-                </android.support.design.widget.TextInputLayout>
+                    android:gravity="center|left"
+                    android:hint="@string/last_name"
+                    android:imeOptions="actionNext"
+                    android:maxLength="16"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textSize="16sp" />
+            </android.support.design.widget.TextInputLayout>
 
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="5dp"
                 android:gravity="center|left"
                 android:paddingLeft="5dp"
                 android:text="@string/prompt_user_role"
@@ -98,65 +96,64 @@
                 android:minHeight="35dp">
 
             </Spinner>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0.5pt"
+                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:layout_marginBottom="5dp"
                 android:background="#99000000"></LinearLayout>
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.84">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+                    <EditText
+                        android:id="@+id/edtDob"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:digits="0123456789-"
+                        android:drawableTint="#FF4081"
+                        android:hint="@string/dob"
+                        android:inputType="date"
+                        android:singleLine="true"
+
+                        android:textSize="16sp"
+                        android:textStyle="normal" />
+                </android.support.design.widget.TextInputLayout>
+
+                <ImageView
+                    android:id="@+id/calBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="0.158"
+                    android:src="@drawable/calendarico" />
+            </LinearLayout>
 
             <android.support.design.widget.TextInputLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.84">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/edtDob"
+                    android:id="@+id/edtEmail"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:drawableTint="#FF4081"
-                    android:hint="@string/dob"
-                    android:inputType="date"
-                    android:singleLine="true"
-                    android:digits="0123456789-"
+                    android:layout_marginTop="16dp"
 
+                    android:hint="@string/prompt_enter_email1_"
+
+                    android:singleLine="true"
                     android:textSize="16sp"
                     android:textStyle="normal" />
             </android.support.design.widget.TextInputLayout>
-
-            <ImageView
-                android:id="@+id/calBtn"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="0.158"
-                android:src="@drawable/calendarico" />
-        </LinearLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/edtEmail"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-
-                android:hint="@string/prompt_enter_email1_"
-
-                android:singleLine="true"
-                android:textSize="16sp"
-                android:textStyle="normal" />
-        </android.support.design.widget.TextInputLayout>
 
 
         </LinearLayout>

@@ -86,7 +86,7 @@ public class UserRegistrationActivity extends BaseActivity  implements MultiSele
         /*Linkify.addLinks(loginLink, Linkify.ALL);*/
         db = ((A3Application) getApplicationContext()).getDb();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        getSupportActionBar().setTitle(getResources().getString(R.string.registration));
 
 
         cyear = 1988;

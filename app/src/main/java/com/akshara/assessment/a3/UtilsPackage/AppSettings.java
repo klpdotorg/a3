@@ -63,7 +63,7 @@ public class AppSettings extends BaseActivity {
         tv1.setText(getResources().getString(R.string.selectState));
         tv2.setText(getResources().getString(R.string.selectLanguage));
         String stateKey = sessionManager.getStateSelection();
-        getSupportActionBar().setTitle("Change School");
+        getSupportActionBar().setTitle(getResources().getString(R.string.changeLanguage));
         db = ((A3Application) getApplicationContext().getApplicationContext()).getDb();
         stateList = new ArrayList<>();
         languageList = new ArrayList<>();

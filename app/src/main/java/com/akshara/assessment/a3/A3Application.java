@@ -17,7 +17,7 @@ import java.util.Locale;
 
 
 /**
- * Created by bibhas on 7/5/16.
+ * Created by shridhar .
  */
 public class A3Application extends Application {
     KontactDatabase db;

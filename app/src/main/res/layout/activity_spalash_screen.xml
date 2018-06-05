@@ -4,32 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="@color/background"
     android:gravity="center"
+    android:orientation="vertical"
     tools:context=".SpalashScreenActivity">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_weight="0.7"
         android:gravity="center"
-        android:orientation="vertical"
-        android:layout_weight="0.7">
+        android:orientation="vertical">
+
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="200dp"
+            android:layout_height="150dp"
 
 
-            android:src="@drawable/app_logo" />
+            android:src="@drawable/app_logo_new" />
 
         <TextView
             android:id="@+id/tvappname"
             android:layout_width="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:text="@string/app_name_ext"
             android:textSize="22sp" />
-
 
 
     </LinearLayout>
@@ -37,9 +38,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_weight="0.3"
         android:gravity="center"
-        android:orientation="vertical"
-        android:layout_weight="0.3">
+        android:orientation="vertical">
 
 
         <ProgressBar
@@ -54,13 +55,14 @@
             android:visibility="gone"></ProgressBar>
 
         <Button
-        android:id="@+id/btnInternt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-
-        android:text="Check Connectivity" />
-
+            android:id="@+id/btnInternt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_roundedrect"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="Check Connectivity"
+            android:textColor="@color/btnTextColor" />
 
 
     </LinearLayout>

@@ -15,7 +15,7 @@
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/botomnav_col"
+        android:background="@color/colorPrimaryToolbar"
 
 
         app:itemTextColor="@android:color/white"

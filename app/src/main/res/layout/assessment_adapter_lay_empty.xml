@@ -4,6 +4,7 @@
     android:minHeight="100dp"
     android:gravity="center"
     android:orientation="vertical"
+    android:layout_margin="2dp"
     android:background="@drawable/rounded_rect"
     android:layout_height="wrap_content">
 <TextView
@@ -20,6 +21,8 @@
         android:minWidth="150dp"
         android:minHeight="45dp"
         android:text="OK"
+        android:textColor="@color/btnTextColor"
+        android:background="@drawable/btn_roundedrect"
         android:id="@+id/btnOKGo"
         android:layout_height="wrap_content" />
 </LinearLayout>

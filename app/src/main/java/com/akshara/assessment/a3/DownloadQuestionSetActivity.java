@@ -16,7 +16,7 @@ import com.akshara.assessment.a3.Pojo.QuestionSetPojo;
 import com.akshara.assessment.a3.Pojo.StatePojo;
 import com.akshara.assessment.a3.UtilsPackage.StringWithTags;
 
-public class DownloadQuestionSetActivity extends AppCompatActivity {
+public class DownloadQuestionSetActivity extends BaseActivity {
 
     Button btnDownloadQuestion;
     Spinner spn_language, spn_subject, spn_selectGrade, spn_selectAssessment;

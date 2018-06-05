@@ -4,7 +4,7 @@
         >
 
         <shape android:shape="rectangle">
-            <solid android:color="#D7CCC8" />
+            <solid android:color="@color/colorPrimaryToolbar" />
 
             <corners
                 android:topLeftRadius="10dp"

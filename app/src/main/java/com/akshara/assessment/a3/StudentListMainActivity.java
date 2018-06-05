@@ -21,7 +21,7 @@ import com.akshara.assessment.a3.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudentListMainActivity extends AppCompatActivity {
+public class StudentListMainActivity extends BaseActivity {
 
 
 

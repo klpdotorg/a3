@@ -997,10 +997,11 @@ public class A3NetWorkCalls {
 
         } else {
             //INSERT
-            boolean b = db.persist(questionSetTable);
+            boolean b = db.insertNew(questionSetTable);
             Log.d("shri", "Insert:" + b);
         }
     }
+
 
     private void parseQuestionSet(QuestionSetPojos questionSetDataObj) {
 
@@ -1011,6 +1012,7 @@ public class A3NetWorkCalls {
                 for (int i = 0; i < questionSetDataObj.getQuestionsets().size(); i++) {
 
                     QuestionSetTable questionSetTable = new QuestionSetTable();
+
                     Questionset questionset = questionSetDataObj.getQuestionsets().get(i);
                     questionSetTable.setIdQuestionset(Integer.parseInt(questionset.getIdQuestionset()));
                     questionSetTable.setQsetTitle(questionset.getTitle());
@@ -1020,7 +1022,7 @@ public class A3NetWorkCalls {
                     questionSetTable.setGradeName(questionset.getGrade());
                     questionSetTable.setAssesstypeName(questionset.getAssessmenttype());
 
-                    //INSERT QUESTION SET
+                    //INSERT QUESTION SET IF ID ALready EXIST DELETE FIRST
                     insertQuestionSetIntoDB(questionSetTable);
                     if (questionset.getQuestions() != null) {
                         //LOAD QUESTIONS
