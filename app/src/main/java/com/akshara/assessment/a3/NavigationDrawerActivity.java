@@ -199,6 +199,7 @@ DBHelper dbHelper;
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
                             sessionManager.logoutUserDB();
+                            finish();
 
                         }
                     });

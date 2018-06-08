@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -154,7 +155,8 @@ public class LanguageSelectionActivity extends BaseActivity {
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
                             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-                                System.exit(0);
+                              //  System.exit(0);
+                                ActivityCompat.finishAffinity(LanguageSelectionActivity.this);
                                 overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
 
 

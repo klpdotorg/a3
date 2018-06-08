@@ -17,6 +17,7 @@
           android:drawableRight="@drawable/search_icon"
           android:drawablePadding="5dp"
           android:padding="5dp"
+          android:hint="Name or STS Id"
           android:id="@+id/edtStudentSearch"
           android:singleLine="true"
           android:imeOptions="actionDone"

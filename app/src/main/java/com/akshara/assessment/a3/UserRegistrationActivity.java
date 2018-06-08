@@ -52,7 +52,7 @@ import retrofit2.Callback;
 
 public class UserRegistrationActivity extends BaseActivity  implements MultiSelectSpinner.OnMultipleItemsSelectedListener {
 
-    public String LOG_TAG = UserRegistrationActivity.class.getSimpleName();
+    //public String LOG_TAG = UserRegistrationActivity.class.getSimpleName();
 
     //UI references
 

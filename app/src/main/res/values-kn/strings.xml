@@ -134,7 +134,7 @@
     <string name="profileUpdatedSuccessfully">ಪ್ರೊಫೈಲ್ ಅನ್ನು ಯಶಸ್ವಿಯಾಗಿ ನವೀಕರಿಸಲಾಗಿದೆ</string>
     <string name="updating_profile">ಪ್ರೊಫೈಲ್ ನವೀಕರಿಸಲಾಗುತ್ತಿದೆ …</string>
     <string name="urdu">Urdu</string>
-    <string name="selectCluster">-- Select Cluster --</string>
+    <string name="selectCluster">-- ಕ್ಲಸ್ಟರ್ ಆಯ್ಕೆ ಮಾಡಿ --</string>
     <string name="stuFirstName">ಹೆಸರು</string>
     <string name="stuLastName">ಉಪನಾಮ</string>
     <string name="male">Male</string>
@@ -147,9 +147,9 @@
     <string name="clusterSchoolLoading">cluster: schools loading. It will take few minutes for download to complete. Thanks for your patience !!!</string>
     <string name="clusterLeveldataLoadedSchussfully">cluster level schools loaded successfully</string>
     <string name="clusterDataAlreadyFound">cluster schools already downloaded. Do you want to re-download?</string>
-    <string name="school">SCHOOLS</string>
-    <string name="prompt_school">Select School</string>
-    <string name="selectSchool">-- Select School --</string>
+    <string name="school">ಶಾಲೆಗಳು</string>
+    <string name="prompt_school">ಶಾಲೆ ಆಯ್ಕೆ ಮಾಡಿ</string>
+    <string name="selectSchool">-- ಶಾಲೆ ಆಯ್ಕೆ ಮಾಡಿ --</string>
     <string name="schoolStudentDownloaded">school student downloaded successfully</string>
     <string name="loadingStudent">Students details loading...</string>
     <string name="students_downloaded">%1$s students details loaded</string>

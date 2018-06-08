@@ -27,8 +27,6 @@ import com.yahoo.squidb.data.SquidCursor;
 import com.yahoo.squidb.sql.Query;
 
 
-
-
 public class SpalashScreenActivity extends BaseActivity {
 
     TextView tv2;
@@ -38,22 +36,23 @@ public class SpalashScreenActivity extends BaseActivity {
     private SessionManager mSession;
     ProgressBar dailog;
     Button btnInternt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_spalash_screen);
         mSession = new SessionManager(getApplicationContext());
-         //DatabaseCopyHelper dbCopyHelper = new DatabaseCopyHelper(this);
+        //DatabaseCopyHelper dbCopyHelper = new DatabaseCopyHelper(this);
 //        SQLiteDatabase dbCopy = dbCopyHelper.getReadableDatabase();
         db = ((A3Application) getApplicationContext()).getDb();
-        btnInternt= findViewById(R.id.btnInternt);
+        btnInternt = findViewById(R.id.btnInternt);
         btnInternt.setVisibility(View.GONE);
-Log.d("shri", this.getLocalClassName());
+//Log.d("shri", this.getLocalClassName());
         dailog = findViewById(R.id.progressBar);
         //dailog = ProgressUtil.showProgress(SpalashScreenActivity.this, getResources().getString(R.string.authenticating));
-    //   dailog=new ProgressDialog(SpalashScreenActivity.this);
-    //dailog.setProgressStyle();
+        //   dailog=new ProgressDialog(SpalashScreenActivity.this);
+        //dailog.setProgressStyle();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -64,19 +63,20 @@ Log.d("shri", this.getLocalClassName());
         // check state and language if user first time login
 
         if (mSession.isLoggedIn()) {
+            Log.d("shri",mSession.isLoggedIn()+"------");
             //langauge screen
-            if(getStateCount()==0) {
+            if (getStateCount() == 0) {
                 loadStateDeatil();
-            }else {
-                if(mSession.isLoggedIn()&&  mSession.isSetupDone()) {
-               Intent intent = new Intent(getApplicationContext(), NavigationDrawerActivity.class);
+            } else {
+                if (mSession.isLoggedIn() && mSession.isSetupDone()) {
+                    Log.d("shri",mSession.isSetupDone()+"----set--");
+                    Intent intent = new Intent(getApplicationContext(), NavigationDrawerActivity.class);
                     startActivity(intent);
                     finish();
                     overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-                    Toast.makeText(getApplicationContext(),"loggedin",Toast.LENGTH_SHORT).show();
-                }
-                else {
-                  Intent intent = new Intent(getApplicationContext(), BoundaryLoaderActivity.class);
+                    Toast.makeText(getApplicationContext(), "loggedin", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(getApplicationContext(), BoundaryLoaderActivity.class);
                     startActivity(intent);
                     finish();
                     overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
@@ -123,12 +123,10 @@ Log.d("shri", this.getLocalClassName());
 
                 dailog.setVisibility(View.GONE);
 
-                if(AppStatus.isConnected(getApplicationContext())) {
+                if (AppStatus.isConnected(getApplicationContext())) {
                     DailogUtill.showDialog(message, getSupportFragmentManager(), getApplicationContext());
                     btnInternt.setVisibility(View.VISIBLE);
-                }
-                else
-                {
+                } else {
                     DailogUtill.showDialog(message, getSupportFragmentManager(), getApplicationContext());
                     btnInternt.setVisibility(View.VISIBLE);
                 }
@@ -136,9 +134,6 @@ Log.d("shri", this.getLocalClassName());
             }
         });
     }
-
-
-
 
 
     public int getStateCount() {

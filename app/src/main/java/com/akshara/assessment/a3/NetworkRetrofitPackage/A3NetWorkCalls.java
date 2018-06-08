@@ -12,11 +12,13 @@ import com.akshara.assessment.a3.DistrictPojos.DistrictPojos;
 import com.akshara.assessment.a3.ErrorHandlingPack.A3Errors;
 import com.akshara.assessment.a3.ErrorPojoPackage.ForgotOTPError;
 import com.akshara.assessment.a3.ErrorPojoPackage.InvalidOTp;
+import com.akshara.assessment.a3.ErrorPojoPackage.LoginErrorPojo;
 import com.akshara.assessment.a3.Pojo.ForgotPassswordOtpPojo;
 
 import com.akshara.assessment.a3.Pojo.QuestionSetPojo;
 import com.akshara.assessment.a3.Pojo.RegisterStudentPojo;
 import com.akshara.assessment.a3.Pojo.ResetPasswordPojo;
+import com.akshara.assessment.a3.Pojo.StudentExistsPojo;
 import com.akshara.assessment.a3.QuestionSetPojos.Question;
 import com.akshara.assessment.a3.QuestionSetPojos.QuestionSetPojos;
 import com.akshara.assessment.a3.QuestionSetPojos.Questiondatum;
@@ -50,6 +52,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 
 import okhttp3.ResponseBody;
@@ -443,8 +446,7 @@ public class A3NetWorkCalls {
                 } else if (response.code() == 500) {
                     //email or password invalid
                     stateInterface.failed(funInternalServerError());
-                }
-                else {
+                } else {
 
                     stateInterface.failed(context.getResources().getString(R.string.schoolloadingfailed));
 
@@ -529,11 +531,10 @@ public class A3NetWorkCalls {
                 if (response.isSuccessful()) {
                     parseStudent(response.body(), schoolId, stateInterface);
 
-                }else if (response.code() == 500) {
+                } else if (response.code() == 500) {
                     //email or password invalid
                     stateInterface.failed(funInternalServerError());
-                }
-                else {
+                } else {
                     stateInterface.failed("student downloading failed");
                 }
 
@@ -627,12 +628,10 @@ public class A3NetWorkCalls {
                         stateInterface.failed(context.getResources().getString(R.string.registeredblocksnotfound));
 
                     }
-                }
-                else if (response.code() == 500) {
+                } else if (response.code() == 500) {
                     //email or password invalid
                     stateInterface.failed(funInternalServerError());
-                }
-                else {
+                } else {
 
                     //Exception
                     stateInterface.failed(context.getResources().getString(R.string.blocksDataLoadingFailed));
@@ -722,13 +721,10 @@ public class A3NetWorkCalls {
 
 
                     parseClusterDataToDb(response, distId, stateInterface, stateKey, isDataAlreadyDownloaded, token);
-                }
-                else if (response.code() == 500) {
+                } else if (response.code() == 500) {
                     //email or password invalid
                     stateInterface.failed(funInternalServerError());
-                }
-
-                else {
+                } else {
 
                     stateInterface.failed(context.getResources().getString(R.string.clusterDataLoadingFailed));
                     //   Toast.makeText(getApplicationContext(), "Ex", Toast.LENGTH_SHORT).show();
@@ -826,12 +822,10 @@ public class A3NetWorkCalls {
                         stateInterface.setFailed(context.getResources().getString(R.string.profileUpdationFailed));
                     }
 
-                }
-                else if (response.code() == 500) {
+                } else if (response.code() == 500) {
                     //email or password invalid
                     stateInterface.setFailed(funInternalServerError());
-                }
-                else {
+                } else {
 
                     stateInterface.setFailed(context.getResources().getString(R.string.profileUpdationFailed));
 
@@ -876,11 +870,10 @@ public class A3NetWorkCalls {
                 if (response.isSuccessful() && response.code() == 200 && response.body().getStatus().equalsIgnoreCase("success")) {
                     parseQuestionSet(response.body());
                     currentStateInterface.setSuccess("Successfully question set downloaded");
-                }else if (response.code() == 500) {
+                } else if (response.code() == 500) {
                     //email or password invalid
                     currentStateInterface.setFailed(funInternalServerError());
-                }
-                else {
+                } else {
                     if (response.body().getDescription() != null && !response.body().getDescription().equalsIgnoreCase("")) {
                         currentStateInterface.setFailed(response.body().getDescription());
                     } else {
@@ -911,13 +904,14 @@ public class A3NetWorkCalls {
                         storeregistredStudent(response.body());
                         currentStateInterface.setSuccess("Student registration successfull");
                     }
-                }
-                else if (response.code() == 500) {
+                } else if (response.code() == 400) {
+                    Gson gson = new Gson();
+                    StudentExistsPojo messageObject = gson.fromJson(response.errorBody().charStream(), StudentExistsPojo.class);
+                    currentStateInterface.setFailed(getDataFromList(messageObject.getResults()));
+                } else if (response.code() == 500) {
                     //email or password invalid
                     currentStateInterface.setFailed(funInternalServerError());
-                }
-
-                else {
+                } else {
                     try {
                         currentStateInterface.setFailed(response.errorBody().string());
 
@@ -936,6 +930,19 @@ public class A3NetWorkCalls {
 
             }
         });
+
+    }
+
+
+    public String getDataFromList(List<String> listData) {
+        String msg = "";
+        if (listData != null && listData.size() > 0) {
+            for (String msgData : listData) {
+                msg = msg + msgData + "\n";
+            }
+        }
+
+        return msg.trim();
 
 
     }
@@ -982,23 +989,23 @@ public class A3NetWorkCalls {
 
                     .where(QuestionSetTable.ID_QUESTIONSET.eq(questionSetTable.getIdQuestionset()));
             int val = db.update(questionsetUpdate);
-            Log.d("shri", "Updated:" + val);
+          //  Log.d("shri", "Updated:" + val);
             if (val > 0) {
                 //delete Question & data
                 int questionint = db.deleteWhere(QuestionTable.class, QuestionTable.ID_QUESTIONSET.eq(questionSetTable.getIdQuestionset()));
-                Log.d("shri", "deleted:" + questionint);
+             //   Log.d("shri", "deleted:" + questionint);
                 int quesDataInt = db.deleteWhere(QuestionDataTable.class, QuestionDataTable.ID_QUESTIONSET.eq(questionSetTable.getIdQuestionset()));
-                Log.d("shri", "deleted:" + quesDataInt);
+              //  Log.d("shri", "deleted:" + quesDataInt);
 
                 int quesSetDetailInt = db.deleteWhere(QuestionSetDetailTable.class, QuestionSetDetailTable.ID_QUESTIONSET.eq(questionSetTable.getIdQuestionset()));
-                Log.d("shri", "deleted QuestionsetDetail:" + quesSetDetailInt);
+                //Log.d("shri", "deleted QuestionsetDetail:" + quesSetDetailInt);
             }
 
 
         } else {
             //INSERT
             boolean b = db.insertNew(questionSetTable);
-            Log.d("shri", "Insert:" + b);
+          //  Log.d("shri", "Insert:" + b);
         }
     }
 
@@ -1052,7 +1059,7 @@ public class A3NetWorkCalls {
                             questionSetDetailTable.setIdQuestion(question.getIdQuestion());
 
                             db.persist(questionSetDetailTable);
-                            Log.d("shri", "Insert Question:" + b);
+                          //  Log.d("shri", "Insert Question:" + b);
                             //LOAD OPTIONS FOR THE QUESTION
                             if (question.getQuestiondata() != null) {
                                 for (int k = 0; k < question.getQuestiondata().size(); k++) {
@@ -1070,7 +1077,7 @@ public class A3NetWorkCalls {
                                     questionDataTable.setFilecontentBase64(questionData.getFilecontentBase64());
 
                                     boolean b1 = db.persist(questionDataTable);
-                                    Log.d("shri", "Insert Question data:" + b1);
+                                 //   Log.d("shri", "Insert Question data:" + b1);
 
                                 }
                             }

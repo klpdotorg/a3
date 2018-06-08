@@ -185,16 +185,13 @@ public class RegisterStudentActivity extends android.support.v4.app.Fragment {
 
     public boolean gradeIdvalidation() {
         if (gradeIdCursor != null) {
-            if (gradeIdCursor.getCount() > 0 && grade > 0) {
-                return true;
-            }
-            Log.d("shri", "kkkk" + gradeIdCursor.getCount() + ":" + grade);
-            return false;
+            return gradeIdCursor.getCount() > 0 && grade > 0;
+          //  Log.d("shri", "kkkk" + gradeIdCursor.getCount() + ":" + grade);
 
 
         }
 
-        Log.d("shri", "23232");
+      //  Log.d("shri", "23232");
         return false;
     }
 

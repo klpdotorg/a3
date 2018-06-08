@@ -27,7 +27,7 @@ class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.Student
         this.activity=activity;
         this.students=students;
         gradeString = activity.getIntent().getStringExtra("A3APP_GRADESTRING");
-        institution = activity.getIntent().getLongExtra("A3APP_INSTITUTIONID",0l);
+        institution = activity.getIntent().getLongExtra("A3APP_INSTITUTIONID",0L);
         grade = activity.getIntent().getIntExtra("A3APP_GRADEID",0);
 
     }
@@ -42,7 +42,7 @@ class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.Student
     public void onBindViewHolder(StudentViewHolder holder, final int position) {
 
        holder.txtStudent.setText(students.get(position).name+" "+students.get(position).lastName);
-        Log.d("shri",students.get(position).stsid+":"+students.get(position).name);
+       // Log.d("shri",students.get(position).stsid+":"+students.get(position).name);
        holder.txtStudentID.setText("STS ID: "
                +(students.get(position).uid!=null &&
                !students.get(position).equals("")?students.get(position).uid:"NA"));

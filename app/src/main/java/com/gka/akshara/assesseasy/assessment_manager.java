@@ -100,7 +100,7 @@ public class assessment_manager extends AppCompatActivity {
             if(!rtn) {
                 if(!globalvault.demomodeifnodb) {
                     String msg = "Failed to load the QuestionSet from the Device Database. QuestionSet ID:"+globalvault.questionsetid;
-                    String gotoactivity = "MainActivity"; // The activity to go when user clicks 'OK' on the message screen
+                    String gotoactivity = "com.gka.akshara.assesseasy.MainActivity"; // The activity to go when user clicks 'OK' on the message screen
                     this.invokeMessageDisplayActivity(msg, gotoactivity);
                     return;
                 }

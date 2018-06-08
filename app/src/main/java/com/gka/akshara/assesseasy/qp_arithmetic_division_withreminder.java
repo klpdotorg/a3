@@ -28,14 +28,14 @@ public class qp_arithmetic_division_withreminder extends AppCompatActivity {
 
         // set the background image (pick an image randomly from the QP_BGRND_IMGS array)
         int bkgrndimagearrayindex = new Random().nextInt(globalvault.QP_BGRND_IMGS.length-1);
-        ConstraintLayout clayout = (ConstraintLayout) findViewById(R.id.ConstraintLayout_parent_arithmeticdivisionwithreminder);
+        ConstraintLayout clayout = findViewById(R.id.ConstraintLayout_parent_arithmeticdivisionwithreminder);
         clayout.setBackgroundResource(globalvault.QP_BGRND_IMGS[bkgrndimagearrayindex]);
 
         // Saves the questionid passed to this page
         Intent intent = getIntent(); // get the Intent that started this activity
         questionid =  intent.getIntExtra("EASYASSESS_QUESTIONID",0);
 
-        TextView tvquestiontext = (TextView)findViewById(R.id.textViewQuestionText);
+        TextView tvquestiontext = findViewById(R.id.textViewQuestionText);
         tvquestiontext.setText(globalvault.questions[questionid-1].getQuestionText());
 
         Random rand = new Random();
@@ -55,13 +55,13 @@ public class qp_arithmetic_division_withreminder extends AppCompatActivity {
 
         }
 
-        TextView tvNumber1 = (TextView)findViewById(R.id.textViewDividend);
+        TextView tvNumber1 = findViewById(R.id.textViewDividend);
         if(dividendset != null) {
             int randindex = rand.nextInt(dividendset.length);
             tvNumber1.setText(dividendset[randindex]);
         }
 
-        TextView tvNumber2 = (TextView)findViewById(R.id.textViewDivisor);
+        TextView tvNumber2 = findViewById(R.id.textViewDivisor);
         if(divisorset != null) {
             int randindex = rand.nextInt(divisorset.length);
             tvNumber2.setText(divisorset[randindex]);
@@ -82,7 +82,7 @@ public class qp_arithmetic_division_withreminder extends AppCompatActivity {
 
         // To hide the keyboard initially, remove the focus from the EditText field and move it to the dummy view.
         // When user clicks on the EditText field, the keyboard will appear
-        View dummyview = (View) findViewById(R.id.dummyViewForFocus);
+        View dummyview = findViewById(R.id.dummyViewForFocus);
         tvQuotient.clearFocus();
         tvReminder.clearFocus();
         dummyview.requestFocus();
@@ -125,10 +125,10 @@ public class qp_arithmetic_division_withreminder extends AppCompatActivity {
     public void clickedNext(View view) {
 
 
-        EditText editTextQuotient = (EditText)findViewById(R.id.editTextQuotient);
+        EditText editTextQuotient = findViewById(R.id.editTextQuotient);
         Editable quotient_editable = editTextQuotient.getText();
 
-        EditText editTextReminder = (EditText)findViewById(R.id.editTextReminder);
+        EditText editTextReminder = findViewById(R.id.editTextReminder);
         Editable reminder_editable = editTextReminder.getText();
 
         if((quotient_editable != null) && (reminder_editable != null)) {
@@ -147,9 +147,9 @@ public class qp_arithmetic_division_withreminder extends AppCompatActivity {
                     return;
             }
             else {
-                TextView tvNumber1 = (TextView)findViewById(R.id.textViewDividend);
+                TextView tvNumber1 = findViewById(R.id.textViewDividend);
                 String dividend = tvNumber1.getText().toString();
-                TextView tvNumber2 = (TextView)findViewById(R.id.textViewDivisor);
+                TextView tvNumber2 = findViewById(R.id.textViewDivisor);
                 String divisor = tvNumber2.getText().toString();
                 String answerstr = dividend+","+divisor+","+quotient+","+reminder;
 

@@ -140,7 +140,7 @@ class AssessEasyKeyboard {
      */
     public AssessEasyKeyboard(Activity host, int viewid, int layoutid) {
         mHostActivity= host;
-        mKeyboardView= (KeyboardView)mHostActivity.findViewById(viewid);
+        mKeyboardView= mHostActivity.findViewById(viewid);
         mKeyboardView.setKeyboard(new Keyboard(mHostActivity, layoutid));
         mKeyboardView.setPreviewEnabled(false); // NOTE Do not show the preview balloons
         mKeyboardView.setOnKeyboardActionListener(mOnKeyboardActionListener);
@@ -173,7 +173,7 @@ class AssessEasyKeyboard {
      */
     public void registerEditText(int resid) {
         // Find the EditText 'resid'
-        EditText edittext= (EditText)mHostActivity.findViewById(resid);
+        EditText edittext= mHostActivity.findViewById(resid);
         // Make the custom keyboard appear
         edittext.setOnFocusChangeListener(new OnFocusChangeListener() {
             // NOTE By setting the on focus listener, we can show the custom keyboard when the edit box gets focus, but also hide it when the edit box loses focus

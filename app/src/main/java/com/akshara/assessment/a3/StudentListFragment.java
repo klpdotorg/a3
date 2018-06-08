@@ -126,7 +126,10 @@ public class StudentListFragment extends Fragment {
         } else {
             studentsTemp.clear();
             for (int i = 0; i < students.size(); i++) {
-                if (students.get(i).name.toLowerCase().startsWith(edtStudentSearch.getText().toString().trim().toLowerCase())) {
+                if (students.get(i).name.toLowerCase().
+                        startsWith(edtStudentSearch.getText().toString().trim().toLowerCase())||
+                        students.get(i).uid.toLowerCase().
+                                startsWith(edtStudentSearch.getText().toString().trim().toLowerCase())) {
                     studentsTemp.add(students.get(i));
                     adapter = new StudentListAdapter(activity, studentsTemp);
                     student_list_recycler.setAdapter(adapter);
