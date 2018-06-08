@@ -8,10 +8,11 @@
     <application
         android:name=".A3Application"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/app_logo_new"
         android:label="@string/app_name"
         android:roundIcon="@drawable/app_logo_new"
         android:supportsRtl="true"
+        android:largeHeap="true"
         android:theme="@style/A3Theme">
         <activity
             android:name=".SpalashScreenActivity"

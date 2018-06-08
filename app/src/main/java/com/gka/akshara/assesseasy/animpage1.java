@@ -43,14 +43,14 @@ public class animpage1 extends AppCompatActivity {
         int bkgrndimgindex = questionid[0]/globalvault.animationdisplayinterval;
         if(bkgrndimgindex >= globalvault.ANIMATION_BGRND_IMGS.length)
             bkgrndimgindex = globalvault.ANIMATION_BGRND_IMGS.length - 1;
-        ConstraintLayout clayout = findViewById(R.id.ConstraintLayoutParentAnimation);
+        ConstraintLayout clayout = (ConstraintLayout) findViewById(R.id.ConstraintLayoutParentAnimation);
         clayout.setBackgroundResource(globalvault.ANIMATION_BGRND_IMGS[bkgrndimgindex]);
 
-        ivrabbit[0] = findViewById(R.id.imageViewRabbitAnim);
+        ivrabbit[0] = (ImageView)findViewById(R.id.imageViewRabbitAnim);
         ivrabbit[0].setImageResource(R.drawable.anim_rabbit); // XML file for rabbit animation frames
         adrabbit[0] = (AnimationDrawable)ivrabbit[0].getDrawable();
 
-        ivboy[0] = findViewById(R.id.imageViewBoyAnim);
+        ivboy[0] = (ImageView)findViewById(R.id.imageViewBoyAnim);
         ivboy[0].setImageResource(R.drawable.anim_man); // XML file for boy animation frames
         adboy[0] = (AnimationDrawable)ivboy[0].getDrawable();
 

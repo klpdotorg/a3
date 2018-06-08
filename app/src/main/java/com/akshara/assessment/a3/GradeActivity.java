@@ -36,7 +36,7 @@ public class GradeActivity extends AppCompatActivity {
         setContentView(R.layout.temp2);
         tvSchoolName= findViewById(R.id.tvSchoolName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Select Grades");
+        getSupportActionBar().setTitle("Select Grade");
         RecyclerView list1 = findViewById(R.id.recyclerview);
         final LinearLayoutManager mLayoutManager;
         database = new KontactDatabase(this);

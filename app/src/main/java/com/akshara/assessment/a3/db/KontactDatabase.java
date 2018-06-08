@@ -5,6 +5,7 @@ import android.content.ContextWrapper;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.akshara.assessment.a3.SchoolDataPojo.Boundary;
 import com.yahoo.squidb.android.AndroidOpenHelper;
 import com.yahoo.squidb.data.ISQLiteDatabase;
 import com.yahoo.squidb.data.ISQLiteOpenHelper;
@@ -12,6 +13,7 @@ import com.yahoo.squidb.data.SquidDatabase;
 import com.yahoo.squidb.data.TableModel;
 import com.yahoo.squidb.sql.Table;
 import com.yahoo.squidb.sql.TableStatement;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,13 +35,14 @@ public class KontactDatabase extends SquidDatabase {
     public KontactDatabase(Context context) {
         mContext = context;
 
-        if (android.os.Build.VERSION.SDK_INT >= 17) {
+      /*  if (android.os.Build.VERSION.SDK_INT >= 17) {
             //DB_PATH = context.getApplicationInfo().dataDir + "/databases/";
             ContextWrapper cw = new ContextWrapper(context.getApplicationContext());
             DB_PATH = cw.getFilesDir().getAbsolutePath() + "/databases/";
         } else {
-            DB_PATH = "/data/data/" + context.getPackageName() + "/databases/";
-        }
+
+        }*/
+        DB_PATH = "/data/data/" + context.getPackageName() + "/databases/";
 
     }
 
@@ -63,7 +66,7 @@ public class KontactDatabase extends SquidDatabase {
 
 
                 Respondent.TABLE,
-                Boundary.TABLE,
+                com.akshara.assessment.a3.db.Boundary.TABLE,
                 State.TABLE,
                 School.TABLE,
                 QuestionTable.TABLE,

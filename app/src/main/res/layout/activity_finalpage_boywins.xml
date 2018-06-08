@@ -58,6 +58,23 @@
         app:layout_constraintTop_toTopOf="@+id/guideline_top1"
         app:srcCompat="@drawable/back_arrow" />
 
+    <ImageButton
+        android:id="@+id/buttonFinish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:background="#00000000"
+        android:onClick="clickedFinish"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_bottom1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline_top1"
+        app:srcCompat="@drawable/greentickclick" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"

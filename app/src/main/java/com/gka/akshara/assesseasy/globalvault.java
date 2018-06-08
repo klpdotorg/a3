@@ -9,6 +9,10 @@ import com.akshara.assessment.a3.R;
 public class globalvault {
 
     public static assessquestion[] questions; // The question set
+    public static deviceDatastoreMgr dsmgr = null;
+    public static int questionsetid = 0;
+    public static long datetime_assessment_start;
+
     public static int backclickedonquestionid; // questionid on which back button was clicked (so that while moving forward again, the animation will not be played until this questionid is reached
     public static int currentquestionid = 0;
 
@@ -18,6 +22,12 @@ public class globalvault {
     public static String a3app_gradeString;
     public static String a3app_childId;
     public static String a3app_language;
+
+    public static String containerapp_invokefromactivity = "com.akshara.assessment.a3.AssessmentSelectorActivity";
+    public static String containerapp_returntoactivity = "com.akshara.assessment.a3.StudentListMainActivity";
+
+    // Final page of the AssessmentApp
+    public static String finalpageactivity = "com.gka.akshara.assesseasy.finalpage_boywins";
 
     // Background images for Question Pages. An image is randomly picked from this array
     public static int[] QP_BGRND_IMGS = {
@@ -41,7 +51,7 @@ public class globalvault {
     static boolean allowskipquestions = true; // If false, user will not be allowed to move to next question unless the current question is answered
     static boolean autosynctelemetry = true; // If true, all unsynced Telemetry data (assessment records) will be read from the local DB and Synced to the Server automatically at the end of the Assessment (if connectivity is available)
     static boolean deleterecordsaftersync = false; // if true, all the telemetry records that are synced to the A3 Server will be flushed out from the device database
-    static boolean demomodeifnodb = true; // If set true, the app will run with demo questions in case it fails to read question set from the DB
+    static boolean demomodeifnodb = false; // If set true, the app will run with demo questions in case it fails to read question set from the DB
 
     public static String[] questionTemplTypes = {
 

@@ -26,9 +26,6 @@ public class assessment_manager extends AppCompatActivity {
     boolean showfirstpage = false; // show first page after first question when backarrow is pressed and goes backwards
     boolean clickedbackarrow = false;
 
-    int questionsetid = 0;
-
-    deviceDatastoreMgr dsmgr = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,20 +44,26 @@ public class assessment_manager extends AppCompatActivity {
             this.questionid_last = databundle.getInt("EASYASSESS_QUESTIONID");
             this.clickedbackarrow = databundle.getBoolean("EASYASSESS_CLICKEDBACKARROW");
 
-            globalvault.a3app_institutionId = databundle.getLong("A3APP_INSTITUTIONID");
-            globalvault.a3app_gradeId = databundle.getInt("A3APP_GRADEID");
-            globalvault.a3app_gradeString = databundle.getString("A3APP_GRADESTRING");
-            globalvault.a3app_childId = databundle.getString("A3APP_CHILDID");
-            globalvault.a3app_language = databundle.getString("A3APP_LANGUAGE");
+            if(this.fromactivityname.equals(globalvault.containerapp_invokefromactivity)) {
 
-            Log.d("shri","from Assessment Insti:"+globalvault.a3app_institutionId);
-            Log.d("shri","from Assessment gradeId:"+globalvault.a3app_gradeId);
-            Log.d("shri","from Assessment gradeString:"+globalvault.a3app_gradeString);
-            Log.d("shri","from Assessment gradeString:"+ globalvault.a3app_childId);
-            Log.d("shri","from Assessment gradeString:"+globalvault.a3app_language);
+                globalvault.a3app_institutionId = databundle.getLong("A3APP_INSTITUTIONID");
+                globalvault.a3app_gradeId = databundle.getInt("A3APP_GRADEID");
+                globalvault.a3app_gradeString = databundle.getString("A3APP_GRADESTRING");
+                globalvault.a3app_childId = databundle.getString("A3APP_CHILDID");
+                globalvault.a3app_language = databundle.getString("A3APP_LANGUAGE");
 
+            Log.d("shri","INStition ID:"+ globalvault.a3app_institutionId);
+            Log.d("shri","grade ID:"+ globalvault.a3app_gradeId);
+            Log.d("shri","grade string:"+ globalvault.a3app_gradeString);
+            Log.d("shri","Child id:"+ globalvault.a3app_childId);
+            Log.d("shri","language:"+ globalvault.a3app_language);
 
+                if (MainActivity.debugalerts)
+                    Log.d("EASYASSESS", "assessment_manager: Recived parameters from the ContainerApp: EASYASSESS_FROMACTIVITY:" + this.fromactivityname + " A3APP_GRADEID:" + globalvault.a3app_gradeId + " A3APP_GRADESTRING:" + globalvault.a3app_gradeString + " A3APP_INSTITUTIONID:" + globalvault.a3app_institutionId + " A3APP_CHILDID:" + globalvault.a3app_childId + " A3APP_LANGUAGE:" + globalvault.a3app_language);
 
+                globalvault.datetime_assessment_start = System.currentTimeMillis();
+
+            }
 
             if(!TextUtils.isEmpty(this.fromactivityname)) {
                 if (fromactivityname.contains("animpage")) {
@@ -72,33 +75,31 @@ public class assessment_manager extends AppCompatActivity {
         if(MainActivity.debugalerts)
             Log.d("EASYASSESS","fromactivityname:"+fromactivityname+" questionid_last:"+questionid_last);
 
-
-        if(globalvault.questions == null) {  // Load Questions if the array is null (no Questions are loaded)
+         if(globalvault.questions == null) {  // Load Questions if the array is null (no Questions are loaded)
 
             if(MainActivity.debugalerts)
                 Log.d("EASYASSESS","assessment_manager: Loading QuestionSet from the database");
 
-            this.questionsetid = databundle.getInt("EASYASSESS_QUESTIONSETID");
+            globalvault.questionsetid = databundle.getInt("EASYASSESS_QUESTIONSETID");
 
-            if(this.questionsetid == 0) {
+            if(globalvault.questionsetid == 0) {
                 if(MainActivity.debugalerts)
                     Log.d("EASYASSESS","assessment_manager: No EASYASSESS_QUESTIONSETID received");
             }
 
             // Read the QuestionSet from the database
-            this.dsmgr = new deviceDatastoreMgr();
-            this.dsmgr.initializeDS(this);
+            globalvault.dsmgr = new deviceDatastoreMgr();
+            globalvault.dsmgr.initializeDS(this);
 
             // Add Test Questions to the Database For testing (Used ONLY for testing)
             // this.addTestQuestionsToDatabase();
 
             // Read the Questions from the Database (for the given QuestionSet ID)
-            boolean rtn = this.dsmgr.readQuestions(questionsetid); // returns false if failed to read the QuestionSet from the DB
-
-            // If failed to read QuestionSet from the database, show the message (go to messagedisplay activity screen)
+            boolean rtn = globalvault.dsmgr.readQuestions(globalvault.questionsetid); // returns false if failed to read the QuestionSet from the DB
+             // If failed to read QuestionSet from the database, show the message (go to messagedisplay activity screen)
             if(!rtn) {
                 if(!globalvault.demomodeifnodb) {
-                    String msg = "Failed to load the QuestionSet from the Device Database. QuestionSet ID:"+this.questionsetid;
+                    String msg = "Failed to load the QuestionSet from the Device Database. QuestionSet ID:"+globalvault.questionsetid;
                     String gotoactivity = "MainActivity"; // The activity to go when user clicks 'OK' on the message screen
                     this.invokeMessageDisplayActivity(msg, gotoactivity);
                     return;
@@ -190,20 +191,13 @@ public class assessment_manager extends AppCompatActivity {
             //So, if you called ActivityB from ActivityA, and System.exit(0) is called in ActivityB,
             //then the application will be killed and started immediately with only one activity ActivityA
 
-
-            // Calculate the final score
-            // To DO
-
-            // Save the Assessment telemetry
-            // To DO
-
             if (MainActivity.debugalerts)
                 Log.d("EASYASSESS", "showfinalpage is true. Invoking the finalpage.");
 
             try {
-                String toactivityclassname = "com.gka.akshara.assesseasy.finalpage_boywins";
+                String toactivityclassname = globalvault.finalpageactivity;
                 if (MainActivity.debugalerts)
-                    Log.d("EASYASSESS", "invoking the finalpage_boywins");
+                    Log.d("EASYASSESS", "assessment_manager: invoking the finalpage");
 
                 Intent intentnxt = new Intent(this, Class.forName(toactivityclassname));
                 startActivity(intentnxt);
@@ -265,11 +259,11 @@ public class assessment_manager extends AppCompatActivity {
         if (MainActivity.debugalerts)
             Log.d("EASYASSESS", "assessmentmanager: Enter addTestQuestionsToDatabase");
 
-        this.dsmgr.initializeDS(this);
-        this.dsmgr.dropTables();
-        this.dsmgr.createTables();
+        globalvault.dsmgr.initializeDS(this);
+        globalvault.dsmgr.dropTables();
+        globalvault.dsmgr.createTables();
 
-        this.dsmgr.addQuestionSet(qsetid);
+        globalvault.dsmgr.addQuestionSet(qsetid);
 
         if (MainActivity.debugalerts)
             Log.d("EASYASSESS", "assessmentmanager:addTestQuestionsToDatabase. addQuestionSet done");
@@ -310,7 +304,7 @@ public class assessment_manager extends AppCompatActivity {
 
         Log.d("EASYASSESS", "assessmentmanager:addTestQuestionsToDatabase. Added paramadd2");
 
-        this.dsmgr.addQuestion(dbquestions[0], qsetid);
+        globalvault.dsmgr.addQuestion(dbquestions[0], qsetid);
 
         if (MainActivity.debugalerts)
             Log.d("EASYASSESS", "assessmentmanager:addTestQuestionsToDatabase. Added FIB_ADD question");
@@ -392,7 +386,9 @@ public class assessment_manager extends AppCompatActivity {
         parammcqimg4.filecontent_base64 = imageString10;
         dbquestions[1].addQuestionData(parammcqimg4);
 
-        this.dsmgr.addQuestion(dbquestions[1], qsetid);
+        dbquestions[1].setAnswerCorrect("2");
+
+        globalvault.dsmgr.addQuestion(dbquestions[1], qsetid);
 
     }
 
@@ -527,6 +523,7 @@ public class assessment_manager extends AppCompatActivity {
 
         globalvault.questions[indexq].setQuestionTemplType(globalvault.questionTemplTypes[indexq]);
         globalvault.questions[indexq].setQuestionText("Select the matching type from the options");
+        globalvault.questions[indexq].setAnswerCorrect("1");
 
         assessquestiondata attribmcqimgimg = new assessquestiondata();
         attribmcqimgimg.name = "questionimg";
@@ -620,6 +617,7 @@ public class assessment_manager extends AppCompatActivity {
 
         globalvault.questions[indexq].setQuestionTemplType(globalvault.questionTemplTypes[indexq]);
         globalvault.questions[indexq].setQuestionText("How many tomatoes are there in the picture?");
+        globalvault.questions[indexq].setAnswerCorrect("1");
 
         assessquestiondata attribmcqimgtxt = new assessquestiondata();
         attribmcqimgtxt.name = "questionimg";
@@ -679,6 +677,7 @@ public class assessment_manager extends AppCompatActivity {
 
         globalvault.questions[indexq].setQuestionTemplType(globalvault.questionTemplTypes[indexq]);
         globalvault.questions[indexq].setQuestionText("Select Many Tomatoes");
+        globalvault.questions[indexq].setAnswerCorrect("1");
 
         assessquestiondata parammcqimg1 = new assessquestiondata();
         parammcqimg1.name = "option1img";
@@ -751,6 +750,7 @@ public class assessment_manager extends AppCompatActivity {
 
         globalvault.questions[indexq].setQuestionTemplType(globalvault.questionTemplTypes[indexq]);
         globalvault.questions[indexq].setQuestionText("Select Highest number");
+        globalvault.questions[indexq].setAnswerCorrect("1");
 
         assessquestiondata parammcqtxt1 = new assessquestiondata();
         parammcqtxt1.name = "option1txt";
@@ -792,6 +792,7 @@ public class assessment_manager extends AppCompatActivity {
 
         globalvault.questions[indexq].setQuestionTemplType(globalvault.questionTemplTypes[indexq]);
         globalvault.questions[indexq].setQuestionText("Match the items");
+        globalvault.questions[indexq].setAnswerCorrect("1,2,3,4");
 
         assessquestiondata parammtfimgimg1 = new assessquestiondata();
         parammtfimgimg1.name = "option1img";
@@ -933,6 +934,7 @@ public class assessment_manager extends AppCompatActivity {
 
         globalvault.questions[indexq].setQuestionTemplType(globalvault.questionTemplTypes[indexq]);
         globalvault.questions[indexq].setQuestionText("Match the items");
+        globalvault.questions[indexq].setAnswerCorrect("1,2,3,4");
 
         assessquestiondata parammtfimgtxt1 = new assessquestiondata();
         parammtfimgtxt1.name = "option1img";
@@ -1039,6 +1041,7 @@ public class assessment_manager extends AppCompatActivity {
 
         globalvault.questions[indexq].setQuestionTemplType(globalvault.questionTemplTypes[indexq]);
         globalvault.questions[indexq].setQuestionText("Match the items");
+        globalvault.questions[indexq].setAnswerCorrect("1,2,3,4");
 
         assessquestiondata parammtftxtimg1 = new assessquestiondata();
         parammtftxtimg1.name = "option1txt";
@@ -1147,6 +1150,7 @@ public class assessment_manager extends AppCompatActivity {
 
         globalvault.questions[indexq].setQuestionTemplType(globalvault.questionTemplTypes[indexq]);
         globalvault.questions[indexq].setQuestionText("Match the items");
+        globalvault.questions[indexq].setAnswerCorrect("1,2,3,4");
 
         assessquestiondata parammtftxttxt1 = new assessquestiondata();
         parammtftxttxt1.name = "option1txt";
@@ -1218,6 +1222,7 @@ public class assessment_manager extends AppCompatActivity {
 
         globalvault.questions[indexq].setQuestionTemplType(globalvault.questionTemplTypes[indexq]);
         globalvault.questions[indexq].setQuestionText("Arrange in alphabetical order");
+        globalvault.questions[indexq].setAnswerCorrect("1,2,3,4");
 
         assessquestiondata paramrarimg1 = new assessquestiondata();
         paramrarimg1.name = "option1img";
@@ -1291,6 +1296,7 @@ public class assessment_manager extends AppCompatActivity {
 
         globalvault.questions[indexq].setQuestionTemplType(globalvault.questionTemplTypes[indexq]);
         globalvault.questions[indexq].setQuestionText("Arrange in ascending order");
+        globalvault.questions[indexq].setAnswerCorrect("1,2,3,4");
 
         assessquestiondata paramrartxt1 = new assessquestiondata();
         paramrartxt1.name = "option1txt";
@@ -1331,6 +1337,7 @@ public class assessment_manager extends AppCompatActivity {
 
         globalvault.questions[indexq].setQuestionTemplType(globalvault.questionTemplTypes[indexq]);
         globalvault.questions[indexq].setQuestionText("Tiger eats grass");
+        globalvault.questions[indexq].setAnswerCorrect("1");
 
         assessquestiondata paramtoftxt1 = new assessquestiondata();
         paramtoftxt1.name = "option1txt";
@@ -1355,6 +1362,7 @@ public class assessment_manager extends AppCompatActivity {
 
         globalvault.questions[indexq].setQuestionTemplType(globalvault.questionTemplTypes[indexq]);
         globalvault.questions[indexq].setQuestionText("There are 7 Tomatoes in the picture");
+        globalvault.questions[indexq].setAnswerCorrect("1");
 
         assessquestiondata attribtoftxtimg = new assessquestiondata();
         attribtoftxtimg.name = "questionimg";
@@ -1397,6 +1405,7 @@ public class assessment_manager extends AppCompatActivity {
 
         globalvault.questions[indexq].setQuestionTemplType(globalvault.questionTemplTypes[indexq]);
         globalvault.questions[indexq].setQuestionText("There are _________ number of Tomatoes in the picture below");
+        globalvault.questions[indexq].setAnswerCorrect("1");
 
         assessquestiondata attribwordtxtimg = new assessquestiondata();
         attribwordtxtimg.name = "questionimg";
@@ -1421,6 +1430,7 @@ public class assessment_manager extends AppCompatActivity {
 
         globalvault.questions[indexq].setQuestionTemplType(globalvault.questionTemplTypes[indexq]);
         globalvault.questions[indexq].setQuestionText("Cat has _______ number of legs");
+        globalvault.questions[indexq].setAnswerCorrect("1");
 
 
         indexq++;

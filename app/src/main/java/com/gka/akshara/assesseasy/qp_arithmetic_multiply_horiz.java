@@ -30,14 +30,14 @@ public class qp_arithmetic_multiply_horiz extends AppCompatActivity {
 
         // set the background image (pick an image randomly from the QP_BGRND_IMGS array)
         int bkgrndimagearrayindex = new Random().nextInt(globalvault.QP_BGRND_IMGS.length-1);
-        ConstraintLayout clayout = findViewById(R.id.ConstraintLayout_parent_arithmeticmultiply_horiz);
+        ConstraintLayout clayout = (ConstraintLayout) findViewById(R.id.ConstraintLayout_parent_arithmeticmultiply_horiz);
         clayout.setBackgroundResource(globalvault.QP_BGRND_IMGS[bkgrndimagearrayindex]);
 
         // Saves the questionid passed to this page
         Intent intent = getIntent(); // get the Intent that started this activity
         questionid =  intent.getIntExtra("EASYASSESS_QUESTIONID",0);
 
-        TextView tvquestiontext = findViewById(R.id.textViewQuestionText);
+        TextView tvquestiontext = (TextView)findViewById(R.id.textViewQuestionText);
         tvquestiontext.setText(globalvault.questions[questionid-1].getQuestionText());
 
         Random rand = new Random();
@@ -57,13 +57,13 @@ public class qp_arithmetic_multiply_horiz extends AppCompatActivity {
 
         }
 
-        TextView tvNumber1 = findViewById(R.id.textViewNumber1);
+        TextView tvNumber1 = (TextView)findViewById(R.id.textViewNumber1);
         if(firstnumberset != null) {
             int randindex = rand.nextInt(firstnumberset.length);
             tvNumber1.setText(firstnumberset[randindex]);
         }
 
-        TextView tvNumber2 = findViewById(R.id.textViewNumber2);
+        TextView tvNumber2 = (TextView)findViewById(R.id.textViewNumber2);
         if(secondnumberset != null) {
             int randindex = rand.nextInt(secondnumberset.length);
             tvNumber2.setText(secondnumberset[randindex]);
@@ -71,7 +71,7 @@ public class qp_arithmetic_multiply_horiz extends AppCompatActivity {
 
         // sets the answer field (when navigating backwards, can fill the answer entered earlier in the answer field)
         String answer = globalvault.questions[questionid-1].getAnswerGiven();
-        EditText tvAnswer = findViewById(R.id.editTextAnswer);
+        EditText tvAnswer = (EditText) findViewById(R.id.editTextAnswer);
         if(!TextUtils.isEmpty(answer)) {  // If answer is not empty, then the firstnumber, secondnumber and answer be set to the previously entered values (reached this screen by pressing back button)
             String[] arrAnswer = answer.split(","); // Answer is stored as firstnumber, secondnumber, givenanswer
             tvNumber1.setText(arrAnswer[0]);
@@ -81,7 +81,7 @@ public class qp_arithmetic_multiply_horiz extends AppCompatActivity {
 
         // To hide the keyboard initially, remove the focus from the EditText field and move it to the dummy view.
         // When user clicks on the EditText field, the keyboard will appear
-        View dummyview = findViewById(R.id.dummyViewForFocus);
+        View dummyview = (View) findViewById(R.id.dummyViewForFocus);
         tvAnswer.clearFocus();
         dummyview.requestFocus();
 
@@ -123,7 +123,7 @@ public class qp_arithmetic_multiply_horiz extends AppCompatActivity {
 
     public void clickedNext(View view) {
 
-        EditText editTextAnswer = findViewById(R.id.editTextAnswer);
+        EditText editTextAnswer = (EditText)findViewById(R.id.editTextAnswer);
         Editable answer_editable = editTextAnswer.getText();
 
         if(answer_editable != null) {
@@ -131,17 +131,35 @@ public class qp_arithmetic_multiply_horiz extends AppCompatActivity {
             if(answer.equals("")) {
                 if (MainActivity.debugalerts)
                     Log.d("EASYASSESS", "qp_arithmetic_multiply_horiz: clickedNext: answer is empty string");
-                if(globalvault.allowskipquestions)
+                if(globalvault.allowskipquestions) {
+                    globalvault.questions[questionid - 1].setPass("S");
                     this.invokeAssessmentManagerActivity();
+                    return;
+                }
                 else
                     return;
             }
             else {
-                TextView tvNumber1 = findViewById(R.id.textViewNumber1);
+                TextView tvNumber1 = (TextView)findViewById(R.id.textViewNumber1);
                 String firstnumber = tvNumber1.getText().toString();
-                TextView tvNumber2 = findViewById(R.id.textViewNumber2);
+                TextView tvNumber2 = (TextView)findViewById(R.id.textViewNumber2);
                 String secondnumber = tvNumber2.getText().toString();
                 String answerstr = firstnumber+","+secondnumber+","+answer;
+
+                try {
+                    int intFirstnum = Integer.parseInt(firstnumber.trim());
+                    int intSecondnum = Integer.parseInt(secondnumber.trim());
+                    int correctAnswer = intFirstnum * intSecondnum;
+                    globalvault.questions[questionid - 1].setAnswerCorrect(Integer.toString(correctAnswer));
+
+                    if (correctAnswer == Integer.parseInt(answer.trim()))
+                        globalvault.questions[questionid - 1].setPass("P");
+                    else
+                        globalvault.questions[questionid - 1].setPass("F");
+                }
+                catch(Exception e) {
+                    Log.e("EASYASSESS", "qp_qrithmetic_multiply_horiz: clickedNext: Exception: "+e.toString());
+                }
 
                 globalvault.questions[questionid-1].setAnswerGiven(answerstr); // Given answer field will have string in the format firstnumber,secondnumber,givenanswer
                 this.invokeAssessmentManagerActivity();
@@ -150,8 +168,10 @@ public class qp_arithmetic_multiply_horiz extends AppCompatActivity {
         else {
             if (MainActivity.debugalerts)
                 Log.d("EASYASSESS", "qp_arithmetic_multiply_horiz: clickedNext: answer_editable is null");
-            if(globalvault.allowskipquestions)
+            if(globalvault.allowskipquestions) {
+                globalvault.questions[questionid - 1].setPass("S");
                 this.invokeAssessmentManagerActivity();
+            }
             else
                 return;
         }

@@ -34,20 +34,20 @@ public class qp_mcq_image_image extends AppCompatActivity {
 
         // set the background image (pick an image randomly from the QP_BGRND_IMGS array)
         int bkgrndimagearrayindex = new Random().nextInt(globalvault.QP_BGRND_IMGS.length-1);
-        ConstraintLayout clayout = findViewById(R.id.ConstraintLayout_parent_mcq_image_image);
+        ConstraintLayout clayout = (ConstraintLayout) findViewById(R.id.ConstraintLayout_parent_mcq_image_image);
         clayout.setBackgroundResource(globalvault.QP_BGRND_IMGS[bkgrndimagearrayindex]);
 
         // Saves the questionid passed to this page
         Intent intent = getIntent(); // get the Intent that started this activity
         questionid =  intent.getIntExtra("EASYASSESS_QUESTIONID",0);
 
-        TextView tvquestiontext = findViewById(R.id.textViewQuestionText);
+        TextView tvquestiontext = (TextView)findViewById(R.id.textViewQuestionText);
         tvquestiontext.setText(globalvault.questions[questionid-1].getQuestionText());
 
         ArrayList qdatalist = globalvault.questions[questionid-1].getQuestionDataList();
 
-        ImageView questionimg = findViewById(R.id.mcqQuestionImage);
-        RadioGroup radiogrp_mcqoptions = findViewById(R.id.radiogroup_optionbuttonsgrp);
+        ImageView questionimg = (ImageView)findViewById(R.id.mcqQuestionImage);
+        RadioGroup radiogrp_mcqoptions = (RadioGroup)findViewById(R.id.radiogroup_optionbuttonsgrp);
 
      try {
          for (int i = 0; i < qdatalist.size(); i++) {
@@ -124,22 +124,33 @@ public class qp_mcq_image_image extends AppCompatActivity {
 
     public void clickedNext(View view) {
 
-        RadioGroup radiogrp_mcqoptions = findViewById(R.id.radiogroup_optionbuttonsgrp);
+        RadioGroup radiogrp_mcqoptions = (RadioGroup)findViewById(R.id.radiogroup_optionbuttonsgrp);
         int selectedRadioButtonId = radiogrp_mcqoptions.getCheckedRadioButtonId();
 
         if(selectedRadioButtonId == -1) { // Nothing selected
             if (MainActivity.debugalerts)
                 Log.d("EASYASSESS", "qp_mcq_img_img: clickedNext: No option selected");
-            if(globalvault.allowskipquestions)
+            if(globalvault.allowskipquestions) {
+                globalvault.questions[questionid - 1].setPass("S");
                 this.invokeAssessmentManagerActivity();
+                return;
+            }
             else
                 return;
         }
 
-        RadioButton selectedRadioButton = findViewById(selectedRadioButtonId);
+        RadioButton selectedRadioButton = (RadioButton) findViewById(selectedRadioButtonId);
         //String selectedRadioButtonText = selectedRadioButton.getText().toString();
         int selectedoption = radiogrp_mcqoptions.indexOfChild(selectedRadioButton) + 1; // Index starts from 0. So add +1 as options are numbered 1 to 4
         globalvault.questions[questionid-1].setAnswerGiven(Integer.toString(selectedoption));
+
+        if (MainActivity.debugalerts)
+            Log.d("EASYASSESS", "qp_mcq_img_img: clickedNext: selectedoption: "+selectedoption+" correctAnswer:"+globalvault.questions[questionid-1].getAnswerCorrect());
+
+        if(globalvault.questions[questionid-1].getAnswerCorrect().equals(Integer.toString(selectedoption)))
+            globalvault.questions[questionid - 1].setPass("P");
+        else
+            globalvault.questions[questionid - 1].setPass("F");
 
         this.invokeAssessmentManagerActivity();
 
