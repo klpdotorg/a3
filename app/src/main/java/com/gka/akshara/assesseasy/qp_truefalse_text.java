@@ -28,7 +28,7 @@ public class qp_truefalse_text extends AppCompatActivity {
 
         // set the background image (pick an image randomly from the QP_BGRND_IMGS array)
         int bkgrndimagearrayindex = new Random().nextInt(globalvault.QP_BGRND_IMGS.length-1);
-        ConstraintLayout clayout = findViewById(R.id.ConstraintLayout_parent_truefalse_text);
+        ConstraintLayout clayout = (ConstraintLayout) findViewById(R.id.ConstraintLayout_parent_truefalse_text);
         clayout.setBackgroundResource(globalvault.QP_BGRND_IMGS[bkgrndimagearrayindex]);
 
 
@@ -37,12 +37,12 @@ public class qp_truefalse_text extends AppCompatActivity {
         questionid =  intent.getIntExtra("EASYASSESS_QUESTIONID",0);
 
 
-        TextView tvquestiontext = findViewById(R.id.textViewQuestionText);
+        TextView tvquestiontext = (TextView)findViewById(R.id.textViewQuestionText);
         tvquestiontext.setText(globalvault.questions[questionid-1].getQuestionText());
 
         ArrayList qdatalist = globalvault.questions[questionid-1].getQuestionDataList();
 
-        RadioGroup radiogrp_mcqoptions = findViewById(R.id.radiogroup_optionbuttonsgrp);
+        RadioGroup radiogrp_mcqoptions = (RadioGroup)findViewById(R.id.radiogroup_optionbuttonsgrp);
 
         try {
             for (int i = 0; i < qdatalist.size(); i++) {
@@ -105,7 +105,7 @@ public class qp_truefalse_text extends AppCompatActivity {
 
     public void clickedNext(View view) {
 
-        RadioGroup radiogrp_mcqoptions = findViewById(R.id.radiogroup_optionbuttonsgrp);
+        RadioGroup radiogrp_mcqoptions = (RadioGroup)findViewById(R.id.radiogroup_optionbuttonsgrp);
         int selectedRadioButtonId = radiogrp_mcqoptions.getCheckedRadioButtonId();
 
         if(selectedRadioButtonId == -1) { // Nothing selected
@@ -120,7 +120,7 @@ public class qp_truefalse_text extends AppCompatActivity {
                 return;
         }
 
-        RadioButton selectedRadioButton = findViewById(selectedRadioButtonId);
+        RadioButton selectedRadioButton = (RadioButton) findViewById(selectedRadioButtonId);
         //String selectedRadioButtonText = selectedRadioButton.getText().toString();
         int selectedoption = radiogrp_mcqoptions.indexOfChild(selectedRadioButton) + 1; // Index starts from 0. So add +1 as options are numbered 1 to 4
         globalvault.questions[questionid-1].setAnswerGiven(Integer.toString(selectedoption));

@@ -22,8 +22,7 @@ public class QuestionDataTableSpe {
 
 
 
-    @ColumnSpec(name="id_questionset")
-    public int Id_questionset;
+
 
     @ColumnSpec(name = "name")
     @NonNull

@@ -52,16 +52,10 @@ public class assessment_manager extends AppCompatActivity {
                 globalvault.a3app_childId = databundle.getString("A3APP_CHILDID");
                 globalvault.a3app_language = databundle.getString("A3APP_LANGUAGE");
 
-            Log.d("shri","INStition ID:"+ globalvault.a3app_institutionId);
-            Log.d("shri","grade ID:"+ globalvault.a3app_gradeId);
-            Log.d("shri","grade string:"+ globalvault.a3app_gradeString);
-            Log.d("shri","Child id:"+ globalvault.a3app_childId);
-            Log.d("shri","language:"+ globalvault.a3app_language);
-
                 if (MainActivity.debugalerts)
                     Log.d("EASYASSESS", "assessment_manager: Recived parameters from the ContainerApp: EASYASSESS_FROMACTIVITY:" + this.fromactivityname + " A3APP_GRADEID:" + globalvault.a3app_gradeId + " A3APP_GRADESTRING:" + globalvault.a3app_gradeString + " A3APP_INSTITUTIONID:" + globalvault.a3app_institutionId + " A3APP_CHILDID:" + globalvault.a3app_childId + " A3APP_LANGUAGE:" + globalvault.a3app_language);
 
-                globalvault.datetime_assessment_start = System.currentTimeMillis();
+                globalvault.datetime_assessment_start = System.currentTimeMillis(); // In seconds
 
             }
 
@@ -75,7 +69,8 @@ public class assessment_manager extends AppCompatActivity {
         if(MainActivity.debugalerts)
             Log.d("EASYASSESS","fromactivityname:"+fromactivityname+" questionid_last:"+questionid_last);
 
-         if(globalvault.questions == null) {  // Load Questions if the array is null (no Questions are loaded)
+
+        if(globalvault.questions == null) {  // Load Questions if the array is null (no Questions are loaded)
 
             if(MainActivity.debugalerts)
                 Log.d("EASYASSESS","assessment_manager: Loading QuestionSet from the database");
@@ -96,11 +91,12 @@ public class assessment_manager extends AppCompatActivity {
 
             // Read the Questions from the Database (for the given QuestionSet ID)
             boolean rtn = globalvault.dsmgr.readQuestions(globalvault.questionsetid); // returns false if failed to read the QuestionSet from the DB
-             // If failed to read QuestionSet from the database, show the message (go to messagedisplay activity screen)
+
+            // If failed to read QuestionSet from the database, show the message (go to messagedisplay activity screen)
             if(!rtn) {
                 if(!globalvault.demomodeifnodb) {
                     String msg = "Failed to load the QuestionSet from the Device Database. QuestionSet ID:"+globalvault.questionsetid;
-                    String gotoactivity = "com.gka.akshara.assesseasy.MainActivity"; // The activity to go when user clicks 'OK' on the message screen
+                    String gotoactivity = "MainActivity"; // The activity to go when user clicks 'OK' on the message screen
                     this.invokeMessageDisplayActivity(msg, gotoactivity);
                     return;
                 }
@@ -132,7 +128,7 @@ public class assessment_manager extends AppCompatActivity {
         }
 
 
-        if((!fromanimation) && (!clickedbackarrow) && (questionid_last % globalvault.animationdisplayinterval == 0) && (questionid_last < (globalvault.questions.length-1))) { // Show animation page (if not already displayed animation for this questionid and this questionid needs animation to be displayed
+        if((!fromanimation) && (!clickedbackarrow) && (globalvault.showanimation) && (questionid_last % globalvault.animationdisplayinterval == 0) && (questionid_last < (globalvault.questions.length-1))) { // Show animation page (if not already displayed animation for this questionid and this questionid needs animation to be displayed
 
             toactivityname = "animpage1";
             questionid_next = questionid_last;

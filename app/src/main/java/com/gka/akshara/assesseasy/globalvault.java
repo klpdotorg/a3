@@ -29,6 +29,10 @@ public class globalvault {
     // Final page of the AssessmentApp
     public static String finalpageactivity = "com.gka.akshara.assesseasy.finalpage_boywins";
 
+    // Telemetry REST API URL
+    public static String a3_telemetryapi_baseurl = "http://dev.klp.org.in/a3/";
+    public static String a3_telemetryapi_authkey = "A3APIAKSHARAAUTHKEY#2018";
+
     // Background images for Question Pages. An image is randomly picked from this array
     public static int[] QP_BGRND_IMGS = {
             R.drawable.bg_qp_01,
@@ -47,7 +51,8 @@ public class globalvault {
             R.drawable.anim_bg1
     };
 
-    final static int animationdisplayinterval = 5; // display animation after 'n' questions (i.e 0, 2, 4 etc). (use modulus to find if questionid falls in the interval. questionid % 2 = 0
+    static boolean showanimation = false;
+    static int animationdisplayinterval = 5; // display animation after 'n' questions (i.e 0, 2, 4 etc). (use modulus to find if questionid falls in the interval. questionid % 2 = 0
     static boolean allowskipquestions = true; // If false, user will not be allowed to move to next question unless the current question is answered
     static boolean autosynctelemetry = true; // If true, all unsynced Telemetry data (assessment records) will be read from the local DB and Synced to the Server automatically at the end of the Assessment (if connectivity is available)
     static boolean deleterecordsaftersync = false; // if true, all the telemetry records that are synced to the A3 Server will be flushed out from the device database

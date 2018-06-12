@@ -35,7 +35,7 @@ public class qp_mtf_image_blank extends AppCompatActivity {
 
         // set the background image (pick an image randomly from the QP_BGRND_IMGS array)
         int bkgrndimagearrayindex = new Random().nextInt(globalvault.QP_BGRND_IMGS.length-1);
-        ConstraintLayout clayout = findViewById(R.id.ConstraintLayout_parent_mtftextblank);
+        ConstraintLayout clayout = (ConstraintLayout) findViewById(R.id.ConstraintLayout_parent_mtftextblank);
         clayout.setBackgroundResource(globalvault.QP_BGRND_IMGS[bkgrndimagearrayindex]);
 
 
@@ -44,22 +44,22 @@ public class qp_mtf_image_blank extends AppCompatActivity {
         questionid =  intent.getIntExtra("EASYASSESS_QUESTIONID",0);
 
 
-        TextView tvquestiontext = findViewById(R.id.textViewQuestionText);
+        TextView tvquestiontext = (TextView)findViewById(R.id.textViewQuestionText);
         tvquestiontext.setText(globalvault.questions[questionid-1].getQuestionText());
 
         ArrayList qdatalist = globalvault.questions[questionid-1].getQuestionDataList();
 
         // Leftside Options - Views to drag
-        ImageView option1 = findViewById(R.id.imageViewOption1);
-        ImageView option2 = findViewById(R.id.imageViewOption2);
-        ImageView option3 = findViewById(R.id.imageViewOption3);
-        ImageView option4 = findViewById(R.id.imageViewOption4);
+        ImageView option1 = (ImageView)findViewById(R.id.imageViewOption1);
+        ImageView option2 = (ImageView)findViewById(R.id.imageViewOption2);
+        ImageView option3 = (ImageView)findViewById(R.id.imageViewOption3);
+        ImageView option4 = (ImageView)findViewById(R.id.imageViewOption4);
 
         // Right side Blankboxes - Views to drop onto
-        ImageView blankbox1 = findViewById(R.id.imageViewBlankbox1);
-        ImageView blankbox2 = findViewById(R.id.imageViewBlankbox2);
-        ImageView blankbox3 = findViewById(R.id.imageViewBlankbox3);
-        ImageView blankbox4 = findViewById(R.id.imageViewBlankbox4);
+        ImageView blankbox1 = (ImageView)findViewById(R.id.imageViewBlankbox1);
+        ImageView blankbox2 = (ImageView)findViewById(R.id.imageViewBlankbox2);
+        ImageView blankbox3 = (ImageView)findViewById(R.id.imageViewBlankbox3);
+        ImageView blankbox4 = (ImageView)findViewById(R.id.imageViewBlankbox4);
 
         Bitmap[] choiceImages = new Bitmap[4];
 

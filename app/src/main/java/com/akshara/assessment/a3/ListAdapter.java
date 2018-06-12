@@ -42,8 +42,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
       holder.lin.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View view) {
-            long  SchoolId= activity.getIntent().getLongExtra("A3APP_INSTITUTIONID",0l);
-            Intent intent  = new Intent(activity,StudentListMainActivity.class) ;
+              long  SchoolId= activity.getIntent().getLongExtra("A3APP_INSTITUTIONID",0l);
+              Intent intent  = new Intent(activity,StudentListMainActivity.class) ;
               intent .putExtra("A3APP_INSTITUTIONID",SchoolId);
               intent  .putExtra("A3APP_GRADEID",listData.get(position).getGrade());
               intent  .putExtra("A3APP_GRADESTRING",listData.get(position).getGradeString());

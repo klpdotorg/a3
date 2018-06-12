@@ -989,23 +989,36 @@ public class A3NetWorkCalls {
 
                     .where(QuestionSetTable.ID_QUESTIONSET.eq(questionSetTable.getIdQuestionset()));
             int val = db.update(questionsetUpdate);
-          //  Log.d("shri", "Updated:" + val);
+            //  Log.d("shri", "Updated:" + val);
             if (val > 0) {
+
+
+                Query QuestionListQuery = Query.select().from(QuestionSetDetailTable.TABLE)
+                        .where(QuestionSetDetailTable.ID_QUESTIONSET.eq(questionSetTable.getIdQuestionset()));
+                SquidCursor<QuestionSetDetailTable> questionsetListCursor = db.query(QuestionSetDetailTable.class, QuestionListQuery);
+                ArrayList<String> listIds = new ArrayList<>();
+                while (questionsetListCursor.moveToNext()) {
+                    QuestionSetDetailTable qsT = new QuestionSetDetailTable(questionsetListCursor);
+                    listIds.add(qsT.getIdQuestion());
+                }
+
+                Log.d("shri", "Question size:=======" + listIds.size());
+
                 //delete Question & data
-                int questionint = db.deleteWhere(QuestionTable.class, QuestionTable.ID_QUESTIONSET.eq(questionSetTable.getIdQuestionset()));
-             //   Log.d("shri", "deleted:" + questionint);
-                int quesDataInt = db.deleteWhere(QuestionDataTable.class, QuestionDataTable.ID_QUESTIONSET.eq(questionSetTable.getIdQuestionset()));
-              //  Log.d("shri", "deleted:" + quesDataInt);
+                int questionint = db.deleteWhere(QuestionTable.class, QuestionTable.ID_QUESTION.in(listIds));
+                Log.d("shri", "deleted Questions:" + questionint);
+                int quesDataInt = db.deleteWhere(QuestionDataTable.class, QuestionDataTable.ID_QUESTION.in(listIds));
+                Log.d("shri", "deleted data:" + quesDataInt);
 
                 int quesSetDetailInt = db.deleteWhere(QuestionSetDetailTable.class, QuestionSetDetailTable.ID_QUESTIONSET.eq(questionSetTable.getIdQuestionset()));
-                //Log.d("shri", "deleted QuestionsetDetail:" + quesSetDetailInt);
+                Log.d("shri", "deleted QuestionsetDetail:" + quesSetDetailInt);
             }
 
 
         } else {
             //INSERT
             boolean b = db.insertNew(questionSetTable);
-          //  Log.d("shri", "Insert:" + b);
+            //  Log.d("shri", "Insert:" + b);
         }
     }
 
@@ -1027,6 +1040,7 @@ public class A3NetWorkCalls {
                     questionSetTable.setLanguageName(questionset.getLanguage());
                     questionSetTable.setSubjectName(questionset.getSubject());
                     questionSetTable.setGradeName(questionset.getGrade());
+                    questionSetTable.setProgramName(questionset.getProgram());
                     questionSetTable.setAssesstypeName(questionset.getAssessmenttype());
 
                     //INSERT QUESTION SET IF ID ALready EXIST DELETE FIRST
@@ -1038,7 +1052,7 @@ public class A3NetWorkCalls {
                             QuestionTable questionTable = new QuestionTable();
 
                             questionTable.setIdQuestion(question.getIdQuestion());
-                            questionTable.setIdQuestionset(Integer.parseInt(questionset.getIdQuestionset()));
+                            //questionTable.setIdQuestionset(Integer.parseInt(questionset.getIdQuestionset()));
                             questionTable.setQuestionTitle(question.getTitle());
                             questionTable.setQuestionText(question.getText());
                             // questionTable.setCorrectAnswer(question.getC());
@@ -1059,14 +1073,14 @@ public class A3NetWorkCalls {
                             questionSetDetailTable.setIdQuestion(question.getIdQuestion());
 
                             db.persist(questionSetDetailTable);
-                          //  Log.d("shri", "Insert Question:" + b);
+                            //  Log.d("shri", "Insert Question:" + b);
                             //LOAD OPTIONS FOR THE QUESTION
                             if (question.getQuestiondata() != null) {
                                 for (int k = 0; k < question.getQuestiondata().size(); k++) {
                                     Questiondatum questionData = question.getQuestiondata().get(k);
                                     QuestionDataTable questionDataTable = new QuestionDataTable();
                                     questionDataTable.setIdQuestion(questionData.getIdQuestion());
-                                    questionDataTable.setIdQuestionset(Integer.parseInt(questionset.getIdQuestionset()));
+                                    //questionDataTable.setIdQuestionset(Integer.parseInt(questionset.getIdQuestionset()));
 
                                     questionDataTable.setName(questionData.getName());
                                     questionDataTable.setLabel(questionData.getLabel());
@@ -1077,7 +1091,7 @@ public class A3NetWorkCalls {
                                     questionDataTable.setFilecontentBase64(questionData.getFilecontentBase64());
 
                                     boolean b1 = db.persist(questionDataTable);
-                                 //   Log.d("shri", "Insert Question data:" + b1);
+                                    //   Log.d("shri", "Insert Question data:" + b1);
 
                                 }
                             }

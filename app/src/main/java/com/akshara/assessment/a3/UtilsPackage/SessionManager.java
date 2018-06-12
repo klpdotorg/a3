@@ -70,6 +70,7 @@ public class SessionManager {
     public static final String STATESELECTION = "STATESELECTION";
 
     public static final String LANGUAGEPOSITION = "LANGUAGEPOSITION";
+    public static final String PROGRAM = "PROGRAM";
 
     // Constructor
     public SessionManager(Context context) {
@@ -311,5 +312,16 @@ public class SessionManager {
 
         logoutUser();
     }
+
+    public void setProgram(String program) {
+        editor.putString(PROGRAM, program);
+        editor.commit();
+    }
+
+    public String getProgramFromSession() {
+
+        return pref.getString(PROGRAM,"");
+    }
+
 }
 

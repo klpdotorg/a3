@@ -35,7 +35,7 @@ public class qp_mtf_image_text extends AppCompatActivity {
 
         // set the background image (pick an image randomly from the QP_BGRND_IMGS array)
         int bkgrndimagearrayindex = new Random().nextInt(globalvault.QP_BGRND_IMGS.length-1);
-        ConstraintLayout clayout = findViewById(R.id.ConstraintLayout_parent_mtfimagetext);
+        ConstraintLayout clayout = (ConstraintLayout) findViewById(R.id.ConstraintLayout_parent_mtfimagetext);
         clayout.setBackgroundResource(globalvault.QP_BGRND_IMGS[bkgrndimagearrayindex]);
 
         // Saves the questionid passed to this page
@@ -43,26 +43,26 @@ public class qp_mtf_image_text extends AppCompatActivity {
         questionid =  intent.getIntExtra("EASYASSESS_QUESTIONID",0);
 
 
-            TextView tvquestiontext = findViewById(R.id.textViewQuestionText);
+            TextView tvquestiontext = (TextView)findViewById(R.id.textViewQuestionText);
             tvquestiontext.setText(globalvault.questions[questionid-1].getQuestionText());
 
             ArrayList qdatalist = globalvault.questions[questionid-1].getQuestionDataList();
 
             // Leftside Option ImageViews
-            ImageView option1 = findViewById(R.id.imageViewOption1);
-            ImageView option2 = findViewById(R.id.imageViewOption2);
-            ImageView option3 = findViewById(R.id.imageViewOption3);
-            ImageView option4 = findViewById(R.id.imageViewOption4);
+            ImageView option1 = (ImageView)findViewById(R.id.imageViewOption1);
+            ImageView option2 = (ImageView)findViewById(R.id.imageViewOption2);
+            ImageView option3 = (ImageView)findViewById(R.id.imageViewOption3);
+            ImageView option4 = (ImageView)findViewById(R.id.imageViewOption4);
             // Rightside choices TextViews - Views to drag
-            TextView choice1 = findViewById(R.id.textViewChoice1);
-            TextView choice2 = findViewById(R.id.textViewChoice2);
-            TextView choice3 = findViewById(R.id.textViewChoice3);
-            TextView choice4 = findViewById(R.id.textViewChoice4);
+            TextView choice1 = (TextView)findViewById(R.id.textViewChoice1);
+            TextView choice2 = (TextView)findViewById(R.id.textViewChoice2);
+            TextView choice3 = (TextView)findViewById(R.id.textViewChoice3);
+            TextView choice4 = (TextView)findViewById(R.id.textViewChoice4);
             // Middle Blank TextViews - Views to drop onto
-            TextView blankbox1 = findViewById(R.id.textViewBlankbox1);
-            TextView blankbox2 = findViewById(R.id.textViewBlankbox2);
-            TextView blankbox3 = findViewById(R.id.textViewBlankbox3);
-            TextView blankbox4 = findViewById(R.id.textViewBlankbox4);
+            TextView blankbox1 = (TextView)findViewById(R.id.textViewBlankbox1);
+            TextView blankbox2 = (TextView)findViewById(R.id.textViewBlankbox2);
+            TextView blankbox3 = (TextView)findViewById(R.id.textViewBlankbox3);
+            TextView blankbox4 = (TextView)findViewById(R.id.textViewBlankbox4);
 
             String[] choiceTexts = new String[4];
 

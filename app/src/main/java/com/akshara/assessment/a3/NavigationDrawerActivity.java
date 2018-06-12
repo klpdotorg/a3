@@ -38,7 +38,7 @@ public class NavigationDrawerActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener , AdapterView.OnItemSelectedListener {
 
     SessionManager sessionManager;
-    TextView navHeader, navMobile;
+    TextView navHeader, navMobile,navProgram;
     private static final int TIME_INTERVAL = 2000; // # milliseconds, desired time passed between two back presses.
     private long mBackPressed;
 
@@ -81,6 +81,7 @@ DBHelper dbHelper;
         View headerView = navigationView.getHeaderView(0);
         navHeader = headerView.findViewById(R.id.navHeader);
         navMobile = headerView.findViewById(R.id.navMobile);
+        navProgram = headerView.findViewById(R.id.navProgram);
 
 
         db = ((A3Application) getApplicationContext()).getDb();
@@ -400,6 +401,7 @@ DBHelper dbHelper;
         super.onResume();
         navHeader.setText(sessionManager.getFirstName() + " " + sessionManager.getLastName());
         navMobile.setText(sessionManager.getMobile());
+        navProgram.setText(sessionManager.getProgramFromSession());
         try {
             //fill_dropdown(1, sp_district.getId(), 1);
 

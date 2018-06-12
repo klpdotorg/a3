@@ -102,9 +102,9 @@
 
     <string-array name="program">
 
-        <item>SELECT PROGRAM / SUBJECT</item>
-        <item>English</item>
-        <item>Mathematics</item>
+        <item>-- Select program --</item>
+        <item>GKA</item>
+        <item>ESL</item>
     </string-array>
 
 
@@ -165,6 +165,8 @@
     <string name="registeredblocksnotfound">Registered blocks not found for selected district</string>
     <string name="noQuestionSet">No question set found for %1$s  . Please download and continue assessment</string>
     <string name="registration">Registration</string>
+    <string name="selectprogram">Select Program</string>
+    <string name="pleaseSelectProgram">Please select program</string>
 
     <string-array name="array_language">
         <item>English</item>

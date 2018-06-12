@@ -77,27 +77,45 @@ public class RESTAPIsyncMgr implements Runnable {
             inreader.close();
             apiConnection.disconnect();
 
-            // create array of 'Id's of the successfully synced records
-            JSONArray arrJsonResp = new JSONArray(sb.toString());
-            int resplength = arrJsonResp.length();
-            StringBuilder syncedids = new StringBuilder();
+            JSONObject jsonResp = new JSONObject(sb.toString());
 
-            for(int i =0; i < resplength; i++) {
+            String failedids = jsonResp.getString("failedids");
+            String syncedids = jsonResp.getString("syncedids");
 
-                JSONObject respObj = arrJsonResp.getJSONObject(i);
-                if(respObj.getString("status").equals("success")) {
-                    syncedids.append(respObj.getString("objid"));
-                    if(i < (resplength-1))
-                        syncedids.append(",");
+            if(jsonResp.getString("status").equals("success")) {
+
+                if(debugalerts) {
+                    Log.d("EASYASSESS", "RESTAPIsyncMgr.run: success.");
+                }
+
+                // Mark the sucessfully synced record as 'synced'
+                markRecordsAsSynced(syncedids);
+
+                // Delete the synced records
+                if(globalvault.deleterecordsaftersync)
+                    deleteSyncedRecords();
+            }
+            else if(jsonResp.getString("status").equals("partialsuccess")) {
+
+                if(debugalerts) {
+                    Log.d("EASYASSESS", "RESTAPIsyncMgr.run: partialsuccess. Failed to add some of the records. Failed Ids: "+failedids);
+                }
+
+                // Mark the sucessfully synced record as 'synced'
+                markRecordsAsSynced(syncedids);
+
+                // Delete the synced records
+                if(globalvault.deleterecordsaftersync)
+                    deleteSyncedRecords();
+
+            }
+            else {
+
+                String errmsg = jsonResp.getString("message");
+                if(debugalerts) {
+                    Log.d("EASYASSESS", "RESTAPIsyncMgr.run: Failed to sync. Error msg: "+errmsg);
                 }
             }
-
-            if(debugalerts) {
-                Log.d("EASYASSESS", "RESTAPIsyncMgr.run: success. Rxd Response. Synced Ids: " + syncedids.toString());
-            }
-
-            // Delete the synced records
-            deleteSyncedRecords(syncedids.toString());
         }
         catch(Exception e) {
             Log.e("EASYASSESS","RESTAPIsyncMgr.run: Exception: "+e.toString());
@@ -106,9 +124,18 @@ public class RESTAPIsyncMgr implements Runnable {
         }
     }
 
-    public void deleteSyncedRecords(String ids) {
+    public void deleteSyncedRecords() {
 
-        if(globalvault.deleterecordsaftersync)
-            a3dsapiobj.deleteSyncedTelemetryRecords();
-     }
+        a3dsapiobj.deleteSyncedTelemetryRecords();
+    }
+
+    public void markRecordsAsSynced(String ids) {
+
+        if(this.a3apiname.equals("txa3assessment"))
+            a3dsapiobj.markRecordsAsSynced("a3app_assessment_tbl", ids);
+        else if(this.a3apiname.equals("txa3assessmentdetail"))
+            a3dsapiobj.markRecordsAsSynced("a3app_assessmentdetail_tbl", ids);
+        else;
+
+    }
 }

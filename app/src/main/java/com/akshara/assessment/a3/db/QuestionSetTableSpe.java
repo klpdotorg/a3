@@ -41,6 +41,9 @@ public class QuestionSetTableSpe {
     @ColumnSpec(name="grade_name")
     public String grade_name;
 
+    @ColumnSpec(name="program_name")
+    public String program_name;
+
     @ColumnSpec(name="assesstype_name")
     public String assesstype_name;
 

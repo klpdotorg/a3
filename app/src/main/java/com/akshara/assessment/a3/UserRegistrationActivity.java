@@ -146,7 +146,7 @@ public class UserRegistrationActivity extends BaseActivity  implements MultiSele
             }
         };
 
-        final ArrayAdapter<String> programadaapter = new ArrayAdapter<String>(
+    /*    final ArrayAdapter<String> programadaapter = new ArrayAdapter<String>(
                 UserRegistrationActivity.this, R.layout.programview, getResources().getStringArray(R.array.program)) {
             @Override
             public boolean isEnabled(int position) {
@@ -166,7 +166,7 @@ public class UserRegistrationActivity extends BaseActivity  implements MultiSele
                 }
                 return view;
             }
-        };
+        };*/
 
 
 

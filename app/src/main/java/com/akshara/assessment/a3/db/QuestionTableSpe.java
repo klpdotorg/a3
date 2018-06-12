@@ -21,9 +21,7 @@ public class QuestionTableSpe {
     public String id_question;
 
 
-    @ColumnSpec(name="id_questionset")
-    @NonNull
-    public int id_questionset;
+
 
     @ColumnSpec(name="question_title")
     @NonNull

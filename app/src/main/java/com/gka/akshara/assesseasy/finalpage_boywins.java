@@ -1,6 +1,9 @@
 package com.gka.akshara.assesseasy;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +11,8 @@ import android.view.View;
 
 import com.akshara.assessment.a3.R;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.time.LocalTime;
 
 public class finalpage_boywins extends AppCompatActivity {
@@ -43,15 +48,17 @@ public class finalpage_boywins extends AppCompatActivity {
         for(int i = 0; i < globalvault.questions.length; i++) {
             if(globalvault.questions[i].getPass() == "P")
                 score += 1;
-           // globalvault.dsmgr.saveAssessmentDetail();
         }
 
         String[] records_assessment = new String[5];
         records_assessment[0] = globalvault.a3app_childId;
         records_assessment[1] = Integer.toString(globalvault.questionsetid);
         records_assessment[2] = Integer.toString(score);
-        records_assessment[3] = Long.toString(globalvault.datetime_assessment_start);
-        records_assessment[4] = Long.toString(System.currentTimeMillis()); // Submission time
+
+        if(globalvault.datetime_assessment_start  == 0)
+            globalvault.datetime_assessment_start = System.currentTimeMillis();
+        records_assessment[3] = Long.toString(globalvault.datetime_assessment_start / 1000);
+        records_assessment[4] = Long.toString(System.currentTimeMillis() / 1000); // Submission time
 
         String assementid = globalvault.dsmgr.saveAssessment(records_assessment);
 
@@ -72,6 +79,13 @@ public class finalpage_boywins extends AppCompatActivity {
             }
         }
 
+        // Sync the telemetry data with the Server, if the device is online
+        if(globalvault.autosynctelemetry) {
+            if(isDeviceOnline())
+                globalvault.dsmgr.syncTelemetry(globalvault.a3_telemetryapi_baseurl);
+        }
+
+
         globalvault.questions = null;
 
         try {
@@ -86,5 +100,26 @@ public class finalpage_boywins extends AppCompatActivity {
         catch(Exception e) {
             Log.e("EASYASSESS", "finalpage_boywins:clickedFinish: Exception:"+e.toString());
         }
+    }
+
+    // This methods will check if the device has network
+    // doesn't check if it has Internet access. Assumes that if network is available, it has the Internet access
+    public boolean isDeviceOnline() {
+
+            ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connManager.getActiveNetworkInfo();
+
+            if(networkInfo != null && networkInfo.isConnectedOrConnecting()){
+                if (MainActivity.debugalerts)
+                    Log.d("EASYASSESS", "finalpage_boywins:isDeviceOnline(). Device is Online.");
+
+                return true;
+            }
+            else{
+                if (MainActivity.debugalerts)
+                    Log.d("EASYASSESS", "finalpage_boywins:isDeviceOnline(). Device is NOT Online.");
+
+                return false;
+            }
     }
 }

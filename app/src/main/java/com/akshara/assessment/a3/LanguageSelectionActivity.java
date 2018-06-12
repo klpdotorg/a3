@@ -36,7 +36,7 @@ public class LanguageSelectionActivity extends BaseActivity {
 
 
     Button btnOK, btnNext;
-    Spinner spnSelectStae, spnSelectLanguage;
+    Spinner spnSelectStae, spnSelectLanguage,spnProgram;
     SessionManager sessionManager;
 
     private KontactDatabase db;
@@ -58,6 +58,8 @@ public class LanguageSelectionActivity extends BaseActivity {
         sessionManager = new SessionManager(getApplicationContext());
         spnSelectLanguage = findViewById(R.id.spnSelectLanguage);
         spnSelectStae = findViewById(R.id.spnSelectStae);
+        spnProgram = findViewById(R.id.spnProgram);
+        spnProgram.setAdapter(new ArrayAdapter(LanguageSelectionActivity.this, R.layout.spinnertextview, getResources().getStringArray(R.array.program)));
         getSupportActionBar().setTitle("Select Language");
         tv1 = findViewById(R.id.tv1);
         tv2 = findViewById(R.id.tv2);
@@ -124,63 +126,60 @@ public class LanguageSelectionActivity extends BaseActivity {
                 if (spnSelectLanguage.getSelectedItemPosition() > 0)
 
                 {
-                    final String language = languageList.get(spnSelectLanguage.getSelectedItemPosition()).getLanguageEng();
-                    final String languagekey = languageList.get(spnSelectLanguage.getSelectedItemPosition()).getKey();
-                    final String state = stateList.get(spnSelectStae.getSelectedItemPosition()).getState();
-                    final String stateKeyString = stateList.get(spnSelectStae.getSelectedItemPosition()).getStateKey();
-                   /*if (!state.equalsIgnoreCase("odisha")) {*/
 
-                      /*  progressDialog.show();
-                        new ProNetworkSettup(LanguageSelectionActivity.this).getRespondentList(ILPService.RESPONDENTLIST, new UserRolesInterface() {
+                    if(spnProgram.getSelectedItemPosition()>0) {
+                        final String language = languageList.get(spnSelectLanguage.getSelectedItemPosition()).getLanguageEng();
+                        final String languagekey = languageList.get(spnSelectLanguage.getSelectedItemPosition()).getKey();
+                        final String state = stateList.get(spnSelectStae.getSelectedItemPosition()).getState();
+                        final String stateKeyString = stateList.get(spnSelectStae.getSelectedItemPosition()).getStateKey();
+
+                        String url = BuildConfig.HOST + "/api/v1/boundary/admin1s/?per_page=0&state=" + stateKeyString;
+                        progressDialog.show();
+
+                        new A3NetWorkCalls(LanguageSelectionActivity.this).downloadDistrictForState(url, stateKeyString, new CurrentStateInterface() {
                             @Override
-                            public void success(String message) {*/
-
-                    String url = BuildConfig.HOST + "/api/v1/boundary/admin1s/?per_page=0&state=" + stateKeyString;
-                    progressDialog.show();
-
-                    new A3NetWorkCalls(LanguageSelectionActivity.this).downloadDistrictForState(url, stateKeyString, new CurrentStateInterface() {
-                        @Override
-                        public void setSuccess(String message) {
+                            public void setSuccess(String message) {
 
 
-                            progressDialog.dismiss();
-                            sessionManager.setLanguage(state, language, languagekey, stateKeyString);
-                            sessionManager.setStateSelection(stateKeyString);
-                            sessionManager.setStatePosition(spnSelectStae.getSelectedItemPosition());
+                                progressDialog.dismiss();
+                                sessionManager.setLanguage(state, language, languagekey, stateKeyString);
+                                sessionManager.setStateSelection(stateKeyString);
+                                sessionManager.setStatePosition(spnSelectStae.getSelectedItemPosition());
+                                sessionManager.setProgram(spnProgram.getSelectedItem().toString().trim());
+                                // Toast.makeText(getApplicationContext(),stateKey+":"+languagekey,Toast.LENGTH_SHORT).show();
+                                A3Application.setLanguage(getApplicationContext(), languagekey);
+                                sessionManager.setLanguagePosition(spnSelectLanguage.getSelectedItemPosition());
+                                Intent intent = new Intent(new Intent(getApplicationContext(), LoginActivity.class));
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+                                    //  System.exit(0);
+                                    ActivityCompat.finishAffinity(LanguageSelectionActivity.this);
+                                    overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
 
-                            // Toast.makeText(getApplicationContext(),stateKey+":"+languagekey,Toast.LENGTH_SHORT).show();
-                            A3Application.setLanguage(getApplicationContext(), languagekey);
-                            sessionManager.setLanguagePosition(spnSelectLanguage.getSelectedItemPosition());
-                            Intent intent = new Intent(new Intent(getApplicationContext(), LoginActivity.class));
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
-                            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-                              //  System.exit(0);
-                                ActivityCompat.finishAffinity(LanguageSelectionActivity.this);
-                                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
 
+                                } else {
+                                    finish();
+                                    overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                                }
 
                             }
 
-
-                            else{
-                                finish();
-                                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                            @Override
+                            public void setFailed(String message) {
+                                progressDialog.dismiss();
+                                showSignupResultDialog(getResources().getString(R.string.app_name), message, getResources().getString(R.string.Ok));
                             }
-
-                        }
-
-                        @Override
-                        public void setFailed(String message) {
-                            progressDialog.dismiss();
-                            showSignupResultDialog(getResources().getString(R.string.app_name), message, getResources().getString(R.string.Ok));
-                        }
-                    });
+                        });
 
 
-
-
-
+                    }else
+                    {
+                        showSignupResultDialog(
+                                getResources().getString(R.string.app_name),
+                                getResources().getString(R.string.pleaseSelectProgram),
+                                getResources().getString(R.string.Ok_));
+                    }
 
                 } else {
 
