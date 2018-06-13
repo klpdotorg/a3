@@ -1,5 +1,6 @@
 package com.akshara.assessment.a3;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -48,20 +49,37 @@ public class StudentListMainActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
-        finish();
+       navigateBackStack();
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                finish();
-                overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+               navigateBackStack();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+
+    public void navigateBackStack()
+    {
+
+
+
+
+
+        Intent intent=new Intent(getApplicationContext(),AssessmentSelectorActivity.class);
+        intent .putExtra("A3APP_INSTITUTIONID",getIntent().getLongExtra("A3APP_INSTITUTIONID",0L));
+        intent  .putExtra("A3APP_GRADEID",getIntent().getIntExtra("A3APP_GRADEID",0));
+        intent  .putExtra("A3APP_GRADESTRING",getIntent().getStringExtra("A3APP_GRADESTRING"));
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+        finish();
+    }
+
     private void setupNavigationView() {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         if (bottomNavigationView != null) {

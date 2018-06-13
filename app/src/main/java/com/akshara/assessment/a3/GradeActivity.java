@@ -3,6 +3,7 @@ package com.akshara.assessment.a3;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -94,6 +95,13 @@ public class GradeActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        navigateBack();
+    }
+
+
+    public void navigateBack()
+    {
+        Intent intent=new Intent(getApplicationContext(),NavigationDrawerActivity.class);
         overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
         finish();
     }
@@ -102,8 +110,7 @@ public class GradeActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                finish();
-                overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+              navigateBack();
                 return true;
         }
         return super.onOptionsItemSelected(item);

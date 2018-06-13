@@ -411,7 +411,7 @@ import java.util.UUID;
                 for(int i=0; i < totalquestions; i++) {
 
                     String qid = globalvault.questions[i].getQustionID();
-
+                Log.d("shri",qid);
                     String query2 = "SELECT * FROM a3app_questiondata_tbl WHERE id_question='"+qid+"'";
 
                     Cursor curs2 = a3appdb.rawQuery(query2, null);
@@ -420,6 +420,7 @@ import java.util.UUID;
                     if(totalquestiondata == 0) {
                         if(MainActivity.debugalerts)
                             Log.d("EASYASSESS","deviceDatastoreMgr.readQuestions: Retrieved 0 records from a3app_questiondata_tbl.");
+                        Log.d("shri","false");
                         return false;
                     }
 

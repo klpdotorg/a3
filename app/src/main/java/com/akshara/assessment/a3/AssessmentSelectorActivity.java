@@ -1,5 +1,6 @@
 package com.akshara.assessment.a3;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -76,8 +77,18 @@ public class AssessmentSelectorActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        navigateBack();
+    }
+
+
+    public void navigateBack()
+    {
+        Intent intent=new Intent(getApplicationContext(),GradeActivity.class);
+        intent.putExtra("A3APP_INSTITUTIONID",getIntent().getLongExtra("A3APP_INSTITUTIONID", 0l));
+        startActivity(intent);
         overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
         finish();
+
     }
 
     public String getLanguage()
@@ -89,9 +100,8 @@ public class AssessmentSelectorActivity extends BaseActivity {
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                finish();
-                overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
-                return true;
+
+                navigateBack();
         }
         return super.onOptionsItemSelected(item);
     }

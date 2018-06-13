@@ -95,6 +95,10 @@ public class finalpage_boywins extends AppCompatActivity {
             intent.putExtra("A3APP_GRADEID", globalvault.a3app_gradeId);
             intent.putExtra("A3APP_GRADESTRING", globalvault.a3app_gradeString);
             intent.putExtra("EASYASSESS_CLICKEDBACKARROW", false);
+            intent.putExtra("A3APP_LANGUAGE", globalvault.a3app_language);
+            intent.putExtra("EASYASSESS_QUESTIONSETID", globalvault.questionsetid);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
             startActivity(intent);
         }
         catch(Exception e) {

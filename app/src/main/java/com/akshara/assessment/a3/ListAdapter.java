@@ -43,12 +43,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder>{
           @Override
           public void onClick(View view) {
               long  SchoolId= activity.getIntent().getLongExtra("A3APP_INSTITUTIONID",0l);
-              Intent intent  = new Intent(activity,StudentListMainActivity.class) ;
+              Intent intent  = new Intent(activity,AssessmentSelectorActivity.class) ;
               intent .putExtra("A3APP_INSTITUTIONID",SchoolId);
               intent  .putExtra("A3APP_GRADEID",listData.get(position).getGrade());
               intent  .putExtra("A3APP_GRADESTRING",listData.get(position).getGradeString());
               activity.startActivity(intent);
               activity. overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+              activity.finish();
 
           }
       });

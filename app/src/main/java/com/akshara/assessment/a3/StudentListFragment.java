@@ -37,6 +37,8 @@ public class StudentListFragment extends Fragment {
     SquidCursor<StudentTable> studentTableSquidCursor;
     Long institution;
     int grade;
+
+    String language;
    static String gradeString="";
     List<StudentTable> studentTableList;
 
@@ -53,6 +55,7 @@ public class StudentListFragment extends Fragment {
         institution = activity.getIntent().getLongExtra("A3APP_INSTITUTIONID", 0);
         gradeString = activity.getIntent().getStringExtra("A3APP_GRADESTRING");
         grade = activity.getIntent().getIntExtra("A3APP_GRADEID", 0);
+        language = activity.getIntent().getStringExtra("A3APP_LANGUAGE");
         if(institution==0||grade==0)
         {
             Toast.makeText(activity,"Institution:"+institution+"\nGrade:"+grade,Toast.LENGTH_SHORT).show();

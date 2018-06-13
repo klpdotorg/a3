@@ -270,13 +270,13 @@ public class UserRegistrationActivity extends BaseActivity  implements MultiSele
                             emailValue = "";
                             response = ApiClient.getClient().create(ApiInterface.class).registrationServiceWithoutEmail(
                                     phoneNoValue.trim(), firstNameValue.trim(), lastNameValue.trim(), passwordValue.trim(),
-                                    "konnect", mSelectedUserType, ReqDate,sessionManager.getStateSelection());
+                                    "a3", mSelectedUserType, ReqDate,sessionManager.getStateSelection());
                         } else {
 
 
                             response = ApiClient.getClient().create(ApiInterface.class).registrationService(emailValue.trim(),
                                     phoneNoValue.trim(), firstNameValue.trim(), lastNameValue.trim(), passwordValue.trim(),
-                                    "konnect", mSelectedUserType, ReqDate,sessionManager.getStateSelection());
+                                    "a3", mSelectedUserType, ReqDate,sessionManager.getStateSelection());
 
                         }
 
