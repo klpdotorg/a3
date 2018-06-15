@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <dimen name="qp_add_questiontext">20sp</dimen>
+  <dimen name="qp_add_questiontext">20sp</dimen>
     <dimen name="qp_add_numbers">30sp</dimen>
 
     <dimen name="qp_subtract_questiontext">20sp</dimen>

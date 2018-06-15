@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.akshara.assessment.a3.TelemetryReport.TelemetryRreportActivity;
 import com.akshara.assessment.a3.UtilsPackage.SessionManager;
 import com.akshara.assessment.a3.db.KontactDatabase;
 import com.akshara.assessment.a3.db.QuestionSetTable;
@@ -72,6 +73,11 @@ public class AssessmentSelectorActivity extends BaseActivity {
 
         asssessmentSelectorAdapter=new AsssessmentSelectorAdapter(this,questionSetTables);
         recycler.setAdapter(asssessmentSelectorAdapter);
+
+
+
+      //  startActivity(new Intent(getApplicationContext(), TelemetryRreportActivity.class));
+
     }
 
     @Override

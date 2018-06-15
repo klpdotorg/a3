@@ -48,11 +48,21 @@ public class messagedisplay extends AppCompatActivity {
     public void invokeGOTOactivity() {
 
         try {
-            Intent intentnxt = new Intent(this, Class.forName(this.gotoactivityname));
-            startActivity(intentnxt);
+            Intent intent = new Intent(this, Class.forName(globalvault.containerapp_returntoactivity));
+
+            intent.putExtra("A3APP_INSTITUTIONID", globalvault.a3app_institutionId);
+            intent.putExtra("A3APP_GRADEID", globalvault.a3app_gradeId);
+            intent.putExtra("A3APP_GRADESTRING", globalvault.a3app_gradeString);
+            intent.putExtra("A3APP_LANGUAGE",globalvault.a3app_language);
+            intent.putExtra("A3APP_CHILDID",globalvault.a3app_childId);
+            intent.putExtra("EASYASEESS_QUESTIONSETID", globalvault.questionsetid);
+            intent.putExtra("EASYASSESS_CLICKEDBACKARROW", false);
+
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
 
             if (MainActivity.debugalerts)
-                Log.d("EASYASSESS", "messagedisplay: clickedOK: gotoactivity: " + this.gotoactivityname);
+                Log.d("EASYASSESS", "messagedisplay: clickedOK: gotoactivity: " + globalvault.containerapp_returntoactivity);
         }
         catch (Exception e) {
             Log.e("EASYASSESS", "messagedisplay.invokeGOTOactivity: Exception."+e.toString());

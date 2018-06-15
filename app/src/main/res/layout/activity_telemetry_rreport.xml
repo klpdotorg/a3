@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+
+    android:layout_height="match_parent"
+    tools:context="com.akshara.assessment.a3.TelemetryReport.TelemetryRreportActivity">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:background="@color/colorPrimaryToolbar"
+        android:paddingLeft="5dp"
+        android:minHeight="40dp"
+        android:gravity="center|left"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/tvStsid"
+            android:layout_width="0dp"
+            android:textSize="18sp"
+            android:text="STS ID"
+            android:gravity="center|left"
+            android:typeface="serif"
+            android:textColor="#FFFFFF"
+            android:layout_height="match_parent"
+            android:layout_weight="0.25" />
+        <TextView
+            android:id="@+id/tvStudentName"
+            android:layout_width="0dp"
+            android:textSize="18sp"
+            android:text="STUDENT NAME"
+            android:gravity="center|left"
+            android:typeface="serif"
+            android:textColor="#FFFFFF"
+            android:layout_height="match_parent"
+            android:layout_weight="0.55" />
+
+        <TextView
+            android:id="@+id/tvMarks"
+            android:layout_width="0dp"
+            android:textSize="18sp"
+            android:text="SCORE"
+            android:gravity="center|left"
+            android:textColor="#FFFFFF"
+            android:typeface="serif"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2" />
+
+    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/reportRecyclerView">
+
+    </android.support.v7.widget.RecyclerView>
+</LinearLayout>

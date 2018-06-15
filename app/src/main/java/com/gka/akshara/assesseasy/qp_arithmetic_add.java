@@ -195,6 +195,12 @@ public class qp_arithmetic_add extends AppCompatActivity {
 
     }
 
+    public void clickedAudio(View view) {
+
+        //String base64encodedaudiostring = "";
+        //audioManager.playAudio(base64encodedaudiostring);
+    }
+
     public void drawShape() {
 
         //setContentView(new shapePainter(this)); // this call will change the current view and display this view

@@ -25,7 +25,7 @@ class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.Student
     long A3APP_INSTITUTIONID;
     int A3APP_GRADEID;
     String A3APP_LANGUAGE;
-    int EASYASSESS_QUESTIONSETID;
+    int EASYASEESS_QUESTIONSETID;
 
     public StudentListAdapter(StudentListMainActivity activity, ArrayList<StudentPojo> students) {
 
@@ -34,14 +34,14 @@ class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.Student
         A3APP_GRADESTRING = activity.getIntent().getStringExtra("A3APP_GRADESTRING");
         A3APP_INSTITUTIONID = activity.getIntent().getLongExtra("A3APP_INSTITUTIONID",0L);
         A3APP_GRADEID = activity.getIntent().getIntExtra("A3APP_GRADEID",0);
-        EASYASSESS_QUESTIONSETID = activity.getIntent().getIntExtra("EASYASSESS_QUESTIONSETID",0);
+        EASYASEESS_QUESTIONSETID = activity.getIntent().getIntExtra("EASYASEESS_QUESTIONSETID",0);
         A3APP_LANGUAGE =  activity.getIntent().getStringExtra("A3APP_LANGUAGE");
 
         Log.d("shri","-------A3 SEND DATA------");
         Log.d("Shri","GradeString:"+A3APP_GRADESTRING);
         Log.d("Shri","Institution Id:"+A3APP_INSTITUTIONID);
         Log.d("Shri","Grade Id:"+A3APP_GRADEID);
-        Log.d("Shri","Q set Id:"+EASYASSESS_QUESTIONSETID);
+        Log.d("Shri","Q set Id:"+EASYASEESS_QUESTIONSETID);
         Log.d("Shri","App Language:"+A3APP_LANGUAGE);
         Log.d("shri","-------------");
     }
@@ -84,7 +84,7 @@ class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.Student
                 Intent intent = new Intent(activity, com.gka.akshara.assesseasy.assessment_manager.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("EASYASSESS_FROMACTIVITY", "com.akshara.assessment.a3.AssessmentSelectorActivity");
-                bundle.putInt("EASYASSESS_QUESTIONSETID", EASYASSESS_QUESTIONSETID);
+                bundle.putInt("EASYASSESS_QUESTIONSETID", EASYASEESS_QUESTIONSETID);
                 bundle.putBoolean("EASYASSESS_CLICKEDBACKARROW", false);
 
 
@@ -115,7 +115,7 @@ class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.Student
                 Intent intent = new Intent(activity, com.gka.akshara.assesseasy.assessment_manager.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("EASYASSESS_FROMACTIVITY", "com.akshara.assessment.a3.AssessmentSelectorActivity");
-                bundle.putInt("EASYASSESS_QUESTIONSETID", EASYASSESS_QUESTIONSETID);
+                bundle.putInt("EASYASSESS_QUESTIONSETID", EASYASEESS_QUESTIONSETID);
                 bundle.putBoolean("EASYASSESS_CLICKEDBACKARROW", false);
 
 

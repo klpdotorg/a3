@@ -10,9 +10,9 @@
         android:allowBackup="true"
         android:icon="@drawable/app_logo_new"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@drawable/app_logo_new"
         android:supportsRtl="true"
-        android:largeHeap="true"
         android:theme="@style/A3Theme">
         <activity
             android:name=".SpalashScreenActivity"
@@ -89,17 +89,14 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/A3Theme" />
-        <activity android:name=".AssessmentSelectorActivity"
+        <activity
+            android:name=".AssessmentSelectorActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/A3Theme" />
-
-
         <activity
             android:name="com.gka.akshara.assesseasy.MainActivity"
-            android:screenOrientation="landscape">
-
-        </activity>
+            android:screenOrientation="landscape"></activity>
         <activity
             android:name="com.gka.akshara.assesseasy.qp_arithmetic_add"
             android:windowSoftInputMode="stateHidden|adjustPan" />
@@ -140,9 +137,8 @@
         <activity
             android:name="com.gka.akshara.assesseasy.messagedisplay"
             android:label="@string/title_activity_messagedisplay"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
-
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".TelemetryReport.TelemetryRreportActivity"></activity>
     </application>
 
 </manifest>

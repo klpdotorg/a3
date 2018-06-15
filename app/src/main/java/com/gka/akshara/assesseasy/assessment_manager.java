@@ -52,21 +52,6 @@ public class assessment_manager extends AppCompatActivity {
                 globalvault.a3app_childId = databundle.getString("A3APP_CHILDID");
                 globalvault.a3app_language = databundle.getString("A3APP_LANGUAGE");
 
-
-                Log.d("shri","-------Container Receive DATA------");
-                Log.d("Shri","GradeString:"+ globalvault.a3app_gradeString);
-                Log.d("Shri","Institution Id:"+globalvault.a3app_institutionId);
-                Log.d("Shri","Grade Id:"+  globalvault.a3app_gradeId );
-                Log.d("Shri","Q set Id:"+  globalvault.questionsetid );
-                Log.d("Shri","App Language:"+globalvault.a3app_language );
-                Log.d("shri","-------------");
-
-
-
-
-
-
-
                 if (MainActivity.debugalerts)
                     Log.d("EASYASSESS", "assessment_manager: Recived parameters from the ContainerApp: EASYASSESS_FROMACTIVITY:" + this.fromactivityname + " A3APP_GRADEID:" + globalvault.a3app_gradeId + " A3APP_GRADESTRING:" + globalvault.a3app_gradeString + " A3APP_INSTITUTIONID:" + globalvault.a3app_institutionId + " A3APP_CHILDID:" + globalvault.a3app_childId + " A3APP_LANGUAGE:" + globalvault.a3app_language);
 

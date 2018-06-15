@@ -139,7 +139,7 @@
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:background="@drawable/bg_wa_multiply"
+        android:background="@drawable/bg_workarea"
         app:layout_constraintBottom_toTopOf="@+id/guideline_bottom2"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right2"
         app:layout_constraintStart_toStartOf="@+id/guideline_left2"

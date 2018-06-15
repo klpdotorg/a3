@@ -13,6 +13,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.akshara.assessment.a3.TelemetryReport.TelemetryRreportActivity;
+import com.akshara.assessment.a3.TelemetryReport.pojoReportData;
 import com.akshara.assessment.a3.UtilsPackage.DailogUtill;
 import com.akshara.assessment.a3.UtilsPackage.SessionManager;
 import com.akshara.assessment.a3.db.QuestionSetTable;
@@ -32,6 +34,7 @@ public class AsssessmentSelectorAdapter extends RecyclerView.Adapter {
     private final int DATA = 1;
 
 
+
     public AsssessmentSelectorAdapter(AssessmentSelectorActivity activity, ArrayList<QuestionSetTable> questionSetTables) {
         this.activity = activity;
         this.questionSetTables = questionSetTables;
@@ -43,6 +46,8 @@ public class AsssessmentSelectorAdapter extends RecyclerView.Adapter {
 
         //  notifyDataSetChanged();
     }
+
+
 
 
     @Override
@@ -95,7 +100,7 @@ public class AsssessmentSelectorAdapter extends RecyclerView.Adapter {
                         Bundle bundle = new Bundle();
                         bundle.putLong("A3APP_INSTITUTIONID", A3APP_INSTITUTIONID);
                         bundle.putInt("A3APP_GRADEID", A3APP_GRADEID);
-                        bundle.putInt("EASYASSESS_QUESTIONSETID", questionSetTables.get(position).getIdQuestionset());
+                        bundle.putInt("EASYASEESS_QUESTIONSETID", questionSetTables.get(position).getIdQuestionset());
                         bundle.putString("A3APP_GRADESTRING", A3APP_GRADESTRING);
                         //  bundle.putString("A3APP_CHILDID", A3APP_CHILDID);
                         bundle.putString("A3APP_LANGUAGE", A3APP_LANGUAGE);
@@ -111,7 +116,15 @@ public class AsssessmentSelectorAdapter extends RecyclerView.Adapter {
                 holder.imageReport.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        DailogUtill.showDialog("Coming soon",activity.getSupportFragmentManager(),activity);
+
+                        Intent intent=new Intent(activity,TelemetryRreportActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putLong("A3APP_INSTITUTIONID", A3APP_INSTITUTIONID);
+                        bundle.putInt("EASYASSESS_QUESTIONSETID", questionSetTables.get(position).getIdQuestionset());
+                        bundle.putInt("A3APP_GRADEID", A3APP_GRADEID);
+                        intent.putExtras(bundle);
+                        activity.startActivity(intent);
+                      // DailogUtill.showDialog("Coming soon",activity.getSupportFragmentManager(),activity);
 
                         // Toast.makeText(activity,"Coming soon",Toast.LENGTH_SHORT).show();
 
@@ -126,7 +139,7 @@ public class AsssessmentSelectorAdapter extends RecyclerView.Adapter {
                         Bundle bundle = new Bundle();
                         bundle.putLong("A3APP_INSTITUTIONID", A3APP_INSTITUTIONID);
                         bundle.putInt("A3APP_GRADEID", A3APP_GRADEID);
-                        bundle.putInt("EASYASSESS_QUESTIONSETID", questionSetTables.get(position).getIdQuestionset());
+                        bundle.putInt("EASYASEESS_QUESTIONSETID", questionSetTables.get(position).getIdQuestionset());
                         bundle.putString("A3APP_GRADESTRING", A3APP_GRADESTRING);
                         //  bundle.putString("A3APP_CHILDID", A3APP_CHILDID);
                         bundle.putString("A3APP_LANGUAGE", A3APP_LANGUAGE);
