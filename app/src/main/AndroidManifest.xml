@@ -139,6 +139,7 @@
             android:label="@string/title_activity_messagedisplay"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".TelemetryReport.TelemetryRreportActivity"></activity>
+        <activity android:name=".TelemetryReport.TelemetryReportIndetail"></activity>
     </application>
 
 </manifest>

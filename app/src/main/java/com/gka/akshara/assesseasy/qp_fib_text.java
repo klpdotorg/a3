@@ -27,7 +27,7 @@ public class qp_fib_text extends AppCompatActivity {
 
         // set the background image (pick an image randomly from the QP_BGRND_IMGS array)
         int bkgrndimagearrayindex = new Random().nextInt(globalvault.QP_BGRND_IMGS.length-1);
-        ConstraintLayout clayout = (ConstraintLayout) findViewById(R.id.ConstraintLayout_parent_fibtext);
+        ConstraintLayout clayout = findViewById(R.id.ConstraintLayout_parent_fibtext);
         clayout.setBackgroundResource(globalvault.QP_BGRND_IMGS[bkgrndimagearrayindex]);
 
 
@@ -35,19 +35,19 @@ public class qp_fib_text extends AppCompatActivity {
         Intent intent = getIntent(); // get the Intent that started this activity
         questionid =  intent.getIntExtra("EASYASSESS_QUESTIONID",0);
 
-        TextView tvquestiontext = (TextView)findViewById(R.id.textViewQuestionFIB);
+        TextView tvquestiontext = findViewById(R.id.textViewQuestionFIB);
         tvquestiontext.setText(globalvault.questions[questionid-1].getQuestionText());
 
         // sets the answer field (when navigating backwards, can fill the answer entered earlier in the answer field)
         String answer = globalvault.questions[questionid-1].getAnswerGiven();
-        EditText tvAnswer = (EditText) findViewById(R.id.editTextAnswer);
+        EditText tvAnswer = findViewById(R.id.editTextAnswer);
         if(!TextUtils.isEmpty(answer)) {
             tvAnswer.setText(answer);
         }
 
         // To hide the keyboard initially, remove the focus from the EditText field and move it to the dummy view.
         // When user clicks on the EditText field, the keyboard will appear
-        View dummyview = (View) findViewById(R.id.dummyViewForFocus);
+        View dummyview = findViewById(R.id.dummyViewForFocus);
         tvAnswer.clearFocus();
         dummyview.requestFocus();
 
@@ -90,7 +90,7 @@ public class qp_fib_text extends AppCompatActivity {
 
     public void clickedNext(View view) {
 
-        EditText editTextAnswer = (EditText)findViewById(R.id.editTextAnswer);
+        EditText editTextAnswer = findViewById(R.id.editTextAnswer);
         Editable answer_editable = editTextAnswer.getText();
 
         if(answer_editable != null) {

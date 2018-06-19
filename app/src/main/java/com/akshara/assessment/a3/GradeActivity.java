@@ -102,7 +102,9 @@ public class GradeActivity extends AppCompatActivity {
     public void navigateBack()
     {
         Intent intent=new Intent(getApplicationContext(),NavigationDrawerActivity.class);
+        startActivity(intent);
         overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+
         finish();
     }
     @Override

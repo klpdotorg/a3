@@ -96,6 +96,8 @@ class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.Student
 
                 intent.putExtras(bundle);
                 activity.startActivity(intent);
+                activity. overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+
             }
         });
 
@@ -127,6 +129,8 @@ class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.Student
 
                 intent.putExtras(bundle);
                 activity.startActivity(intent);
+                activity. overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+
 
             }
         });

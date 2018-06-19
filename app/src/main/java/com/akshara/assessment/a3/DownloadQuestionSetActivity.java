@@ -21,6 +21,7 @@ public class DownloadQuestionSetActivity extends BaseActivity {
     Button btnDownloadQuestion;
     Spinner spn_language, spn_subject, spn_selectGrade, spn_selectAssessment;
     ProgressDialog progressDialog;
+    com.akshara.assessment.a3.UtilsPackage.SessionManager smanger;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,7 @@ public class DownloadQuestionSetActivity extends BaseActivity {
         setContentView(R.layout.activity_download_question_set);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Download Question set");
+        smanger=new com.akshara.assessment.a3.UtilsPackage.SessionManager(getApplicationContext());
         btnDownloadQuestion = findViewById(R.id.btnDownloadQuestion);
         spn_language = findViewById(R.id.spn_language);
         spn_subject = findViewById(R.id.spn_subject);
@@ -43,7 +45,7 @@ public class DownloadQuestionSetActivity extends BaseActivity {
                 String subject = spn_subject.getSelectedItem().toString().trim();
                 String grade = spn_selectGrade.getSelectedItem().toString().trim();
                 String assessment = spn_selectAssessment.getSelectedItem().toString().trim();
-                QuestionSetPojo qestionPojo = new QuestionSetPojo(language, subject, grade, assessment, "A3APIAKSHARAAUTHKEY#2018");
+                QuestionSetPojo qestionPojo = new QuestionSetPojo(language, subject, grade, assessment,smanger.getProgramFromSession(), "A3APIAKSHARAAUTHKEY#2018");
 
                 downloadQuestion(qestionPojo);
             }

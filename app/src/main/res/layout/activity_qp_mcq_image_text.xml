@@ -72,6 +72,22 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.70" />
 
+    <ImageButton
+        android:id="@+id/buttonAudio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:background="#00000000"
+        android:visibility="invisible"
+        android:onClick="clickedAudio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/audiosymbol" />
 
     <ImageButton
         android:id="@+id/buttonNext"

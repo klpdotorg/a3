@@ -14,8 +14,6 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 
-import com.akshara.assessment.a3.R;
-
 import java.lang.reflect.Array;
 import java.util.Random;
 import java.util.Timer;
@@ -33,7 +31,7 @@ public class animpage1 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_animpage1);
+        setContentView(com.akshara.assessment.a3.R.layout.activity_animpage1);
 
         // saves the last Question ID passed to this activity to pass back to the 'assessment_manager' activity
         Intent intent = getIntent(); // get the Intent that started this activity
@@ -43,15 +41,15 @@ public class animpage1 extends AppCompatActivity {
         int bkgrndimgindex = questionid[0]/globalvault.animationdisplayinterval;
         if(bkgrndimgindex >= globalvault.ANIMATION_BGRND_IMGS.length)
             bkgrndimgindex = globalvault.ANIMATION_BGRND_IMGS.length - 1;
-        ConstraintLayout clayout = (ConstraintLayout) findViewById(R.id.ConstraintLayoutParentAnimation);
+        ConstraintLayout clayout = findViewById(com.akshara.assessment.a3.R.id.ConstraintLayoutParentAnimation);
         clayout.setBackgroundResource(globalvault.ANIMATION_BGRND_IMGS[bkgrndimgindex]);
 
-        ivrabbit[0] = (ImageView)findViewById(R.id.imageViewRabbitAnim);
-        ivrabbit[0].setImageResource(R.drawable.anim_rabbit); // XML file for rabbit animation frames
+        ivrabbit[0] = findViewById(com.akshara.assessment.a3.R.id.imageViewRabbitAnim);
+        ivrabbit[0].setImageResource(com.akshara.assessment.a3.R.drawable.anim_rabbit); // XML file for rabbit animation frames
         adrabbit[0] = (AnimationDrawable)ivrabbit[0].getDrawable();
 
-        ivboy[0] = (ImageView)findViewById(R.id.imageViewBoyAnim);
-        ivboy[0].setImageResource(R.drawable.anim_man); // XML file for boy animation frames
+        ivboy[0] = findViewById(com.akshara.assessment.a3.R.id.imageViewBoyAnim);
+        ivboy[0].setImageResource(com.akshara.assessment.a3.R.drawable.anim_man); // XML file for boy animation frames
         adboy[0] = (AnimationDrawable)ivboy[0].getDrawable();
 
         final int[] totalwidth = new int[1]; // Defined as an array to workaround the fact that innerclass can not directly modify the class variable and the inner class that get the width is asynchrouns
@@ -62,7 +60,7 @@ public class animpage1 extends AppCompatActivity {
         // So, create a ViewTreeObserver and add a GlobalLayoutListener, which will be invoked when layout is finished
         // get the total width in the listner function
 
-        final ConstraintLayout animparentlayout = findViewById(R.id.ConstraintLayoutParentAnimation);
+        final ConstraintLayout animparentlayout = findViewById(com.akshara.assessment.a3.R.id.ConstraintLayoutParentAnimation);
         ViewTreeObserver vto = animparentlayout.getViewTreeObserver();
         vto.addOnGlobalLayoutListener (new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override

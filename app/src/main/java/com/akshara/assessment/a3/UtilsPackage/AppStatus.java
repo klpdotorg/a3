@@ -4,9 +4,18 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.akshara.assessment.a3.TelemetryReport.pojoReportData;
+import com.akshara.assessment.a3.db.QuestionTable;
+
+import java.util.ArrayList;
+
 
 public class AppStatus {
 
+
+   public static pojoReportData data;
+   public static ArrayList<QuestionTable> questionTables;
+    public static  ArrayList<String> titles;
 
 
         public static boolean isConnected(Context context)

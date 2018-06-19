@@ -107,6 +107,8 @@ public class AsssessmentSelectorAdapter extends RecyclerView.Adapter {
 
                         intent.putExtras(bundle);
                         activity.startActivity(intent);
+                        activity. overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+
                         activity.finish();
 
                     }
@@ -124,7 +126,9 @@ public class AsssessmentSelectorAdapter extends RecyclerView.Adapter {
                         bundle.putInt("A3APP_GRADEID", A3APP_GRADEID);
                         intent.putExtras(bundle);
                         activity.startActivity(intent);
-                      // DailogUtill.showDialog("Coming soon",activity.getSupportFragmentManager(),activity);
+                        activity. overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+
+                        // DailogUtill.showDialog("Coming soon",activity.getSupportFragmentManager(),activity);
 
                         // Toast.makeText(activity,"Coming soon",Toast.LENGTH_SHORT).show();
 
@@ -146,6 +150,8 @@ public class AsssessmentSelectorAdapter extends RecyclerView.Adapter {
 
                         intent.putExtras(bundle);
                         activity.startActivity(intent);
+                        activity. overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+
                         activity.finish();
 
 

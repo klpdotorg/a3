@@ -35,7 +35,7 @@ public class messagedisplay extends AppCompatActivity {
             this.message = databundle.getString("EASYASSESS_MESSAGE");
         }
 
-        TextView msgview = (TextView)findViewById(R.id.textViewMessage);
+        TextView msgview = findViewById(R.id.textViewMessage);
         msgview.setText(this.message);
 
     }

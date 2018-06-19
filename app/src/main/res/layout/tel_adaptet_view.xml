@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="3dp"
+    android:background="@drawable/report_student_rectangle"
+    android:gravity="center|left"
+    android:minHeight="40dp"
+    android:id="@+id/linLayRepo"
+    android:orientation="horizontal"
+    android:paddingLeft="5dp">
+
+    <TextView
+        android:id="@+id/stsid"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.25"
+        android:gravity="center|left"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvStudentName"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.55"
+        android:gravity="center|left"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvMarks"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.2"
+        android:gravity="center|left"
+        android:textSize="16sp" />
+
+</LinearLayout>
