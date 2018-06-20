@@ -506,7 +506,7 @@ import java.util.UUID;
                             String id_assessmentD = assessmentDetailCursor.getString(assessmentDetailCursor.getColumnIndex("id_assessment"));
                             pojoAssessmentDetail.setId_assessment(id_assessmentD);
                             String id_question = assessmentDetailCursor.getString(assessmentDetailCursor.getColumnIndex("id_question"));
-                         //   Log.d("shri","COncept Name:"+getConceptName(id_question));
+
                             pojoAssessmentDetail.setId_question(id_question);
                             String answer_given = assessmentDetailCursor.getString(assessmentDetailCursor.getColumnIndex("answer_given"));
                             pojoAssessmentDetail.setAnswer_given(answer_given);
@@ -516,13 +516,13 @@ import java.util.UUID;
                             pojoAssessmentDetail.setSynced(syncedD);
 
                             pojoAssessmentDetailArrayList.add(pojoAssessmentDetail);
-
+                            //  Log.d("shri","===id_assessmentD:"+id_assessmentD+"----id_question:"+id_question+"----pass:"+pass);
 
                         }
                         com.akshara.assessment.a3.TelemetryReport.CombinePojo combinePojo = new com.akshara.assessment.a3.TelemetryReport.CombinePojo();
                         combinePojo.setPojoAssessment(pojoAssessment);
                         combinePojo.setPojoAssessmentDetail(pojoAssessmentDetailArrayList);
-                        Log.d("shri", "-------&&&&&&-----" + sID.getId());
+
                         combinePojosList.add(combinePojo);
                     }
 
@@ -533,8 +533,10 @@ import java.util.UUID;
                 pojoReportData.setDetailReportsMap(detailReportsMap);
                 pojoReportData.setTable(sID);
                 pojoReportData.setScore(pojoAssessment.getScore());
-                Log.d("shri", "------------" + sID.getId());
+               // Log.d("shri", "------------" + sID.getId());
                 reportDataWithStudentInfo.add(pojoReportData);
+
+
 
 
 
@@ -559,7 +561,7 @@ import java.util.UUID;
 
 
         }
-        Log.d("shri", reportDataWithStudentInfo.size() + "--END----");
+      //  Log.d("shri", reportDataWithStudentInfo.size() + "--END----");
         return reportDataWithStudentInfo;
 
     }

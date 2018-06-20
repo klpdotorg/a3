@@ -72,15 +72,24 @@ public class TelematryIndetailAdapter extends RecyclerView.Adapter<TelematryInde
     public int getAnswer(String conceptName) {
         int answerCount = 0;
          if(data.getDetailReportsMap().get(data.getTable().getId())!=null){
-        for (pojoAssessmentDetail detail : data.getDetailReportsMap().get(data.getTable().getId()).get(data.getDetailReportsMap().size()-1).getPojoAssessmentDetail()) {
-            Log.d("shri",conceptName+"---------00--------");
+
+             int size=data.getDetailReportsMap().get(data.getTable().getId()).size();
+            // int size2=data.getDetailReportsMap().get(data.getTable().getId()).get((size-1)).getPojoAssessmentDetail().size();
+            //pojoAssessmentDetail det=data.getDetailReportsMap().get(data.getTable().getId()).get((size-1)).getPojoAssessmentDetail().get((size2-1));
+
+                    // Log.d("shri","////"+det.getId()+":"+det.getPass());
+
+
+
+             //reportDataWithStudentInfo.get(0).getDetailReportsMap().get(18).get(3).getPojoAssessmentDetail().
+        for (pojoAssessmentDetail detail : data.getDetailReportsMap().get(data.getTable().getId()).get((size-1)).getPojoAssessmentDetail()) {
 
             if(detail!=null) {
                 String concept = getConceptName(detail.getId_question());
-                Log.d("shri",concept+"-----------------");
+              //  Log.d("shri",concept+"------"+conceptName+":"+detail.getPass()+"qidAss"+detail.getId_assessment()+"-QID"+detail.getId_question()+"--id--"+detail.getId());
                 if (conceptName.equalsIgnoreCase(concept)&&detail.getPass().equalsIgnoreCase("P")) {
                     answerCount = answerCount + 1;
-                    Log.d("shri",answerCount+"-----------------");
+                    //Log.d("shri",answerCount+"-----------------");
                 }
             }
 

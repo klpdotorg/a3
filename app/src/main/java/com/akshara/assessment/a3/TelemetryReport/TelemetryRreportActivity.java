@@ -1,15 +1,18 @@
 package com.akshara.assessment.a3.TelemetryReport;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.akshara.assessment.a3.A3Application;
 import com.akshara.assessment.a3.AsssessmentSelectorAdapter;
+import com.akshara.assessment.a3.GradeActivity;
 import com.akshara.assessment.a3.R;
 import com.akshara.assessment.a3.db.KontactDatabase;
 import com.akshara.assessment.a3.db.QuestionSetDetailTable;
@@ -48,6 +51,7 @@ public class TelemetryRreportActivity extends AppCompatActivity {
         A3APP_INSTITUTIONID = getIntent().getLongExtra("A3APP_INSTITUTIONID", 0L);
         EASYASSESS_QUESTIONSETID = getIntent().getIntExtra("EASYASSESS_QUESTIONSETID", 0);
         A3APP_GRADEID = getIntent().getIntExtra("A3APP_GRADEID", 0);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 //        ArrayList<QuestionTable> QuestionTitles = getAllQuestionSetTitle(EASYASSESS_QUESTIONSETID);
         reportRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -64,7 +68,30 @@ public class TelemetryRreportActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
 
+                navigateBack();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        navigateBack();
+    }
+
+    public void navigateBack()
+    {
+
+        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+        finish();
+
+    }
     public ArrayList<StudentTable> getStudentIds(long institution, int gradeId) {
         ArrayList<StudentTable> studentIds = new ArrayList<>();
         Query studentQuery = Query.select().from(StudentTable.TABLE)

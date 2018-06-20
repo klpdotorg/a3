@@ -108,6 +108,7 @@ public class AssessmentSelectorActivity extends BaseActivity {
             case android.R.id.home:
 
                 navigateBack();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

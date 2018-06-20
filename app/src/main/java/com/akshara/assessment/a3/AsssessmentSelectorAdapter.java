@@ -182,7 +182,7 @@ public class AsssessmentSelectorAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        Log.d("shri", questionSetTables.size() + "s");
+       // Log.d("shri", questionSetTables.size() + "s");
         if (questionSetTables.size() <= 0) {
             return 1;
         }

@@ -138,8 +138,12 @@
             android:name="com.gka.akshara.assesseasy.messagedisplay"
             android:label="@string/title_activity_messagedisplay"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".TelemetryReport.TelemetryRreportActivity"></activity>
-        <activity android:name=".TelemetryReport.TelemetryReportIndetail"></activity>
+        <activity android:name=".TelemetryReport.TelemetryRreportActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/A3Theme" />
+        <activity android:name=".TelemetryReport.TelemetryReportIndetail"
+            android:screenOrientation="portrait"
+            android:theme="@style/A3Theme" />
     </application>
 
 </manifest>

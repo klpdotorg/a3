@@ -2,6 +2,7 @@ package com.akshara.assessment.a3.TelemetryReport;
 
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,8 +49,13 @@ public class TelemetryReportAdapter extends RecyclerView.Adapter<TelemetryReport
         Map<Long, ArrayList<CombinePojo>> listData = data.get(position).getDetailReportsMap();
         if (listData.get(studentTable.getId()) != null && listData.get(studentTable.getId()).size() > 0) {
             ArrayList<CombinePojo> combinePojos = listData.get(studentTable.getId());
+            for(CombinePojo cd:listData.get(studentTable.getId()))
+            {
+                //Log.d("shri",cd.getPojoAssessment().getScore()+"!!!!");
+            }
             if (combinePojos.size() > 1) {
-                holder.tvMarks.setText(combinePojos.get(listData.size()-1).getPojoAssessment().getScore() + "/" + questionTables.size());
+                int size=combinePojos.size();
+                holder.tvMarks.setText(combinePojos.get((size-1)).getPojoAssessment().getScore() + "/" + questionTables.size());
 
             } else {
                 holder.tvMarks.setText(combinePojos.get(0).getPojoAssessment().getScore() + "/" + questionTables.size());
