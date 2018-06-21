@@ -17,7 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.akshara.assessment.a3.NetworkRetrofitPackage.A3NetWorkCalls;
+import com.akshara.assessment.a3.NetworkRetrofitPackage.A3Services;
 import com.akshara.assessment.a3.NetworkRetrofitPackage.CurrentStateInterface;
+import com.akshara.assessment.a3.Pojo.AuthKeyPojo;
 import com.akshara.assessment.a3.UtilsPackage.AppStatus;
 import com.akshara.assessment.a3.UtilsPackage.DailogUtill;
 import com.akshara.assessment.a3.UtilsPackage.SessionManager;
@@ -63,13 +65,13 @@ public class SpalashScreenActivity extends BaseActivity {
         // check state and language if user first time login
 
         if (mSession.isLoggedIn()) {
-            Log.d("shri",mSession.isLoggedIn()+"------");
+            Log.d("shri", mSession.isLoggedIn() + "------");
             //langauge screen
             if (getStateCount() == 0) {
                 loadStateDeatil();
             } else {
                 if (mSession.isLoggedIn() && mSession.isSetupDone()) {
-                    Log.d("shri",mSession.isSetupDone()+"----set--");
+                    Log.d("shri", mSession.isSetupDone() + "----set--");
                     Intent intent = new Intent(getApplicationContext(), NavigationDrawerActivity.class);
                     startActivity(intent);
                     finish();
@@ -109,12 +111,59 @@ public class SpalashScreenActivity extends BaseActivity {
             @Override
             public void setSuccess(String message) {
 
-                dailog.setVisibility(View.GONE);
+                final AuthKeyPojo pojo = new AuthKeyPojo(A3Services.AUTH_KEY);
+                new A3NetWorkCalls(SpalashScreenActivity.this).getProgramsList(pojo, new CurrentStateInterface() {
+                    @Override
+                    public void setSuccess(String message) {
 
-                Intent intent = new Intent(getApplicationContext(), LanguageSelectionActivity.class);
-                startActivity(intent);
-                finish();
-                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+
+                        new A3NetWorkCalls(SpalashScreenActivity.this).getAssessmentList(pojo, new CurrentStateInterface() {
+                            @Override
+                            public void setSuccess(String message) {
+
+                                dailog.setVisibility(View.GONE);
+
+                                Intent intent = new Intent(getApplicationContext(), LanguageSelectionActivity.class);
+                                startActivity(intent);
+                                finish();
+                                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+
+                            }
+
+                            @Override
+                            public void setFailed(String message) {
+                                dailog.setVisibility(View.GONE);
+
+                                if (AppStatus.isConnected(getApplicationContext())) {
+                                    DailogUtill.showDialog(message, getSupportFragmentManager(), getApplicationContext());
+                                    btnInternt.setVisibility(View.VISIBLE);
+                                } else {
+                                    DailogUtill.showDialog(message, getSupportFragmentManager(), getApplicationContext());
+                                    btnInternt.setVisibility(View.VISIBLE);
+                                }
+
+                            }
+                        });
+
+
+                    }
+
+                    @Override
+                    public void setFailed(String message) {
+
+                        dailog.setVisibility(View.GONE);
+
+                        if (AppStatus.isConnected(getApplicationContext())) {
+                            DailogUtill.showDialog(message, getSupportFragmentManager(), getApplicationContext());
+                            btnInternt.setVisibility(View.VISIBLE);
+                        } else {
+                            DailogUtill.showDialog(message, getSupportFragmentManager(), getApplicationContext());
+                            btnInternt.setVisibility(View.VISIBLE);
+                        }
+
+                    }
+                });
+
 
             }
 

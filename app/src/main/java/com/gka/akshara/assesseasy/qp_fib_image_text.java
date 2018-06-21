@@ -26,6 +26,7 @@ public class qp_fib_image_text extends AppCompatActivity {
 
     AssessEasyKeyboard aekbd;
     int questionid = 0;
+    String audio_base64string = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,7 @@ public class qp_fib_image_text extends AppCompatActivity {
 
         // set the background image (pick an image randomly from the QP_BGRND_IMGS array)
         int bkgrndimagearrayindex = new Random().nextInt(globalvault.QP_BGRND_IMGS.length-1);
-        ConstraintLayout clayout = findViewById(R.id.ConstraintLayout_parent_fibimagetext);
+        ConstraintLayout clayout = (ConstraintLayout) findViewById(R.id.ConstraintLayout_parent_fibimagetext);
         clayout.setBackgroundResource(globalvault.QP_BGRND_IMGS[bkgrndimagearrayindex]);
 
         if (MainActivity.debugalerts)
@@ -44,12 +45,12 @@ public class qp_fib_image_text extends AppCompatActivity {
         Intent intent = getIntent(); // get the Intent that started this activity
         questionid =  intent.getIntExtra("EASYASSESS_QUESTIONID",0);
 
-        TextView tvquestiontext = findViewById(R.id.textViewQuestionFIB);
+        TextView tvquestiontext = (TextView)findViewById(R.id.textViewQuestionFIB);
         tvquestiontext.setText(globalvault.questions[questionid-1].getQuestionText());
 
         ArrayList qdatalist = globalvault.questions[questionid-1].getQuestionDataList();
 
-        ImageView questionimg = findViewById(R.id.fibQuestionImage);
+        ImageView questionimg = (ImageView)findViewById(R.id.fibQuestionImage);
 
         try {
             for (int i = 0; i < qdatalist.size(); i++) {
@@ -65,6 +66,14 @@ public class qp_fib_image_text extends AppCompatActivity {
                         questionimg.setImageBitmap(decodedImage);   // to set image for an 'ImageView'
                     }
                 }
+
+                if(qdata.datatype.equals("audio")) {
+                    audio_base64string = qdata.filecontent_base64;
+                    ImageView audiobuttonimageview = (ImageView)findViewById(R.id.buttonAudio);
+                    //int res = getResources().getIdentifier("audiosymbol", "drawable", this.getPackageName());
+                    //audiobuttonimageview.setImageResource(res);
+                    audiobuttonimageview.setVisibility(View.VISIBLE);
+                }
             }
         }
         catch(Exception e) {
@@ -74,7 +83,7 @@ public class qp_fib_image_text extends AppCompatActivity {
 
         // sets the answer field (when navigating backwards, can fill the answer entered earlier in the answer field)
         String answer = globalvault.questions[questionid-1].getAnswerGiven();
-        EditText tvAnswer = findViewById(R.id.editTextAnswer);
+        EditText tvAnswer = (EditText) findViewById(R.id.editTextAnswer);
         if(!TextUtils.isEmpty(answer)) {
              tvAnswer.setText(answer);
         }
@@ -84,7 +93,7 @@ public class qp_fib_image_text extends AppCompatActivity {
 
         // To hide the keyboard initially, remove the focus from the EditText field and move it to the dummy view.
         // When user clicks on the EditText field, the keyboard will appear
-        View dummyview = findViewById(R.id.dummyViewForFocus);
+        View dummyview = (View) findViewById(R.id.dummyViewForFocus);
         tvAnswer.clearFocus();
         dummyview.requestFocus();
 
@@ -99,8 +108,12 @@ public class qp_fib_image_text extends AppCompatActivity {
         // Register the EditText box with the custom keyboard
         aekbd.registerEditText(R.id.editTextAnswer);
 
-        if (MainActivity.debugalerts)
-            Log.d("EASYASSESS", "qp_fib_image_text: registered edit");
+        // Play Audio file (if any) associated with the Question, if the flag globalvault.audioautoplay is set to true
+        if(!TextUtils.isEmpty(this.audio_base64string)) {
+            if(globalvault.audioautoplay) { // If the Audio to be played when the screen opens
+                audioManager.playAudio(this.audio_base64string);
+            }
+        }
     }
 
 
@@ -134,7 +147,7 @@ public class qp_fib_image_text extends AppCompatActivity {
 
     public void clickedNext(View view) {
 
-        EditText editTextAnswer = findViewById(R.id.editTextAnswer);
+        EditText editTextAnswer = (EditText)findViewById(R.id.editTextAnswer);
         Editable answer_editable = editTextAnswer.getText();
 
         if(answer_editable != null) {
@@ -151,11 +164,16 @@ public class qp_fib_image_text extends AppCompatActivity {
                     return;
             }
             else {
-                if(globalvault.questions[questionid-1].getAnswerCorrect().equals(answer.trim()))
-                    globalvault.questions[questionid - 1].setPass("P");
-                else
+                try {
+                    if (globalvault.questions[questionid - 1].getAnswerCorrect().equals(answer.trim()))
+                        globalvault.questions[questionid - 1].setPass("P");
+                    else
+                        globalvault.questions[questionid - 1].setPass("F");
+                }
+                catch(Exception e) {
+                    Log.e("EASYASSESS", "qp_fib_image_text: clickedNext: Exception:CorrectAnswer is null"+e.toString());
                     globalvault.questions[questionid - 1].setPass("F");
-
+                }
                 globalvault.questions[questionid-1].setAnswerGiven(answer);
                 this.invokeAssessmentManagerActivity();
             }
@@ -184,5 +202,10 @@ public class qp_fib_image_text extends AppCompatActivity {
         if (MainActivity.debugalerts)
             Log.d("EASYASSESS", "qp_fib_image_text: clickedNext: fromactivvity: "+fromactivityname+" questionid:"+questionid);
 
+    }
+
+    public void clickedAudio(View view) {
+
+        audioManager.playAudio(this.audio_base64string);
     }
 }

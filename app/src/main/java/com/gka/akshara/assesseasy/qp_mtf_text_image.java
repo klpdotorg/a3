@@ -21,7 +21,7 @@ import java.util.Random;
 public class qp_mtf_text_image extends AppCompatActivity {
 
     int questionid = 0;
-
+    String audio_base64string = "";
 
     DragAndDropListenerForImage blankbox1Listener = new DragAndDropListenerForImage();
     DragAndDropListenerForImage blankbox2Listener = new DragAndDropListenerForImage();
@@ -35,7 +35,7 @@ public class qp_mtf_text_image extends AppCompatActivity {
 
         // set the background image (pick an image randomly from the QP_BGRND_IMGS array)
         int bkgrndimagearrayindex = new Random().nextInt(globalvault.QP_BGRND_IMGS.length-1);
-        ConstraintLayout clayout = findViewById(R.id.ConstraintLayout_parent_mtftextimage);
+        ConstraintLayout clayout = (ConstraintLayout) findViewById(R.id.ConstraintLayout_parent_mtftextimage);
         clayout.setBackgroundResource(globalvault.QP_BGRND_IMGS[bkgrndimagearrayindex]);
 
 
@@ -44,26 +44,26 @@ public class qp_mtf_text_image extends AppCompatActivity {
         questionid =  intent.getIntExtra("EASYASSESS_QUESTIONID",0);
 
 
-        TextView tvquestiontext = findViewById(R.id.textViewQuestionText);
+        TextView tvquestiontext = (TextView)findViewById(R.id.textViewQuestionText);
         tvquestiontext.setText(globalvault.questions[questionid-1].getQuestionText());
 
         ArrayList qdatalist = globalvault.questions[questionid-1].getQuestionDataList();
 
         // Leftside Option TextViews
-        TextView option1 = findViewById(R.id.textViewOption1);
-        TextView option2 = findViewById(R.id.textViewOption2);
-        TextView option3 = findViewById(R.id.textViewOption3);
-        TextView option4 = findViewById(R.id.textViewOption4);
+        TextView option1 = (TextView)findViewById(R.id.textViewOption1);
+        TextView option2 = (TextView)findViewById(R.id.textViewOption2);
+        TextView option3 = (TextView)findViewById(R.id.textViewOption3);
+        TextView option4 = (TextView)findViewById(R.id.textViewOption4);
         // Rightside choices ImageViews - Views to drag
-        ImageView choice1 = findViewById(R.id.imageViewChoice1);
-        ImageView choice2 = findViewById(R.id.imageViewChoice2);
-        ImageView choice3 = findViewById(R.id.imageViewChoice3);
-        ImageView choice4 = findViewById(R.id.imageViewChoice4);
+        ImageView choice1 = (ImageView)findViewById(R.id.imageViewChoice1);
+        ImageView choice2 = (ImageView)findViewById(R.id.imageViewChoice2);
+        ImageView choice3 = (ImageView)findViewById(R.id.imageViewChoice3);
+        ImageView choice4 = (ImageView)findViewById(R.id.imageViewChoice4);
         // Middle Blank ImageViews - Views to drop onto
-        ImageView blankbox1 = findViewById(R.id.imageViewBlankbox1);
-        ImageView blankbox2 = findViewById(R.id.imageViewBlankbox2);
-        ImageView blankbox3 = findViewById(R.id.imageViewBlankbox3);
-        ImageView blankbox4 = findViewById(R.id.imageViewBlankbox4);
+        ImageView blankbox1 = (ImageView)findViewById(R.id.imageViewBlankbox1);
+        ImageView blankbox2 = (ImageView)findViewById(R.id.imageViewBlankbox2);
+        ImageView blankbox3 = (ImageView)findViewById(R.id.imageViewBlankbox3);
+        ImageView blankbox4 = (ImageView)findViewById(R.id.imageViewBlankbox4);
 
         Bitmap[] choiceImages = new Bitmap[4];
 
@@ -103,6 +103,14 @@ public class qp_mtf_text_image extends AppCompatActivity {
                         option4.setText(qdata.value);
                     } else ;
                 }
+
+                if(qdata.datatype.equals("audio")) {
+                    audio_base64string = qdata.filecontent_base64;
+                    ImageView audiobuttonimageview = (ImageView)findViewById(R.id.buttonAudio);
+                    //int res = getResources().getIdentifier("audiosymbol", "drawable", this.getPackageName());
+                    //audiobuttonimageview.setImageResource(res);
+                    audiobuttonimageview.setVisibility(View.VISIBLE);
+                }
             }
         }
         catch(Exception e) {
@@ -136,6 +144,13 @@ public class qp_mtf_text_image extends AppCompatActivity {
         blankbox2.setOnDragListener(blankbox2Listener);
         blankbox3.setOnDragListener(blankbox3Listener);
         blankbox4.setOnDragListener(blankbox4Listener);
+
+        // Play Audio file (if any) associated with the Question, if the flag globalvault.audioautoplay is set to true
+        if(!TextUtils.isEmpty(this.audio_base64string)) {
+            if(globalvault.audioautoplay) { // If the Audio to be played when the screen opens
+                audioManager.playAudio(this.audio_base64string);
+            }
+        }
     }
 
     @Override
@@ -216,11 +231,16 @@ public class qp_mtf_text_image extends AppCompatActivity {
 
         globalvault.questions[questionid-1].setAnswerGiven(answerStr);
 
-        if(globalvault.questions[questionid-1].getAnswerCorrect().equals(answerStr.trim()))
-            globalvault.questions[questionid - 1].setPass("P");
-        else
+        try {
+            if (globalvault.questions[questionid - 1].getAnswerCorrect().equals(answerStr.trim()))
+                globalvault.questions[questionid - 1].setPass("P");
+            else
+                globalvault.questions[questionid - 1].setPass("F");
+        }
+        catch(Exception e) {
+            Log.e("EASYASSESS", "qp_mtf_text_image: clickedNext: Exception:CorrectAnswer is null"+e.toString());
             globalvault.questions[questionid - 1].setPass("F");
-
+        }
         this.invokeAssessmentManagerActivity();
     }
 
@@ -237,4 +257,10 @@ public class qp_mtf_text_image extends AppCompatActivity {
             Log.d("EASYASSESS", "qp_mtf_text_image: clickedNext: fromactivvity: "+fromactivityname+" questionid:"+questionid);
 
     }
+
+    public void clickedAudio(View view) {
+
+        audioManager.playAudio(this.audio_base64string);
+    }
+
 }

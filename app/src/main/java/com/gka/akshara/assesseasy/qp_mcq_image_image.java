@@ -26,6 +26,7 @@ import java.util.Random;
 public class qp_mcq_image_image extends AppCompatActivity {
 
     int questionid = 0;
+    String audio_base64string = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,61 +34,82 @@ public class qp_mcq_image_image extends AppCompatActivity {
         setContentView(R.layout.activity_qp_mcq_image_image);
 
         // set the background image (pick an image randomly from the QP_BGRND_IMGS array)
-        int bkgrndimagearrayindex = new Random().nextInt(globalvault.QP_BGRND_IMGS.length - 1);
-        ConstraintLayout clayout = findViewById(R.id.ConstraintLayout_parent_mcq_image_image);
+        int bkgrndimagearrayindex = new Random().nextInt(globalvault.QP_BGRND_IMGS.length-1);
+        ConstraintLayout clayout = (ConstraintLayout) findViewById(R.id.ConstraintLayout_parent_mcq_image_image);
         clayout.setBackgroundResource(globalvault.QP_BGRND_IMGS[bkgrndimagearrayindex]);
 
         // Saves the questionid passed to this page
         Intent intent = getIntent(); // get the Intent that started this activity
-        questionid = intent.getIntExtra("EASYASSESS_QUESTIONID", 0);
+        questionid =  intent.getIntExtra("EASYASSESS_QUESTIONID",0);
 
-        TextView tvquestiontext = findViewById(R.id.textViewQuestionText);
-        tvquestiontext.setText(globalvault.questions[questionid - 1].getQuestionText());
+        TextView tvquestiontext = (TextView)findViewById(R.id.textViewQuestionText);
+        tvquestiontext.setText(globalvault.questions[questionid-1].getQuestionText());
 
-        ArrayList qdatalist = globalvault.questions[questionid - 1].getQuestionDataList();
+        ArrayList qdatalist = globalvault.questions[questionid-1].getQuestionDataList();
 
-        ImageView questionimg = findViewById(R.id.mcqQuestionImage);
-        RadioGroup radiogrp_mcqoptions = findViewById(R.id.radiogroup_optionbuttonsgrp);
+        ImageView questionimg = (ImageView)findViewById(R.id.mcqQuestionImage);
+        RadioGroup radiogrp_mcqoptions = (RadioGroup)findViewById(R.id.radiogroup_optionbuttonsgrp);
 
-        try {
-            for (int i = 0; i < qdatalist.size(); i++) {
+     try {
+         for (int i = 0; i < qdatalist.size(); i++) {
 
-                assessquestiondata qdata = (assessquestiondata) qdatalist.get(i);
-                String paramname = qdata.name;
+             assessquestiondata qdata = (assessquestiondata) qdatalist.get(i);
+             String paramname = qdata.name;
 
-                String imageString = qdata.filecontent_base64;
-                byte[] imageBytes = Base64.decode(imageString, Base64.DEFAULT);
-                Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-                Drawable drawableimg = new BitmapDrawable(getResources(), decodedImage);
+             String imageString = qdata.filecontent_base64;
+             byte[] imageBytes = Base64.decode(imageString, Base64.DEFAULT);
+             Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+             Drawable drawableimg = new BitmapDrawable(getResources(), decodedImage);
 
-                if (paramname.equals("questionimg")) {
-                    questionimg.setImageBitmap(decodedImage);   // to set image for an 'ImageView'
-                } else if (paramname.equals("option1img")) {
-                    ((RadioButton) radiogrp_mcqoptions.getChildAt(0)).setCompoundDrawablesWithIntrinsicBounds(null, null, null, drawableimg); // align image to bottom
-                } else if (paramname.equals("option2img")) {
-                    ((RadioButton) radiogrp_mcqoptions.getChildAt(1)).setCompoundDrawablesWithIntrinsicBounds(null, null, null, drawableimg);
-                } else if (paramname.equals("option3img")) {
-                    ((RadioButton) radiogrp_mcqoptions.getChildAt(2)).setCompoundDrawablesWithIntrinsicBounds(null, null, null, drawableimg);
-                } else if (paramname.equals("option4img")) {
-                    ((RadioButton) radiogrp_mcqoptions.getChildAt(3)).setCompoundDrawablesWithIntrinsicBounds(null, null, null, drawableimg);
-                } else ;
-            }
-        } catch (Exception e) {
-            Log.e("EASYASSESS", "qp_mcq_image_image: exception: " + e.getMessage());
-        }
+             if (paramname.equals("questionimg")) {
+                 questionimg.setImageBitmap(decodedImage);   // to set image for an 'ImageView'
+             }
+             else if (paramname.equals("option1img")) {
+                 ((RadioButton) radiogrp_mcqoptions.getChildAt(0)).setCompoundDrawablesWithIntrinsicBounds(null, null, null, drawableimg); // align image to bottom
+             }
+             else if (paramname.equals("option2img")) {
+                 ((RadioButton) radiogrp_mcqoptions.getChildAt(1)).setCompoundDrawablesWithIntrinsicBounds(null, null, null, drawableimg);
+             }
+             else if (paramname.equals("option3img")) {
+                 ((RadioButton) radiogrp_mcqoptions.getChildAt(2)).setCompoundDrawablesWithIntrinsicBounds(null, null, null, drawableimg);
+             }
+             else if (paramname.equals("option4img")) {
+                 ((RadioButton) radiogrp_mcqoptions.getChildAt(3)).setCompoundDrawablesWithIntrinsicBounds(null, null, null, drawableimg);
+             }
+             else ;
+
+             if(qdata.datatype.equals("audio")) {
+                 audio_base64string = qdata.filecontent_base64;
+                 ImageView audiobuttonimageview = (ImageView)findViewById(R.id.buttonAudio);
+                 //int res = getResources().getIdentifier("audiosymbol", "drawable", this.getPackageName());
+                 //audiobuttonimageview.setImageResource(res);
+                 audiobuttonimageview.setVisibility(View.VISIBLE);
+             }
+         }
+     }
+     catch(Exception e) {
+         Log.e("EASYASSESS", "qp_mcq_image_image: exception: "+e.getMessage());
+     }
 
 
         // sets the option selected (when navigating backwards, can fill the answer entered earlier in the answer field)
-        String answer = globalvault.questions[questionid - 1].getAnswerGiven();
-        if (!TextUtils.isEmpty(answer)) {
+        String answer = globalvault.questions[questionid-1].getAnswerGiven();
+        if(!TextUtils.isEmpty(answer)) {
             if (MainActivity.debugalerts)
-                Log.d("EASYASSESS", "qp_mcq_image_image: setting the answer. answer:" + answer);
+                Log.d("EASYASSESS", "qp_mcq_image_image: setting the answer. answer:"+answer);
 
             int intAnswer = Integer.parseInt(answer);
             for (int i = 0; i < radiogrp_mcqoptions.getChildCount(); i++) {
-                if (intAnswer == (i + 1)) {
+                if(intAnswer == (i + 1)) {
                     ((RadioButton) radiogrp_mcqoptions.getChildAt(i)).setChecked(true);
                 }
+            }
+        }
+
+        // Play Audio file (if any) associated with the Question, if the flag globalvault.audioautoplay is set to true
+        if(!TextUtils.isEmpty(this.audio_base64string)) {
+            if(globalvault.audioautoplay) { // If the Audio to be played when the screen opens
+                audioManager.playAudio(this.audio_base64string);
             }
         }
 
@@ -118,33 +140,39 @@ public class qp_mcq_image_image extends AppCompatActivity {
 
     public void clickedNext(View view) {
 
-        RadioGroup radiogrp_mcqoptions = findViewById(R.id.radiogroup_optionbuttonsgrp);
+        RadioGroup radiogrp_mcqoptions = (RadioGroup)findViewById(R.id.radiogroup_optionbuttonsgrp);
         int selectedRadioButtonId = radiogrp_mcqoptions.getCheckedRadioButtonId();
 
-        if (selectedRadioButtonId == -1) { // Nothing selected
+        if(selectedRadioButtonId == -1) { // Nothing selected
             if (MainActivity.debugalerts)
                 Log.d("EASYASSESS", "qp_mcq_img_img: clickedNext: No option selected");
-            if (globalvault.allowskipquestions) {
+            if(globalvault.allowskipquestions) {
                 globalvault.questions[questionid - 1].setPass("S");
                 this.invokeAssessmentManagerActivity();
                 return;
-            } else
+            }
+            else
                 return;
         }
 
-        RadioButton selectedRadioButton = findViewById(selectedRadioButtonId);
+        RadioButton selectedRadioButton = (RadioButton) findViewById(selectedRadioButtonId);
         //String selectedRadioButtonText = selectedRadioButton.getText().toString();
         int selectedoption = radiogrp_mcqoptions.indexOfChild(selectedRadioButton) + 1; // Index starts from 0. So add +1 as options are numbered 1 to 4
-        globalvault.questions[questionid - 1].setAnswerGiven(Integer.toString(selectedoption));
+        globalvault.questions[questionid-1].setAnswerGiven(Integer.toString(selectedoption));
 
         if (MainActivity.debugalerts)
-            Log.d("EASYASSESS", "qp_mcq_img_img: clickedNext: selectedoption: " + selectedoption + " correctAnswer:" + globalvault.questions[questionid - 1].getAnswerCorrect());
+            Log.d("EASYASSESS", "qp_mcq_img_img: clickedNext: selectedoption: "+selectedoption+" correctAnswer:"+globalvault.questions[questionid-1].getAnswerCorrect());
 
-        if (globalvault.questions[questionid - 1].getAnswerCorrect().equals(Integer.toString(selectedoption)))
-            globalvault.questions[questionid - 1].setPass("P");
-        else
+        try {
+            if (globalvault.questions[questionid - 1].getAnswerCorrect().equals(Integer.toString(selectedoption)))
+                globalvault.questions[questionid - 1].setPass("P");
+            else
+                globalvault.questions[questionid - 1].setPass("F");
+        }
+        catch(Exception e) {
+            Log.e("EASYASSESS", "qp_mcq_img_img: clickedNext: Exception:CorrectAnswer is null"+e.toString());
             globalvault.questions[questionid - 1].setPass("F");
-
+        }
         this.invokeAssessmentManagerActivity();
 
     }
@@ -157,9 +185,15 @@ public class qp_mcq_image_image extends AppCompatActivity {
         intent.putExtra("EASYASSESS_QUESTIONID", questionid);
         intent.putExtra("EASYASSESS_CLICKEDBACKARROW", false);
         startActivity(intent);
-        if (MainActivity.debugalerts)
-            Log.d("EASYASSESS", "qp_mcq_img_img: clickedNext: fromactivvity: " + fromactivityname + " questionid:" + questionid);
 
+        if (MainActivity.debugalerts)
+            Log.d("EASYASSESS", "qp_mcq_img_img: clickedNext: fromactivvity: "+fromactivityname+" questionid:"+questionid);
+
+    }
+
+    public void clickedAudio(View view) {
+
+        audioManager.playAudio(this.audio_base64string);
     }
 
 }

@@ -9,16 +9,19 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.akshara.assessment.a3.R;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class qp_fib_text extends AppCompatActivity {
 
     AssessEasyKeyboard aekbd;
     int questionid = 0;
+    String audio_base64string = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +30,7 @@ public class qp_fib_text extends AppCompatActivity {
 
         // set the background image (pick an image randomly from the QP_BGRND_IMGS array)
         int bkgrndimagearrayindex = new Random().nextInt(globalvault.QP_BGRND_IMGS.length-1);
-        ConstraintLayout clayout = findViewById(R.id.ConstraintLayout_parent_fibtext);
+        ConstraintLayout clayout = (ConstraintLayout) findViewById(R.id.ConstraintLayout_parent_fibtext);
         clayout.setBackgroundResource(globalvault.QP_BGRND_IMGS[bkgrndimagearrayindex]);
 
 
@@ -35,19 +38,41 @@ public class qp_fib_text extends AppCompatActivity {
         Intent intent = getIntent(); // get the Intent that started this activity
         questionid =  intent.getIntExtra("EASYASSESS_QUESTIONID",0);
 
-        TextView tvquestiontext = findViewById(R.id.textViewQuestionFIB);
+        TextView tvquestiontext = (TextView)findViewById(R.id.textViewQuestionFIB);
         tvquestiontext.setText(globalvault.questions[questionid-1].getQuestionText());
+
+        ArrayList qdatalist = globalvault.questions[questionid-1].getQuestionDataList();
+
+        try {
+            if(qdatalist != null) {
+                for (int i = 0; i < qdatalist.size(); i++) {
+
+                    assessquestiondata qdata = (assessquestiondata) qdatalist.get(i);
+
+                    if (qdata.datatype.equals("audio")) {
+                        audio_base64string = qdata.filecontent_base64;
+                        ImageView audiobuttonimageview = (ImageView) findViewById(R.id.buttonAudio);
+                        //int res = getResources().getIdentifier("audiosymbol", "drawable", this.getPackageName());
+                        //audiobuttonimageview.setImageResource(res);
+                        audiobuttonimageview.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        }
+        catch(Exception e) {
+            Log.e("EASYASSESS", "qp_fib_text: exception: "+e.getMessage());
+        }
 
         // sets the answer field (when navigating backwards, can fill the answer entered earlier in the answer field)
         String answer = globalvault.questions[questionid-1].getAnswerGiven();
-        EditText tvAnswer = findViewById(R.id.editTextAnswer);
+        EditText tvAnswer = (EditText) findViewById(R.id.editTextAnswer);
         if(!TextUtils.isEmpty(answer)) {
             tvAnswer.setText(answer);
         }
 
         // To hide the keyboard initially, remove the focus from the EditText field and move it to the dummy view.
         // When user clicks on the EditText field, the keyboard will appear
-        View dummyview = findViewById(R.id.dummyViewForFocus);
+        View dummyview = (View) findViewById(R.id.dummyViewForFocus);
         tvAnswer.clearFocus();
         dummyview.requestFocus();
 
@@ -57,6 +82,13 @@ public class qp_fib_text extends AppCompatActivity {
 
         // Register the EditText box with the custom keyboard
         aekbd.registerEditText(R.id.editTextAnswer);
+
+        // Play Audio file (if any) associated with the Question, if the flag globalvault.audioautoplay is set to true
+        if(!TextUtils.isEmpty(this.audio_base64string)) {
+            if(globalvault.audioautoplay) { // If the Audio to be played when the screen opens
+                audioManager.playAudio(this.audio_base64string);
+            }
+        }
     }
 
 
@@ -90,14 +122,14 @@ public class qp_fib_text extends AppCompatActivity {
 
     public void clickedNext(View view) {
 
-        EditText editTextAnswer = findViewById(R.id.editTextAnswer);
+        EditText editTextAnswer = (EditText)findViewById(R.id.editTextAnswer);
         Editable answer_editable = editTextAnswer.getText();
 
         if(answer_editable != null) {
             String answer = answer_editable.toString();
             if(answer.equals("")) {
                 if (MainActivity.debugalerts)
-                    Log.d("EASYASSESS", "qp_arithmetic_fib: clickedNext: answer is empty string");
+                    Log.d("EASYASSESS", "qp_fib_text: clickedNext: answer is empty string");
                 if(globalvault.allowskipquestions) {
                     globalvault.questions[questionid - 1].setPass("S");
                     this.invokeAssessmentManagerActivity();
@@ -107,11 +139,16 @@ public class qp_fib_text extends AppCompatActivity {
                     return;
             }
             else {
-
-                if(globalvault.questions[questionid-1].getAnswerCorrect().equals(answer.trim()))
-                    globalvault.questions[questionid - 1].setPass("P");
-                else
+                try {
+                    if (globalvault.questions[questionid - 1].getAnswerCorrect().equals(answer.trim()))
+                        globalvault.questions[questionid - 1].setPass("P");
+                    else
+                        globalvault.questions[questionid - 1].setPass("F");
+                }
+                catch(Exception e) {
+                    Log.e("EASYASSESS", "qp_fib_text: clickedNext: Exception:CorrectAnswer is null"+e.toString());
                     globalvault.questions[questionid - 1].setPass("F");
+                }
                 globalvault.questions[questionid-1].setAnswerGiven(answer);
                 this.invokeAssessmentManagerActivity();
             }
@@ -140,5 +177,10 @@ public class qp_fib_text extends AppCompatActivity {
         if (MainActivity.debugalerts)
             Log.d("EASYASSESS", "qp_fib_text: clickedNext: fromactivity: "+fromactivityname+" questionid:"+questionid);
 
+    }
+
+    public void clickedAudio(View view) {
+
+        audioManager.playAudio(this.audio_base64string);
     }
 }

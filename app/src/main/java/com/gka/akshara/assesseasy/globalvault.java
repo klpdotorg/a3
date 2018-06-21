@@ -57,6 +57,7 @@ public class globalvault {
     static boolean autosynctelemetry = true; // If true, all unsynced Telemetry data (assessment records) will be read from the local DB and Synced to the Server automatically at the end of the Assessment (if connectivity is available)
     static boolean deleterecordsaftersync = false; // if true, all the telemetry records that are synced to the A3 Server will be flushed out from the device database
     static boolean demomodeifnodb = false; // If set true, the app will run with demo questions in case it fails to read question set from the DB
+    static boolean audioautoplay = true; // Play the audio file for the Question (if any) automatically when the screen is displayed initially
 
     public static String[] questionTemplTypes = {
 

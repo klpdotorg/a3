@@ -2,6 +2,7 @@ package com.gka.akshara.assesseasy;
 
 import android.media.AudioTrack;
 import android.media.MediaPlayer;
+import android.text.TextUtils;
 import android.util.Log;
 
 /**
@@ -13,6 +14,12 @@ public class audioManager {
     public static MediaPlayer mplayer = new MediaPlayer();
 
     public static void playAudio(String base64EncodedString) {
+
+        if(TextUtils.isEmpty(base64EncodedString)) {
+            if (MainActivity.debugalerts)
+                Log.d("EASYASSESS", "audioManager: playAudio: Passed empty base64EncodedString for the Audio");
+            return;
+        }
 
         try {
             String url = "data:audio/mp3;base64,"+base64EncodedString;

@@ -1,6 +1,7 @@
 package com.gka.akshara.assesseasy;
 
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,8 @@ import android.util.Log;
 import com.akshara.assessment.a3.R;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 
@@ -299,6 +302,44 @@ public class assessment_manager extends AppCompatActivity {
         dbquestions[0].addQuestionData(paramadd2);
 
         Log.d("EASYASSESS", "assessmentmanager:addTestQuestionsToDatabase. Added paramadd2");
+
+        // Add an Audio file to the Question (for Testing)
+
+        assessquestiondata paramaudio = new assessquestiondata();
+        paramaudio.name = "audio";
+        paramaudio.label = "";
+        paramaudio.datatype = "audio";
+        paramaudio.role = "parameter";
+        paramaudio.value = "";
+
+        String base64audiostring = "";
+        try {
+            //FileInputStream fis = new FileInputStream("assets/testaudio.mp3");
+            AssetManager mngr = getAssets();
+            InputStream fis =  mngr.open("testaudio.mp3");
+
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+            int read = 0;
+            byte[] buffer = new byte[1024];
+            while (read != -1) {
+                read = fis.read(buffer);
+                if (read != -1)
+                    out.write(buffer,0,read);
+            }
+            out.close();
+            byte[] bytes = out.toByteArray();
+            base64audiostring = Base64.encodeToString(bytes, Base64.DEFAULT);
+            Log.e("EASYASSESS", "assessmentmanager:addTestQuestionsToDatabase. Audio string:"+base64audiostring);
+
+        }
+        catch(Exception e) {
+            Log.e("EASYASSESS", "assessmentmanager:addTestQuestionsToDatabase. File exception"+e.toString());
+
+        }
+        paramaudio.filecontent_base64 = base64audiostring;
+        dbquestions[0].addQuestionData(paramaudio);
+
 
         globalvault.dsmgr.addQuestion(dbquestions[0], qsetid);
 
@@ -1209,7 +1250,7 @@ public class assessment_manager extends AppCompatActivity {
         parammtftxttxt8.label = "Choice4";
         parammtftxttxt8.datatype = "text";
         parammtftxttxt8.role = "parameter";
-        parammtftxttxt8.value = "Fruit";
+        parammtftxttxt8.value = "Animal";
         globalvault.questions[indexq].addQuestionData(parammtftxttxt8);
 
         indexq++;
@@ -1374,7 +1415,7 @@ public class assessment_manager extends AppCompatActivity {
         byte[] imageBytes31 = baos31.toByteArray();
         String imageString31 = Base64.encodeToString(imageBytes31, Base64.DEFAULT);
 
-        attribmcqimgtxt.filecontent_base64 = imageString31;
+        attribtoftxtimg.filecontent_base64 = imageString31;
         globalvault.questions[indexq].addQuestionData(attribtoftxtimg);
 
 

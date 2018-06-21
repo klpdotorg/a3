@@ -97,7 +97,6 @@ public class finalpage_boywins extends AppCompatActivity {
             intent.putExtra("A3APP_LANGUAGE",globalvault.a3app_language);
             intent.putExtra("A3APP_CHILDID",globalvault.a3app_childId);
             intent.putExtra("EASYASEESS_QUESTIONSETID", globalvault.questionsetid);
-            Log.d("shri","------"+globalvault.questionsetid);
 
             intent.putExtra("EASYASSESS_CLICKEDBACKARROW", false);
 

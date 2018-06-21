@@ -9,4 +9,10 @@ public class A3Services {
     public static final String SCHOOLS="/api/v1/institutions/?&s_type=primaryschools";
     public static final String UPDATE_PROFILE ="/api/v1/users/profile" ;
 
+
+    public static final String AUTH_KEY="A3APIAKSHARAAUTHKEY#2018";
+    public static final String PROGRAMSURL="http://dev.klp.org.in/a3/getPrograms";
+    public static final String ASSESSMENT_URL="http://dev.klp.org.in/a3/getAssessmentTypes";
+    public static final String QUESTIONSET_URL="http://dev.klp.org.in/a3/getQuestionSets";
+
 }

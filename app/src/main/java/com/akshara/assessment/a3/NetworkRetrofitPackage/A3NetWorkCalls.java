@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.akshara.assessment.a3.A3Application;
+import com.akshara.assessment.a3.AssessmentPojoPack.AssessmentPojoRes;
 import com.akshara.assessment.a3.BlocksPojo.BlockDetailPojo;
 import com.akshara.assessment.a3.ClusterPojos.ClusterDetailPojo;
 import com.akshara.assessment.a3.DistrictPojos.DistrictPojos;
@@ -13,8 +14,11 @@ import com.akshara.assessment.a3.ErrorHandlingPack.A3Errors;
 import com.akshara.assessment.a3.ErrorPojoPackage.ForgotOTPError;
 import com.akshara.assessment.a3.ErrorPojoPackage.InvalidOTp;
 import com.akshara.assessment.a3.ErrorPojoPackage.LoginErrorPojo;
+import com.akshara.assessment.a3.Pojo.AuthKeyPojo;
 import com.akshara.assessment.a3.Pojo.ForgotPassswordOtpPojo;
 
+import com.akshara.assessment.a3.Pojo.Program;
+import com.akshara.assessment.a3.Pojo.ProgramsResPojo;
 import com.akshara.assessment.a3.Pojo.QuestionSetPojo;
 import com.akshara.assessment.a3.Pojo.RegisterStudentPojo;
 import com.akshara.assessment.a3.Pojo.ResetPasswordPojo;
@@ -31,9 +35,11 @@ import com.akshara.assessment.a3.StudentPojopack.SchoolStudentPojo;
 import com.akshara.assessment.a3.UserRolePack.UserRolesPojos;
 import com.akshara.assessment.a3.UtilsPackage.SchoolStateInterface;
 import com.akshara.assessment.a3.UtilsPackage.SessionManager;
+import com.akshara.assessment.a3.db.AssessmentTypeTable;
 import com.akshara.assessment.a3.db.Boundary;
 import com.akshara.assessment.a3.db.InstititeGradeIdTable;
 import com.akshara.assessment.a3.db.KontactDatabase;
+import com.akshara.assessment.a3.db.ProgramTable;
 import com.akshara.assessment.a3.db.QuestionDataTable;
 import com.akshara.assessment.a3.db.QuestionSetDetailTable;
 import com.akshara.assessment.a3.db.QuestionSetTable;
@@ -81,7 +87,7 @@ public class A3NetWorkCalls {
 
     public void login(String mobile, String password, String stateKey, final CurrentStateInterface currentStateInterface) {
 
-        apiInterface.userLoginService(mobile, password, stateKey,"a3").enqueue(new Callback<ResponseBody>() {
+        apiInterface.userLoginService(mobile, password, stateKey, "a3").enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
@@ -862,6 +868,7 @@ public class A3NetWorkCalls {
     public void downloadQuestionset(String url, QuestionSetPojo qestionPojo, final CurrentStateInterface currentStateInterface) {
 
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+
         Call<QuestionSetPojos> api = apiInterface.getQuestionset(url, qestionPojo);
         api.enqueue(new Callback<QuestionSetPojos>() {
             @Override
@@ -888,6 +895,124 @@ public class A3NetWorkCalls {
             }
         });
 
+
+    }
+
+    public void getAssessmentList(AuthKeyPojo authKeyPojo, final CurrentStateInterface currentStateInterface) {
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        String Url = A3Services.ASSESSMENT_URL;
+        Call<AssessmentPojoRes> api = apiInterface.getAssessmentFromService(authKeyPojo, Url);
+
+        api.enqueue(new Callback<AssessmentPojoRes>() {
+            @Override
+            public void onResponse(Call<AssessmentPojoRes> call, Response<AssessmentPojoRes> response) {
+
+                if (response.isSuccessful()) {
+                    parseAssessmentData(response.body(), currentStateInterface);
+                } else {
+                    currentStateInterface.setFailed("Assessment loading failed");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AssessmentPojoRes> call, Throwable t) {
+                currentStateInterface.setFailed(getFailureMessage(t));
+            }
+        });
+
+
+    }
+
+    private void parseAssessmentData(AssessmentPojoRes body, CurrentStateInterface currentStateInterface) {
+
+        if (body != null && body.getStatus().equalsIgnoreCase("success") && body.getPrograms() != null && body.getPrograms().size() > 0) {
+            try {
+                db.deleteAll(AssessmentTypeTable.class);
+            } catch (Exception e) {
+
+            }
+
+
+            for (com.akshara.assessment.a3.AssessmentPojoPack.Program program : body.getPrograms()) {
+
+                Log.d("shri", body.getPrograms().size() + "---------");
+
+                AssessmentTypeTable typeTable = new AssessmentTypeTable();
+                typeTable.setId(Long.parseLong(program.getIdAssesstype()));
+                typeTable.setAssesstypeName(program.getAssesstypeName());
+                typeTable.setAssesstypeDescr(program.getAssesstypeDescr());
+                typeTable.setIdProgram(Long.parseLong(program.getIdProgram()));
+                typeTable.setProgramName(program.getProgramName());
+                typeTable.setStartMonth(program.getStartMonth());
+                typeTable.setEndMonth(program.getEndMonth());
+                db.insertNew(typeTable);
+
+            }
+
+            currentStateInterface.setSuccess("All Assessment Loaded");
+
+
+        } else {
+            currentStateInterface.setFailed("Assessment Loading Failed");
+        }
+
+    }
+
+    public void getProgramsList(AuthKeyPojo authKeyPojo, final CurrentStateInterface currentStateInterface) {
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        String Url = A3Services.PROGRAMSURL;
+
+        Call<ProgramsResPojo> api = apiInterface.getProgramsFromService(authKeyPojo, Url);
+        api.enqueue(new Callback<ProgramsResPojo>() {
+            @Override
+            public void onResponse(Call<ProgramsResPojo> call, Response<ProgramsResPojo> response) {
+
+                if (response.isSuccessful() && response.body().getStatus().equalsIgnoreCase("success")) {
+                    parseResponse(response.body(), currentStateInterface);
+                } else {
+                    //Toast.makeText(context, "Fail", Toast.LENGTH_SHORT).show();
+                    currentStateInterface.setFailed("Programs loading failed");
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ProgramsResPojo> call, Throwable t) {
+                currentStateInterface.setFailed(getFailureMessage(t));
+            }
+        });
+
+
+    }
+
+    private void parseResponse(ProgramsResPojo body, CurrentStateInterface currentStateInterface) {
+
+        if (body != null && body.getPrograms() != null && body.getPrograms().size() > 0) {
+            try {
+                db.deleteAll(ProgramTable.class);
+            } catch (Exception e) {
+
+            }
+
+            for (Program program : body.getPrograms()) {
+                try {
+                    long id = Long.parseLong(program.getIdProgram());
+                    String program_name = program.getProgramName();
+                    String program_descr = program.getProgramDescr();
+                    ProgramTable programTable = new ProgramTable();
+                    programTable.setId(id);
+                    programTable.setProgramName(program_name);
+                    programTable.setProgramDescr(program_descr);
+                    db.insertNew(programTable);
+                } catch (Exception e) {
+                    currentStateInterface.setFailed("Programs loading failed");
+                }
+            }
+            currentStateInterface.setSuccess("All Programs Loaded");
+
+        } else {
+            currentStateInterface.setFailed("No Programs Found");
+        }
 
     }
 
@@ -1002,16 +1127,16 @@ public class A3NetWorkCalls {
                     listIds.add(qsT.getIdQuestion());
                 }
 
-                Log.d("shri", "Question size:=======" + listIds.size());
+                // Log.d("shri", "Question size:=======" + listIds.size());
 
                 //delete Question & data
                 int questionint = db.deleteWhere(QuestionTable.class, QuestionTable.ID_QUESTION.in(listIds));
-                Log.d("shri", "deleted Questions:" + questionint);
+                //  Log.d("shri", "deleted Questions:" + questionint);
                 int quesDataInt = db.deleteWhere(QuestionDataTable.class, QuestionDataTable.ID_QUESTION.in(listIds));
-                Log.d("shri", "deleted data:" + quesDataInt);
+                // Log.d("shri", "deleted data:" + quesDataInt);
 
                 int quesSetDetailInt = db.deleteWhere(QuestionSetDetailTable.class, QuestionSetDetailTable.ID_QUESTIONSET.eq(questionSetTable.getIdQuestionset()));
-                Log.d("shri", "deleted QuestionsetDetail:" + quesSetDetailInt);
+                //   Log.d("shri", "deleted QuestionsetDetail:" + quesSetDetailInt);
             }
 
 
@@ -1055,7 +1180,7 @@ public class A3NetWorkCalls {
                             //questionTable.setIdQuestionset(Integer.parseInt(questionset.getIdQuestionset()));
                             questionTable.setQuestionTitle(question.getTitle());
                             questionTable.setQuestionText(question.getText());
-                            // questionTable.setCorrectAnswer(question.getC());
+                            questionTable.setCorrectAnswer(question.getCorrect_answer());
                             questionTable.setLanguageName(question.getLanguage());
                             questionTable.setSubjectName(question.getSubject());
                             questionTable.setGradeName(question.getGrade());

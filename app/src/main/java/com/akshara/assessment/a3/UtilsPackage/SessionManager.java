@@ -71,6 +71,7 @@ public class SessionManager {
 
     public static final String LANGUAGEPOSITION = "LANGUAGEPOSITION";
     public static final String PROGRAM = "PROGRAM";
+    public static final String PROGRAM_ID = "PROGRAM_ID";
 
     // Constructor
     public SessionManager(Context context) {
@@ -322,6 +323,17 @@ public class SessionManager {
 
         return pref.getString(PROGRAM,"");
     }
+
+    public void setProgramId(long programId) {
+        editor.putLong(PROGRAM_ID, programId);
+        editor.commit();
+    }
+
+    public long getProgramIdFromSession() {
+
+        return pref.getLong(PROGRAM_ID,0);
+    }
+
 
 }
 

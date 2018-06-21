@@ -17,8 +17,11 @@ import android.widget.Toast;
 import com.akshara.assessment.a3.NetworkRetrofitPackage.A3NetWorkCalls;
 import com.akshara.assessment.a3.NetworkRetrofitPackage.CurrentStateInterface;
 import com.akshara.assessment.a3.Pojo.LanguagePojo;
+import com.akshara.assessment.a3.Pojo.Program;
+import com.akshara.assessment.a3.Pojo.ProgramPojo;
 import com.akshara.assessment.a3.Pojo.StatePojo;
 import com.akshara.assessment.a3.UtilsPackage.ProgressUtil;
+import com.akshara.assessment.a3.UtilsPackage.RolesUtils;
 import com.akshara.assessment.a3.UtilsPackage.SessionManager;
 import com.akshara.assessment.a3.UtilsPackage.SignUpResultDialogFragment;
 import com.akshara.assessment.a3.db.KontactDatabase;
@@ -36,7 +39,7 @@ public class LanguageSelectionActivity extends BaseActivity {
 
 
     Button btnOK, btnNext;
-    Spinner spnSelectStae, spnSelectLanguage,spnProgram;
+    Spinner spnSelectStae, spnSelectLanguage, spnProgram;
     SessionManager sessionManager;
 
     private KontactDatabase db;
@@ -58,15 +61,21 @@ public class LanguageSelectionActivity extends BaseActivity {
         sessionManager = new SessionManager(getApplicationContext());
         spnSelectLanguage = findViewById(R.id.spnSelectLanguage);
         spnSelectStae = findViewById(R.id.spnSelectStae);
+        db = ((A3Application) getApplicationContext().getApplicationContext()).getDb();
+
+        ArrayList<ProgramPojo> dataList = RolesUtils.getProgramData(db);
+        ProgramPojo pojo = new ProgramPojo();
+        pojo.setId(0);
+        pojo.setProgramName(getResources().getString(R.string.select_program));
+        dataList.add(0, pojo);
         spnProgram = findViewById(R.id.spnProgram);
-        spnProgram.setAdapter(new ArrayAdapter(LanguageSelectionActivity.this, R.layout.spinnertextview, getResources().getStringArray(R.array.program)));
+        spnProgram.setAdapter(new ArrayAdapter(LanguageSelectionActivity.this, R.layout.spinnertextview, dataList));
         getSupportActionBar().setTitle("Select Language");
         tv1 = findViewById(R.id.tv1);
         tv2 = findViewById(R.id.tv2);
         tv1.setText(getResources().getString(R.string.selectStateForLanguage));
         tv2.setText(getResources().getString(R.string.selectLanguageForLanguage));
         progressDialog = ProgressUtil.showProgress(LanguageSelectionActivity.this, getResources().getString(R.string.authenticating));
-        db = ((A3Application) getApplicationContext().getApplicationContext()).getDb();
         stateList = new ArrayList<>();
         languageList = new ArrayList<>();
 
@@ -127,7 +136,7 @@ public class LanguageSelectionActivity extends BaseActivity {
 
                 {
 
-                    if(spnProgram.getSelectedItemPosition()>0) {
+                    if (spnProgram.getSelectedItemPosition() > 0) {
                         final String language = languageList.get(spnSelectLanguage.getSelectedItemPosition()).getLanguageEng();
                         final String languagekey = languageList.get(spnSelectLanguage.getSelectedItemPosition()).getKey();
                         final String state = stateList.get(spnSelectStae.getSelectedItemPosition()).getState();
@@ -146,6 +155,7 @@ public class LanguageSelectionActivity extends BaseActivity {
                                 sessionManager.setStateSelection(stateKeyString);
                                 sessionManager.setStatePosition(spnSelectStae.getSelectedItemPosition());
                                 sessionManager.setProgram(spnProgram.getSelectedItem().toString().trim());
+                                sessionManager.setProgramId(((ProgramPojo) spnProgram.getSelectedItem()).getId());
                                 // Toast.makeText(getApplicationContext(),stateKey+":"+languagekey,Toast.LENGTH_SHORT).show();
                                 A3Application.setLanguage(getApplicationContext(), languagekey);
                                 sessionManager.setLanguagePosition(spnSelectLanguage.getSelectedItemPosition());
@@ -173,8 +183,7 @@ public class LanguageSelectionActivity extends BaseActivity {
                         });
 
 
-                    }else
-                    {
+                    } else {
                         showSignupResultDialog(
                                 getResources().getString(R.string.app_name),
                                 getResources().getString(R.string.pleaseSelectProgram),

@@ -1,10 +1,13 @@
 package com.akshara.assessment.a3.NetworkRetrofitPackage;
 
 
+import com.akshara.assessment.a3.AssessmentPojoPack.AssessmentPojoRes;
 import com.akshara.assessment.a3.BlocksPojo.BlockDetailPojo;
 import com.akshara.assessment.a3.ClusterPojos.ClusterDetailPojo;
 import com.akshara.assessment.a3.DistrictPojos.DistrictPojos;
+import com.akshara.assessment.a3.Pojo.AuthKeyPojo;
 import com.akshara.assessment.a3.Pojo.ForgotPassswordOtpPojo;
+import com.akshara.assessment.a3.Pojo.ProgramsResPojo;
 import com.akshara.assessment.a3.Pojo.QuestionSetPojo;
 import com.akshara.assessment.a3.Pojo.RegisterStudentPojo;
 import com.akshara.assessment.a3.Pojo.RegstrationResponsePojo;
@@ -111,6 +114,12 @@ public interface ApiInterface {
                                               @Header("Authorization") String authHeader,
                                               @Body ArrayList<RegisterStudentPojo> pojo);
 
+
+    @POST
+    Call<ProgramsResPojo> getProgramsFromService(@Body AuthKeyPojo Authpojo,@Url String url);
+
+    @POST
+    Call<AssessmentPojoRes> getAssessmentFromService(@Body AuthKeyPojo Authpojo, @Url String url);
 
 
 

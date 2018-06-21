@@ -10,7 +10,7 @@ import com.akshara.assessment.a3.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    public  static boolean debugalerts = true;
+    public  static boolean debugalerts = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

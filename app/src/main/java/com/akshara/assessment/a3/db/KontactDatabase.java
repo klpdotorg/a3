@@ -74,7 +74,9 @@ public class KontactDatabase extends SquidDatabase {
                 QuestionSetTable.TABLE,
                 InstititeGradeIdTable.TABLE,
                 QuestionDataTable.TABLE,
-                QuestionSetDetailTable.TABLE
+                QuestionSetDetailTable.TABLE,
+                ProgramTable.TABLE,
+                AssessmentTypeTable.TABLE
 
 
 

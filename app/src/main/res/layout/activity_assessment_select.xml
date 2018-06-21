@@ -78,7 +78,7 @@
             android:layout_width="match_parent"
             android:gravity="center|left"
             android:layout_height="match_parent"
-            android:entries="@array/array_assessment_type"
+
             />
 
     </LinearLayout>

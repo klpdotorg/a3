@@ -6,15 +6,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.akshara.assessment.a3.AssessmentPojoPack.AssessmentTempPojo;
 import com.akshara.assessment.a3.NetworkRetrofitPackage.A3NetWorkCalls;
+import com.akshara.assessment.a3.NetworkRetrofitPackage.A3Services;
 import com.akshara.assessment.a3.NetworkRetrofitPackage.CurrentStateInterface;
 import com.akshara.assessment.a3.Pojo.QuestionSetPojo;
 import com.akshara.assessment.a3.Pojo.StatePojo;
+import com.akshara.assessment.a3.UtilsPackage.RolesUtils;
 import com.akshara.assessment.a3.UtilsPackage.StringWithTags;
+import com.akshara.assessment.a3.db.KontactDatabase;
+
+import java.util.ArrayList;
 
 public class DownloadQuestionSetActivity extends BaseActivity {
 
@@ -22,19 +29,24 @@ public class DownloadQuestionSetActivity extends BaseActivity {
     Spinner spn_language, spn_subject, spn_selectGrade, spn_selectAssessment;
     ProgressDialog progressDialog;
     com.akshara.assessment.a3.UtilsPackage.SessionManager smanger;
+    private KontactDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_download_question_set);
+        db = ((A3Application) getApplicationContext().getApplicationContext()).getDb();
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Download Question set");
-        smanger=new com.akshara.assessment.a3.UtilsPackage.SessionManager(getApplicationContext());
+        smanger = new com.akshara.assessment.a3.UtilsPackage.SessionManager(getApplicationContext());
         btnDownloadQuestion = findViewById(R.id.btnDownloadQuestion);
+        ArrayList<AssessmentTempPojo> listAssessmentData = RolesUtils.getAssessmentType(smanger.getProgramFromSession(), smanger.getProgramIdFromSession(), db);
         spn_language = findViewById(R.id.spn_language);
         spn_subject = findViewById(R.id.spn_subject);
         spn_selectGrade = findViewById(R.id.spn_selectGrade);
         spn_selectAssessment = findViewById(R.id.spn_selectAssessment);
+        spn_selectAssessment.setAdapter(new ArrayAdapter(DownloadQuestionSetActivity.this, R.layout.spinnertextview, listAssessmentData));
 
 
         btnDownloadQuestion.setOnClickListener(new View.OnClickListener() {
@@ -45,7 +57,7 @@ public class DownloadQuestionSetActivity extends BaseActivity {
                 String subject = spn_subject.getSelectedItem().toString().trim();
                 String grade = spn_selectGrade.getSelectedItem().toString().trim();
                 String assessment = spn_selectAssessment.getSelectedItem().toString().trim();
-                QuestionSetPojo qestionPojo = new QuestionSetPojo(language, subject, grade, assessment,smanger.getProgramFromSession(), "A3APIAKSHARAAUTHKEY#2018");
+                QuestionSetPojo qestionPojo = new QuestionSetPojo(language, subject, grade, assessment, smanger.getProgramFromSession(), "A3APIAKSHARAAUTHKEY#2018");
 
                 downloadQuestion(qestionPojo);
             }
@@ -55,7 +67,8 @@ public class DownloadQuestionSetActivity extends BaseActivity {
     private void downloadQuestion(QuestionSetPojo qestionPojo) {
 
         initPorgresssDialogForSchool();
-        String url = "http://dev.klp.org.in/a3/getQuestionSets";
+        String url = A3Services.QUESTIONSET_URL;
+
         // String url="http://www.kodvin.com/a3portal/getQuestionSets";
         new A3NetWorkCalls(getApplicationContext()).downloadQuestionset(url, qestionPojo, new CurrentStateInterface() {
             @Override
