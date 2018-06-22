@@ -100,12 +100,6 @@
 
     <string name="selectLanguage">Please select application language</string>
 
-    <string-array name="program">
-
-        <item>-- Select program --</item>
-        <item>GKA</item>
-        <item>ESL</item>
-    </string-array>
 
 
     <string-array name="grade">
@@ -167,6 +161,37 @@
     <string name="registration">Registration</string>
     <string name="selectprogram">Select Program</string>
     <string name="pleaseSelectProgram">Please select program</string>
+    <string name="program_header">Program :</string>
+    <string name="total_boys">Total Boys</string>
+    <string name="total_girls">Total Girls</string>
+    <string name="total">Total</string>
+    <string name="assessment_title">Assessment Title :</string>
+    <string name="language_assment">Language :</string>
+    <string name="subject">Subject :</string>
+    <string name="assessment_type">Assessment type :</string>
+    <string name="stuent_name">STUDENT NAME</string>
+    <string name="score">SCORE</string>
+    <string name="download_students">Download Students</string>
+    <string name="assessment_header">Assessments</string>
+    <string name="student_list">STUDENT LIST</string>
+    <string name="add_student">ADD STUDENT</string>
+    <string name="internal_server_error">Internal Server Error. Please try later</string>
+    <string name="student_registration_failed">Student registration Failed</string>
+    <string name="student_registration_success">Student registration successfull</string>
+    <string name="no_program_found">No Programs Found</string>
+    <string name="all_programs_loaded">All Programs Loaded</string>
+    <string name="program_loading_failed">Programs loading failed</string>
+    <string name="assment_loading_failed">Assessment Loading Failed</string>
+    <string name="assessment_loaded">All Assessment Loaded</string>
+    <string name="successfuly_Questionset">Successfully question set downloaded</string>
+    <string name="schools_not_contains_reg_stu">school not contains registered students</string>
+    <string name="stu_downloading_failed">student downloading failed</string>
+    <string name="schools_loaded_success">schools loaded successfully</string>
+    <string name="resend_otp">Resend OTP</string>
+    <string name="do_you_want_resend_otp">Do you want to resend OTP?</string>
+    <string name="resend">Resend</string>
+    <string name="resending_otp">Resending OTP...</string>
+    <string name="do_you_want_to_go_back">Do you want to go back</string>
 
     <string-array name="array_language">
         <item>English</item>
@@ -187,15 +212,5 @@
 
     </string-array>
 
-    <string-array name="array_assessment_type">
-        <item>FA1</item>
-        <item>FA2</item>
-        <item>FA3</item>
-        <item>FA4</item>
-        <item>FA5</item>
-        <item>FA6</item>
-        <item>SA1</item>
-        <item>SA2</item>
 
-    </string-array>
 </resources>

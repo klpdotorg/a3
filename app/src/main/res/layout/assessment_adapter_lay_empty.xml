@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:minWidth="150dp"
         android:minHeight="45dp"
-        android:text="OK"
+        android:text="@string/response_neutral"
         android:textColor="@color/btnTextColor"
         android:background="@drawable/btn_roundedrect"
         android:id="@+id/btnOKGo"

@@ -76,7 +76,7 @@ public class SpalashScreenActivity extends BaseActivity {
                     startActivity(intent);
                     finish();
                     overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-                    Toast.makeText(getApplicationContext(), "loggedin", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(getApplicationContext(), "loggedin", Toast.LENGTH_SHORT).show();
                 } else {
                     Intent intent = new Intent(getApplicationContext(), BoundaryLoaderActivity.class);
                     startActivity(intent);

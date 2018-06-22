@@ -358,6 +358,7 @@ public class A3NetWorkCalls {
 
     public String getFailureMessage(Throwable t) {
         if (t instanceof IOException) {
+
             return context.getResources().getString(R.string.netWorkError);
             // logging probably not necessary
         } else {
@@ -521,7 +522,7 @@ public class A3NetWorkCalls {
 
             // stateInterface.success("success");
 
-            stateInterface.success("schools loaded successfully");
+            stateInterface.success(context.getResources().getString(R.string.schools_loaded_success));
 
         }
 
@@ -541,14 +542,14 @@ public class A3NetWorkCalls {
                     //email or password invalid
                     stateInterface.failed(funInternalServerError());
                 } else {
-                    stateInterface.failed("student downloading failed");
+                    stateInterface.failed(context.getResources().getString(R.string.stu_downloading_failed));
                 }
 
             }
 
             @Override
             public void onFailure(Call<SchoolStudentPojo> call, Throwable t) {
-                stateInterface.failed("student downloading failed");
+                stateInterface.failed(context.getResources().getString(R.string.stu_downloading_failed));
             }
         });
     }
@@ -596,7 +597,7 @@ public class A3NetWorkCalls {
                 Update updateSchool = Update.table(School.TABLE).where(School.ID.eq(schoolId));
                 Update schoolUpdate = updateSchool.fromTemplate(new School().setStudentCount(0));
                 db.update(schoolUpdate);
-                stateInterface.success("school not contains registered students");
+                stateInterface.success(context.getResources().getString(R.string.schools_not_contains_reg_stu));
 
             }
 
@@ -876,7 +877,7 @@ public class A3NetWorkCalls {
 
                 if (response.isSuccessful() && response.code() == 200 && response.body().getStatus().equalsIgnoreCase("success")) {
                     parseQuestionSet(response.body());
-                    currentStateInterface.setSuccess("Successfully question set downloaded");
+                    currentStateInterface.setSuccess(context.getResources().getString(R.string.successfuly_Questionset));
                 } else if (response.code() == 500) {
                     //email or password invalid
                     currentStateInterface.setFailed(funInternalServerError());
@@ -910,7 +911,7 @@ public class A3NetWorkCalls {
                 if (response.isSuccessful()) {
                     parseAssessmentData(response.body(), currentStateInterface);
                 } else {
-                    currentStateInterface.setFailed("Assessment loading failed");
+                    currentStateInterface.setFailed(context.getResources().getString(R.string.assment_loading_failed));
                 }
             }
 
@@ -935,7 +936,7 @@ public class A3NetWorkCalls {
 
             for (com.akshara.assessment.a3.AssessmentPojoPack.Program program : body.getPrograms()) {
 
-                Log.d("shri", body.getPrograms().size() + "---------");
+              //  Log.d("shri", body.getPrograms().size() + "---------");
 
                 AssessmentTypeTable typeTable = new AssessmentTypeTable();
                 typeTable.setId(Long.parseLong(program.getIdAssesstype()));
@@ -949,11 +950,11 @@ public class A3NetWorkCalls {
 
             }
 
-            currentStateInterface.setSuccess("All Assessment Loaded");
+            currentStateInterface.setSuccess(context.getResources().getString(R.string.assessment_loaded));
 
 
         } else {
-            currentStateInterface.setFailed("Assessment Loading Failed");
+            currentStateInterface.setFailed(context.getResources().getString(R.string.assment_loading_failed));
         }
 
     }
@@ -971,7 +972,7 @@ public class A3NetWorkCalls {
                     parseResponse(response.body(), currentStateInterface);
                 } else {
                     //Toast.makeText(context, "Fail", Toast.LENGTH_SHORT).show();
-                    currentStateInterface.setFailed("Programs loading failed");
+                    currentStateInterface.setFailed(context.getResources().getString(R.string.program_loading_failed));
                 }
 
             }
@@ -1005,13 +1006,13 @@ public class A3NetWorkCalls {
                     programTable.setProgramDescr(program_descr);
                     db.insertNew(programTable);
                 } catch (Exception e) {
-                    currentStateInterface.setFailed("Programs loading failed");
+                    currentStateInterface.setFailed(context.getResources().getString(R.string.program_loading_failed));
                 }
             }
-            currentStateInterface.setSuccess("All Programs Loaded");
+            currentStateInterface.setSuccess(context.getResources().getString(R.string.all_programs_loaded));
 
         } else {
-            currentStateInterface.setFailed("No Programs Found");
+            currentStateInterface.setFailed(context.getResources().getString(R.string.no_program_found));
         }
 
     }
@@ -1027,7 +1028,7 @@ public class A3NetWorkCalls {
                 if (response.isSuccessful()) {
                     if (response.body() != null && response.body().getCount() > 0) {
                         storeregistredStudent(response.body());
-                        currentStateInterface.setSuccess("Student registration successfull");
+                        currentStateInterface.setSuccess(context.getResources().getString(R.string.student_registration_success));
                     }
                 } else if (response.code() == 400) {
                     Gson gson = new Gson();
@@ -1042,7 +1043,7 @@ public class A3NetWorkCalls {
 
                     } catch (IOException e) {
 
-                        currentStateInterface.setFailed("Student registration Failed");
+                        currentStateInterface.setFailed(context.getResources().getString(R.string.student_registration_failed));
 
                     }
                 }
@@ -1234,6 +1235,6 @@ public class A3NetWorkCalls {
 
 
     public String funInternalServerError() {
-        return "Internal Server Error. Please try later";
+        return context.getResources().getString(R.string.internal_server_error);
     }
 }

@@ -102,8 +102,8 @@ public class RegisterStudentActivity extends android.support.v4.app.Fragment {
                     ArrayList<RegisterStudentPojo> list = new ArrayList<>();
                     list.add(studentPojo);
                     initPorgresssDialogForSchool();
-                 // new A3NetWorkCalls(activity).registerStudentservice(groupId, sessionManager.getToken(), list, new CurrentStateInterface() {
-                    new A3NetWorkCalls(activity).registerStudentservice(groupId, "Token f68deebe2fa4f85ec53ea012197dd66cc2b785cb", list, new CurrentStateInterface() {
+                 new A3NetWorkCalls(activity).registerStudentservice(groupId, sessionManager.getToken(), list, new CurrentStateInterface() {
+                   // new A3NetWorkCalls(activity).registerStudentservice(groupId, "Token f68deebe2fa4f85ec53ea012197dd66cc2b785cb", list, new CurrentStateInterface() {
                         @Override
                         public void setSuccess(String message) {
                             finishProgress();

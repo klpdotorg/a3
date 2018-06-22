@@ -4,12 +4,12 @@
     <item
         android:id="@+id/action_studentList"
         android:icon="@drawable/classroom"
-        android:title="STUDENT LIST"/>
+        android:title="@string/student_list"/>
 
     <item
         android:id="@+id/action_register"
         android:icon="@drawable/study"
-        android:title="ADD STUDENT"/>
+        android:title="@string/add_student"/>
 
 
 

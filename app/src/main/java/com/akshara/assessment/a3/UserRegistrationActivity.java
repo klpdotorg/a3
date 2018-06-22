@@ -294,7 +294,7 @@ public class UserRegistrationActivity extends BaseActivity  implements MultiSele
                                     Intent otpIntent = new Intent(getApplicationContext(), OTP_VarifyActivity.class);
                                     otpIntent.putExtra("mobile", phoneNoWidget.getText().toString().trim());
                                     startActivity(otpIntent);
-                                    finish();
+                                //    finish();
                                     overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
                                     //    clearAllFields();
                                 } else if (response.code() == 400) {

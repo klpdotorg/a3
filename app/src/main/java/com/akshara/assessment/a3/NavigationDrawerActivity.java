@@ -68,7 +68,7 @@ DBHelper dbHelper;
         setContentView(R.layout.activity_navigation_drawer);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-       getSupportActionBar().setTitle("Select School");
+       getSupportActionBar().setTitle(getResources().getString(R.string.prompt_school));
         sessionManager = new SessionManager(getApplicationContext());
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

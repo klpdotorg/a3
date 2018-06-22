@@ -37,9 +37,11 @@ public class AssessmentSelectorActivity extends BaseActivity {
         setContentView(R.layout.activity_assessment_selector);
         recycler=findViewById(R.id.recycler);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getResources().getString(R.string.assessment_header));
+
         questionSetTables=new ArrayList<>();
         gradeName = getIntent().getStringExtra("A3APP_GRADESTRING");
-        Toast.makeText(getApplicationContext(),gradeName,Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(getApplicationContext(),gradeName,Toast.LENGTH_SHORT).show();
         recycler.setLayoutManager(new LinearLayoutManager(this));
         //   student_list_recycler.addItemDecoration(new DividerItemDecoration(activity, 1));
         recycler.setItemAnimator(new DefaultItemAnimator());

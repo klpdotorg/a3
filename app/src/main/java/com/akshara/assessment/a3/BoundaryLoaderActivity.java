@@ -71,7 +71,7 @@ public class BoundaryLoaderActivity extends BaseActivity implements OnItemSelect
         select_school = findViewById(R.id.select_school);
         linLayState = findViewById(R.id.linLayState);
         btnNext = findViewById(R.id.btnNext);
-        getSupportActionBar().setTitle("Download Students");
+        getSupportActionBar().setTitle(getResources().getString(R.string.download_students));
         select_district = findViewById(R.id.select_district);
         Query listStateQuery = Query.select().from(State.TABLE).orderBy(State.STATE.asc());
         select_state.setOnItemSelectedListener(this);

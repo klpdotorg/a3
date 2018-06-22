@@ -100,12 +100,7 @@
 
     <string name="selectLanguage">ನಿಮ್ಮ ಭಾಷೆಯನ್ನು ಆಯ್ಕೆ ಮಾಡಿ</string>
 
-    <string-array name="program">
 
-        <item>-- Select program --</item>
-        <item>GKA</item>
-        <item>ESL</item>
-    </string-array>
 
 
     <string-array name="grade">
@@ -137,36 +132,68 @@
     <string name="selectCluster">-- ಕ್ಲಸ್ಟರ್ ಆಯ್ಕೆ ಮಾಡಿ --</string>
     <string name="stuFirstName">ಹೆಸರು</string>
     <string name="stuLastName">ಉಪನಾಮ</string>
-    <string name="male">Male</string>
-    <string name="female">Female</string>
-    <string name="registerStudent">Register Student</string>
+
+
+    <string name="male">ಗಂಡು</string>
+    <string name="female">ಹೆಣ್ಣು</string>
+    <string name="registerStudent">ವಿದ್ಯಾರ್ಥಿಯನ್ನು ನೋಂದಾಯಿಸಿ</string>
     <string name="registerstudent">ರಿಜಿಸ್ಟರ್</string>
-    <string name="errorFirstName">enter student first name</string>
-    <string name="errorLastName">enter student last name</string>
-    <string name="errorStudentId">enter student ID</string>
-    <string name="clusterSchoolLoading">cluster: schools loading. It will take few minutes for download to complete. Thanks for your patience !!!</string>
-    <string name="clusterLeveldataLoadedSchussfully">cluster level schools loaded successfully</string>
-    <string name="clusterDataAlreadyFound">cluster schools already downloaded. Do you want to re-download?</string>
+    <string name="errorFirstName">ವಿದ್ಯಾರ್ಥಿಯ ಮೊದಲ ಹೆಸರನ್ನು ನಮೂದಿಸಿ</string>
+    <string name="errorLastName">ವಿದ್ಯಾರ್ಥಿಯ ಕೊನೆಯ  ಹೆಸರನ್ನು ನಮೂದಿಸಿ</string>
+    <string name="errorStudentId">ವಿದ್ಯಾರ್ಥಿಯ ಗುರುತಿನ ID ಯನ್ನು ನಮೂದಿಸಿ</string>
+    <string name="clusterSchoolLoading">ಕ್ಲಸ್ಟರ್:   ಶಾಲೆಗಳು ಲೋಡ್ ಆಗುತ್ತಿವೆ. ಡೌನ್ ಲೋಡ್ ಆಗಲು ಕೆಲವು ನಿಮಿಷಗಳು ತೆಗೆದುಕೊಳ್ಳುತ್ತದೆ. ನಿಮ್ಮ ತಾಳ್ಮೆಗೆ ಧನ್ಯವಾದಗಳು.</string>
+    <string name="clusterLeveldataLoadedSchussfully">ಕ್ಲಸ್ಟರ್ ಮಟ್ಟದ ಶಾಲೆಗಳು ಯಶಸ್ವಿಯಾಗಿ ಲೋಡ್ ಆಗಿವೆ</string>
+    <string name="clusterDataAlreadyFound">ಕ್ಲಸ್ಟರ್ ಶಾಲೆಗಳು ಈಗಾಗಲೇ ಡೌನ್ಲೋಡ್ ಮಾಡಲ್ಪಟ್ಟಿದೆ.ನೀವು ಮರು-ಡೌನ್ಲೋಡ್ ಮಾಡಲು ಬಯಸುವಿರಾ?</string>
     <string name="school">ಶಾಲೆಗಳು</string>
     <string name="prompt_school">ಶಾಲೆ ಆಯ್ಕೆ ಮಾಡಿ</string>
     <string name="selectSchool">-- ಶಾಲೆ ಆಯ್ಕೆ ಮಾಡಿ --</string>
-    <string name="schoolStudentDownloaded">school student downloaded successfully</string>
-    <string name="loadingStudent">Students details loading...</string>
-    <string name="students_downloaded">%1$s students details loaded</string>
-    <string name="string_select_language">Select Language</string>
-    <string name="downloadQuestion">Download Question set</string>
-    <string name="string_select_subject">Select Subject</string>
-    <string name="string_select_grade">Select Grade</string>
-    <string name="string_select_AsseesmentType">Select Assessment Type</string>
-    <string name="institution_id">Institution Id</string>
-    <string name="status">Status</string>
-    <string name="academic_year">Academic Year</string>
-    <string name="schoolsnotfoundforcluster">Schools not available for selected cluster</string>
-    <string name="registeredblocksnotfound">Registered blocks not found for selected district</string>
-    <string name="noQuestionSet">No question set found for %1$s  . Please download and continue assessment</string>
-    <string name="registration">Registration</string>
-    <string name="selectprogram">Select Program</string>
-    <string name="pleaseSelectProgram">Please select program</string>
+    <string name="loadingStudent">ವಿದ್ಯಾರ್ಥಿಗಳು ವಿವರಗಳನ್ನು ಲೋಡ್ ಮಾಡಲಾಗುತ್ತಿದೆ ...</string>
+    <string name="students_downloaded">%1$s ವಿದ್ಯಾರ್ಥಿಗಳು ವಿವರಗಳನ್ನು ಲೋಡ್ ಮಾಡಿದ್ದಾರೆ</string>
+    <string name="string_select_language">ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
+    <string name="downloadQuestion">ಪ್ರಶ್ನೆ ಸೆಟ್ಅನ್ನು ಡೌನ್ಲೋಡ್ ಮಾಡಿ</string>
+    <string name="string_select_subject">ವಿಷಯ ಆಯ್ಕೆಮಾಡಿ</string>
+    <string name="string_select_grade">ಗ್ರೇಡ್ ಆಯ್ಕೆಮಾಡಿ</string>
+    <string name="string_select_AsseesmentType">ಮೌಲ್ಯಮಾಪನದ ವಿಧವನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
+
+
+
+    <string name="schoolsnotfoundforcluster">ಆಯ್ಕೆಮಾಡಿದ ಕ್ಲಸ್ಟರ್ ಗಳಲ್ಲಿ ಶಾಲೆಗಳು ಲಭ್ಯವಿಲ್ಲ</string>
+    <string name="registeredblocksnotfound">ಆಯ್ಕೆಮಾಡಿದ ಜಿಲ್ಲೆಗೆ ನೋಂದಾಯಿತ ಬ್ಲಾಕ್ ಗಳು ಕಂಡುಬಂದಿಲ್ಲ</string>
+    <string name="noQuestionSet"> %1$s ಕ್ಕೆ ಯಾವುದೇ ಪ್ರಶ್ನೆ ಸೆಟ್ ಕಂಡುಬಂದಿಲ್ಲ.ದಯವಿಟ್ಟು ಡೌನ್ಲೋಡ್ ಮಾಡಿ ಮತ್ತು ಮೌಲ್ಯಮಾಪನವನ್ನು ಮುಂದುವರಿಸಿ</string>
+    <string name="registration">ನೋಂದಣಿ</string>
+    <string name="selectprogram">ಪ್ರೋಗ್ರಾಂ ಆಯ್ಕೆಮಾಡಿ</string>
+    <string name="pleaseSelectProgram">ದಯವಿಟ್ಟು ಪ್ರೋಗ್ರಾಂ ಅನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
+    <string name="program_header">ಪ್ರೋಗ್ರಾಂ :</string>
+    <string name="total_boys">ಒಟ್ಟು ಹುಡುಗರು</string>
+    <string name="total_girls">ಒಟ್ಟು ಹುಡುಗಿಯರು</string>
+    <string name="total">ಒಟ್ಟು</string>
+    <string name="assessment_title">ಮೌಲ್ಯಮಾಪನದ ಶೀರ್ಷಿಕೆ :</string>
+    <string name="language_assment">ಭಾಷೆ :</string>
+    <string name="subject">ವಿಷಯ :</string>
+    <string name="assessment_type">ಮೌಲ್ಯಮಾಪನದ ಪ್ರಕಾರ(ವಿಧ):</string>
+    <string name="stuent_name">ವಿದ್ಯಾರ್ಥಿಯ ಹೆಸರು</string>
+    <string name="score">ಗಳಿಸಿದ ಅಂಕ</string>
+    <string name="download_students">ವಿದ್ಯಾರ್ಥಿಗಳ ಹೆಸರು ಡೌನ್ಲೋಡ್ ಮಾಡಿ</string>
+    <string name="assessment_header">ಮೌಲ್ಯಮಾಪನ</string>
+    <string name="student_list">ವಿದ್ಯಾರ್ಥಿ ಪಟ್ಟಿ</string>
+    <string name="add_student">ವಿದ್ಯಾರ್ಥಿಯನ್ನು ಸೇರಿಸಿ</string>
+    <string name="internal_server_error">ಆಂತರಿಕ ಸರ್ವರ್ ದೋಷ.ದಯವಿಟ್ಟು ನಂತರ ಪ್ರಯತ್ನಿಸಿ</string>
+    <string name="student_registration_failed">ವಿದ್ಯಾರ್ಥಿ ನೋಂದಣಿ ವಿಫಲವಾಗಿದೆ</string>
+    <string name="student_registration_success">ವಿದ್ಯಾರ್ಥಿ ನೋಂದಣಿ ಸಫಲವಾಗಿದೆ</string>
+    <string name="no_program_found">ಯಾವುದೇ ಪ್ರೋಗ್ರಾಂಗಳು ಕಂಡುಬಂದಿಲ್ಲ</string>
+    <string name="all_programs_loaded">ಎಲ್ಲಾ ಪ್ರೋಗ್ರಾಂಗಳು  ಲೋಡ್ ಆಗಿದೆ</string>
+    <string name="program_loading_failed">ಪ್ರೋಗ್ರಾಂಗಳು ಲೋಡ್ ಆಗುತ್ತಿಲ್ಲ</string>
+    <string name="assment_loading_failed">ಮೌಲ್ಯಮಾಪನ ಲೋಡ್ ವಿಫಲವಾಗಿದೆ</string>
+    <string name="assessment_loaded">ಎಲ್ಲಾ ಮೌಲ್ಯಮಾಪನ  ಲೋಡ್ ಆಗಿದೆ</string>
+    <string name="successfuly_Questionset">ಯಶಸ್ವಿಯಾಗಿ ಪ್ರಶ್ನೆ ಸೆಟ್ ಡೌನ್ಲೋಡ್ ಮಾಡಲಾಗಿದೆ</string>
+    <string name="schools_not_contains_reg_stu">ಶಾಲೆಯು ನೋಂದಾಯಿತ ವಿದ್ಯಾರ್ಥಿಗಳನ್ನು ಒಳಗೊಂಡಿಲ್ಲ</string>
+    <string name="stu_downloading_failed">ವಿದ್ಯಾರ್ಥಿ ಡೌನ್ಲೋಡ್ ವಿಫಲವಾಗಿದೆ</string>
+    <string name="schools_loaded_success">ಶಾಲೆಗಳು ಯಶಸ್ವಿಯಾಗಿ ಲೋಡ್ ಆಗಿದೆ</string>
+    <string name="resend_otp">OTP ಮರು ಕಳುಹಿಸಿ</string>
+    <string name="do_you_want_resend_otp">ನೀವು OTP ಅನ್ನು ಮರು ಕಳುಹಿಸಲು ಬಯಸುವಿರಾ?</string>
+    <string name="resend">ಮರು ಕಳುಹಿಸಿ</string>
+    <string name="resending_otp">OTP ಅನ್ನು ಮರು ಕಳುಹಿಸಲಾಗುತ್ತಿದೆ ...</string>
+    <string name="do_you_want_to_go_back">ನೀವು ಹಿಂದಕ್ಕೆ ಹೋಗಲು ಬಯಸುತ್ತೀರಾ</string>
     <string-array name="array_language">
         <item>English</item>
         <item>Kannada</item>
@@ -187,15 +214,5 @@
 
     </string-array>
 
-    <string-array name="array_assessment_type">
-        <item>FA1</item>
-        <item>FA2</item>
-        <item>FA3</item>
-        <item>FA4</item>
-        <item>FA5</item>
-        <item>FA6</item>
-        <item>SA1</item>
-        <item>SA2</item>
 
-    </string-array>
 </resources>

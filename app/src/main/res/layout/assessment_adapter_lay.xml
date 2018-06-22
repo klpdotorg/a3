@@ -17,7 +17,7 @@
         android:layout_weight="0.4"
         android:textStyle="bold"
         android:layout_height="wrap_content"
-        android:text="Assessment Title : "/>
+        android:text="@string/assessment_title"/>
 
         <TextView
             android:layout_width="0dp"
@@ -35,7 +35,7 @@
             android:layout_weight="0.4"
             android:textStyle="bold"
             android:layout_height="wrap_content"
-            android:text="Language : "/>
+            android:text="@string/language_assment"/>
 
         <TextView
             android:layout_width="0dp"
@@ -54,7 +54,7 @@
             android:layout_weight="0.4"
             android:textStyle="bold"
             android:layout_height="wrap_content"
-            android:text="Subject : "/>
+            android:text="@string/subject"/>
 
         <TextView
             android:layout_width="0dp"
@@ -74,7 +74,7 @@
             android:layout_weight="0.4"
             android:textStyle="bold"
             android:layout_height="wrap_content"
-            android:text="Assessment type : "/>
+            android:text="@string/assessment_type"/>
 
         <TextView
             android:layout_width="0dp"

@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class GradeActivity extends AppCompatActivity {
+public class GradeActivity extends BaseActivity {
 
     long SchoolId;
     KontactDatabase database;
@@ -37,7 +37,7 @@ public class GradeActivity extends AppCompatActivity {
         setContentView(R.layout.temp2);
         tvSchoolName= findViewById(R.id.tvSchoolName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Select Grade");
+        getSupportActionBar().setTitle(getResources().getString(R.string.string_select_grade));
         RecyclerView list1 = findViewById(R.id.recyclerview);
         final LinearLayoutManager mLayoutManager;
         database = new KontactDatabase(this);
