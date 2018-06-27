@@ -1039,9 +1039,11 @@ public class A3NetWorkCalls {
                     currentStateInterface.setFailed(funInternalServerError());
                 } else {
                     try {
-                        currentStateInterface.setFailed(response.errorBody().string());
+                        Gson gson = new Gson();
+                        ForgotOTPError messageObject = gson.fromJson(response.errorBody().charStream(), ForgotOTPError.class);
+                        currentStateInterface.setFailed(messageObject.getDetail());
 
-                    } catch (IOException e) {
+                    } catch (Exception e) {
 
                         currentStateInterface.setFailed(context.getResources().getString(R.string.student_registration_failed));
 

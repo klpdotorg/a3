@@ -6,6 +6,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.akshara.assessment.a3.BaseActivity;
 import com.akshara.assessment.a3.R;
@@ -15,20 +16,31 @@ public class TelemetryReportIndetail extends BaseActivity {
 
     RecyclerView recyReportIndi;
     TelematryIndetailAdapter adapter;
+    TextView tvtotalScore,tv_stsId,tvFirstName,tv_fatherName;
+    String name,fname,stsid;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.report_inditail_lay);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        getSupportActionBar().setTitle(getResources().getString(R.string.report));
+        name=getIntent().getStringExtra("name");
+        fname=getIntent().getStringExtra("fatherName");
+        stsid=getIntent().getStringExtra("stsId");
         recyReportIndi= findViewById(R.id.recyReportIndi);
+        tv_stsId= findViewById(R.id.tv_stsId);
+        tvFirstName= findViewById(R.id.tvFirstName);
+        tv_fatherName= findViewById(R.id.tv_fatherName);
 
+        tv_stsId.setText(stsid);
+        tv_fatherName.setText(fname);
+        tvFirstName.setText(name);
         recyReportIndi.setLayoutManager(new LinearLayoutManager(this));
-
+        tvtotalScore=findViewById(R.id.txtScore);
         recyReportIndi.setItemAnimator(new DefaultItemAnimator());
         adapter=new TelematryIndetailAdapter(
                 TelemetryReportIndetail.this,
-                AppStatus.data,AppStatus.titles,AppStatus.questionTables,getApplicationContext() );
+        AppStatus.data,AppStatus.titles,AppStatus.questionTables,getApplicationContext() );
         recyReportIndi.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
@@ -37,6 +49,10 @@ public class TelemetryReportIndetail extends BaseActivity {
 
     }
 
+    public void setScore(String score)
+    {
+        tvtotalScore.setText(score);
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

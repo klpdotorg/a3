@@ -105,16 +105,14 @@
     <string name="select_program">-- Select program --</string>
 
 
-
     <string-array name="grade">
-
-
         <item>1</item>
         <item>2</item>
         <item>3</item>
         <item>4</item>
         <item>5</item>
     </string-array>
+
     <string name="title_activity_navigation_drawer">NavigationDrawerActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -161,13 +159,6 @@
     <string name="institution_id">Institution Id</string>
 
 
-    <string-array name="array_language">
-        <item>English</item>
-        <item>Kannada</item>
-        <item>Urdu</item>
-    </string-array>
-
-
     <string-array name="array_subject">
         <item>English</item>
         <item>Mathematics</item>
@@ -182,8 +173,6 @@
         <item>5th Grade</item>
 
     </string-array>
-
-
 
 
     <string name="title_activity_qp_arithmetic_multiply_horiz">qp_arithmetic_multiply_horiz</string>
@@ -226,5 +215,11 @@
     <string name="resend">Resend</string>
     <string name="resending_otp">Resending OTP...</string>
     <string name="do_you_want_to_go_back">Do you want to go back</string>
+    <string name="totalScore">Total Score</string>
+    <string name="name">Name</string>
+    <string name="fatherName">FATHER NAME</string>
+    <string name="report">Report</string>
+    <string name="studentScore">Students Score</string>
+
 
 </resources>

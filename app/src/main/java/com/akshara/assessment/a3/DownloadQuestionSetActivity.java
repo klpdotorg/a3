@@ -26,10 +26,11 @@ import java.util.ArrayList;
 public class DownloadQuestionSetActivity extends BaseActivity {
 
     Button btnDownloadQuestion;
-    Spinner spn_language, spn_subject, spn_selectGrade, spn_selectAssessment;
+    Spinner spn_subject, spn_selectGrade, spn_selectAssessment;
     ProgressDialog progressDialog;
     com.akshara.assessment.a3.UtilsPackage.SessionManager smanger;
     private KontactDatabase db;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +39,11 @@ public class DownloadQuestionSetActivity extends BaseActivity {
         db = ((A3Application) getApplicationContext().getApplicationContext()).getDb();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Download Question set");
+        getSupportActionBar().setTitle(getResources().getString(R.string.downloadQuestion));
         smanger = new com.akshara.assessment.a3.UtilsPackage.SessionManager(getApplicationContext());
         btnDownloadQuestion = findViewById(R.id.btnDownloadQuestion);
         ArrayList<AssessmentTempPojo> listAssessmentData = RolesUtils.getAssessmentType(smanger.getProgramFromSession(), smanger.getProgramIdFromSession(), db);
-        spn_language = findViewById(R.id.spn_language);
+       // spn_language = findViewById(R.id.spn_language);
         spn_subject = findViewById(R.id.spn_subject);
         spn_selectGrade = findViewById(R.id.spn_selectGrade);
         spn_selectAssessment = findViewById(R.id.spn_selectAssessment);
@@ -53,7 +54,9 @@ public class DownloadQuestionSetActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
 
-                String language = spn_language.getSelectedItem().toString().trim();
+               // String language = spn_language.getSelectedItem().toString().trim();
+              String language = smanger.getLanguage();
+              Toast.makeText(getApplicationContext(),language,Toast.LENGTH_SHORT).show();
                 String subject = spn_subject.getSelectedItem().toString().trim();
                 String grade = spn_selectGrade.getSelectedItem().toString().trim();
                 String assessment = spn_selectAssessment.getSelectedItem().toString().trim();

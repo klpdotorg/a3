@@ -192,12 +192,13 @@
     <string name="resend">Resend</string>
     <string name="resending_otp">Resending OTP...</string>
     <string name="do_you_want_to_go_back">Do you want to go back</string>
+    <string name="totalScore">Total Score</string>
+    <string name="name">Name</string>
+    <string name="fatherName">Father Name</string>
+    <string name="report">Report</string>
+    <string name="studentScore">Students Score</string>
 
-    <string-array name="array_language">
-        <item>English</item>
-        <item>Kannada</item>
-        <item>Urdu</item>
-    </string-array>
+
     <string-array name="array_subject">
         <item>English</item>
         <item>Maths</item>

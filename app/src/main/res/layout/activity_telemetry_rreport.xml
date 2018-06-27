@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
 
         android:background="@color/colorPrimaryToolbar"
-        android:paddingLeft="5dp"
+
         android:minHeight="40dp"
         android:gravity="center|left"
         android:orientation="horizontal">
@@ -23,27 +23,47 @@
             android:layout_width="0dp"
             android:textSize="18sp"
             android:text="@string/stsid"
+            android:paddingLeft="2dp"
             android:gravity="center|left"
             android:typeface="serif"
             android:textColor="#FFFFFF"
             android:layout_height="match_parent"
             android:layout_weight="0.25" />
         <TextView
+
+            android:layout_width="1dp"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:layout_height="match_parent"
+            android:background="#000000"
+            android:gravity="center|left"
+            android:textSize="16sp" />
+        <TextView
             android:id="@+id/tvStudentName"
             android:layout_width="0dp"
             android:textSize="18sp"
             android:text="@string/stuent_name"
             android:gravity="center|left"
+            android:paddingLeft="2dp"
             android:typeface="serif"
             android:textColor="#FFFFFF"
             android:layout_height="match_parent"
             android:layout_weight="0.55" />
+        <TextView
 
+            android:layout_width="1dp"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
+            android:layout_height="match_parent"
+            android:background="#000000"
+            android:gravity="center|left"
+            android:textSize="16sp" />
         <TextView
             android:id="@+id/tvMarks"
             android:layout_width="0dp"
             android:textSize="18sp"
             android:text="@string/score"
+            android:paddingLeft="2dp"
             android:gravity="center|left"
             android:textColor="#FFFFFF"
             android:typeface="serif"
@@ -51,9 +71,15 @@
             android:layout_weight="0.2" />
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000"
+        android:orientation="horizontal"/>
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/background"
         android:id="@+id/reportRecyclerView">
 
     </android.support.v7.widget.RecyclerView>

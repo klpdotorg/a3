@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.akshara.assessment.a3.A3Application;
 import com.akshara.assessment.a3.AsssessmentSelectorAdapter;
+import com.akshara.assessment.a3.BaseActivity;
 import com.akshara.assessment.a3.GradeActivity;
 import com.akshara.assessment.a3.R;
 import com.akshara.assessment.a3.db.KontactDatabase;
@@ -30,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class TelemetryRreportActivity extends AppCompatActivity {
+public class TelemetryRreportActivity extends BaseActivity {
 
     KontactDatabase db;
     long A3APP_INSTITUTIONID;
@@ -52,6 +53,7 @@ public class TelemetryRreportActivity extends AppCompatActivity {
         EASYASSESS_QUESTIONSETID = getIntent().getIntExtra("EASYASSESS_QUESTIONSETID", 0);
         A3APP_GRADEID = getIntent().getIntExtra("A3APP_GRADEID", 0);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getResources().getString(R.string.studentScore));
 
 //        ArrayList<QuestionTable> QuestionTitles = getAllQuestionSetTitle(EASYASSESS_QUESTIONSETID);
         reportRecyclerView.setLayoutManager(new LinearLayoutManager(this));

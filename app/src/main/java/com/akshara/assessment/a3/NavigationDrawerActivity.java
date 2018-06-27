@@ -351,7 +351,8 @@ DBHelper dbHelper;
             public void onClick(DialogInterface dialogInterface, int i) {
         int grade=Integer.parseInt(mSpinner.getSelectedItem().toString());
             startActivity(new Intent(getApplicationContext(),StudentListMainActivity.class)
-                    .putExtra("insti",schoolid).putExtra("grade",grade));
+                    .putExtra("insti",schoolid).
+                            putExtra("grade",grade));
                 overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
 
             }

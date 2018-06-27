@@ -58,8 +58,8 @@
     <string name="Cancel">ಕ್ಯಾನ್ಸಲ್</string>
     <string name="Ok">ಓಕೆ</string>
     <string name="Ok_">ಓಕೆ</string>
-    <string name="nextbutton">ಮುಂದಿನ</string>
-    <string name="next">ಮುಂದಿನ</string>
+    <string name="nextbutton">ಮುಂದುವರಿಸಿ</string>
+    <string name="next">ಮುಂದುವರಿಸಿ</string>
     <string name="english">English</string>
     <string name="districtDownloaded">ಜಿಲ್ಲೆಗಳು ಡೌನ್ಲೋಡ್ ಮಾಡಲ್ಪಟ್ಟಿದೆ</string>
     <string name="districtDataLoadingFailed">ಈ ಕ್ಷಣದಲ್ಲಿ ಜಿಲ್ಲೆಯ ಮಾಹಿತಿಯನ್ನು ಲೋಡ್ ಮಾಡಲು ಆಗುತ್ತಿಲ್ಲ. ದಯವಿಟ್ಟು ಪುನಃ ಪ್ರಯತ್ನಿಸಿ</string>
@@ -194,11 +194,13 @@
     <string name="resend">ಮರು ಕಳುಹಿಸಿ</string>
     <string name="resending_otp">OTP ಅನ್ನು ಮರು ಕಳುಹಿಸಲಾಗುತ್ತಿದೆ ...</string>
     <string name="do_you_want_to_go_back">ನೀವು ಹಿಂದಕ್ಕೆ ಹೋಗಲು ಬಯಸುತ್ತೀರಾ</string>
-    <string-array name="array_language">
-        <item>English</item>
-        <item>Kannada</item>
-        <item>Urdu</item>
-    </string-array>
+    <string name="totalScore">ಒಟ್ಟು ಅಂಕ</string>
+    <string name="name">ಹೆಸರು</string>
+    <string name="fatherName">ತಂದೆಯ ಹೆಸರು</string>
+    <string name="report">Report</string>
+    <string name="studentScore">ವಿದ್ಯಾರ್ಥಿಗಳ ಸ್ಕೋರ್</string>
+
+
     <string-array name="array_subject">
         <item>English</item>
         <item>Mathematics</item>

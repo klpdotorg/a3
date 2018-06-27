@@ -25,6 +25,7 @@ public class TelematryIndetailAdapter extends RecyclerView.Adapter<TelematryInde
     ArrayList<QuestionTable> questionTables;
     KontactDatabase db;
     Context context;
+    int totalanswerCount = 0;
 
     public TelematryIndetailAdapter(TelemetryReportIndetail telemetryReportIndetail,
                                     pojoReportData data, ArrayList<String> titles,
@@ -36,7 +37,7 @@ public class TelematryIndetailAdapter extends RecyclerView.Adapter<TelematryInde
         notifyDataSetChanged();
         this.context = context;
         db = ((A3Application) this.context.getApplicationContext()).getDb();
-
+        int totalanswerCount = 0;
 
     }
 
@@ -52,8 +53,11 @@ public class TelematryIndetailAdapter extends RecyclerView.Adapter<TelematryInde
     public void onBindViewHolder(TelematryIndiViewHolder holder, int position) {
 
 
-        holder.text_Repo.setText(titles.get(position) + ":" +getAnswer(titles.get(position))+"/"+ getCount(position));
+        holder.text_Repo.setText(titles.get(position));
+        holder.text_score.setText(getAnswer(titles.get(position)) + "/" + getCount(position));
+      //  telemetryReportIndetail.setScore(telemetryReportIndetail.getResources().getString(R.string.totalScore) + totalanswerCount + "");
 
+       telemetryReportIndetail.setScore(totalanswerCount+"/"+questionTables.size());
     }
 
 
@@ -71,30 +75,31 @@ public class TelematryIndetailAdapter extends RecyclerView.Adapter<TelematryInde
 
     public int getAnswer(String conceptName) {
         int answerCount = 0;
-         if(data.getDetailReportsMap().get(data.getTable().getId())!=null){
+        if (data.getDetailReportsMap().get(data.getTable().getId()) != null) {
 
-             int size=data.getDetailReportsMap().get(data.getTable().getId()).size();
+            int size = data.getDetailReportsMap().get(data.getTable().getId()).size();
             // int size2=data.getDetailReportsMap().get(data.getTable().getId()).get((size-1)).getPojoAssessmentDetail().size();
             //pojoAssessmentDetail det=data.getDetailReportsMap().get(data.getTable().getId()).get((size-1)).getPojoAssessmentDetail().get((size2-1));
 
-                    // Log.d("shri","////"+det.getId()+":"+det.getPass());
+            // Log.d("shri","////"+det.getId()+":"+det.getPass());
 
 
+            //reportDataWithStudentInfo.get(0).getDetailReportsMap().get(18).get(3).getPojoAssessmentDetail().
+            for (pojoAssessmentDetail detail : data.getDetailReportsMap().get(data.getTable().getId()).get((size - 1)).getPojoAssessmentDetail()) {
 
-             //reportDataWithStudentInfo.get(0).getDetailReportsMap().get(18).get(3).getPojoAssessmentDetail().
-        for (pojoAssessmentDetail detail : data.getDetailReportsMap().get(data.getTable().getId()).get((size-1)).getPojoAssessmentDetail()) {
-
-            if(detail!=null) {
-                String concept = getConceptName(detail.getId_question());
-              //  Log.d("shri",concept+"------"+conceptName+":"+detail.getPass()+"qidAss"+detail.getId_assessment()+"-QID"+detail.getId_question()+"--id--"+detail.getId());
-                if (conceptName.equalsIgnoreCase(concept)&&detail.getPass().equalsIgnoreCase("P")) {
-                    answerCount = answerCount + 1;
-                    //Log.d("shri",answerCount+"-----------------");
+                if (detail != null) {
+                    String concept = getConceptName(detail.getId_question());
+                   Log.d("shri",concept+"------"+conceptName+":"+detail.getPass()+"qidAss"+detail.getId_assessment()+"-QID"+detail.getId_question()+"--id--"+detail.getId());
+                    if (conceptName.equalsIgnoreCase(concept) && detail.getPass().equalsIgnoreCase("P")) {
+                        answerCount = answerCount + 1;
+                    totalanswerCount = totalanswerCount + 1;
+                        Log.d("shri",totalanswerCount+"-----------------");
+                    }
                 }
+
+
             }
-
-
-        }}
+        }
         return answerCount;
 
     }
@@ -118,12 +123,13 @@ public class TelematryIndetailAdapter extends RecyclerView.Adapter<TelematryInde
     }
 
     class TelematryIndiViewHolder extends RecyclerView.ViewHolder {
-        TextView text_Repo;
+        TextView text_Repo,text_score;
 
         public TelematryIndiViewHolder(View itemView) {
 
             super(itemView);
             text_Repo = (itemView).findViewById(R.id.text_Repo);
+            text_score = (itemView).findViewById(R.id.text_score);
         }
     }
 

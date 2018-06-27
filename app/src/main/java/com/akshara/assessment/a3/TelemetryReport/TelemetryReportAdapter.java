@@ -43,7 +43,7 @@ public class TelemetryReportAdapter extends RecyclerView.Adapter<TelemetryReport
 
     @Override
     public void onBindViewHolder(TelemetryViewHolder holder, final int position) {
-        StudentTable studentTable = data.get(position).getTable();
+        final StudentTable studentTable = data.get(position).getTable();
         holder.tvStudentName.setText(studentTable.getFirstName());
         holder.stsid.setText(studentTable.getUid());
         Map<Long, ArrayList<CombinePojo>> listData = data.get(position).getDetailReportsMap();
@@ -73,6 +73,9 @@ public class TelemetryReportAdapter extends RecyclerView.Adapter<TelemetryReport
                 AppStatus.questionTables = questionTables;
                 AppStatus.titles = titles;
                 Intent intent = new Intent(telemetryRreportActivity, TelemetryReportIndetail.class);
+                intent.putExtra("name",studentTable.getFirstName());
+                intent.putExtra("fatherName",studentTable.getMiddleName());
+                intent.putExtra("stsId",studentTable.getUid());
                 telemetryRreportActivity.startActivity(intent);
             }
         });

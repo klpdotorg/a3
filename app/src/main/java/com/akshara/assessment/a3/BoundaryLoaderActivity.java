@@ -307,9 +307,10 @@ select_school.setOnItemSelectedListener(new OnItemSelectedListener() {
       initPorgresssDialogForSchool();
 
                         updateProgressMessage(select_school.getSelectedItem().toString() + " " + getResources().getString(R.string.loadingStudent), 0);
-Log.d("shri",((StringWithTags) select_school.getSelectedItem()).id.toString());
+//Log.d("shri",((StringWithTags) select_school.getSelectedItem()).id.toString());
 int schoolId=Integer.parseInt(((StringWithTags) select_school.getSelectedItem()).id.toString());
-                String URL =  BuildConfig.HOST +"/api/v1/institutestudents/?institution_id="+schoolId;
+                String URL =  BuildConfig.HOST +"/api/v1/institutions/"+schoolId+"/students/";
+             //   String URL =  BuildConfig.HOST +"/api/v1/institutestudents/?institution_id="+schoolId;
                 new A3NetWorkCalls(BoundaryLoaderActivity.this).downloadStudent(URL,schoolId, new SchoolStateInterface() {
                     public void success(String message) {
                         finishProgress();
