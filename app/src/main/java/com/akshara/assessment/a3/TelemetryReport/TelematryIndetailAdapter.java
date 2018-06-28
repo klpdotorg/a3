@@ -111,6 +111,10 @@ public class TelematryIndetailAdapter extends RecyclerView.Adapter<TelematryInde
         SquidCursor<QuestionTable> studentCursor = db.query(QuestionTable.class, question);
         while (studentCursor.moveToNext()) {
             String conceptName = new QuestionTable(studentCursor).getConceptName();
+            if(studentCursor!=null)
+            {
+                studentCursor.close();
+            }
             return conceptName;
         }
         return "";

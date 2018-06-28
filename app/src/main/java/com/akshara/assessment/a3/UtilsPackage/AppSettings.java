@@ -14,8 +14,10 @@ import android.widget.TextView;
 
 import com.akshara.assessment.a3.A3Application;
 import com.akshara.assessment.a3.BaseActivity;
+import com.akshara.assessment.a3.LanguageSelectionActivity;
 import com.akshara.assessment.a3.NavigationDrawerActivity;
 import com.akshara.assessment.a3.Pojo.LanguagePojo;
+import com.akshara.assessment.a3.Pojo.ProgramPojo;
 import com.akshara.assessment.a3.Pojo.StatePojo;
 import com.akshara.assessment.a3.R;
 import com.akshara.assessment.a3.db.Boundary;
@@ -49,6 +51,7 @@ public class AppSettings extends BaseActivity {
     private static final int TIME_INTERVAL = 2000; // # milliseconds, desired time passed between two back presses.
     private long mBackPressed;
 
+    Spinner spnSelectProgram;
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +60,25 @@ public class AppSettings extends BaseActivity {
         sessionManager = new SessionManager(getApplicationContext());
         spnSelectLanguage = findViewById(R.id.spnSelectLanguage);
         spnSelectStae = findViewById(R.id.spnSelectStae);
+        spnSelectProgram = findViewById(R.id.spnSelectProgram);
+        db = ((A3Application) getApplicationContext().getApplicationContext()).getDb();
+
+        ArrayList<ProgramPojo> dataList = RolesUtils.getProgramData(db);
+        ProgramPojo pojo = new ProgramPojo();
+        pojo.setId(0);
+        pojo.setProgramName(getResources().getString(R.string.select_program));
+        dataList.add(0, pojo);
+
+        spnSelectProgram.setAdapter(new ArrayAdapter(AppSettings.this, R.layout.spinnertextview, dataList));
+        for(int i=0;i<dataList.size();i++)
+        {
+            if(sessionManager.getProgramFromSession().equalsIgnoreCase(dataList.get(i).getProgramName()))
+            {
+                spnSelectProgram.setSelection(i);
+               break;
+            }
+        }
+
         tv1 = findViewById(R.id.tv1);
         tv2 = findViewById(R.id.tv2);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -64,8 +86,7 @@ public class AppSettings extends BaseActivity {
         tv2.setText(getResources().getString(R.string.selectLanguage));
         String stateKey = sessionManager.getStateSelection();
         getSupportActionBar().setTitle(getResources().getString(R.string.changeLanguage));
-        db = ((A3Application) getApplicationContext().getApplicationContext()).getDb();
-        stateList = new ArrayList<>();
+         stateList = new ArrayList<>();
         languageList = new ArrayList<>();
 
         spnSelectStae.setVisibility(View.INVISIBLE);
@@ -125,6 +146,7 @@ public class AppSettings extends BaseActivity {
                 if (spnSelectLanguage.getSelectedItemPosition() > 0)
 
                 {
+                    if(spnSelectProgram.getSelectedItemPosition()>0){
                     if (checkDistrictCount(stateList.get(spnSelectStae.getSelectedItemPosition()).getStateKey()) > 0) {
                         String language = languageList.get(spnSelectLanguage.getSelectedItemPosition()).getLanguageEng();
                         String languagekey = languageList.get(spnSelectLanguage.getSelectedItemPosition()).getKey();
@@ -135,6 +157,9 @@ public class AppSettings extends BaseActivity {
                         //  subscribetoTopicsForNotification(state.toString().trim(), sessionManager.getUserType().trim().toUpperCase());
                         sessionManager.setLanguage(state, language, languagekey, stateKeyString);
                         sessionManager.setStateSelection(stateKeyString);
+                        sessionManager.setProgram(spnSelectProgram.getSelectedItem().toString().trim());
+                        sessionManager.setProgramId(((ProgramPojo) spnSelectProgram.getSelectedItem()).getId());
+
 
                         A3Application.setLanguage(getApplicationContext(), languagekey);
                         sessionManager.setLanguagePosition(spnSelectLanguage.getSelectedItemPosition());
@@ -150,13 +175,7 @@ public class AppSettings extends BaseActivity {
                             finish();
                             overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
                         }
-/*
-                    } else {
-                        showSignupResultDialog(
-                                getResources().getString(R.string.app_name),
-                                getResources().getString(R.string.functioalityprogree),
-                                getResources().getString(R.string.Ok_));
-                    }*/
+
                     } else {
 
                         showSignupResultDialog(
@@ -165,6 +184,17 @@ public class AppSettings extends BaseActivity {
                                 getResources().getString(R.string.Ok_));
 
                     }
+
+
+                }
+                        else
+                        {
+                            showSignupResultDialog(
+                                    getResources().getString(R.string.app_name),
+                                    getResources().getString(R.string.pleaseSelectProgram),
+                                    getResources().getString(R.string.Ok_));
+                        }
+
                 } else{
 
 

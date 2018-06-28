@@ -197,6 +197,7 @@
     <string name="fatherName">Father Name</string>
     <string name="report">Report</string>
     <string name="studentScore">Students Score</string>
+    <string name="questionsetDownloading">Question set downloading...</string>
 
 
     <string-array name="array_subject">

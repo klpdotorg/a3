@@ -122,7 +122,7 @@
     <string name="action_settings">Settings</string>
     <string name="Profile">Profile</string>
     <string name="download">Download</string>
-    <string name="changeLanguage">Change language</string>
+    <string name="changeLanguage">Change language-Program</string>
     <string name="prompt_user_role">USER ROLE</string>
     <string name="update">Update</string>
     <string name="updateProfile">Update Profile</string>
@@ -220,6 +220,7 @@
     <string name="fatherName">FATHER NAME</string>
     <string name="report">Report</string>
     <string name="studentScore">Students Score</string>
+    <string name="questionsetDownloading">Question set downloading...</string>
 
 
 </resources>

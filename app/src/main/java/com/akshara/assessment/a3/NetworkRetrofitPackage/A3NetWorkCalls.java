@@ -529,7 +529,7 @@ public class A3NetWorkCalls {
 
     }
 
-    public void downloadStudent(String url, final int schoolId, final SchoolStateInterface stateInterface) {
+    public void downloadStudent(String url, final long schoolId, final SchoolStateInterface stateInterface) {
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         apiInterface.getStudentAtClusterLevel(url).enqueue(new Callback<SchoolStudentPojo>() {
             @Override
@@ -554,7 +554,7 @@ public class A3NetWorkCalls {
         });
     }
 
-    public void parseStudent(SchoolStudentPojo response, int schoolId, SchoolStateInterface stateInterface) {
+    public void parseStudent(SchoolStudentPojo response, long schoolId, SchoolStateInterface stateInterface) {
 
         for (int i = 0; i < response.getResults().size(); i++) {
             String garde = response.getResults().get(i).getClasses().get(0).getName();
@@ -573,7 +573,7 @@ public class A3NetWorkCalls {
                 table.setStudentGrade(gradeInt);
                 table.setUid(result.getUid());
                 table.setInstitution(result.getInstitution());
-                table.setMiddleName(result.getMiddleName());
+                table.setMiddleName(result.getFather_name());
                 db.insertNew(table);
             }
 

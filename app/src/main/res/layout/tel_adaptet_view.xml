@@ -39,7 +39,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.55"
-        android:paddingLeft="2dp"
+        android:paddingLeft="4dp"
         android:gravity="center|left"
         android:textSize="16sp" />
     <TextView
@@ -53,7 +53,7 @@
         android:textSize="16sp" />
     <TextView
         android:id="@+id/tvMarks"
-        android:paddingLeft="2dp"
+        android:paddingLeft="4dp"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.2"

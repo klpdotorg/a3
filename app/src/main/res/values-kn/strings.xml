@@ -83,9 +83,7 @@
     <string name="doyouwantToLogout">ಲಾಗ್ ಔಟ್ ಮಾಡಲು ನೀವು ಖಚಿತವಾಗಿ ಬಯಸುವಿರಾ?</string>
     <string name="districtDataAlreadyFound">district: blocks and clusters already downloaded. Do you want to re-download?</string>
 
-    <string name="blockDataAlreadyFound">block data already downloaded. Do you want to re-download?</string>
-    <string name="blockSchoolLoading">block: schools loading. It will take few minutes for download to complete. Thanks for your patience !!!</string>
-    <string name="blockLeveldataLoadedSchussfully">ಬ್ಲಾಕ್ ಮಟ್ಟದ ಡೇಟಾವನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಲೋಡ್ ಮಾಡಲಾಗಿದೆ</string>
+     <string name="blockLeveldataLoadedSchussfully">ಬ್ಲಾಕ್ ಮಟ್ಟದ ಡೇಟಾವನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಲೋಡ್ ಮಾಡಲಾಗಿದೆ</string>
     <string name="action_logout">ಲಾಗ್ ಔಟ್</string>
     <string name="selectDistrict">--ಜಿಲ್ಲೆ ಆಯ್ಕೆ ಮಾಡಿ--</string>
     <string name="clusterDataLoadingFailed">ಕ್ಲಸ್ಟರ್ ಮಾಹಿತಿ ಲೋಡ್ ಆಗಲು ವಿಫಲಗೊಂಡಿದೆ. ದಯವಿಟ್ಟು ಪುನಃ ಪ್ರಯತ್ನಿಸಿ</string>
@@ -121,7 +119,7 @@
     <string name="action_settings">ಸೆಟ್ಟಿಂಗ್ಸ್</string>
     <string name="Profile">ಪ್ರೊಫೈಲ್</string>
     <string name="download">ಡೌನ್ಲೋಡ್</string>
-    <string name="changeLanguage">ಭಾಷೆ ಬದಲಾಯಿಸಿ</string>
+    <string name="changeLanguage">ಭಾಷೆ-ಪ್ರೋಗ್ರಾಂ ಬದಲಾಯಿಸಿ</string>
     <string name="prompt_user_role">ಬಳಕೆದಾರರ ಪಾತ್ರ</string>
     <string name="update">ನವೀಕರಿಸಿ</string>
     <string name="updateProfile">ಪ್ರೊಫೈಲ್ ನವೀಕರಿಸಿ</string>
@@ -147,8 +145,8 @@
     <string name="school">ಶಾಲೆಗಳು</string>
     <string name="prompt_school">ಶಾಲೆ ಆಯ್ಕೆ ಮಾಡಿ</string>
     <string name="selectSchool">-- ಶಾಲೆ ಆಯ್ಕೆ ಮಾಡಿ --</string>
-    <string name="loadingStudent">ವಿದ್ಯಾರ್ಥಿಗಳು ವಿವರಗಳನ್ನು ಲೋಡ್ ಮಾಡಲಾಗುತ್ತಿದೆ ...</string>
-    <string name="students_downloaded">%1$s ವಿದ್ಯಾರ್ಥಿಗಳು ವಿವರಗಳನ್ನು ಲೋಡ್ ಮಾಡಿದ್ದಾರೆ</string>
+    <string name="loadingStudent">ವಿದ್ಯಾರ್ಥಿಗಳ ವಿವರಗಳನ್ನು ಲೋಡ್ ಮಾಡಲಾಗುತ್ತಿದೆ ...</string>
+    <string name="students_downloaded">%1$s ವಿದ್ಯಾರ್ಥಿಗಳ ವಿವರಗಳನ್ನು ಲೋಡ್ ಮಾಡಿದ್ದಾರೆ</string>
     <string name="string_select_language">ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
     <string name="downloadQuestion">ಪ್ರಶ್ನೆ ಸೆಟ್ಅನ್ನು ಡೌನ್ಲೋಡ್ ಮಾಡಿ</string>
     <string name="string_select_subject">ವಿಷಯ ಆಯ್ಕೆಮಾಡಿ</string>
@@ -199,6 +197,7 @@
     <string name="fatherName">ತಂದೆಯ ಹೆಸರು</string>
     <string name="report">Report</string>
     <string name="studentScore">ವಿದ್ಯಾರ್ಥಿಗಳ ಸ್ಕೋರ್</string>
+    <string name="questionsetDownloading">ಪ್ರಶ್ನೆ ಸೆಟ್ಅನ್ನು ಮಾಡಲಾಗುತ್ತಿದೆ...</string>
 
 
     <string-array name="array_subject">

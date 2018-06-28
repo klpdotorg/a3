@@ -15,6 +15,19 @@ public class Result {
     @SerializedName("middle_name")
     @Expose
     private String middleName;
+
+    @SerializedName("father_name")
+    @Expose
+    private String father_name;
+
+    public String getFather_name() {
+        return father_name;
+    }
+
+    public void setFather_name(String father_name) {
+        this.father_name = father_name;
+    }
+
     @SerializedName("last_name")
     @Expose
     private String lastName;

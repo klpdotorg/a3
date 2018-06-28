@@ -41,8 +41,7 @@ public class AsssessmentSelectorAdapter extends RecyclerView.Adapter {
         A3APP_GRADEID = activity.getIntent().getIntExtra("A3APP_GRADEID", 0);
         A3APP_INSTITUTIONID = activity.getIntent().getLongExtra("A3APP_INSTITUTIONID", 0l);
         A3APP_GRADESTRING = activity.getIntent().getStringExtra("A3APP_GRADESTRING");
-
-        A3APP_LANGUAGE = this.activity.getLanguage();
+         A3APP_LANGUAGE = this.activity.getLanguage();
 
         //  notifyDataSetChanged();
     }
@@ -104,6 +103,7 @@ public class AsssessmentSelectorAdapter extends RecyclerView.Adapter {
                         bundle.putString("A3APP_GRADESTRING", A3APP_GRADESTRING);
                         //  bundle.putString("A3APP_CHILDID", A3APP_CHILDID);
                         bundle.putString("A3APP_LANGUAGE", A3APP_LANGUAGE);
+
 
                         intent.putExtras(bundle);
                         activity.startActivity(intent);

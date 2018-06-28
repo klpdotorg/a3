@@ -61,7 +61,7 @@ public class AssessmentSelectorActivity extends BaseActivity {
         super.onResume();
         questionSetTables.clear();
         Query quesryQuestionSet = Query.select().from(QuestionSetTable.TABLE)
-                .where(QuestionSetTable.GRADE_NAME.eqCaseInsensitive(gradeName))
+                .where(QuestionSetTable.GRADE_NAME.eqCaseInsensitive(gradeName).and(QuestionSetTable.PROGRAM_NAME.eqCaseInsensitive(sessionManager.getProgramFromSession())))
                 .orderBy(QuestionSetTable.ID_QUESTIONSET.asc());
         questionsetCursor = database.query(QuestionSetTable.class, quesryQuestionSet);
         if (questionsetCursor != null) {

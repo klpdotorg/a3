@@ -1,5 +1,6 @@
 package com.akshara.assessment.a3;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,8 +17,13 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.akshara.assessment.a3.NetworkRetrofitPackage.A3NetWorkCalls;
 import com.akshara.assessment.a3.R;
+import com.akshara.assessment.a3.UtilsPackage.DailogUtill;
+import com.akshara.assessment.a3.UtilsPackage.SchoolStateInterface;
+import com.akshara.assessment.a3.UtilsPackage.StringWithTags;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,56 +31,126 @@ import java.util.List;
 public class StudentListMainActivity extends BaseActivity {
 
 
-
     String title;
-
-
+    long schoolId;
+    ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tabed_activity);
 
-        title=getIntent().getStringExtra("A3APP_GRADESTRING");
+        title = getIntent().getStringExtra("A3APP_GRADESTRING");
+        schoolId= getIntent().getLongExtra("A3APP_INSTITUTIONID", 0L);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(title);
         setupNavigationView();
 
 
+    }
+
+    private void updateProgressMessage(String message, int count) {
+
+        progressDialog.setMessage(message);
+        progressDialog.setProgress(count);
 
     }
 
+    private void finishProgress() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
 
+    }
 
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-       navigateBackStack();
+        navigateBackStack();
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-               navigateBackStack();
+                navigateBackStack();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    public void downloadStudents(MenuItem item) {
+        if (item.getItemId() == R.id.action_download) {
 
 
-    public void navigateBackStack()
-    {
+           if(schoolId==0)
+           {
+               finish();
+           }
+            initPorgresssDialogForSchool();
+            updateProgressMessage(getResources().getString(R.string.loadingStudent), 0);
+
+          Toast.makeText(getApplicationContext(),schoolId+"",Toast.LENGTH_SHORT).show();
+        //    updateProgressMessage(select_school.getSelectedItem().toString() + " " + getResources().getString(R.string.loadingStudent), 0);
+//Log.d("shri",((StringWithTags) select_school.getSelectedItem()).id.toString());
+             String URL = BuildConfig.HOST + "/api/v1/institutions/" + schoolId + "/students/";
+            //   String URL =  BuildConfig.HOST +"/api/v1/institutestudents/?institution_id="+schoolId;
+            new A3NetWorkCalls(StudentListMainActivity.this).downloadStudent(URL, schoolId, new SchoolStateInterface() {
+                @Override
+                public void success(String message) {
+                    finishProgress();
+                    BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+                    Menu menu = bottomNavigationView.getMenu();
+                    selectFragment(menu.getItem(0));
+
+                    DailogUtill.showDialog(message, getSupportFragmentManager(), getApplicationContext());
+                }
+
+                @Override
+                public void failed(String message) {
+                    finishProgress();
+                    DailogUtill.showDialog(message, getSupportFragmentManager(), getApplicationContext());
+
+                }
+
+                @Override
+                public void update(int message) {
+
+                }
+            });
 
 
+        }
+    }
 
 
+    private void initPorgresssDialogForSchool() {
+        progressDialog = new ProgressDialog(StudentListMainActivity.this);
+        progressDialog.setMessage("");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
 
-        Intent intent=new Intent(getApplicationContext(),AssessmentSelectorActivity.class);
-        intent .putExtra("A3APP_INSTITUTIONID",getIntent().getLongExtra("A3APP_INSTITUTIONID",0L));
-        intent  .putExtra("A3APP_GRADEID",getIntent().getIntExtra("A3APP_GRADEID",0));
-        intent  .putExtra("A3APP_GRADESTRING",getIntent().getStringExtra("A3APP_GRADESTRING"));
+        progressDialog.show();
+        progressDialog.setCancelable(false);
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+
+
+        getMenuInflater().inflate(R.menu.download_menu, menu);
+
+        return true;
+    }
+
+    public void navigateBackStack() {
+
+
+        Intent intent = new Intent(getApplicationContext(), AssessmentSelectorActivity.class);
+        intent.putExtra("A3APP_INSTITUTIONID", getIntent().getLongExtra("A3APP_INSTITUTIONID", 0L));
+        intent.putExtra("A3APP_GRADEID", getIntent().getIntExtra("A3APP_GRADEID", 0));
+        intent.putExtra("A3APP_GRADESTRING", getIntent().getStringExtra("A3APP_GRADESTRING"));
         startActivity(intent);
         overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
         finish();
@@ -116,6 +192,7 @@ public class StudentListMainActivity extends BaseActivity {
 
         }
     }
+
     protected void pushFragment(Fragment fragment) {
         if (fragment == null)
             return;

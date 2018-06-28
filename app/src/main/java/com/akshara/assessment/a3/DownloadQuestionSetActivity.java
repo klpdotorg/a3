@@ -141,7 +141,7 @@ public class DownloadQuestionSetActivity extends BaseActivity {
 
     private void initPorgresssDialogForSchool() {
         progressDialog = new ProgressDialog(DownloadQuestionSetActivity.this);
-        progressDialog.setMessage("Question set downloading...");
+        progressDialog.setMessage(getResources().getString(R.string.questionsetDownloading));
 
 
         progressDialog.show();
