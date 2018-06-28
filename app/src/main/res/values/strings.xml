@@ -221,6 +221,7 @@
     <string name="report">Report</string>
     <string name="studentScore">Students Score</string>
     <string name="questionsetDownloading">Question set downloading...</string>
+    <string name="conceptName">Concept Name</string>
 
 
 </resources>

@@ -12,8 +12,11 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import com.akshara.assessment.a3.db.KontactDatabase;
+import com.crashlytics.android.Crashlytics;
 
 import java.util.Locale;
+
+import io.fabric.sdk.android.Fabric;
 
 
 /**
@@ -21,6 +24,7 @@ import java.util.Locale;
  */
 public class A3Application extends Application {
     KontactDatabase db;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -30,7 +34,8 @@ public class A3Application extends Application {
                 new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 */
         initSingletons();
-       updateLanguage(this);
+        updateLanguage(this);
+
 
     }
 
@@ -43,28 +48,22 @@ public class A3Application extends Application {
     }
 
 
-
-
-    public static Context setLanguage(Context ctx,String language)
-    {
+    public static Context setLanguage(Context ctx, String language) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
-        SharedPreferences.Editor editor=prefs.edit();
+        SharedPreferences.Editor editor = prefs.edit();
         editor.putString("user_locale", language);
         editor.commit();
-       return updateLanguage(ctx, language);
+        return updateLanguage(ctx, language);
     }
 
 
-
-    public static Context updateLanguage(Context ctx)
-    {
+    public static Context updateLanguage(Context ctx) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ctx);
         String lang = prefs.getString("user_locale", "En");
-       return updateLanguage(ctx, lang);
+        return updateLanguage(ctx, lang);
     }
 
-    public static Context updateLanguage(Context ctx, String lang)
-    {
+    public static Context updateLanguage(Context ctx, String lang) {
      /*   Configuration cfg = new Configuration();
         if (!TextUtils.isEmpty(lang))
             cfg.locale = new Locale(lang);
@@ -73,7 +72,7 @@ public class A3Application extends Application {
 
         ctx.getResources().updateConfiguration(cfg, null);*/
 
-        Context context=ctx;
+        Context context = ctx;
 
         Resources rs = context.getResources();
         Configuration config = rs.getConfiguration();
@@ -83,7 +82,7 @@ public class A3Application extends Application {
         } else {
             sysLocale = config.locale;
         }*/
-        if (!TextUtils.isEmpty(lang)){
+        if (!TextUtils.isEmpty(lang)) {
             Locale locale = new Locale(lang);
             Locale.setDefault(locale);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
@@ -94,31 +93,23 @@ public class A3Application extends Application {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
                 context = context.createConfigurationContext(config);
             } else {
-                  ctx.getResources().updateConfiguration(config,  rs.getDisplayMetrics());
+                ctx.getResources().updateConfiguration(config, rs.getDisplayMetrics());
             }
         }
 
-        return  context;
+        return context;
 
 
     }
-
-
-
 
 
     @Override
     protected void attachBaseContext(Context newBase) {
 
         Context context = updateLanguage(newBase);
-           super.attachBaseContext(context);
+        super.attachBaseContext(context);
 
     }
-
-
-
-
-
 
 
 }

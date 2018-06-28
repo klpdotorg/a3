@@ -111,7 +111,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.7"
-            android:text="Concept Name"
+            android:text="@string/conceptName"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -129,7 +129,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.3"
             android:paddingLeft="10dp"
-            android:text="Score"
+            android:text="@string/score"
             android:textSize="18sp"
             android:textStyle="bold" />
     </LinearLayout>

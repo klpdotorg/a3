@@ -28,6 +28,7 @@ import com.akshara.assessment.a3.db.Boundary;
 import com.akshara.assessment.a3.db.DBHelper;
 import com.akshara.assessment.a3.db.KontactDatabase;
 import com.akshara.assessment.a3.db.School;
+import com.crashlytics.android.Crashlytics;
 import com.yahoo.squidb.data.SquidCursor;
 import com.yahoo.squidb.sql.Query;
 
@@ -179,7 +180,8 @@ DBHelper dbHelper;
 
             // finish();
         } else if (id == R.id.nav_download) {
-            startActivity(new Intent(getApplicationContext(), BoundaryLoaderActivity.class));
+          //  Crashlytics.getInstance().crash();
+           startActivity(new Intent(getApplicationContext(), BoundaryLoaderActivity.class));
 
         }
         else if (id == R.id.nav_downloadQuestionSet) {

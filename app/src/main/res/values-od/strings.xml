@@ -197,6 +197,7 @@
     <string name="report">ରିପୋର୍ଟ</string>
     <string name="studentScore">ବିଦ୍ୟାର୍ଥୀଙ୍କ ପ୍ରାପ୍ତଙ୍କ</string>
     <string name="questionsetDownloading">Question set downloading...</string>
+    <string name="conceptName">Concept Name</string>
 
 
     <string-array name="array_subject">
