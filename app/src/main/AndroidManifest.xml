@@ -195,7 +195,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/A3Theme" />
         <service
-            android:name="Firebasepack.MyFirebaseInstanceIDService">
+            android:name="firebasepack.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
@@ -205,7 +205,7 @@
             android:resource="@drawable/app_logo_new"
             />
         <service
-            android:name="Firebasepack.MyFirebaseMessagingService">
+            android:name="firebasepack.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>

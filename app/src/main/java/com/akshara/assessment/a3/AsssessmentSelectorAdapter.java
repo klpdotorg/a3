@@ -90,7 +90,7 @@ public class AsssessmentSelectorAdapter extends RecyclerView.Adapter {
                 holder.tvSubject.setText(questionSetTables.get(position).getSubjectName());
                 holder.tvAssementtype.setText(questionSetTables.get(position).getAssesstypeName());
 
-
+/*
                 holder.adapterLay.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -112,7 +112,7 @@ public class AsssessmentSelectorAdapter extends RecyclerView.Adapter {
                         activity.finish();
 
                     }
-                });
+                });*/
 
 
                 holder.imageReport.setOnClickListener(new View.OnClickListener() {

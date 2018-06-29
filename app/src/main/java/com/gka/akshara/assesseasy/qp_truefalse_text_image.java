@@ -45,7 +45,7 @@ public class qp_truefalse_text_image extends AppCompatActivity {
 
         ArrayList qdatalist = globalvault.questions[questionid-1].getQuestionDataList();
 
-        ImageView questionimg = (ImageView)findViewById(R.id.mcqQuestionImage);
+        TouchImageView questionimg = (TouchImageView)findViewById(R.id.mcqQuestionImage);
         RadioGroup radiogrp_mcqoptions = (RadioGroup)findViewById(R.id.radiogroup_optionbuttonsgrp);
 
         try {

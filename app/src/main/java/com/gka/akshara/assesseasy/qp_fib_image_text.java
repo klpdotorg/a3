@@ -50,7 +50,7 @@ public class qp_fib_image_text extends AppCompatActivity {
 
         ArrayList qdatalist = globalvault.questions[questionid-1].getQuestionDataList();
 
-        ImageView questionimg = (ImageView)findViewById(R.id.fibQuestionImage);
+        TouchImageView questionimg = (TouchImageView)findViewById(R.id.fibQuestionImage);
 
         try {
             for (int i = 0; i < qdatalist.size(); i++) {

@@ -62,16 +62,17 @@ public class qp_mcq_image extends AppCompatActivity {
                 Drawable drawableimg = new BitmapDrawable(getResources(), decodedImage);
 
                 if (paramname.equals("option1img")) {
-                    ((RadioButton) radiogrp_mcqoptions.getChildAt(0)).setCompoundDrawablesWithIntrinsicBounds(null, null, null, drawableimg); // align image to bottom
+                    // ((RadioButton) radiogrp_mcqoptions.getChildAt(0)).setCompoundDrawablesWithIntrinsicBounds(null, null, null, drawableimg); // align image to bottom. This function doesnt display the image properly scaled. Use setBackground(drawable) instead)
+                    ((RadioButton) radiogrp_mcqoptions.getChildAt(0)).setBackground(drawableimg);
                 }
                 else if (paramname.equals("option2img")) {
-                    ((RadioButton) radiogrp_mcqoptions.getChildAt(1)).setCompoundDrawablesWithIntrinsicBounds(null, null, null, drawableimg);
+                    ((RadioButton) radiogrp_mcqoptions.getChildAt(1)).setBackground(drawableimg);
                 }
                 else if (paramname.equals("option3img")) {
-                    ((RadioButton) radiogrp_mcqoptions.getChildAt(2)).setCompoundDrawablesWithIntrinsicBounds(null, null, null, drawableimg);
+                    ((RadioButton) radiogrp_mcqoptions.getChildAt(2)).setBackground(drawableimg);
                 }
                 else if (paramname.equals("option4img")) {
-                    ((RadioButton) radiogrp_mcqoptions.getChildAt(3)).setCompoundDrawablesWithIntrinsicBounds(null, null, null, drawableimg);
+                    ((RadioButton) radiogrp_mcqoptions.getChildAt(3)).setBackground(drawableimg);
                 }
                 else ;
 

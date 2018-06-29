@@ -13,14 +13,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.05" />
+        app:layout_constraintGuide_percent="0.02" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_bottom1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.95" />
+        app:layout_constraintGuide_percent="0.98" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_left1"
@@ -42,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.35" />
+        app:layout_constraintGuide_percent="0.25" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_bottom2"
@@ -70,7 +70,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.70" />
+        app:layout_constraintGuide_percent="0.75" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_pillar1"
@@ -156,19 +156,22 @@
         app:layout_constraintStart_toStartOf="@+id/guideline_left1"
         app:layout_constraintTop_toTopOf="@+id/guideline_top1" />
 
-    <ImageView
+    <com.gka.akshara.assesseasy.TouchImageView
         android:id="@+id/mcqQuestionImage"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:paddingLeft="@dimen/questionimagebox_image_padding"
+        android:paddingRight="@dimen/questionimagebox_image_padding"
+        android:paddingTop="@dimen/questionimagebox_image_topmargin"
+        android:paddingBottom="@dimen/questionimagebox_image_bottommargin"
+        android:layout_marginEnd="@dimen/questionimagebox_image_sidemargin"
+        android:layout_marginStart="@dimen/questionimagebox_image_sidemargin"
+        android:layout_marginTop="@dimen/questionimagebox_image_topmargin"
+        android:layout_marginBottom="@dimen/questionimagebox_image_bottommargin"
         app:layout_constraintBottom_toTopOf="@+id/guideline_top3"
         app:layout_constraintEnd_toStartOf="@+id/guideline_pillar2"
         app:layout_constraintStart_toStartOf="@+id/guideline_pillar1"
-        app:layout_constraintTop_toBottomOf="@+id/guideline_top2"
-        app:srcCompat="@drawable/tomatoes" />
+        app:layout_constraintTop_toBottomOf="@+id/guideline_top2" />
 
     <RadioGroup
         android:id="@+id/radiogroup_optionbuttonsgrp"

@@ -54,13 +54,13 @@ class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.Student
         a3dsapiobj.initializeDS(activity);
         db = ((A3Application) activity.getApplicationContext()).getDb();
 
-        Log.d("shri", "-------A3 SEND DATA------");
+      /*  Log.d("shri", "-------A3 SEND DATA------");
         Log.d("Shri", "GradeString:" + A3APP_GRADESTRING);
         Log.d("Shri", "Institution Id:" + A3APP_INSTITUTIONID);
         Log.d("Shri", "Grade Id:" + A3APP_GRADEID);
         Log.d("Shri", "Q set Id:" + EASYASEESS_QUESTIONSETID);
         Log.d("Shri", "App Language:" + A3APP_LANGUAGE);
-        Log.d("shri", "-------------");
+        Log.d("shri", "-------------");*/
     }
 
     @Override
@@ -76,7 +76,7 @@ class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.Student
         // Log.d("shri",students.get(position).stsid+":"+students.get(position).name);
         holder.txtStudentID.setText("STS ID: "
                 + (students.get(position).uid != null &&
-                !students.get(position).equals("") ? students.get(position).uid : "NA"));
+                !students.get(position).uid.equals("") ? students.get(position).uid : "NA"));
 
         if (students.get(position).gender.equalsIgnoreCase("male")) {
             holder.image_gender.setImageResource(R.drawable.boy);
@@ -134,17 +134,17 @@ class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.Student
         });
 
 
-        holder.card_view.setOnClickListener(new View.OnClickListener() {
+    /*    holder.card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-           /*     Intent intent=new Intent(activity,AssessmentSelectorActivity.class);
+           *//*     Intent intent=new Intent(activity,AssessmentSelectorActivity.class);
                 intent  .putExtra("A3APP_GRADESTRING",gradeString);
                 intent  .putExtra("A3APP_INSTITUTIONID",institution);
                 intent  .putExtra("A3APP_GRADEID",grade);
                 intent.putExtra("A3APP_CHILDID",students.get(position).stsid);
 
-                activity.startActivity(intent);*/
+                activity.startActivity(intent);*//*
 
                 Intent intent = new Intent(activity, com.gka.akshara.assesseasy.assessment_manager.class);
                 Bundle bundle = new Bundle();
@@ -165,7 +165,7 @@ class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.Student
 
 
             }
-        });
+        });*/
 
     }
 

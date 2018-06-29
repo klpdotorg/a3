@@ -308,15 +308,13 @@ DBHelper dbHelper;
                 editor.commit();
                  long id=   new Long(schoolArrayAdapter.getItem(i).id.toString());
                  String name=  ((TextView)view.findViewById(R.id.cust_view)).getText().toString();
-              //  Long id=Long.parseLong(((StringWithTags)listView.getSelectedItem()).id.toString());
-             // showAltertDailog(id);
-               // Toast.makeText(getApplicationContext(),id+"",Toast.LENGTH_SHORT).show();
-                Intent gradeIntent=new Intent(getApplicationContext(),GradeActivity.class);
+                  showAltertDailog(id);
+                 /*Intent gradeIntent=new Intent(getApplicationContext(),GradeActivity.class);
                 gradeIntent.putExtra("A3APP_INSTITUTIONID",id);
                 gradeIntent.putExtra("institutionName",name);
 
                 startActivity(gradeIntent);
-                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);*/
                 //finish();
 
             }
@@ -352,9 +350,12 @@ DBHelper dbHelper;
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
         int grade=Integer.parseInt(mSpinner.getSelectedItem().toString());
-            startActivity(new Intent(getApplicationContext(),StudentListMainActivity.class)
-                    .putExtra("insti",schoolid).
-                            putExtra("grade",grade));
+        String gradeS=getResources().getStringArray(R.array.array_grade)[grade-1];
+       // Toast.makeText(getApplicationContext(),"GradeId:"+grade+":Insti:"+schoolid+":grade"+gradeS,Toast.LENGTH_SHORT).show();
+           startActivity(new Intent(getApplicationContext(),AssessmentSelectorActivity.class)
+                    .putExtra("A3APP_INSTITUTIONID",schoolid).
+                      putExtra("A3APP_GRADEID",grade).
+                      putExtra("A3APP_GRADESTRING",gradeS));
                 overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
 
             }

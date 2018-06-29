@@ -32,7 +32,7 @@ public class TelemetryReportIndetail extends BaseActivity {
         tvFirstName= findViewById(R.id.tvFirstName);
         tv_fatherName= findViewById(R.id.tv_fatherName);
 
-        tv_stsId.setText(stsid);
+        tv_stsId.setText(stsid!=null&&!stsid.equalsIgnoreCase("")?stsid:"NA");
         tv_fatherName.setText(fname);
         tvFirstName.setText(name);
         recyReportIndi.setLayoutManager(new LinearLayoutManager(this));

@@ -556,9 +556,16 @@ public class A3NetWorkCalls {
 
     public void parseStudent(SchoolStudentPojo response, long schoolId, SchoolStateInterface stateInterface) {
 
+      Log.d("shri", schoolId + "=============");
         for (int i = 0; i < response.getResults().size(); i++) {
+            int gradeInt = 0;
             String garde = response.getResults().get(i).getClasses().get(0).getName();
-            int gradeInt = Integer.parseInt(garde);
+            try {
+                gradeInt = Integer.parseInt(garde);
+            } catch (Exception e) {
+                continue;
+            }
+
 
             if (gradeInt > 0 && gradeInt <= 5) {
                 Result result = response.getResults().get(i);
@@ -936,7 +943,7 @@ public class A3NetWorkCalls {
 
             for (com.akshara.assessment.a3.AssessmentPojoPack.Program program : body.getPrograms()) {
 
-              //  Log.d("shri", body.getPrograms().size() + "---------");
+                //  Log.d("shri", body.getPrograms().size() + "---------");
 
                 AssessmentTypeTable typeTable = new AssessmentTypeTable();
                 typeTable.setId(Long.parseLong(program.getIdAssesstype()));

@@ -47,7 +47,7 @@ public class qp_mcq_image_image extends AppCompatActivity {
 
         ArrayList qdatalist = globalvault.questions[questionid-1].getQuestionDataList();
 
-        ImageView questionimg = (ImageView)findViewById(R.id.mcqQuestionImage);
+        TouchImageView questionimg = (TouchImageView)findViewById(R.id.mcqQuestionImage);
         RadioGroup radiogrp_mcqoptions = (RadioGroup)findViewById(R.id.radiogroup_optionbuttonsgrp);
 
      try {
@@ -65,16 +65,17 @@ public class qp_mcq_image_image extends AppCompatActivity {
                  questionimg.setImageBitmap(decodedImage);   // to set image for an 'ImageView'
              }
              else if (paramname.equals("option1img")) {
-                 ((RadioButton) radiogrp_mcqoptions.getChildAt(0)).setCompoundDrawablesWithIntrinsicBounds(null, null, null, drawableimg); // align image to bottom
+                 //((RadioButton) radiogrp_mcqoptions.getChildAt(0)).setCompoundDrawablesWithIntrinsicBounds(null, null, null, drawableimg); // align image to bottom
+                 ((RadioButton) radiogrp_mcqoptions.getChildAt(0)).setBackground(drawableimg);
              }
              else if (paramname.equals("option2img")) {
-                 ((RadioButton) radiogrp_mcqoptions.getChildAt(1)).setCompoundDrawablesWithIntrinsicBounds(null, null, null, drawableimg);
+                 ((RadioButton) radiogrp_mcqoptions.getChildAt(1)).setBackground(drawableimg);
              }
              else if (paramname.equals("option3img")) {
-                 ((RadioButton) radiogrp_mcqoptions.getChildAt(2)).setCompoundDrawablesWithIntrinsicBounds(null, null, null, drawableimg);
+                 ((RadioButton) radiogrp_mcqoptions.getChildAt(2)).setBackground(drawableimg);
              }
              else if (paramname.equals("option4img")) {
-                 ((RadioButton) radiogrp_mcqoptions.getChildAt(3)).setCompoundDrawablesWithIntrinsicBounds(null, null, null, drawableimg);
+                 ((RadioButton) radiogrp_mcqoptions.getChildAt(3)).setBackground(drawableimg);
              }
              else ;
 

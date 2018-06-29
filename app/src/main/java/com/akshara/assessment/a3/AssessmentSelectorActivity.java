@@ -91,9 +91,10 @@ public class AssessmentSelectorActivity extends BaseActivity {
 
     public void navigateBack()
     {
-        Intent intent=new Intent(getApplicationContext(),GradeActivity.class);
-        intent.putExtra("A3APP_INSTITUTIONID",getIntent().getLongExtra("A3APP_INSTITUTIONID", 0l));
-        startActivity(intent);
+       //Intent intent=new Intent(getApplicationContext(),GradeActivity.class);
+    Intent intent=new Intent(getApplicationContext(),NavigationDrawerActivity.class);
+      //  intent.putExtra("A3APP_INSTITUTIONID",getIntent().getLongExtra("A3APP_INSTITUTIONID", 0l));
+       startActivity(intent);
         overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
         finish();
 

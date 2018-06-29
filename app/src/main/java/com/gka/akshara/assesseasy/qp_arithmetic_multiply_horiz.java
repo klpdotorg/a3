@@ -68,15 +68,18 @@ public class qp_arithmetic_multiply_horiz extends AppCompatActivity {
         }
 
         TextView tvNumber1 = (TextView)findViewById(R.id.textViewNumber1);
+        int randindex = 0;
         if(firstnumberset != null) {
-            int randindex = rand.nextInt(firstnumberset.length);
+            randindex = rand.nextInt(firstnumberset.length);
             tvNumber1.setText(firstnumberset[randindex]);
         }
 
         TextView tvNumber2 = (TextView)findViewById(R.id.textViewNumber2);
         if(secondnumberset != null) {
-            int randindex = rand.nextInt(secondnumberset.length);
-            tvNumber2.setText(secondnumberset[randindex]);
+            if (randindex >= secondnumberset.length) {
+                randindex = 0;
+            }
+            tvNumber2.setText(secondnumberset[randindex]); // Choose the value for the Second Number that corresponds (same index) to the First Number value
         }
 
         // sets the answer field (when navigating backwards, can fill the answer entered earlier in the answer field)

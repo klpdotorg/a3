@@ -35,18 +35,14 @@ public class globalvault {
 
     // Background images for Question Pages. An image is randomly picked from this array
     public static int[] QP_BGRND_IMGS = {
-            R.drawable.bg_qp_01,
-            R.drawable.bg_qp_02,
-            R.drawable.bg_qp_03,
-            R.drawable.bg_qp_04,
-            R.drawable.bg_qp_05,
-            R.drawable.bg_qp_06,
-            R.drawable.bg_qp_07,
-            R.drawable.bg_qp_08
+            R.drawable.bg1,
+            R.drawable.bg2,
+            R.drawable.bg3,
+            R.drawable.bg4,
+            R.drawable.bg5
     };
 
-    public static int[] ANIMATION_BGRND_IMGS = { // Background images for the Animation
-            R.drawable.anim_bg1,
+    public static int[] ANIMATION_BGRND_IMGS = { // Background images for the Animation.
             R.drawable.anim_bg1,
             R.drawable.anim_bg1
     };

@@ -45,7 +45,7 @@ public class TelemetryReportAdapter extends RecyclerView.Adapter<TelemetryReport
     public void onBindViewHolder(TelemetryViewHolder holder, final int position) {
         final StudentTable studentTable = data.get(position).getTable();
         holder.tvStudentName.setText(studentTable.getFirstName());
-        holder.stsid.setText(studentTable.getUid());
+        holder.stsid.setText(studentTable.getUid()!=null&&!studentTable.getUid().equalsIgnoreCase("")?studentTable.getUid():"NA");
         Map<Long, ArrayList<CombinePojo>> listData = data.get(position).getDetailReportsMap();
         if (listData.get(studentTable.getId()) != null && listData.get(studentTable.getId()).size() > 0) {
             ArrayList<CombinePojo> combinePojos = listData.get(studentTable.getId());

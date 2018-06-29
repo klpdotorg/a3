@@ -1,4 +1,4 @@
-package Firebasepack;
+package firebasepack;
 
 import android.util.Log;
 

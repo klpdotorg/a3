@@ -66,15 +66,18 @@ public class qp_arithmetic_division_withreminder extends AppCompatActivity {
         }
 
         TextView tvNumber1 = (TextView)findViewById(R.id.textViewDividend);
+        int randindex = 0;
         if(dividendset != null) {
-            int randindex = rand.nextInt(dividendset.length);
+            randindex = rand.nextInt(dividendset.length);
             tvNumber1.setText(dividendset[randindex]);
         }
 
         TextView tvNumber2 = (TextView)findViewById(R.id.textViewDivisor);
         if(divisorset != null) {
-            int randindex = rand.nextInt(divisorset.length);
-            tvNumber2.setText(divisorset[randindex]);
+            if (randindex >= divisorset.length) {
+                randindex = 0;
+            }
+            tvNumber2.setText(divisorset[randindex]); // Choose the value for the Divisor that corresponds (same index) to the value of the Dividend
         }
 
         // sets the answer field (when navigating backwards, can fill the answer entered earlier in the answer field)

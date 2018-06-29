@@ -39,13 +39,24 @@
     <dimen name="qp_truefalse_questiontext">15sp</dimen>
     <dimen name="qp_truefalse_option">18sp</dimen>
 
-    <dimen name="mtf_optionbox_image_padding">4dp</dimen>
+    <dimen name="questionimagebox_image_padding">4dp</dimen>
     <dimen name="mcq_optionbox_image_padding">4dp</dimen>
+    <dimen name="mtf_optionbox_image_padding">4dp</dimen>
 
-    <dimen name="mtf_horizontal_optionbox_sidemargin">8dp</dimen>
-    <dimen name="mtf_horizontal_optionbox_topmargin">8dp</dimen>
-    <dimen name="mtf_vertical_optionbox_sidemargin">8dp</dimen>
-    <dimen name="mtf_vertical_optionbox_topmargin">8dp</dimen>
+    <dimen name="questionimagebox_image_sidemargin">4dp</dimen>
+    <dimen name="questionimagebox_image_topmargin">4dp</dimen>
+    <dimen name="questionimagebox_image_bottommargin">4dp</dimen>
+
+    <dimen name="mcq_optionbox_sidemargin">4dp</dimen>
+    <dimen name="mcq_optionbox_topmargin">4dp</dimen>
+    <dimen name="mcq_optionbox_bottommargin">4dp</dimen>
+
+    <dimen name="mtf_horizontal_optionbox_sidemargin">4dp</dimen>
+    <dimen name="mtf_horizontal_optionbox_topmargin">4dp</dimen>
+    <dimen name="mtf_horizontal_optionbox_bottommargin">4dp</dimen>
+    <dimen name="mtf_vertical_optionbox_sidemargin">4dp</dimen>
+    <dimen name="mtf_vertical_optionbox_topmargin">4dp</dimen>
+    <dimen name="mtf_vertical_optionbox_bottommargin">4dp</dimen>
 
     <dimen name="finalscore_textsize">35sp</dimen>
 
