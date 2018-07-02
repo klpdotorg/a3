@@ -311,7 +311,8 @@ select_school.setOnItemSelectedListener(new OnItemSelectedListener() {
             int schoolId=Integer.parseInt(((StringWithTags) select_school.getSelectedItem()).id.toString());
                 String URL =  BuildConfig.HOST +"/api/v1/institutions/"+schoolId+"/students/";
              //   String URL =  BuildConfig.HOST +"/api/v1/institutestudents/?institution_id="+schoolId;
-                new A3NetWorkCalls(BoundaryLoaderActivity.this).downloadStudent(URL,schoolId, new SchoolStateInterface() {
+                int flag=0;
+                new A3NetWorkCalls(BoundaryLoaderActivity.this).downloadStudent(URL,schoolId,flag, new SchoolStateInterface() {
                     public void success(String message) {
                         finishProgress();
                         if (mSession.isSetupDone() == false) {

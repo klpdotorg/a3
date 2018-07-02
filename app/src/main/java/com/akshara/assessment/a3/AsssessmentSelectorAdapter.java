@@ -81,8 +81,7 @@ public class AsssessmentSelectorAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder mainHolder, final int position) {
 
-
-        switch (mainHolder.getItemViewType()) {
+          switch (mainHolder.getItemViewType()) {
             case DATA:
                 AssessmentViewHolder holder = ((AssessmentViewHolder) mainHolder);
                 holder.tvAssessmentTitle.setText(questionSetTables.get(position).getQsetTitle());
@@ -170,6 +169,7 @@ public class AsssessmentSelectorAdapter extends RecyclerView.Adapter {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(activity, DownloadQuestionSetActivity.class);
+                        intent.putExtra("A3APP_GRADEID",A3APP_GRADEID);
                         activity.startActivity(intent);
                     }
                 });

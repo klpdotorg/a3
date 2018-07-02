@@ -54,6 +54,7 @@ public class globalvault {
     static boolean deleterecordsaftersync = false; // if true, all the telemetry records that are synced to the A3 Server will be flushed out from the device database
     static boolean demomodeifnodb = false; // If set true, the app will run with demo questions in case it fails to read question set from the DB
     static boolean audioautoplay = true; // Play the audio file for the Question (if any) automatically when the screen is displayed initially
+    static boolean integrated = true; // Integrated with ContainerApp (set to 'false' to test AssessmentApp as stand-alone (is used to decide if clicking 'back arrow' on first Question should take User to Home/Start page of AssessmentApp or Not. If this flag is true, will stay on the first Question itself
 
     public static String[] questionTemplTypes = {
 

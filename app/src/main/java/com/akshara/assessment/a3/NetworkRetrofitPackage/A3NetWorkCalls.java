@@ -23,6 +23,7 @@ import com.akshara.assessment.a3.Pojo.QuestionSetPojo;
 import com.akshara.assessment.a3.Pojo.RegisterStudentPojo;
 import com.akshara.assessment.a3.Pojo.ResetPasswordPojo;
 import com.akshara.assessment.a3.Pojo.StudentExistsPojo;
+import com.akshara.assessment.a3.Pojo.Subject;
 import com.akshara.assessment.a3.QuestionSetPojos.Question;
 import com.akshara.assessment.a3.QuestionSetPojos.QuestionSetPojos;
 import com.akshara.assessment.a3.QuestionSetPojos.Questiondatum;
@@ -48,6 +49,7 @@ import com.akshara.assessment.a3.db.Respondent;
 import com.akshara.assessment.a3.db.School;
 import com.akshara.assessment.a3.db.State;
 import com.akshara.assessment.a3.db.StudentTable;
+import com.akshara.assessment.a3.db.SubjectTable;
 import com.akshara.assessment.a3.regstdrespPojo.RegisterStdPojoResp;
 import com.google.gson.Gson;
 import com.yahoo.squidb.data.SquidCursor;
@@ -529,14 +531,14 @@ public class A3NetWorkCalls {
 
     }
 
-    public void downloadStudent(String url, final long schoolId, final SchoolStateInterface stateInterface) {
+    public void downloadStudent(String url, final long schoolId,final int flag, final SchoolStateInterface stateInterface) {
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         apiInterface.getStudentAtClusterLevel(url).enqueue(new Callback<SchoolStudentPojo>() {
             @Override
             public void onResponse(Call<SchoolStudentPojo> call, Response<SchoolStudentPojo> response) {
 
                 if (response.isSuccessful()) {
-                    parseStudent(response.body(), schoolId, stateInterface);
+                    parseStudent(response.body(), schoolId, stateInterface,flag);
 
                 } else if (response.code() == 500) {
                     //email or password invalid
@@ -554,9 +556,11 @@ public class A3NetWorkCalls {
         });
     }
 
-    public void parseStudent(SchoolStudentPojo response, long schoolId, SchoolStateInterface stateInterface) {
+    public void parseStudent(SchoolStudentPojo response, long schoolId, SchoolStateInterface stateInterface,int flag) {
 
-      Log.d("shri", schoolId + "=============");
+        int studentCount=0;
+        int particularCOunt=0;
+     // Log.d("shri", schoolId + "=============");
         for (int i = 0; i < response.getResults().size(); i++) {
             int gradeInt = 0;
             String garde = response.getResults().get(i).getClasses().get(0).getName();
@@ -581,6 +585,11 @@ public class A3NetWorkCalls {
                 table.setUid(result.getUid());
                 table.setInstitution(result.getInstitution());
                 table.setMiddleName(result.getFather_name());
+                if(flag!=0&&flag==gradeInt)
+                {
+                    particularCOunt++;
+                }
+                studentCount++;
                 db.insertNew(table);
             }
 
@@ -588,13 +597,19 @@ public class A3NetWorkCalls {
 
 
         if (response.getNext() != null) {
-            downloadStudent(response.getNext().toString(), schoolId, stateInterface);
+            downloadStudent(response.getNext().toString(), schoolId, flag,stateInterface);
             //Toast.makeText(getApplicationContext(), "next", Toast.LENGTH_SHORT).show();
 
         } else {
 
             if (response.getCount() > 0) {
-                stateInterface.success(String.format(context.getResources().getString(R.string.students_downloaded), response.getCount() + ""));
+                if(flag!=0){
+                    stateInterface.success(String.format(context.getResources().getString(R.string.students_downloaded), particularCOunt+""));
+
+                }else {
+                    stateInterface.success(String.format(context.getResources().getString(R.string.students_downloaded), studentCount+""));
+
+                }
                 //UPDATE
                 Update updateSchool = Update.table(School.TABLE).where(School.ID.eq(schoolId));
                 Update schoolUpdate = updateSchool.fromTemplate(new School().setStudentCount(response.getCount()));
@@ -998,6 +1013,7 @@ public class A3NetWorkCalls {
         if (body != null && body.getPrograms() != null && body.getPrograms().size() > 0) {
             try {
                 db.deleteAll(ProgramTable.class);
+                db.deleteAll(SubjectTable.class);
             } catch (Exception e) {
 
             }
@@ -1012,6 +1028,33 @@ public class A3NetWorkCalls {
                     programTable.setProgramName(program_name);
                     programTable.setProgramDescr(program_descr);
                     db.insertNew(programTable);
+
+                if(program.getSubjects()!=null&&program.getSubjects().size()>0)
+                {
+                    for(Subject subject:program.getSubjects())
+                    {
+                        long subjectId=0l;
+                        try {
+                             subjectId = Long.parseLong(subject.getIdSubject());
+                        }catch (Exception e)
+                        {
+                            continue;
+                        }
+                        SubjectTable subjectTable=new SubjectTable();
+                        subjectTable.setIdSubject(subjectId);
+                        subjectTable.setSubjectName(subject.getSubjectName());
+                        subjectTable.setIdProgram(id);
+                        subjectTable.setProgramName(program_name);
+                        db.insertNew(subjectTable);
+
+
+
+
+                    }
+
+                }
+
+
                 } catch (Exception e) {
                     currentStateInterface.setFailed(context.getResources().getString(R.string.program_loading_failed));
                 }

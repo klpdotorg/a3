@@ -17,6 +17,7 @@ import com.akshara.assessment.a3.NetworkRetrofitPackage.A3Services;
 import com.akshara.assessment.a3.NetworkRetrofitPackage.CurrentStateInterface;
 import com.akshara.assessment.a3.Pojo.QuestionSetPojo;
 import com.akshara.assessment.a3.Pojo.StatePojo;
+import com.akshara.assessment.a3.Pojo.SubjectTempPojo;
 import com.akshara.assessment.a3.UtilsPackage.RolesUtils;
 import com.akshara.assessment.a3.UtilsPackage.StringWithTags;
 import com.akshara.assessment.a3.db.KontactDatabase;
@@ -30,22 +31,27 @@ public class DownloadQuestionSetActivity extends BaseActivity {
     ProgressDialog progressDialog;
     com.akshara.assessment.a3.UtilsPackage.SessionManager smanger;
     private KontactDatabase db;
-
-
+    ArrayList<SubjectTempPojo> subjectList;
+    int A3APP_GRADEID=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_download_question_set);
         db = ((A3Application) getApplicationContext().getApplicationContext()).getDb();
-
+        A3APP_GRADEID=getIntent().getIntExtra("A3APP_GRADEID",0);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getResources().getString(R.string.downloadQuestion));
         smanger = new com.akshara.assessment.a3.UtilsPackage.SessionManager(getApplicationContext());
         btnDownloadQuestion = findViewById(R.id.btnDownloadQuestion);
+        subjectList=RolesUtils.getSubjectForProgram(db,smanger.getProgramIdFromSession());
         ArrayList<AssessmentTempPojo> listAssessmentData = RolesUtils.getAssessmentType(smanger.getProgramFromSession(), smanger.getProgramIdFromSession(), db);
        // spn_language = findViewById(R.id.spn_language);
         spn_subject = findViewById(R.id.spn_subject);
         spn_selectGrade = findViewById(R.id.spn_selectGrade);
+        spn_subject.setAdapter(new ArrayAdapter(DownloadQuestionSetActivity.this, R.layout.spinnertextview, subjectList));
+        if(A3APP_GRADEID!=0) {
+            spn_selectGrade.setSelection(A3APP_GRADEID-1);
+        }
         spn_selectAssessment = findViewById(R.id.spn_selectAssessment);
         spn_selectAssessment.setAdapter(new ArrayAdapter(DownloadQuestionSetActivity.this, R.layout.spinnertextview, listAssessmentData));
 
@@ -56,7 +62,7 @@ public class DownloadQuestionSetActivity extends BaseActivity {
 
                // String language = spn_language.getSelectedItem().toString().trim();
               String language = smanger.getLanguage();
-              Toast.makeText(getApplicationContext(),language,Toast.LENGTH_SHORT).show();
+             // Toast.makeText(getApplicationContext(),language,Toast.LENGTH_SHORT).show();
                 String subject = spn_subject.getSelectedItem().toString().trim();
                 String grade = spn_selectGrade.getSelectedItem().toString().trim();
                 String assessment = spn_selectAssessment.getSelectedItem().toString().trim();

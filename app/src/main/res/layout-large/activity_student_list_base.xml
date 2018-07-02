@@ -4,13 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.akshara.assessment.a3.GradeActivity">
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:onClick="click"
-        android:text="Click"/>
+    tools:context="com.akshara.assessment.a3.StudentListBaseActivity">
 
 </android.support.constraint.ConstraintLayout>

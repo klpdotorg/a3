@@ -34,12 +34,14 @@ public class StudentListMainActivity extends BaseActivity {
     String title;
     long schoolId;
     ProgressDialog progressDialog;
+    int A3APP_GRADEID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tabed_activity);
 
         title = getIntent().getStringExtra("A3APP_GRADESTRING");
+        A3APP_GRADEID=getIntent().getIntExtra("A3APP_GRADEID",0);
         schoolId= getIntent().getLongExtra("A3APP_INSTITUTIONID", 0L);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(title);
@@ -91,12 +93,12 @@ public class StudentListMainActivity extends BaseActivity {
             initPorgresssDialogForSchool();
             updateProgressMessage(getResources().getString(R.string.loadingStudent), 0);
 
-          Toast.makeText(getApplicationContext(),schoolId+"",Toast.LENGTH_SHORT).show();
+        //  Toast.makeText(getApplicationContext(),schoolId+"",Toast.LENGTH_SHORT).show();
         //    updateProgressMessage(select_school.getSelectedItem().toString() + " " + getResources().getString(R.string.loadingStudent), 0);
 //Log.d("shri",((StringWithTags) select_school.getSelectedItem()).id.toString());
              String URL = BuildConfig.HOST + "/api/v1/institutions/" + schoolId + "/students/";
             //   String URL =  BuildConfig.HOST +"/api/v1/institutestudents/?institution_id="+schoolId;
-            new A3NetWorkCalls(StudentListMainActivity.this).downloadStudent(URL, schoolId, new SchoolStateInterface() {
+            new A3NetWorkCalls(StudentListMainActivity.this).downloadStudent(URL, schoolId,A3APP_GRADEID, new SchoolStateInterface() {
                 @Override
                 public void success(String message) {
                     finishProgress();

@@ -26,6 +26,11 @@
 
     <item android:title="Settings">
         <menu>
+
+            <item
+                android:id="@+id/nav_updateProgram"
+                android:icon="@drawable/vector_download"
+                android:title="@string/update_program" />
             <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/vector_logout"

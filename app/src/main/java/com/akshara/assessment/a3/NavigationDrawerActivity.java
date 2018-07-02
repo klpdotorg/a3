@@ -1,10 +1,12 @@
 package com.akshara.assessment.a3;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -17,11 +19,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.akshara.assessment.a3.NetworkRetrofitPackage.A3NetWorkCalls;
+import com.akshara.assessment.a3.NetworkRetrofitPackage.A3Services;
+import com.akshara.assessment.a3.NetworkRetrofitPackage.CurrentStateInterface;
+import com.akshara.assessment.a3.Pojo.AuthKeyPojo;
 import com.akshara.assessment.a3.UtilsPackage.AppSettings;
+import com.akshara.assessment.a3.UtilsPackage.AppStatus;
+import com.akshara.assessment.a3.UtilsPackage.DailogUtill;
 import com.akshara.assessment.a3.UtilsPackage.SessionManager;
 import com.akshara.assessment.a3.UtilsPackage.StringWithTags;
 import com.akshara.assessment.a3.db.Boundary;
@@ -36,22 +45,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NavigationDrawerActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener , AdapterView.OnItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemSelectedListener {
 
     SessionManager sessionManager;
-    TextView navHeader, navMobile,navProgram;
+    TextView navHeader, navMobile, navProgram;
     private static final int TIME_INTERVAL = 2000; // # milliseconds, desired time passed between two back presses.
     private long mBackPressed;
-
-
-
+    private ProgressDialog progressDialog = null;
     Long bid;
 
-    String  type = "", district = "", block = "", cluster = "";
+    String type = "", district = "", block = "", cluster = "";
     SquidCursor<Boundary> boundary_cursor = null;
     SquidCursor<School> school_cursor = null;
 
-DBHelper dbHelper;
+    DBHelper dbHelper;
 
     LinearLayout linBackSchool;
     KontactDatabase db;
@@ -69,7 +76,7 @@ DBHelper dbHelper;
         setContentView(R.layout.activity_navigation_drawer);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-       getSupportActionBar().setTitle(getResources().getString(R.string.prompt_school));
+        getSupportActionBar().setTitle(getResources().getString(R.string.prompt_school));
         sessionManager = new SessionManager(getApplicationContext());
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -88,9 +95,7 @@ DBHelper dbHelper;
         db = ((A3Application) getApplicationContext()).getDb();
 
 
-   //     dbHelper=new DBHelper(this);
-
-
+        //     dbHelper=new DBHelper(this);
 
 
         //
@@ -110,19 +115,16 @@ DBHelper dbHelper;
 
         SharedPreferences sharedPreferences = getSharedPreferences("Navigationboundary", MODE_PRIVATE);
 
-        int d= sharedPreferences.getInt("dist",0);
-        int b=  sharedPreferences.getInt("block",0);
-        int c=sharedPreferences.getInt("cluster",0);
+        int d = sharedPreferences.getInt("dist", 0);
+        int b = sharedPreferences.getInt("block", 0);
+        int c = sharedPreferences.getInt("cluster", 0);
 
         sp_district.setSelection(d);
         sp_block.setSelection(b);
         sp_cluster.setSelection(c);
 
 
-
-
     }
-
 
 
     @Override
@@ -155,18 +157,6 @@ DBHelper dbHelper;
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -180,16 +170,18 @@ DBHelper dbHelper;
 
             // finish();
         } else if (id == R.id.nav_download) {
-          //  Crashlytics.getInstance().crash();
-           startActivity(new Intent(getApplicationContext(), BoundaryLoaderActivity.class));
+            //  Crashlytics.getInstance().crash();
+            startActivity(new Intent(getApplicationContext(), BoundaryLoaderActivity.class));
 
-        }
-        else if (id == R.id.nav_downloadQuestionSet) {
+        } else if (id == R.id.nav_downloadQuestionSet) {
             startActivity(new Intent(getApplicationContext(), DownloadQuestionSetActivity.class));
 
-        }
-        else if (id == R.id.nav_language) {
+        } else if (id == R.id.nav_language) {
             startActivity(new Intent(getApplicationContext(), AppSettings.class));
+
+        } else if (id == R.id.nav_updateProgram) {
+
+            updateProgram();
 
         } else if (id == R.id.nav_logout) {
             android.support.v7.app.AlertDialog alertDailog = new android.support.v7.app.AlertDialog.Builder(NavigationDrawerActivity.this).create();
@@ -222,13 +214,61 @@ DBHelper dbHelper;
         return true;
     }
 
+    private void updateProgram() {
+
+        showProgress(true);
+
+        final AuthKeyPojo pojo = new AuthKeyPojo(A3Services.AUTH_KEY);
+        new A3NetWorkCalls(NavigationDrawerActivity.this).getProgramsList(pojo, new CurrentStateInterface() {
+            @Override
+            public void setSuccess(String message) {
 
 
+                new A3NetWorkCalls(NavigationDrawerActivity.this).getAssessmentList(pojo, new CurrentStateInterface() {
+                    @Override
+                    public void setSuccess(String message) {
+
+                        showProgress(false);
+                        DailogUtill.showDialog(message, getSupportFragmentManager(), getApplicationContext());
 
 
+                    }
+
+                    @Override
+                    public void setFailed(String message) {
+                        showProgress(false);
 
 
+                        if (AppStatus.isConnected(getApplicationContext())) {
+                            DailogUtill.showDialog(message, getSupportFragmentManager(), getApplicationContext());
 
+                        } else {
+                            DailogUtill.showDialog(message, getSupportFragmentManager(), getApplicationContext());
+
+                        }
+
+                    }
+                });
+
+
+            }
+
+            @Override
+            public void setFailed(String message) {
+
+                showProgress(false);
+                if (AppStatus.isConnected(getApplicationContext())) {
+                    DailogUtill.showDialog(message, getSupportFragmentManager(), getApplicationContext());
+
+                } else {
+                    DailogUtill.showDialog(message, getSupportFragmentManager(), getApplicationContext());
+
+                }
+
+            }
+        });
+
+    }
 
 
     //
@@ -290,7 +330,6 @@ DBHelper dbHelper;
     }
 
 
-
     private void fill_schools(int id, int parent) {
         final ListView listView = findViewById(id); //nothing
         List<StringWithTags> schoolList = get_school_data(parent);
@@ -302,13 +341,13 @@ DBHelper dbHelper;
                 SharedPreferences sharedPreferences = getSharedPreferences("Navigationboundary", MODE_PRIVATE);
 
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putInt("dist",sp_district.getSelectedItemPosition());
-                editor.putInt("block",sp_block.getSelectedItemPosition());
-                editor.putInt("cluster",sp_cluster.getSelectedItemPosition());
+                editor.putInt("dist", sp_district.getSelectedItemPosition());
+                editor.putInt("block", sp_block.getSelectedItemPosition());
+                editor.putInt("cluster", sp_cluster.getSelectedItemPosition());
                 editor.commit();
-                 long id=   new Long(schoolArrayAdapter.getItem(i).id.toString());
-                 String name=  ((TextView)view.findViewById(R.id.cust_view)).getText().toString();
-                  showAltertDailog(id);
+                long id = new Long(schoolArrayAdapter.getItem(i).id.toString());
+                String name = ((TextView) view.findViewById(R.id.cust_view)).getText().toString();
+                showAltertDailog(id);
                  /*Intent gradeIntent=new Intent(getApplicationContext(),GradeActivity.class);
                 gradeIntent.putExtra("A3APP_INSTITUTIONID",id);
                 gradeIntent.putExtra("institutionName",name);
@@ -340,7 +379,7 @@ DBHelper dbHelper;
 // create alert dialog
         final AlertDialog alertDialog = alertDialogBuilder.create();
 
-        final Spinner mSpinner= promptsView
+        final Spinner mSpinner = promptsView
 
                 .findViewById(R.id.spn_grade);
 
@@ -349,13 +388,13 @@ DBHelper dbHelper;
         alertDialog.setButton(android.support.v7.app.AlertDialog.BUTTON_POSITIVE, getString(R.string.response_positive), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-        int grade=Integer.parseInt(mSpinner.getSelectedItem().toString());
-        String gradeS=getResources().getStringArray(R.array.array_grade)[grade-1];
-       // Toast.makeText(getApplicationContext(),"GradeId:"+grade+":Insti:"+schoolid+":grade"+gradeS,Toast.LENGTH_SHORT).show();
-           startActivity(new Intent(getApplicationContext(),AssessmentSelectorActivity.class)
-                    .putExtra("A3APP_INSTITUTIONID",schoolid).
-                      putExtra("A3APP_GRADEID",grade).
-                      putExtra("A3APP_GRADESTRING",gradeS));
+                int grade = Integer.parseInt(mSpinner.getSelectedItem().toString());
+                String gradeS = getResources().getStringArray(R.array.array_grade)[grade - 1];
+                // Toast.makeText(getApplicationContext(),"GradeId:"+grade+":Insti:"+schoolid+":grade"+gradeS,Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), AssessmentSelectorActivity.class)
+                        .putExtra("A3APP_INSTITUTIONID", schoolid).
+                                putExtra("A3APP_GRADEID", grade).
+                                putExtra("A3APP_GRADESTRING", gradeS));
                 overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
 
             }
@@ -383,14 +422,17 @@ DBHelper dbHelper;
         if (boundary_cursor.moveToFirst()) {
             do {
                 Boundary b = new Boundary(boundary_cursor);
-                if ((b.getHierarchy().equalsIgnoreCase("district") || b.getHierarchy().equalsIgnoreCase("block"))&&b.isFlag()==true) {
-                    StringWithTags boundary = new StringWithTags(b.getName(), b.getId(), b.getHierarchy().equals("district") ? "1" : b.getParentId(), getLocTextBoundary(b), sessionManager,b.isFlag(),b.isFlagCB());
+                if ((b.getHierarchy().equalsIgnoreCase("district") || b.getHierarchy().equalsIgnoreCase("block")) && b.isFlag() == true) {
+                    StringWithTags boundary = new StringWithTags(b.getName(), b.getId(), b.getHierarchy().equals("district") ? "1" : b.getParentId(), getLocTextBoundary(b), sessionManager, b.isFlag(), b.isFlagCB());
                     boundaryList.add(boundary);
+                    Log.d("shri", "dist block" + b.getName());
 
                 } else {
-                    if (!b.getHierarchy().equalsIgnoreCase("district") && !b.getHierarchy().equalsIgnoreCase("block")&&b.isFlag()==true) {
-                        StringWithTags boundary = new StringWithTags(b.getName(), b.getId(), b.getHierarchy().equals("district") ? "1" : b.getParentId(), getLocTextBoundary(b), sessionManager,b.isFlag(),b.isFlagCB());
+                    if (!b.getHierarchy().equalsIgnoreCase("district") && !b.getHierarchy().equalsIgnoreCase("block") && b.isFlag() == true) {
+                        StringWithTags boundary = new StringWithTags(b.getName(), b.getId(), b.getHierarchy().equals("district") ? "1" : b.getParentId(), getLocTextBoundary(b), sessionManager, b.isFlag(), b.isFlagCB());
                         boundaryList.add(boundary);
+                        //cluster
+                        // Log.d("shri","cluster"+b.getName());
                     }
                 }
             } while (boundary_cursor.moveToNext());
@@ -414,8 +456,6 @@ DBHelper dbHelper;
         }
 
 
-
-
     }
 
     public String getLocTextBoundary(Boundary b) {
@@ -432,6 +472,10 @@ DBHelper dbHelper;
     private List<StringWithTags> get_school_data(int parent) {
         Query listschool = Query.select().from(School.TABLE)
                 .where(School.BOUNDARY_ID.eq(parent).and(School.STUDENT_COUNT.isNotNull()));
+
+
+     /*   Query listschool = Query.select().from(School.TABLE)
+                .where(School.BOUNDARY_ID.eq(parent));*/
         List<StringWithTags> schoolList = new ArrayList<StringWithTags>();
         school_cursor = db.query(School.class, listschool);
         if (school_cursor.moveToFirst()) {
@@ -446,10 +490,20 @@ DBHelper dbHelper;
         return schoolList;
     }
 
+    private void showProgress(final boolean show) {
+        if (show) {
+            progressDialog = new ProgressDialog(NavigationDrawerActivity.this);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCancelable(false);
 
-
-
-
-
-
+            progressDialog.setMessage(getResources().getString(R.string.updating_program_Assessment));
+            progressDialog.show();
+        } else {
+            if (progressDialog != null) {
+                if (!NavigationDrawerActivity.this.isFinishing()) {
+                    progressDialog.cancel();
+                }
+            }
+        }
+    }
 }

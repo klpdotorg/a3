@@ -141,10 +141,15 @@ public class assessment_manager extends AppCompatActivity {
 
         }
         else { // Call next question page
-            if(clickedbackarrow)
+            if(clickedbackarrow) {
                 questionid_next = questionid_last - 1;
-            else
+                
+                if((globalvault.integrated) && (questionid_next == 0))
+                    questionid_next = questionid_last; // When integrated with the ContainerApp, there is no home screen for the AssessmentApp. So, if clicked 'back' from the first Question, display the same page instead of going to Home page
+            }
+            else {
                 questionid_next = questionid_last + 1;
+            }
 
             String questiontempltype_next = " ";
 
@@ -152,7 +157,7 @@ public class assessment_manager extends AppCompatActivity {
                 showfinalpage = true;
                 showfirstpage = false;
             }
-            else if(questionid_next == 0) {
+            else if(questionid_next == 0) { // Will reach this condition only if the globalvault.integrated is set to false (if set to false, take User to Home/Start page when clicked the back arrow on first Question screen)
                 showfirstpage = true;
                 showfinalpage = false;
             }

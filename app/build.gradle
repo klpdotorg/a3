@@ -37,7 +37,8 @@ android {
             applicationId 'com.akshara.assessment.a3.dev'
             resValue "string", "app_name", "Akshara Assessment-Dev"
             //  buildConfigField 'String', 'HOST', '"https://staging.ilp.org.in"'
-            buildConfigField 'String', 'HOST', '"http://next.ilp.org.in"'
+           // buildConfigField 'String', 'HOST', '"http://next.ilp.org.in"'
+            buildConfigField 'String', 'HOST', '"https://dev.ilp.org.in"'
         }
         production {
             applicationId 'com.akshara.assessment.a3.production'

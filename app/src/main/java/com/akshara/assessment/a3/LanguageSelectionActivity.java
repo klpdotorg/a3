@@ -296,7 +296,7 @@ public class LanguageSelectionActivity extends BaseActivity {
         languageList.add(0, pojo);
         pojo = new LanguagePojo("", getResources().getString(R.string.english), getResources().getString(R.string.english), "en");
         languageList.add(1, pojo);
-        pojo = new LanguagePojo("", getResources().getString(R.string.urdu), getResources().getString(R.string.urdu), "ar");
+        pojo = new LanguagePojo("", getResources().getString(R.string.urdu), getResources().getString(R.string.urdu), "eng");
         languageList.add(2, pojo);
         spnSelectLanguage.setAdapter(new ArrayAdapter(this, R.layout.spinnertextview, languageList));
 

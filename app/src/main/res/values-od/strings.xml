@@ -198,6 +198,9 @@
     <string name="studentScore">ବିଦ୍ୟାର୍ଥୀଙ୍କ ପ୍ରାପ୍ତଙ୍କ</string>
     <string name="questionsetDownloading">Question set downloading...</string>
     <string name="conceptName">Concept Name</string>
+    <string name="updating_program_Assessment"><![CDATA[Updating Program & Assessment...]]></string>
+    <string name="update_program">Update Program</string>
+    <string name="select_program">--- ପ୍ରୋଗ୍ରାମ ବାଛନ୍ତୁ ---</string>
 
 
     <string-array name="array_subject">

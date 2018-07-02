@@ -28,7 +28,7 @@ import com.akshara.assessment.a3.NetworkRetrofitPackage.ApiClient;
 import com.akshara.assessment.a3.NetworkRetrofitPackage.ApiInterface;
 import com.akshara.assessment.a3.Pojo.RegstrationResponsePojo;
 import com.akshara.assessment.a3.UtilsPackage.DailogUtill;
-import com.akshara.assessment.a3.UtilsPackage.MultiSelectSpinner;
+
 import com.akshara.assessment.a3.UtilsPackage.RolesUtils;
 import com.akshara.assessment.a3.UtilsPackage.SessionManager;
 import com.akshara.assessment.a3.UtilsPackage.SignUpResultDialogFragment;
@@ -50,7 +50,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 
-public class UserRegistrationActivity extends BaseActivity  implements MultiSelectSpinner.OnMultipleItemsSelectedListener {
+public class UserRegistrationActivity extends BaseActivity  {
 
     //public String LOG_TAG = UserRegistrationActivity.class.getSimpleName();
 
@@ -513,15 +513,7 @@ public class UserRegistrationActivity extends BaseActivity  implements MultiSele
 
     }
 
-    @Override
-    public void selectedIndices(List<Integer> indices) {
 
-    }
-
-    @Override
-    public void selectedStrings(List<String> strings) {
-
-    }
 
     @Override
     public void onBackPressed() {

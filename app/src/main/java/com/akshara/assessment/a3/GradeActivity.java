@@ -1,18 +1,12 @@
 package com.akshara.assessment.a3;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.akshara.assessment.a3.Pojo.StudentDetailGrade;
 import com.akshara.assessment.a3.db.KontactDatabase;
@@ -34,7 +28,7 @@ public class GradeActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.temp2);
+        setContentView(R.layout.grade_layout);
         tvSchoolName= findViewById(R.id.tvSchoolName);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getResources().getString(R.string.string_select_grade));

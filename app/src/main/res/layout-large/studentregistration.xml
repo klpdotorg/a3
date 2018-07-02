@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/background"
+    android:paddingTop="20dp"
+    android:layout_height="match_parent">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+  android:layout_marginRight="20dp"
+
+        android:background="#FFFDE7"
+      android:layout_marginLeft="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/rounded_rect_top"
+            android:gravity="center"
+            android:minHeight="55dp"
+            android:textColor="@color/btnTextColor"
+            android:text="@string/registerStudent"
+            android:textAllCaps="true"
+            android:textSize="25sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center">
+
+
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+
+
+                android:src="@drawable/student" />
+
+        </LinearLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edtStsId"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:digits="0123456789"
+                android:textSize="20sp"
+              android:paddingLeft="10dp"
+                android:hint="@string/stsid"
+                android:inputType="phone"
+                android:maxLength="10"
+                android:singleLine="true" />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edtFirstName"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:textSize="20sp"
+                android:paddingLeft="10dp"
+                android:hint="@string/stuFirstName"
+                android:singleLine="true" />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edtStuLastName"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:textSize="20sp"
+                android:paddingLeft="10dp"
+                android:hint="@string/stuLastName"
+
+                android:singleLine="true" />
+        </android.support.design.widget.TextInputLayout>
+
+
+        <RadioGroup
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:id="@+id/studentGender"
+            android:paddingRight="10dp">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/boy" />
+
+            <RadioButton
+                android:id="@+id/male"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="50dp"
+                 android:text="@string/male" />
+
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/girl" />
+
+            <RadioButton
+                android:id="@+id/female"
+                android:layout_width="wrap_content"
+
+                android:layout_height="match_parent"
+
+                android:text="@string/female" />
+        </RadioGroup>
+
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:padding="10dp"
+            android:gravity="bottom">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:minHeight="60dp"
+                android:id="@+id/btnRegisterstudent"
+                android:textStyle="bold"
+                android:textColor="@color/btnTextColor"
+                android:background="@drawable/btn_roundedrect"
+                android:text="@string/registerstudent" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
+
+</LinearLayout>
