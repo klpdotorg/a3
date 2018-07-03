@@ -21,7 +21,7 @@
     <string name="passwordChanged">ನಿಮ್ಮ ಪಾಸ್ವರ್ಡ್ ಅನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಬದಲಾಯಿಸಲಾಗಿದೆ</string>
     <string name="new_Password">ಹೊಸ ಪಾಸ್ವರ್ಡ್</string>
     <string name="forgotPasswordqu">ನಿಮ್ಮ ಪಾಸ್ವರ್ಡ್ ಮರೆತಿರಾ?</string>
-    <string name="enterMobileNumber">Enter your mobile number</string>
+    <string name="enterMobileNumber">ನಿಮ್ಮಮೊಬೈಲ್ ನಂಬರ್ ಹಾಕಿ</string>
     <string name="sendOTP">OTP ಕಳುಹಿಸಿ</string>
     <string name="OK">ಓಕೆ</string>
     <string name="resetPassword">ರಿಸೆಟ್ ಪಾಸ್ವರ್ಡ್</string>
@@ -67,7 +67,7 @@
     <string name="prompt_district">ಜಿಲ್ಲೆ ಆಯ್ಕೆ ಮಾಡಿ</string>
     <string name="prompt_block">ಬ್ಲಾಕ್ ಆಯ್ಕೆ ಮಾಡಿ</string>
     <string name="prompt_cluster">ಕ್ಲಸ್ಟರ್ ಆಯ್ಕೆ ಮಾಡಿ</string>
-    <string name="downloadDistrcitData">ಗಮನಿಸಿ: ಅಗತ್ಯ ಜಿಲ್ಲೆಯ ಡೇಟಾವನ್ನು ಡೌನ್ಲೋಡ್ ಮಾಡಿ</string>
+    <string name="downloadDistrcitData">ಗಮನಿಸಿ: ವಿದ್ಯಾರ್ಥಿ ಮಾಹಿತಿಯನ್ನು ಡೌನ್ಲೋಡ್ ಮಾಡಲು ಶಾಲೆಯ ಆಯ್ಕೆ ಮಾಡಿ </string>
     <string name="downloadDistrcitDataNext">ಗಮನಿಸಿ: ಮುಂದಿನ ಹಂತಕ್ಕೆ ನ್ಯಾವಿಗೇಟ್ ಮಾಡಲು ಜಿಲ್ಲೆಯ ಮಟ್ಟದ ಡೇಟಾವನ್ನು ಡೌನ್ಲೋಡ್ ಮಾಡಿ</string>
     <string name="selectblock">--ಬ್ಲಾಕ್ ಆಯ್ಕೆ ಮಾಡಿ--</string>
     <string name="blockandCLusterdownloaded">ಜಿಲ್ಲೆಯ: ಬ್ಲಾಕ್ಗಳು ​​ಮತ್ತು ಕ್ಲಸ್ಟರ್ಗಳು ಡೌನ್ಲೋಡ್ ಮಾಡಲ್ಪಟ್ಟವು</string>
@@ -195,13 +195,15 @@
     <string name="totalScore">ಒಟ್ಟು ಅಂಕ</string>
     <string name="name">ಹೆಸರು</string>
     <string name="fatherName">ತಂದೆಯ ಹೆಸರು</string>
-    <string name="report">Report</string>
+    <string name="report">ವರದಿ</string>
     <string name="studentScore">ವಿದ್ಯಾರ್ಥಿಗಳ ಸ್ಕೋರ್</string>
-    <string name="questionsetDownloading">ಪ್ರಶ್ನೆ ಸೆಟ್ಅನ್ನು ಡೌನ್ಲೋಡ್ ಮಾಡಲಾಗುತ್ತಿದೆ...</string>
-    <string name="conceptName">Concept Name</string>
-    <string name="updating_program_Assessment"><![CDATA[Updating Program & Assessment...]]></string>
-    <string name="update_program">Update Program</string>
+    <string name="questionsetDownloading">ಪ್ರಶ್ನೆ ಪತ್ರಿಕೆ ಡೌನ್ಲೋಡ್ ಮಾಡಲಾಗುತ್ತಿದೆ... </string>
+    <string name="conceptName">ಪರಿಕಲ್ಪನೆಯ ಹೆಸರು</string>
+    <string name="updating_program_Assessment">ಕಾರ್ಯಕ್ರಮ ಹಾಗು ಮೌಲ್ಯಮಾಪನ ಅಪ್ಡೇಟ್ ಮಾಡಲಾಗುತ್ತಿದೆ...</string>
+    <string name="update_program">ಕಾರ್ಯಕ್ರಮ ಅಪ್ಡೇಟ್ ಮಾಡಿ</string>
     <string name="select_program">--- ಪ್ರೋಗ್ರಾಂ ಆಯ್ಕೆಮಾಡಿ ---</string>
+    <string name="updatedProAssessment">ಎಲ್ಲಾ ಕಾರ್ಯಕ್ರಮ ಹಾಗು ಮೌಲ್ಯಮಾಪನ ಅಪ್ಡೇಟ್ ಆಗಿವೆ. </string>
+    <string name="nameorstsid">ಹೆಸರು / STS ID</string>
 
 
     <string-array name="array_subject">

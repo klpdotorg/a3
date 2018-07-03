@@ -67,7 +67,7 @@
     <string name="prompt_district">Select District</string>
     <string name="prompt_block">Select Block</string>
     <string name="prompt_cluster">Select Cluster</string>
-    <string name="downloadDistrcitData">Note : Download required district data</string>
+    <string name="downloadDistrcitData">Note : To download student detail please select school</string>
     <string name="downloadDistrcitDataNext">Note : download district level data to navigate next screen</string>
     <string name="selectblock">--Select Block--</string>
     <string name="blockandCLusterdownloaded">district: blocks and clusters  downloaded</string>
@@ -226,6 +226,8 @@
     <string name="updating_program_Assessment"><![CDATA[Updating Program & Assessment...]]></string>
     <string name="update_program">Update Program</string>
     <string name="select_program">--- Select program ---</string>
+    <string name="updatedProAssessment"><![CDATA[All Programs & Assessments updated]]></string>
+    <string name="nameorstsid">Name / STS ID</string>
 
 
 </resources>

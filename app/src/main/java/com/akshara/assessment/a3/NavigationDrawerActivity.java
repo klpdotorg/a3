@@ -180,6 +180,7 @@ public class NavigationDrawerActivity extends BaseActivity
             startActivity(new Intent(getApplicationContext(), AppSettings.class));
 
         } else if (id == R.id.nav_updateProgram) {
+           // Crashlytics.getInstance().crash();
 
             updateProgram();
 
@@ -229,7 +230,7 @@ public class NavigationDrawerActivity extends BaseActivity
                     public void setSuccess(String message) {
 
                         showProgress(false);
-                        DailogUtill.showDialog(message, getSupportFragmentManager(), getApplicationContext());
+                        DailogUtill.showDialog(getResources().getString(R.string.updatedProAssessment), getSupportFragmentManager(), getApplicationContext());
 
 
                     }

@@ -25,6 +25,7 @@ import com.akshara.assessment.a3.UtilsPackage.DailogUtill;
 import com.akshara.assessment.a3.UtilsPackage.SessionManager;
 import com.akshara.assessment.a3.db.KontactDatabase;
 import com.akshara.assessment.a3.db.State;
+import com.crashlytics.android.Crashlytics;
 import com.yahoo.squidb.data.SquidCursor;
 import com.yahoo.squidb.sql.Query;
 
@@ -43,6 +44,7 @@ public class SpalashScreenActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         setContentView(R.layout.activity_spalash_screen);
         mSession = new SessionManager(getApplicationContext());
         //DatabaseCopyHelper dbCopyHelper = new DatabaseCopyHelper(this);

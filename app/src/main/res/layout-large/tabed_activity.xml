@@ -16,8 +16,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryToolbar"
-
-
+          app:itemBackground="@drawable/menu_click"
+        android:layout_gravity="start"
         app:itemTextColor="@android:color/white"
         app:elevation="5dp"
         app:menu="@menu/bottom_nav"/>
