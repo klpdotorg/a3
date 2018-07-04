@@ -32,6 +32,8 @@ public class qp_truefalse_text_image extends AppCompatActivity {
 
         // set the background image (pick an image randomly from the QP_BGRND_IMGS array)
         int bkgrndimagearrayindex = new Random().nextInt(globalvault.QP_BGRND_IMGS.length-1);
+        if((bkgrndimagearrayindex >= (globalvault.QP_BGRND_IMGS.length -1)) || (bkgrndimagearrayindex < 0))
+            bkgrndimagearrayindex = 0;
         ConstraintLayout clayout = (ConstraintLayout) findViewById(R.id.ConstraintLayout_parent_truefalse_textimage);
         clayout.setBackgroundResource(globalvault.QP_BGRND_IMGS[bkgrndimagearrayindex]);
 

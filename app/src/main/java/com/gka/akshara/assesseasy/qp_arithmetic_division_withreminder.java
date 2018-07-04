@@ -30,6 +30,8 @@ public class qp_arithmetic_division_withreminder extends AppCompatActivity {
 
         // set the background image (pick an image randomly from the QP_BGRND_IMGS array)
         int bkgrndimagearrayindex = new Random().nextInt(globalvault.QP_BGRND_IMGS.length-1);
+        if((bkgrndimagearrayindex >= (globalvault.QP_BGRND_IMGS.length -1)) || (bkgrndimagearrayindex < 0))
+            bkgrndimagearrayindex = 0;
         ConstraintLayout clayout = (ConstraintLayout) findViewById(R.id.ConstraintLayout_parent_arithmeticdivisionwithreminder);
         clayout.setBackgroundResource(globalvault.QP_BGRND_IMGS[bkgrndimagearrayindex]);
 
@@ -80,17 +82,25 @@ public class qp_arithmetic_division_withreminder extends AppCompatActivity {
             tvNumber2.setText(divisorset[randindex]); // Choose the value for the Divisor that corresponds (same index) to the value of the Dividend
         }
 
-        // sets the answer field (when navigating backwards, can fill the answer entered earlier in the answer field)
+        // sets the number and answer fields (when navigating backwards, fill the numbers randomly generated earlier and the answer entered before)
         String answer = globalvault.questions[questionid-1].getAnswerGiven();
         TextView tvQuotient = (EditText) findViewById(R.id.editTextQuotient);
         TextView tvReminder = (EditText) findViewById(R.id.editTextReminder);
 
-        if(!TextUtils.isEmpty(answer)) {  // If answer is not empty, then the dividend, divisor, quotient and reminder be set to the previously entered values (reached this screen by pressing back button)
+        if(!TextUtils.isEmpty(answer)) {  // Display the previously shown values, including the Answer if Child has entered the Answer previously (reached this screen by pressing back button)
             String[] arrAnswer = answer.split(","); // Answer is stored as dividend, divisor, quotient, reminder
             tvNumber1.setText(arrAnswer[0]);
             tvNumber2.setText(arrAnswer[1]);
-            tvQuotient.setText(arrAnswer[2]);
-            tvReminder.setText(arrAnswer[3]);
+
+            int answarrlength = arrAnswer.length;
+            if(answarrlength >= 3) {
+                if (!TextUtils.isEmpty(arrAnswer[2]))
+                    tvQuotient.setText(arrAnswer[2]);
+            }
+            if(answarrlength == 4) {
+                if (!TextUtils.isEmpty(arrAnswer[3]))
+                    tvReminder.setText(arrAnswer[3]);
+            }
         }
 
         // To hide the keyboard initially, remove the focus from the EditText field and move it to the dummy view.
@@ -151,15 +161,26 @@ public class qp_arithmetic_division_withreminder extends AppCompatActivity {
         EditText editTextReminder = (EditText)findViewById(R.id.editTextReminder);
         Editable reminder_editable = editTextReminder.getText();
 
-        if((quotient_editable != null) && (reminder_editable != null)) {
+        if(quotient_editable != null) {
             String quotient = quotient_editable.toString();
-            String reminder = reminder_editable.toString();
 
-            if((quotient.equals("")) || (reminder.equals(""))) {
+            String reminder = "0";  // If Child has not entered anything for remainder, treat it as 0 internally
+            if(reminder_editable != null)
+                reminder = reminder_editable.toString();
+
+            if(quotient.equals("")) {
                 if (MainActivity.debugalerts)
-                    Log.d("EASYASSESS", "qp_arithmetic_division_withreminder: clickedNext: quotient and/or reminder is empty string");
+                    Log.d("EASYASSESS", "qp_arithmetic_division_withreminder: clickedNext: quotient is empty string");
                 if(globalvault.allowskipquestions) {
                     globalvault.questions[questionid - 1].setPass("S");
+
+                    TextView tvNumber1 = (TextView)findViewById(R.id.textViewDividend);
+                    String dividend = tvNumber1.getText().toString();
+                    TextView tvNumber2 = (TextView)findViewById(R.id.textViewDivisor);
+                    String divisor = tvNumber2.getText().toString();
+                    String answerstr = dividend+","+divisor;
+                    globalvault.questions[questionid-1].setAnswerGiven(answerstr);
+
                     this.invokeAssessmentManagerActivity();
                     return;
                 }

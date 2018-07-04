@@ -30,6 +30,8 @@ public class qp_fib_text extends AppCompatActivity {
 
         // set the background image (pick an image randomly from the QP_BGRND_IMGS array)
         int bkgrndimagearrayindex = new Random().nextInt(globalvault.QP_BGRND_IMGS.length-1);
+        if((bkgrndimagearrayindex >= (globalvault.QP_BGRND_IMGS.length -1)) || (bkgrndimagearrayindex < 0))
+            bkgrndimagearrayindex = 0;
         ConstraintLayout clayout = (ConstraintLayout) findViewById(R.id.ConstraintLayout_parent_fibtext);
         clayout.setBackgroundResource(globalvault.QP_BGRND_IMGS[bkgrndimagearrayindex]);
 

@@ -30,6 +30,8 @@ public class qp_arithmetic_division_wholenumber extends AppCompatActivity {
 
         // set the background image (pick an image randomly from the QP_BGRND_IMGS array)
         int bkgrndimagearrayindex = new Random().nextInt(globalvault.QP_BGRND_IMGS.length-1);
+        if((bkgrndimagearrayindex >= (globalvault.QP_BGRND_IMGS.length -1)) || (bkgrndimagearrayindex < 0))
+            bkgrndimagearrayindex = 0;
         ConstraintLayout clayout = (ConstraintLayout) findViewById(R.id.ConstraintLayout_parent_arithmeticdivisionwholenumber);
         clayout.setBackgroundResource(globalvault.QP_BGRND_IMGS[bkgrndimagearrayindex]);
 
@@ -80,14 +82,17 @@ public class qp_arithmetic_division_wholenumber extends AppCompatActivity {
             tvNumber2.setText(divisorset[randindex]); // Choose the value for the Divisor that corresponds (same index) to the value of the Dividend
         }
 
-        // sets the answer field (when navigating backwards, can fill the answer entered earlier in the answer field)
+        // sets the number and answer fields (when navigating backwards, fill the numbers randomly generated earlier and the answer entered before)
         String answer = globalvault.questions[questionid-1].getAnswerGiven();
         EditText tvAnswer = (EditText) findViewById(R.id.editTextQuotient);
-        if(!TextUtils.isEmpty(answer)) {  // If answer is not empty, then the dividend, divisor and answer be set to the previously entered values (reached this screen by pressing back button)
-            String[] arrAnswer = answer.split(","); // Answer is stored as dividend, divisor, givenanswer
-            tvNumber1.setText(arrAnswer[0]);
-            tvNumber2.setText(arrAnswer[1]);
-            tvAnswer.setText(arrAnswer[2]);
+        if(!TextUtils.isEmpty(answer)) {  // Display the previously shown values, including the Answer if Child has entered the Answer previously (reached this screen by pressing back button)
+            String[] arrAnswer = answer.split(","); // Answer is stored as firstnumber, secondnumber, givenanswer
+            tvNumber1.setText(arrAnswer[0]); // First Number
+            tvNumber2.setText(arrAnswer[1]); // Second Number
+            if(arrAnswer.length == 3) { // If the Child has entered the Answer earlier
+                if (!TextUtils.isEmpty(arrAnswer[2])) //
+                    tvAnswer.setText(arrAnswer[2]); // Answer Entered
+            }
         }
 
         // To hide the keyboard initially, remove the focus from the EditText field and move it to the dummy view.
@@ -152,6 +157,14 @@ public class qp_arithmetic_division_wholenumber extends AppCompatActivity {
                     Log.d("EASYASSESS", "qp_arithmetic_division_wholenumber: clickedNext: answer is empty string");
                 if(globalvault.allowskipquestions) {
                     globalvault.questions[questionid - 1].setPass("S");
+
+                    TextView tvNumber1 = (TextView)findViewById(R.id.textViewDividend);
+                    String firstnumber = tvNumber1.getText().toString();
+                    TextView tvNumber2 = (TextView)findViewById(R.id.textViewDivisor);
+                    String secondnumber = tvNumber2.getText().toString();
+                    String answerstr = firstnumber+","+secondnumber; // Store the two numbers as this need to be displayed if Child comes back to this screen (even if the Child has skipped this Question earlier)
+                    globalvault.questions[questionid-1].setAnswerGiven(answerstr);
+
                     this.invokeAssessmentManagerActivity();
                     return;
                 }

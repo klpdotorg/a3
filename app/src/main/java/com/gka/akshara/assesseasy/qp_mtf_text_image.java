@@ -35,6 +35,8 @@ public class qp_mtf_text_image extends AppCompatActivity {
 
         // set the background image (pick an image randomly from the QP_BGRND_IMGS array)
         int bkgrndimagearrayindex = new Random().nextInt(globalvault.QP_BGRND_IMGS.length-1);
+        if((bkgrndimagearrayindex >= (globalvault.QP_BGRND_IMGS.length -1)) || (bkgrndimagearrayindex < 0))
+            bkgrndimagearrayindex = 0;
         ConstraintLayout clayout = (ConstraintLayout) findViewById(R.id.ConstraintLayout_parent_mtftextimage);
         clayout.setBackgroundResource(globalvault.QP_BGRND_IMGS[bkgrndimagearrayindex]);
 
@@ -214,6 +216,17 @@ public class qp_mtf_text_image extends AppCompatActivity {
             else if(arrImageViewIDs[i] == R.id.imageViewChoice4)
                 arrAnswer[i] = 4;
             else;
+        }
+
+        // Check if same image is dropped in more than one box (if yes, then play an error beep audio and return (Child can not go ahead from this screen then)
+        for(int i=0; i < 4; i++) {
+            int selecteditem = arrAnswer[i];
+            for(int j=0; j < 4; j++) {
+                if((arrAnswer[j] == selecteditem) && (j != i)) { // If same Image is dropped in more than 1 box, play an error beep and dont allow to proceed
+                    audioManager.playErrorBeepAudio(this);
+                    return;
+                }
+            }
         }
 
         String answerStr = "";

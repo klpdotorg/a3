@@ -1,5 +1,7 @@
 package com.gka.akshara.assesseasy;
 
+import android.content.Context;
+import android.content.res.AssetFileDescriptor;
 import android.media.AudioTrack;
 import android.media.MediaPlayer;
 import android.text.TextUtils;
@@ -32,6 +34,22 @@ public class audioManager {
         catch (Exception e) {
             if (MainActivity.debugalerts)
                 Log.d("EASYASSESS", "audioManager: playAudio: Exception"+e.toString());
+        }
+    }
+
+    public static void playErrorBeepAudio(Context ctx) {
+
+        try {
+
+            AssetFileDescriptor descriptor = ctx.getAssets().openFd("audio_errorbeep.mp3");
+            mplayer.reset();
+            mplayer.setDataSource(descriptor.getFileDescriptor(), descriptor.getStartOffset(), descriptor.getLength());
+            mplayer.prepare();
+            mplayer.start();
+        }
+        catch (Exception e) {
+            if (MainActivity.debugalerts)
+                Log.d("EASYASSESS", "audioManager: playErrorBeepAudio: Exception"+e.toString());
         }
     }
 }

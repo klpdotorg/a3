@@ -143,7 +143,7 @@ public class assessment_manager extends AppCompatActivity {
         else { // Call next question page
             if(clickedbackarrow) {
                 questionid_next = questionid_last - 1;
-                
+
                 if((globalvault.integrated) && (questionid_next == 0))
                     questionid_next = questionid_last; // When integrated with the ContainerApp, there is no home screen for the AssessmentApp. So, if clicked 'back' from the first Question, display the same page instead of going to Home page
             }
