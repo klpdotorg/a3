@@ -29,7 +29,7 @@ public class A3Application extends Application {
     public void onCreate() {
         super.onCreate();
 
-
+//test
     /*   this. registerReceiver(new NetworkChangeReceiver(),
                 new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 */
