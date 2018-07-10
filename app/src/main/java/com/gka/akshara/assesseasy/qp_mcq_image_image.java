@@ -41,6 +41,14 @@ public class qp_mcq_image_image extends AppCompatActivity {
         ConstraintLayout clayout = (ConstraintLayout) findViewById(R.id.ConstraintLayout_parent_mcq_image_image);
         clayout.setBackgroundResource(globalvault.QP_BGRND_IMGS[bkgrndimagearrayindex]);
 
+        // Set the Title of the App on the Action Bar at the top
+        try {
+            setTitle(globalvault.a3app_titletext);
+        }
+        catch(Exception e) {
+            Log.e("EASYASSESS", "setTitle Exception: errormsg:"+e.toString());
+        }
+
         // Saves the questionid passed to this page
         Intent intent = getIntent(); // get the Intent that started this activity
         questionid =  intent.getIntExtra("EASYASSESS_QUESTIONID",0);
@@ -50,7 +58,10 @@ public class qp_mcq_image_image extends AppCompatActivity {
 
         ArrayList qdatalist = globalvault.questions[questionid-1].getQuestionDataList();
 
-        TouchImageView questionimg = (TouchImageView)findViewById(R.id.mcqQuestionImage);
+        // TouchImageView questionimg = (TouchImageView)findViewById(R.id.mcqQuestionImage); // TouchImageView is a custom class with click/pinch zoom functionality (it zooms the image within the original ImageView rectangle)
+        ImageView questionimg = (ImageView)findViewById(R.id.mcqQuestionImage);
+        ImageView questionimgexpanded = (ImageView)findViewById(R.id.expanded_image); // This is the invisible full screen ImageView to show the expanded Image when clicked on the original Question Image
+
         RadioGroup radiogrp_mcqoptions = (RadioGroup)findViewById(R.id.radiogroup_optionbuttonsgrp);
 
      try {
@@ -66,43 +77,45 @@ public class qp_mcq_image_image extends AppCompatActivity {
 
              if (paramname.equals("questionimg")) {
                  questionimg.setImageBitmap(decodedImage);   // to set image for an 'ImageView'
+                 questionimgexpanded.setImageBitmap(decodedImage);
              }
              else if (paramname.equals("option1img")) {
                  // ((RadioButton) radiogrp_mcqoptions.getChildAt(0)).setCompoundDrawablesWithIntrinsicBounds(null, null, null, drawableimg); // align image to bottom. This function doesnt display the image properly scaled. Use setBackground(drawable) instead)
-                 // ((RadioButton) radiogrp_mcqoptions.getChildAt(0)).setBackground(drawableimg); // // This wont work either as there will be no change visible to the button when clicked/selected since the background is no more set to the 'selector' xml file (optionbox.xml), but to an image.
-                 // So, create a 'selector' dynamically using StateListDrawable to define images/shapes for various states of the RadioButton
+
+                 // Set the option image as the background of the RadioButton
+                 ((RadioButton) radiogrp_mcqoptions.getChildAt(0)).setBackground(drawableimg);
+
+                 // Now to change the look of the button when pressed, set a transparent rectangle as ForeGround image, when the button is pressed/checked.
+                 // create a 'selector' dynamically using StateListDrawable to define images/shapes for various states of the RadioButton and
+                 // set this selecttor (option boxformcqimg.xml) as the Foreground image (A red transparent rectangle, defined only for 'pressed' and 'checked' states
                  // Codes for Various states: Ref: https://developer.android.com/reference/android/graphics/drawable/StateListDrawable
 
                  StateListDrawable state = new StateListDrawable();
-                 state.addState(new int[] {-android.R.attr.state_checked},drawableimg); // for default state (-ve of checked state). Set the background to the option image, which will be displayed by default
-                 state.addState(new int[] {android.R.attr.state_pressed},getDrawable(R.drawable.optionbox)); // Rectangle Shape defined in the optionbox.xml file. Can set to a drawable image also here
-                 state.addState(new int[] {android.R.attr.state_checked},getDrawable(R.drawable.optionbox)); // When this option is selected. Shape is defined in optionbox.xml in the drawable directory
-
-                 ((RadioButton) radiogrp_mcqoptions.getChildAt(0)).setBackground(state);
+                 //state.addState(new int[] {-android.R.attr.state_checked},drawableimg); // for default state (-ve of checked state). Set the foregorund also to the option image, which will be displayed by default
+                 state.addState(new int[] {android.R.attr.state_pressed},getDrawable(R.drawable.optionboxformcqimg)); // Rectangle Shape defined in the optionboxformcqimg.xml file. Can set to a drawable image also here
+                 state.addState(new int[] {android.R.attr.state_checked},getDrawable(R.drawable.optionboxformcqimg)); // When this option is selected. Shape is defined in optionboxformcqimg.xml in the drawable directory
+                 ((RadioButton) radiogrp_mcqoptions.getChildAt(0)).setForeground(state); // Set the selector xml as the foreground image of the RadioButton
              }
              else if (paramname.equals("option2img")) {
+                 ((RadioButton) radiogrp_mcqoptions.getChildAt(1)).setBackground(drawableimg);
                  StateListDrawable state = new StateListDrawable();
-                 state.addState(new int[] {-android.R.attr.state_checked},drawableimg); // for default state (-ve of checked state). Set the background to the option image, which will be displayed by default
-                 state.addState(new int[] {android.R.attr.state_pressed},getDrawable(R.drawable.optionbox)); // Rectangle Shape defined in the optionbox.xml file. Can set to a drawable image also here
-                 state.addState(new int[] {android.R.attr.state_checked},getDrawable(R.drawable.optionbox)); // When this option is selected. Shape is defined in optionbox.xml in the drawable directory
-
-                 ((RadioButton) radiogrp_mcqoptions.getChildAt(1)).setBackground(state);
+                 state.addState(new int[] {android.R.attr.state_pressed},getDrawable(R.drawable.optionboxformcqimg)); // Rectangle Shape defined in the optionbox.xml file. Can set to a drawable image also here
+                 state.addState(new int[] {android.R.attr.state_checked},getDrawable(R.drawable.optionboxformcqimg)); // When this option is selected. Shape is defined in optionbox.xml in the drawable directory
+                 ((RadioButton) radiogrp_mcqoptions.getChildAt(1)).setForeground(state);
              }
              else if (paramname.equals("option3img")) {
+                 ((RadioButton) radiogrp_mcqoptions.getChildAt(2)).setBackground(drawableimg);
                  StateListDrawable state = new StateListDrawable();
-                 state.addState(new int[] {-android.R.attr.state_checked},drawableimg); // for default state (-ve of checked state). Set the background to the option image, which will be displayed by default
-                 state.addState(new int[] {android.R.attr.state_pressed},getDrawable(R.drawable.optionbox)); // Rectangle Shape defined in the optionbox.xml file. Can set to a drawable image also here
-                 state.addState(new int[] {android.R.attr.state_checked},getDrawable(R.drawable.optionbox)); // When this option is selected. Shape is defined in optionbox.xml in the drawable directory
-
-                 ((RadioButton) radiogrp_mcqoptions.getChildAt(2)).setBackground(state);
+                 state.addState(new int[] {android.R.attr.state_pressed},getDrawable(R.drawable.optionboxformcqimg)); // Rectangle Shape defined in the optionbox.xml file. Can set to a drawable image also here
+                 state.addState(new int[] {android.R.attr.state_checked},getDrawable(R.drawable.optionboxformcqimg)); // When this option is selected. Shape is defined in optionbox.xml in the drawable directory
+                 ((RadioButton) radiogrp_mcqoptions.getChildAt(2)).setForeground(state);
              }
              else if (paramname.equals("option4img")) {
+                 ((RadioButton) radiogrp_mcqoptions.getChildAt(3)).setBackground(drawableimg);
                  StateListDrawable state = new StateListDrawable();
-                 state.addState(new int[] {-android.R.attr.state_checked},drawableimg); // for default state (-ve of checked state). Set the background to the option image, which will be displayed by default
-                 state.addState(new int[] {android.R.attr.state_pressed},getDrawable(R.drawable.optionbox)); // Rectangle Shape defined in the optionbox.xml file. Can set to a drawable image also here
-                 state.addState(new int[] {android.R.attr.state_checked},getDrawable(R.drawable.optionbox)); // When this option is selected. Shape is defined in optionbox.xml in the drawable directory
-
-                 ((RadioButton) radiogrp_mcqoptions.getChildAt(3)).setBackground(state);
+                 state.addState(new int[] {android.R.attr.state_pressed},getDrawable(R.drawable.optionboxformcqimg)); // Rectangle Shape defined in the optionbox.xml file. Can set to a drawable image also here
+                 state.addState(new int[] {android.R.attr.state_checked},getDrawable(R.drawable.optionboxformcqimg)); // When this option is selected. Shape is defined in optionbox.xml in the drawable directory
+                 ((RadioButton) radiogrp_mcqoptions.getChildAt(3)).setForeground(state);
              }
              else ;
 
@@ -222,6 +235,18 @@ public class qp_mcq_image_image extends AppCompatActivity {
     public void clickedAudio(View view) {
 
         audioManager.playAudio(this.audio_base64string);
+    }
+
+    public void clickedToZoomQuestionImage(View view) {
+
+        ImageView questionimg = (ImageView)findViewById(R.id.expanded_image);
+        questionimg.setVisibility(View.VISIBLE);
+    }
+
+    public void clickedToCloseExpandedQuestionImage(View view) {
+
+        ImageView questionimg = (ImageView)findViewById(R.id.expanded_image);
+        questionimg.setVisibility(View.INVISIBLE);
     }
 
 }

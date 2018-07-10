@@ -30,6 +30,7 @@ import com.akshara.assessment.a3.NetworkRetrofitPackage.CurrentStateInterface;
 import com.akshara.assessment.a3.Pojo.AuthKeyPojo;
 import com.akshara.assessment.a3.UtilsPackage.AppSettings;
 import com.akshara.assessment.a3.UtilsPackage.AppStatus;
+import com.akshara.assessment.a3.UtilsPackage.ConstantsA3;
 import com.akshara.assessment.a3.UtilsPackage.DailogUtill;
 import com.akshara.assessment.a3.UtilsPackage.SessionManager;
 import com.akshara.assessment.a3.UtilsPackage.StringWithTags;
@@ -348,7 +349,7 @@ public class NavigationDrawerActivity extends BaseActivity
                 editor.commit();
                 long id = new Long(schoolArrayAdapter.getItem(i).id.toString());
                 String name = ((TextView) view.findViewById(R.id.cust_view)).getText().toString();
-                showAltertDailog(id);
+                showAltertDailog(id,name);
                  /*Intent gradeIntent=new Intent(getApplicationContext(),GradeActivity.class);
                 gradeIntent.putExtra("A3APP_INSTITUTIONID",id);
                 gradeIntent.putExtra("institutionName",name);
@@ -362,7 +363,7 @@ public class NavigationDrawerActivity extends BaseActivity
 
     }
 
-    private void showAltertDailog(final long schoolid) {
+    private void showAltertDailog(final long schoolid, final String name) {
 
 
         final ArrayAdapter<String> gradeAdapter = new ArrayAdapter<String>(
@@ -391,6 +392,7 @@ public class NavigationDrawerActivity extends BaseActivity
             public void onClick(DialogInterface dialogInterface, int i) {
                 int grade = Integer.parseInt(mSpinner.getSelectedItem().toString());
                 String gradeS = getResources().getStringArray(R.array.array_grade)[grade - 1];
+                ConstantsA3.schoolName=name;
                 // Toast.makeText(getApplicationContext(),"GradeId:"+grade+":Insti:"+schoolid+":grade"+gradeS,Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getApplicationContext(), AssessmentSelectorActivity.class)
                         .putExtra("A3APP_INSTITUTIONID", schoolid).

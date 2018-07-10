@@ -15,12 +15,24 @@
         <item name="colorPrimary">@color/colorPrimaryToolbar</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkStatus</item>
         <item name="colorAccent">@color/colorAccentViews</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
+
+
+    <style name="A3ThemeAssessment" parent="AppTheme">
+        <item name="colorPrimary">@color/colorPrimaryToolbar</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkStatus</item>
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+
 
     <style name="A3Theme.NoActionBar" parent="AppTheme.NoActionBar">
         <item name="colorPrimary">@color/colorPrimaryToolbar</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDarkStatus</item>
         <item name="colorAccent">@color/colorAccentViews</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

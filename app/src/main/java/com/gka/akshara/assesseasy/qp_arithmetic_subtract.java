@@ -36,6 +36,14 @@ public class qp_arithmetic_subtract extends AppCompatActivity {
         ConstraintLayout clayout = (ConstraintLayout) findViewById(R.id.ConstraintLayout_parent_arithmeticsubtract);
         clayout.setBackgroundResource(globalvault.QP_BGRND_IMGS[bkgrndimagearrayindex]);
 
+        // Set the Title of the App on the Action Bar at the top
+        try {
+            setTitle(globalvault.a3app_titletext);
+        }
+        catch(Exception e) {
+            Log.e("EASYASSESS", "setTitle Exception: errormsg:"+e.toString());
+        }
+
         // Saves the questionid passed to this page
         Intent intent = getIntent(); // get the Intent that started this activity
         questionid =  intent.getIntExtra("EASYASSESS_QUESTIONID",0);
@@ -104,7 +112,7 @@ public class qp_arithmetic_subtract extends AppCompatActivity {
         dummyview.requestFocus();
 
         // create the keyboard
-        aekbd = new AssessEasyKeyboard(this,R.id.aenumberkbd, R.xml.assesseasynumberkbd);
+        aekbd = new AssessEasyKeyboard(this,R.id.aenumberkbd, R.xml.assesseasynumberkbd1);
         //aekbd.showCustomKeyboard(findViewById(R.id.aenumberkbd));
 
         // Register the EditText box with the custom keyboard
@@ -135,6 +143,17 @@ public class qp_arithmetic_subtract extends AppCompatActivity {
 
         if(aekbd.isCustomKeyboardVisible()) {
             aekbd.hideCustomKeyboard();
+        }
+
+        String answergiven = globalvault.questions[questionid-1].getAnswerGiven();
+        if(answergiven == null) { // Never has crossed this Question even once (neither 'Skipped' nor 'submitted' and pressed 'Back' on this Question screen. So, store the First and Second numbers so that same numbers can be displayed when User comes back to this Question.
+            // answergiven will not be null if Child has crossed this Question at least once (clicking 'Next' on this Question)
+            TextView tvNumber1 = (TextView) findViewById(R.id.textViewNumber1);
+            String firstnumber = tvNumber1.getText().toString();
+            TextView tvNumber2 = (TextView) findViewById(R.id.textViewNumber2);
+            String secondnumber = tvNumber2.getText().toString();
+            String answerstr = firstnumber + "," + secondnumber; // Store the two numbers as this need to be displayed if Child comes back to this screen (even if the Child has skipped this Question earlier)
+            globalvault.questions[questionid - 1].setAnswerGiven(answerstr);
         }
 
         Intent intent = new Intent(this, assessment_manager.class);

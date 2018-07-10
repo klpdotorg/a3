@@ -16,6 +16,7 @@ import com.akshara.assessment.a3.TelemetryReport.TelemetryReportAdapter;
 import com.akshara.assessment.a3.TelemetryReport.TelemetryReportIndetail;
 import com.akshara.assessment.a3.TelemetryReport.pojoReportData;
 import com.akshara.assessment.a3.UtilsPackage.AppStatus;
+import com.akshara.assessment.a3.UtilsPackage.ConstantsA3;
 import com.akshara.assessment.a3.UtilsPackage.DailogUtill;
 import com.akshara.assessment.a3.UtilsPackage.SessionManager;
 import com.akshara.assessment.a3.db.KontactDatabase;
@@ -40,6 +41,7 @@ class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.Student
     int EASYASEESS_QUESTIONSETID;
     private deviceDatastoreMgr a3dsapiobj;
     KontactDatabase db;
+    String A3APP_TITLETEXT = "";
 
     public StudentListAdapter(StudentListMainActivity activity, ArrayList<StudentPojo> students) {
 
@@ -51,6 +53,12 @@ class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.Student
         EASYASEESS_QUESTIONSETID = activity.getIntent().getIntExtra("EASYASEESS_QUESTIONSETID", 0);
         A3APP_LANGUAGE = activity.getIntent().getStringExtra("A3APP_LANGUAGE");
         a3dsapiobj = new deviceDatastoreMgr();
+        if( activity.getIntent().getStringExtra(ConstantsA3.A3APP_TITLETEXT)!=null) {
+            A3APP_TITLETEXT = activity.getIntent().getStringExtra(ConstantsA3.A3APP_TITLETEXT);
+        }
+        else {
+            A3APP_TITLETEXT=activity.getResources().getString(R.string.app_name);
+        }
         a3dsapiobj.initializeDS(activity);
         db = ((A3Application) activity.getApplicationContext()).getDb();
 
@@ -103,7 +111,7 @@ class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.Student
                     }
                 }
 
-                checkData(studentIds,position);
+                checkData(studentIds, position);
                 //Toast.makeText(activity,studentIds.size()+"",Toast.LENGTH_SHORT).show();
 
 
@@ -125,7 +133,10 @@ class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.Student
                 bundle.putString("A3APP_GRADESTRING", A3APP_GRADESTRING);
                 bundle.putString("A3APP_CHILDID", students.get(position).stsid + "");
                 bundle.putString("A3APP_LANGUAGE", A3APP_LANGUAGE);
+                bundle.putString("A3APP_TITLETEXT", A3APP_TITLETEXT);
 
+
+                Log.d("shri",A3APP_TITLETEXT);
                 intent.putExtras(bundle);
                 activity.startActivity(intent);
                 activity.overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
@@ -193,7 +204,7 @@ class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.Student
     public void checkData(ArrayList<StudentTable> stsId, int position) {
 
 
-       ArrayList<pojoReportData> data = a3dsapiobj.getAllStudentsForReports(EASYASEESS_QUESTIONSETID + "", stsId);
+        ArrayList<pojoReportData> data = a3dsapiobj.getAllStudentsForReports(EASYASEESS_QUESTIONSETID + "", stsId);
         Collections.sort(data);
 
         ArrayList<String> titles = getAllQuestionSetTitle(EASYASEESS_QUESTIONSETID);
@@ -202,9 +213,9 @@ class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.Student
         AppStatus.questionTables = getAllQuestions(EASYASEESS_QUESTIONSETID);
         AppStatus.titles = titles;
         Intent intent = new Intent(activity, TelemetryReportIndetail.class);
-        intent.putExtra("name",stsId.get(0).getFirstName());
-        intent.putExtra("fatherName",stsId.get(0).getMiddleName());
-        intent.putExtra("stsId",stsId.get(0).getUid());
+        intent.putExtra("name", stsId.get(0).getFirstName());
+        intent.putExtra("fatherName", stsId.get(0).getMiddleName());
+        intent.putExtra("stsId", stsId.get(0).getUid());
         activity.startActivity(intent);
        /* adapter = new TelemetryReportAdapter(this, data, getAllQuestions(EASYASEESS_QUESTIONSETID),titles);
         reportRecyclerView.setAdapter(adapter);

@@ -35,6 +35,13 @@ public class qp_fib_text extends AppCompatActivity {
         ConstraintLayout clayout = (ConstraintLayout) findViewById(R.id.ConstraintLayout_parent_fibtext);
         clayout.setBackgroundResource(globalvault.QP_BGRND_IMGS[bkgrndimagearrayindex]);
 
+        // Set the Title of the App on the Action Bar at the top
+        try {
+            setTitle(globalvault.a3app_titletext);
+        }
+        catch(Exception e) {
+            Log.e("EASYASSESS", "setTitle Exception: errormsg:"+e.toString());
+        }
 
         // Saves the questionid passed to this page
         Intent intent = getIntent(); // get the Intent that started this activity
@@ -79,7 +86,7 @@ public class qp_fib_text extends AppCompatActivity {
         dummyview.requestFocus();
 
         // create the keyboard
-        aekbd = new AssessEasyKeyboard(this,R.id.aenumberkbd, R.xml.assesseasynumberkbd);
+        aekbd = new AssessEasyKeyboard(this,R.id.aenumberkbd, R.xml.assesseasynumberkbd1);
         //aekbd.showCustomKeyboard(findViewById(R.id.aenumberkbd));
 
         // Register the EditText box with the custom keyboard

@@ -50,6 +50,7 @@ import java.util.UUID;
 
                 a3appdb = SQLiteDatabase.openOrCreateDatabase(a3appdbfilepath, null);
                 a3appdb.setVersion(com.akshara.assessment.a3.db.DB_CONSTANTS.DB_VERSION);
+
                 if(a3appdb != null) {
                     if(MainActivity.debugalerts)
                         Log.d("EASYASSESS", "EASYASSESS.initializeDS: openOrCreateDatabase success. ");
@@ -510,6 +511,7 @@ import java.util.UUID;
 
             }
         }
+
 
 
         public ArrayList<com.akshara.assessment.a3.TelemetryReport.pojoReportData> getAllStudentsForReports(String questionsetId, ArrayList<com.akshara.assessment.a3.db.StudentTable> studentIds) {

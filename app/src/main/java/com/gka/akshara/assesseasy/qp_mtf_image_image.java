@@ -45,6 +45,13 @@ public class qp_mtf_image_image extends AppCompatActivity {
         ConstraintLayout clayout = (ConstraintLayout) findViewById(R.id.ConstraintLayout_parent_mtfimageimage);
         clayout.setBackgroundResource(globalvault.QP_BGRND_IMGS[bkgrndimagearrayindex]);
 
+        // Set the Title of the App on the Action Bar at the top
+        try {
+            setTitle(globalvault.a3app_titletext);
+        }
+        catch(Exception e) {
+            Log.e("EASYASSESS", "setTitle Exception: errormsg:"+e.toString());
+        }
 
         // Saves the questionid passed to this page
         Intent intent = getIntent(); // get the Intent that started this activity
@@ -227,6 +234,19 @@ public class qp_mtf_image_image extends AppCompatActivity {
             else;
         }
 
+        String answerStr = "";
+
+        if(TextUtils.isEmpty(currentanswerstring)) { // currentanswerstring will be empty when user submit answer on this screen for the first time
+            answerStr = arrAnswer[0] + "," + arrAnswer[1] + "," + arrAnswer[2] + "," + arrAnswer[3];
+        }
+        else { // User might have changed only two boxes and kept the other two boxes unchanged (for example, dragged only two images to two boxes to edit the answer when comes to the screen by back button)
+            String[] arrCurrentAnswer = currentanswerstring.split(",");
+            for(int k = 0; k < arrAnswer.length; k++) {
+                if (arrAnswer[k] == 0) arrAnswer[k] = Integer.parseInt(arrCurrentAnswer[k]);
+            }
+            answerStr = arrAnswer[0] + "," + arrAnswer[1] + "," + arrAnswer[2] + "," + arrAnswer[3];
+        }
+
         // Check if same image is dropped in more than one box (if yes, then play an error beep audio and return (Child can not go ahead from this screen then)
         for(int i=0; i < 4; i++) {
             int selecteditem = arrAnswer[i];
@@ -236,19 +256,6 @@ public class qp_mtf_image_image extends AppCompatActivity {
                     return;
                 }
             }
-        }
-
-        String answerStr = "";
-
-        if(TextUtils.isEmpty(currentanswerstring)) { // currentanswerstring will be empty when user submit answer on this screen for the first time
-            answerStr = arrAnswer[0] + "," + arrAnswer[1] + "," + arrAnswer[2] + "," + arrAnswer[3];
-        }
-        else { // User might have changed only two boxes and kept the other two boxex unchanged (for example, dragged only two images to two boxes to edit the answer when comes to the screen by back button)
-            String[] arrCurrentAnswer = currentanswerstring.split(",");
-            for(int k = 0; k < arrAnswer.length; k++) {
-                if (arrAnswer[k] == 0) arrAnswer[k] = Integer.parseInt(arrCurrentAnswer[k]);
-            }
-            answerStr = arrAnswer[0] + "," + arrAnswer[1] + "," + arrAnswer[2] + "," + arrAnswer[3];
         }
 
         globalvault.questions[questionid-1].setAnswerGiven(answerStr);

@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.83" />
+        app:layout_constraintGuide_percent="0.85" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_left1"
@@ -204,13 +204,14 @@
             android:textAlignment="center"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="@dimen/qp_fib_text_questiontext"
+            android:lineSpacingMultiplier="@dimen/linespacemultiplier_forquestiontext"
             android:textStyle="bold"
             android:typeface="sans"
             app:layout_constraintEnd_toStartOf="@+id/guideline_right4"
             app:layout_constraintStart_toStartOf="@+id/guideline_left3"
             app:layout_constraintTop_toTopOf="@+id/guideline_top3" />
 
-        <com.gka.akshara.assesseasy.TouchImageView
+        <ImageView
             android:id="@+id/fibQuestionImage"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -222,6 +223,7 @@
             android:paddingRight="@dimen/questionimagebox_image_padding"
             android:paddingTop="@dimen/questionimagebox_image_padding"
             android:paddingBottom="@dimen/questionimagebox_image_padding"
+            android:onClick="clickedToZoomQuestionImage"
             app:layout_constraintBottom_toTopOf="@+id/guideline_bottom4"
             app:layout_constraintEnd_toStartOf="@+id/guideline_right3"
             app:layout_constraintStart_toStartOf="@+id/guideline_left3"
@@ -250,6 +252,17 @@
 
 
     </android.support.constraint.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/expanded_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:onClick="clickedToCloseExpandedQuestionImage"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        android:visibility="invisible" />
 
     <View
         android:id="@+id/dummyViewForFocus"

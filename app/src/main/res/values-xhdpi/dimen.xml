@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <dimen name="linespacemultiplier_forquestiontext">1.1</dimen>
+
     <dimen name="qp_add_questiontext">15sp</dimen>
     <dimen name="qp_add_numbers">18sp</dimen>
 

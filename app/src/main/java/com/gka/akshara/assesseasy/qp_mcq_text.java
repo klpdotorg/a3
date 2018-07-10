@@ -39,6 +39,13 @@ public class qp_mcq_text extends AppCompatActivity {
         ConstraintLayout clayout = (ConstraintLayout) findViewById(R.id.ConstraintLayout_parent_mcqtext);
         clayout.setBackgroundResource(globalvault.QP_BGRND_IMGS[bkgrndimagearrayindex]);
 
+        // Set the Title of the App on the Action Bar at the top
+        try {
+            setTitle(globalvault.a3app_titletext);
+        }
+        catch(Exception e) {
+            Log.e("EASYASSESS", "setTitle Exception: errormsg:"+e.toString());
+        }
 
         // Saves the questionid passed to this page
         Intent intent = getIntent(); // get the Intent that started this activity

@@ -13,6 +13,7 @@ import android.text.TextUtils;
 
 import com.akshara.assessment.a3.db.KontactDatabase;
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
 
 import java.util.Locale;
 
@@ -33,6 +34,8 @@ public class A3Application extends Application {
     /*   this. registerReceiver(new NetworkChangeReceiver(),
                 new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 */
+       /* Fabric.with(this, new Crashlytics.Builder().core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build()).build());
+        */
         initSingletons();
         updateLanguage(this);
 

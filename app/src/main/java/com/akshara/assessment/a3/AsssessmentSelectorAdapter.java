@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.akshara.assessment.a3.TelemetryReport.TelemetryRreportActivity;
 import com.akshara.assessment.a3.TelemetryReport.pojoReportData;
+import com.akshara.assessment.a3.UtilsPackage.ConstantsA3;
 import com.akshara.assessment.a3.UtilsPackage.DailogUtill;
 import com.akshara.assessment.a3.UtilsPackage.SessionManager;
 import com.akshara.assessment.a3.db.QuestionSetTable;
@@ -89,29 +90,6 @@ public class AsssessmentSelectorAdapter extends RecyclerView.Adapter {
                 holder.tvSubject.setText(questionSetTables.get(position).getSubjectName());
                 holder.tvAssementtype.setText(questionSetTables.get(position).getAssesstypeName());
 
-/*
-                holder.adapterLay.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        Intent intent = new Intent(activity, StudentListMainActivity.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putLong("A3APP_INSTITUTIONID", A3APP_INSTITUTIONID);
-                        bundle.putInt("A3APP_GRADEID", A3APP_GRADEID);
-                        bundle.putInt("EASYASEESS_QUESTIONSETID", questionSetTables.get(position).getIdQuestionset());
-                        bundle.putString("A3APP_GRADESTRING", A3APP_GRADESTRING);
-                        //  bundle.putString("A3APP_CHILDID", A3APP_CHILDID);
-                        bundle.putString("A3APP_LANGUAGE", A3APP_LANGUAGE);
-
-
-                        intent.putExtras(bundle);
-                        activity.startActivity(intent);
-                        activity. overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-
-                        activity.finish();
-
-                    }
-                });*/
 
 
                 holder.imageReport.setOnClickListener(new View.OnClickListener() {
@@ -123,6 +101,9 @@ public class AsssessmentSelectorAdapter extends RecyclerView.Adapter {
                         bundle.putLong("A3APP_INSTITUTIONID", A3APP_INSTITUTIONID);
                         bundle.putInt("EASYASSESS_QUESTIONSETID", questionSetTables.get(position).getIdQuestionset());
                         bundle.putInt("A3APP_GRADEID", A3APP_GRADEID);
+                        ConstantsA3.surveyTitle=questionSetTables.get(position).getQsetTitle();
+                        ConstantsA3.subject=questionSetTables.get(position).getSubjectName();
+                        ConstantsA3.assessmenttype=questionSetTables.get(position).getAssesstypeName();
                         intent.putExtras(bundle);
                         activity.startActivity(intent);
                         activity. overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
@@ -146,7 +127,8 @@ public class AsssessmentSelectorAdapter extends RecyclerView.Adapter {
                         bundle.putString("A3APP_GRADESTRING", A3APP_GRADESTRING);
                         //  bundle.putString("A3APP_CHILDID", A3APP_CHILDID);
                         bundle.putString("A3APP_LANGUAGE", A3APP_LANGUAGE);
-
+                        String title=activity.getResources().getString(R.string.app_name)+" "+A3APP_GRADESTRING+" "+questionSetTables.get(position).getAssesstypeName()+" "+questionSetTables.get(position).getSubjectName();
+                        bundle.putString(ConstantsA3.A3APP_TITLETEXT,title);
                         intent.putExtras(bundle);
                         activity.startActivity(intent);
                         activity. overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);

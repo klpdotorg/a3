@@ -40,6 +40,13 @@ public class qp_mtf_text_image extends AppCompatActivity {
         ConstraintLayout clayout = (ConstraintLayout) findViewById(R.id.ConstraintLayout_parent_mtftextimage);
         clayout.setBackgroundResource(globalvault.QP_BGRND_IMGS[bkgrndimagearrayindex]);
 
+        // Set the Title of the App on the Action Bar at the top
+        try {
+            setTitle(globalvault.a3app_titletext);
+        }
+        catch(Exception e) {
+            Log.e("EASYASSESS", "setTitle Exception: errormsg:"+e.toString());
+        }
 
         // Saves the questionid passed to this page
         Intent intent = getIntent(); // get the Intent that started this activity
@@ -218,17 +225,6 @@ public class qp_mtf_text_image extends AppCompatActivity {
             else;
         }
 
-        // Check if same image is dropped in more than one box (if yes, then play an error beep audio and return (Child can not go ahead from this screen then)
-        for(int i=0; i < 4; i++) {
-            int selecteditem = arrAnswer[i];
-            for(int j=0; j < 4; j++) {
-                if((arrAnswer[j] == selecteditem) && (j != i)) { // If same Image is dropped in more than 1 box, play an error beep and dont allow to proceed
-                    audioManager.playErrorBeepAudio(this);
-                    return;
-                }
-            }
-        }
-
         String answerStr = "";
 
         if(TextUtils.isEmpty(currentanswerstring)) { // currentanswerstring will be empty when user submit answer on this screen for the first time
@@ -240,6 +236,17 @@ public class qp_mtf_text_image extends AppCompatActivity {
                 if (arrAnswer[k] == 0) arrAnswer[k] = Integer.parseInt(arrCurrentAnswer[k]);
             }
             answerStr = arrAnswer[0] + "," + arrAnswer[1] + "," + arrAnswer[2] + "," + arrAnswer[3];
+        }
+
+        // Check if same image is dropped in more than one box (if yes, then play an error beep audio and return (Child can not go ahead from this screen then)
+        for(int i=0; i < 4; i++) {
+            int selecteditem = arrAnswer[i];
+            for(int j=0; j < 4; j++) {
+                if((arrAnswer[j] == selecteditem) && (j != i)) { // If same Image is dropped in more than 1 box, play an error beep and dont allow to proceed
+                    audioManager.playErrorBeepAudio(this);
+                    return;
+                }
+            }
         }
 
         globalvault.questions[questionid-1].setAnswerGiven(answerStr);

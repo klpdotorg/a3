@@ -39,6 +39,8 @@ public class assessment_manager extends AppCompatActivity {
         if(MainActivity.debugalerts)
             Log.d("EASYASSESS","Enter assessment manager onCreate");
 
+        globalvault.finished = false;
+
         Intent intent = getIntent(); // get the Intent that started this activity
         Bundle databundle = intent.getExtras();
 
@@ -54,6 +56,8 @@ public class assessment_manager extends AppCompatActivity {
                 globalvault.a3app_gradeString = databundle.getString("A3APP_GRADESTRING");
                 globalvault.a3app_childId = databundle.getString("A3APP_CHILDID");
                 globalvault.a3app_language = databundle.getString("A3APP_LANGUAGE");
+                globalvault.a3app_titletext = databundle.getString("A3APP_TITLETEXT");
+                //Log.d("sssss", databundle.getString("A3APP_TITLETEXT"));
 
                 if (MainActivity.debugalerts)
                     Log.d("EASYASSESS", "assessment_manager: Recived parameters from the ContainerApp: EASYASSESS_FROMACTIVITY:" + this.fromactivityname + " A3APP_GRADEID:" + globalvault.a3app_gradeId + " A3APP_GRADESTRING:" + globalvault.a3app_gradeString + " A3APP_INSTITUTIONID:" + globalvault.a3app_institutionId + " A3APP_CHILDID:" + globalvault.a3app_childId + " A3APP_LANGUAGE:" + globalvault.a3app_language);
@@ -242,6 +246,7 @@ public class assessment_manager extends AppCompatActivity {
                 Log.e("EASYASSESS", "assessment_manager: Exception."+e.toString());
             }
         }
+
     }
 
     public void invokeMessageDisplayActivity(String message, String gotoactivity) {
@@ -1458,7 +1463,7 @@ public class assessment_manager extends AppCompatActivity {
 
         ByteArrayOutputStream baos32 = new ByteArrayOutputStream();
         // Bitmap bitmap = BitmapFactory.decodeFile(pathOfYourImage);  // to convert from a file
-        Bitmap bitmap32 = BitmapFactory.decodeResource(getResources(), R.drawable.tomatoes);
+        Bitmap bitmap32 = BitmapFactory.decodeResource(getResources(), R.drawable.manytomatoes);
         bitmap32.compress(Bitmap.CompressFormat.PNG, 100, baos32);
         byte[] imageBytes32 = baos32.toByteArray();
         String imageString32 = Base64.encodeToString(imageBytes32, Base64.DEFAULT);

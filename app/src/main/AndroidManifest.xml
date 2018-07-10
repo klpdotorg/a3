@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
+
     <application
         android:name=".A3Application"
         android:allowBackup="false"
@@ -14,6 +15,21 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:theme="@style/A3Theme">
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:grantUriPermissions="true"
+            android:exported="false"
+            android:authorities="${applicationId}">
+
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+
+        </provider>
+
+
+
         <activity
             android:name=".SpalashScreenActivity"
             android:screenOrientation="portrait"
@@ -91,77 +107,119 @@
             android:theme="@style/A3Theme" />
         <activity
             android:name="com.gka.akshara.assesseasy.MainActivity"
+            android:theme="@style/A3ThemeAssessment"
             android:screenOrientation="landscape" />
         <activity
             android:name="com.gka.akshara.assesseasy.qp_arithmetic_add"
-            android:windowSoftInputMode="stateHidden|adjustPan"
             android:screenOrientation="landscape"
-            />
+            android:theme="@style/A3ThemeAssessment"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
 
-        <activity android:name="com.gka.akshara.assesseasy.animpage1"
+        <activity
+            android:name="com.gka.akshara.assesseasy.animpage1"
+            android:theme="@style/A3ThemeAssessment"
             android:screenOrientation="landscape" />
 
         <meta-data
             android:name="preloaded_fonts"
+            android:theme="@style/A3ThemeAssessment"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name="com.gka.akshara.assesseasy.qp_arithmetic_subtract"
-            android:windowSoftInputMode="stateHidden|adjustPan"
-            android:screenOrientation="landscape" />
-
-        <activity android:name="com.gka.akshara.assesseasy.qp_arithmetic_division_wholenumber"
-            android:windowSoftInputMode="stateHidden|adjustPan"
-            android:screenOrientation="landscape" />
-
-        <activity android:name="com.gka.akshara.assesseasy.assessment_manager"
+        <activity
+            android:name="com.gka.akshara.assesseasy.qp_arithmetic_subtract"
             android:screenOrientation="landscape"
-            />
-        <activity android:name="com.gka.akshara.assesseasy.qp_arithmetic_division_withreminder"
-            android:windowSoftInputMode="stateHidden|adjustPan"
-            android:screenOrientation="landscape"
-            />
+            android:theme="@style/A3ThemeAssessment"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
 
-        <activity android:name="com.gka.akshara.assesseasy.qp_fib_text"
+        <activity
+            android:name="com.gka.akshara.assesseasy.qp_arithmetic_division_wholenumber"
+            android:screenOrientation="landscape"
+            android:theme="@style/A3ThemeAssessment"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <activity
+            android:name="com.gka.akshara.assesseasy.assessment_manager"
+            android:theme="@style/A3ThemeAssessment"
             android:screenOrientation="landscape" />
-        <activity android:name="com.gka.akshara.assesseasy.finalpage_boywins"
+        <activity
+            android:name="com.gka.akshara.assesseasy.qp_arithmetic_division_withreminder"
+            android:screenOrientation="landscape"
+            android:theme="@style/A3ThemeAssessment"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <activity
+            android:name="com.gka.akshara.assesseasy.qp_fib_text"
+            android:theme="@style/A3ThemeAssessment"
             android:screenOrientation="landscape" />
-        <activity android:name="com.gka.akshara.assesseasy.finalpage_rabbitwins"
+        <activity
+            android:name="com.gka.akshara.assesseasy.finalpage_boywins"
+            android:theme="@style/A3ThemeAssessment"
             android:screenOrientation="landscape" />
-        <activity android:name="com.gka.akshara.assesseasy.qp_mcq_text"
+        <activity
+            android:name="com.gka.akshara.assesseasy.finalpage_rabbitwins"
+            android:theme="@style/A3ThemeAssessment"
             android:screenOrientation="landscape" />
-        <activity android:name="com.gka.akshara.assesseasy.qp_mcq_image_text"
+        <activity
+            android:name="com.gka.akshara.assesseasy.qp_mcq_text"
+            android:theme="@style/A3ThemeAssessment"
             android:screenOrientation="landscape" />
-        <activity android:name="com.gka.akshara.assesseasy.qp_fib_image_text"
+        <activity
+            android:name="com.gka.akshara.assesseasy.qp_mcq_image_text"
+            android:theme="@style/A3ThemeAssessment"
             android:screenOrientation="landscape" />
-        <activity android:name="com.gka.akshara.assesseasy.qp_mtf_text_blank"
+        <activity
+            android:name="com.gka.akshara.assesseasy.qp_fib_image_text"
+            android:theme="@style/A3ThemeAssessment"
             android:screenOrientation="landscape" />
-        <activity android:name="com.gka.akshara.assesseasy.qp_mtf_text_text"
+        <activity
+            android:name="com.gka.akshara.assesseasy.qp_mtf_text_blank"
+            android:theme="@style/A3ThemeAssessment"
             android:screenOrientation="landscape" />
-        <activity android:name="com.gka.akshara.assesseasy.qp_mtf_text_image"
+        <activity
+            android:name="com.gka.akshara.assesseasy.qp_mtf_text_text"
+            android:theme="@style/A3ThemeAssessment"
             android:screenOrientation="landscape" />
-        <activity android:name="com.gka.akshara.assesseasy.qp_mtf_image_image"
+        <activity
+            android:name="com.gka.akshara.assesseasy.qp_mtf_text_image"
+            android:theme="@style/A3ThemeAssessment"
             android:screenOrientation="landscape" />
-        <activity android:name="com.gka.akshara.assesseasy.qp_mtf_image_blank"
+        <activity
+            android:name="com.gka.akshara.assesseasy.qp_mtf_image_image"
+            android:theme="@style/A3ThemeAssessment"
             android:screenOrientation="landscape" />
-        <activity android:name="com.gka.akshara.assesseasy.qp_truefalse_text"
+        <activity
+            android:name="com.gka.akshara.assesseasy.qp_mtf_image_blank"
+            android:theme="@style/A3ThemeAssessment"
             android:screenOrientation="landscape" />
-        <activity android:name="com.gka.akshara.assesseasy.qp_truefalse_text_image"
+        <activity
+            android:name="com.gka.akshara.assesseasy.qp_truefalse_text"
+            android:theme="@style/A3ThemeAssessment"
             android:screenOrientation="landscape" />
-        <activity android:name="com.gka.akshara.assesseasy.qp_mtf_image_text"
+        <activity
+            android:name="com.gka.akshara.assesseasy.qp_truefalse_text_image"
+            android:theme="@style/A3ThemeAssessment"
             android:screenOrientation="landscape" />
-        <activity android:name="com.gka.akshara.assesseasy.qp_mcq_image"
+        <activity
+            android:name="com.gka.akshara.assesseasy.qp_mtf_image_text"
+            android:theme="@style/A3ThemeAssessment"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name="com.gka.akshara.assesseasy.qp_mcq_image"
+            android:theme="@style/A3ThemeAssessment"
             android:screenOrientation="landscape" />
         <activity
             android:name="com.gka.akshara.assesseasy.qp_arithmetic_multiply_horiz"
-            android:windowSoftInputMode="stateHidden|adjustPan"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"
+            android:theme="@style/A3ThemeAssessment"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name="com.gka.akshara.assesseasy.qp_mcq_image_image"
+            android:theme="@style/A3ThemeAssessment"
             android:screenOrientation="landscape" />
         <activity
             android:name="com.gka.akshara.assesseasy.messagedisplay"
+            android:theme="@style/A3ThemeAssessment"
             android:screenOrientation="landscape" />
-
 
 
         <activity

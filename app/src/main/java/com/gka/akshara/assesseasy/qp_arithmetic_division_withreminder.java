@@ -35,6 +35,14 @@ public class qp_arithmetic_division_withreminder extends AppCompatActivity {
         ConstraintLayout clayout = (ConstraintLayout) findViewById(R.id.ConstraintLayout_parent_arithmeticdivisionwithreminder);
         clayout.setBackgroundResource(globalvault.QP_BGRND_IMGS[bkgrndimagearrayindex]);
 
+        // Set the Title of the App on the Action Bar at the top
+        try {
+            setTitle(globalvault.a3app_titletext);
+        }
+        catch(Exception e) {
+            Log.e("EASYASSESS", "setTitle Exception: errormsg:"+e.toString());
+        }
+
         // Saves the questionid passed to this page
         Intent intent = getIntent(); // get the Intent that started this activity
         questionid =  intent.getIntExtra("EASYASSESS_QUESTIONID",0);
@@ -111,7 +119,7 @@ public class qp_arithmetic_division_withreminder extends AppCompatActivity {
         dummyview.requestFocus();
 
         // create the keyboard
-        aekbd = new AssessEasyKeyboard(this,R.id.aenumberkbd, R.xml.assesseasynumberkbd);
+        aekbd = new AssessEasyKeyboard(this,R.id.aenumberkbd, R.xml.assesseasynumberkbd1);
 
         // Register the EditText box with the custom keyboard
         aekbd.registerEditText(R.id.editTextQuotient);
@@ -143,6 +151,17 @@ public class qp_arithmetic_division_withreminder extends AppCompatActivity {
             aekbd.hideCustomKeyboard();
         }
 
+        String answergiven = globalvault.questions[questionid-1].getAnswerGiven();
+        if(answergiven == null) { // Never has crossed this Question even once (neither 'Skipped' nor 'submitted' and pressed 'Back' on this Question screen. So, store the First and Second numbers so that same numbers can be displayed when User comes back to this Question.
+            // answergiven will not be null if Child has crossed this Question at least once (clicking 'Next' on this Question)
+            TextView tvNumber1 = (TextView) findViewById(R.id.textViewDividend);
+            String firstnumber = tvNumber1.getText().toString();
+            TextView tvNumber2 = (TextView) findViewById(R.id.textViewDivisor);
+            String secondnumber = tvNumber2.getText().toString();
+            String answerstr = firstnumber + "," + secondnumber; // Store the two numbers as this need to be displayed if Child comes back to this screen (even if the Child has skipped this Question earlier)
+            globalvault.questions[questionid - 1].setAnswerGiven(answerstr);
+        }
+
         Intent intent = new Intent(this, assessment_manager.class);
         String fromactivityname = this.getLocalClassName();
         intent.putExtra("EASYASSESS_FROMACTIVITY", fromactivityname);
@@ -164,9 +183,21 @@ public class qp_arithmetic_division_withreminder extends AppCompatActivity {
         if(quotient_editable != null) {
             String quotient = quotient_editable.toString();
 
-            String reminder = "0";  // If Child has not entered anything for remainder, treat it as 0 internally
-            if(reminder_editable != null)
+            String reminder = "";
+            if (reminder_editable != null) {
                 reminder = reminder_editable.toString();
+
+                // If Child has not entered anything for remainder, treat it as 0 internally (this default '0' is not displayed on the remainder field though
+                if (reminder == null)  {
+                    reminder = "0";
+                }
+                else if(reminder.length() == 0) {
+                    reminder = "0";
+                }
+                else;
+            }
+            else
+                reminder = "0";
 
             if(quotient.equals("")) {
                 if (MainActivity.debugalerts)

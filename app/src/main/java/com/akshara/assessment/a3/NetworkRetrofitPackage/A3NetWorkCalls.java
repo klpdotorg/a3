@@ -531,14 +531,14 @@ public class A3NetWorkCalls {
 
     }
 
-    public void downloadStudent(String url, final long schoolId,final int flag, final SchoolStateInterface stateInterface) {
+    public void downloadStudent(String url, final long schoolId, final int flag, final SchoolStateInterface stateInterface) {
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         apiInterface.getStudentAtClusterLevel(url).enqueue(new Callback<SchoolStudentPojo>() {
             @Override
             public void onResponse(Call<SchoolStudentPojo> call, Response<SchoolStudentPojo> response) {
 
                 if (response.isSuccessful()) {
-                    parseStudent(response.body(), schoolId, stateInterface,flag);
+                    parseStudent(response.body(), schoolId, stateInterface, flag);
 
                 } else if (response.code() == 500) {
                     //email or password invalid
@@ -556,20 +556,27 @@ public class A3NetWorkCalls {
         });
     }
 
-    public void parseStudent(SchoolStudentPojo response, long schoolId, SchoolStateInterface stateInterface,int flag) {
+    public void parseStudent(SchoolStudentPojo response, long schoolId, SchoolStateInterface stateInterface, int flag) {
 
-        int studentCount=0;
-        int particularCOunt=0;
-     // Log.d("shri", schoolId + "=============");
+        int studentCount = 0;
+        int particularCOunt = 0;
+        Log.d("shri", schoolId + "=============");
         for (int i = 0; i < response.getResults().size(); i++) {
             int gradeInt = 0;
-            String garde = response.getResults().get(i).getClasses().get(0).getName();
             try {
-                gradeInt = Integer.parseInt(garde);
+
+
+                String garde = response.getResults().get(i).getClasses().get(0).getName();
+                try {
+                    gradeInt = Integer.parseInt(garde);
+                } catch (Exception e) {
+                  //  Log.d("shri", i + "=============");
+                    continue;
+                }
             } catch (Exception e) {
+              //  Log.d("shri",   response.getResults().get(i).getId()+"----");
                 continue;
             }
-
 
             if (gradeInt > 0 && gradeInt <= 5) {
                 Result result = response.getResults().get(i);
@@ -585,8 +592,7 @@ public class A3NetWorkCalls {
                 table.setUid(result.getUid());
                 table.setInstitution(result.getInstitution());
                 table.setMiddleName(result.getFather_name());
-                if(flag!=0&&flag==gradeInt)
-                {
+                if (flag != 0 && flag == gradeInt) {
                     particularCOunt++;
                 }
                 studentCount++;
@@ -597,17 +603,17 @@ public class A3NetWorkCalls {
 
 
         if (response.getNext() != null) {
-            downloadStudent(response.getNext().toString(), schoolId, flag,stateInterface);
+            downloadStudent(response.getNext().toString(), schoolId, flag, stateInterface);
             //Toast.makeText(getApplicationContext(), "next", Toast.LENGTH_SHORT).show();
 
         } else {
 
             if (response.getCount() > 0) {
-                if(flag!=0){
-                    stateInterface.success(String.format(context.getResources().getString(R.string.students_downloaded), particularCOunt+""));
+                if (flag != 0) {
+                    stateInterface.success(String.format(context.getResources().getString(R.string.students_downloaded), particularCOunt + ""));
 
-                }else {
-                    stateInterface.success(String.format(context.getResources().getString(R.string.students_downloaded), studentCount+""));
+                } else {
+                    stateInterface.success(String.format(context.getResources().getString(R.string.students_downloaded), studentCount + ""));
 
                 }
                 //UPDATE
@@ -1029,30 +1035,25 @@ public class A3NetWorkCalls {
                     programTable.setProgramDescr(program_descr);
                     db.insertNew(programTable);
 
-                if(program.getSubjects()!=null&&program.getSubjects().size()>0)
-                {
-                    for(Subject subject:program.getSubjects())
-                    {
-                        long subjectId=0l;
-                        try {
-                             subjectId = Long.parseLong(subject.getIdSubject());
-                        }catch (Exception e)
-                        {
-                            continue;
+                    if (program.getSubjects() != null && program.getSubjects().size() > 0) {
+                        for (Subject subject : program.getSubjects()) {
+                            long subjectId = 0l;
+                            try {
+                                subjectId = Long.parseLong(subject.getIdSubject());
+                            } catch (Exception e) {
+                                continue;
+                            }
+                            SubjectTable subjectTable = new SubjectTable();
+                            subjectTable.setIdSubject(subjectId);
+                            subjectTable.setSubjectName(subject.getSubjectName());
+                            subjectTable.setIdProgram(id);
+                            subjectTable.setProgramName(program_name);
+                            db.insertNew(subjectTable);
+
+
                         }
-                        SubjectTable subjectTable=new SubjectTable();
-                        subjectTable.setIdSubject(subjectId);
-                        subjectTable.setSubjectName(subject.getSubjectName());
-                        subjectTable.setIdProgram(id);
-                        subjectTable.setProgramName(program_name);
-                        db.insertNew(subjectTable);
-
-
-
 
                     }
-
-                }
 
 
                 } catch (Exception e) {

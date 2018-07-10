@@ -149,6 +149,7 @@
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="@dimen/qp_mcq_text_questiontext"
+        android:lineSpacingMultiplier="@dimen/linespacemultiplier_forquestiontext"
         android:textStyle="bold"
         android:typeface="sans"
         app:layout_constraintBottom_toTopOf="@+id/guideline_top2"
@@ -156,7 +157,7 @@
         app:layout_constraintStart_toStartOf="@+id/guideline_left1"
         app:layout_constraintTop_toTopOf="@+id/guideline_top1" />
 
-    <com.gka.akshara.assesseasy.TouchImageView
+    <ImageView
         android:id="@+id/mcqQuestionImage"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -168,6 +169,7 @@
         android:layout_marginStart="@dimen/questionimagebox_image_sidemargin"
         android:layout_marginTop="@dimen/questionimagebox_image_topmargin"
         android:layout_marginBottom="@dimen/questionimagebox_image_bottommargin"
+        android:onClick="clickedToZoomQuestionImage"
         app:layout_constraintBottom_toTopOf="@+id/guideline_top3"
         app:layout_constraintEnd_toStartOf="@+id/guideline_pillar2"
         app:layout_constraintStart_toStartOf="@+id/guideline_pillar1"
@@ -232,6 +234,15 @@
 
     </RadioGroup>
 
-
+    <ImageView
+        android:id="@+id/expanded_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:onClick="clickedToCloseExpandedQuestionImage"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        android:visibility="invisible" />
 
 </android.support.constraint.ConstraintLayout>

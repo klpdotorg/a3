@@ -39,6 +39,14 @@ public class qp_mcq_image_text extends AppCompatActivity {
         ConstraintLayout clayout = (ConstraintLayout) findViewById(R.id.ConstraintLayout_parent_mcqimagetext);
         clayout.setBackgroundResource(globalvault.QP_BGRND_IMGS[bkgrndimagearrayindex]);
 
+        // Set the Title of the App on the Action Bar at the top
+        try {
+            setTitle(globalvault.a3app_titletext);
+        }
+        catch(Exception e) {
+            Log.e("EASYASSESS", "setTitle Exception: errormsg:"+e.toString());
+        }
+
         // Saves the questionid passed to this page
         Intent intent = getIntent(); // get the Intent that started this activity
         questionid =  intent.getIntExtra("EASYASSESS_QUESTIONID",0);
@@ -49,7 +57,10 @@ public class qp_mcq_image_text extends AppCompatActivity {
 
         ArrayList qdatalist = globalvault.questions[questionid-1].getQuestionDataList();
 
-        TouchImageView questionimg = (TouchImageView)findViewById(R.id.mcqQuestionImage);
+        //TouchImageView questionimg = (TouchImageView)findViewById(R.id.mcqQuestionImage);
+        ImageView questionimg = (ImageView)findViewById(R.id.mcqQuestionImage);
+        ImageView questionimgexpanded = (ImageView)findViewById(R.id.expanded_image); // This is the invisible full screen ImageView to show the expanded Image when clicked on the original Question Image
+
         RadioGroup radiogrp_mcqoptions = (RadioGroup)findViewById(R.id.radiogroup_optionbuttonsgrp);
 
         try {
@@ -64,6 +75,7 @@ public class qp_mcq_image_text extends AppCompatActivity {
                         byte[] imageBytes = Base64.decode(imageString, Base64.DEFAULT);
                         Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
                         questionimg.setImageBitmap(decodedImage);   // to set image for an 'ImageView'
+                        questionimgexpanded.setImageBitmap(decodedImage);
                     } else if (paramname.equals("option1txt")) {
                         ((RadioButton) radiogrp_mcqoptions.getChildAt(0)).setText(qdata.value);
                     } else if (paramname.equals("option2txt")) {
@@ -186,5 +198,17 @@ public class qp_mcq_image_text extends AppCompatActivity {
     public void clickedAudio(View view) {
 
         audioManager.playAudio(this.audio_base64string);
+    }
+
+    public void clickedToZoomQuestionImage(View view) {
+
+        ImageView questionimg = (ImageView)findViewById(R.id.expanded_image);
+        questionimg.setVisibility(View.VISIBLE);
+    }
+
+    public void clickedToCloseExpandedQuestionImage(View view) {
+
+        ImageView questionimg = (ImageView)findViewById(R.id.expanded_image);
+        questionimg.setVisibility(View.INVISIBLE);
     }
 }

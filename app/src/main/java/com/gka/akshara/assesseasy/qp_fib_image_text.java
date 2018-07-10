@@ -40,8 +40,13 @@ public class qp_fib_image_text extends AppCompatActivity {
         ConstraintLayout clayout = (ConstraintLayout) findViewById(R.id.ConstraintLayout_parent_fibimagetext);
         clayout.setBackgroundResource(globalvault.QP_BGRND_IMGS[bkgrndimagearrayindex]);
 
-        if (MainActivity.debugalerts)
-            Log.d("EASYASSESS", "qp_fib_image_text: set background done");
+        // Set the Title of the App on the Action Bar at the top
+        try {
+            setTitle(globalvault.a3app_titletext);
+        }
+        catch(Exception e) {
+            Log.e("EASYASSESS", "setTitle Exception: errormsg:"+e.toString());
+        }
 
         // Saves the questionid passed to this page
         Intent intent = getIntent(); // get the Intent that started this activity
@@ -52,7 +57,9 @@ public class qp_fib_image_text extends AppCompatActivity {
 
         ArrayList qdatalist = globalvault.questions[questionid-1].getQuestionDataList();
 
-        TouchImageView questionimg = (TouchImageView)findViewById(R.id.fibQuestionImage);
+        //TouchImageView questionimg = (TouchImageView)findViewById(R.id.fibQuestionImage);
+        ImageView questionimg = (ImageView)findViewById(R.id.fibQuestionImage);
+        ImageView questionimgexpanded = (ImageView)findViewById(R.id.expanded_image); // This is the invisible full screen ImageView to show the expanded Image when clicked on the original Question Image
 
         try {
             for (int i = 0; i < qdatalist.size(); i++) {
@@ -66,6 +73,7 @@ public class qp_fib_image_text extends AppCompatActivity {
                         byte[] imageBytes = Base64.decode(imageString, Base64.DEFAULT);
                         Bitmap decodedImage = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
                         questionimg.setImageBitmap(decodedImage);   // to set image for an 'ImageView'
+                        questionimgexpanded.setImageBitmap(decodedImage);
                     }
                 }
 
@@ -104,7 +112,7 @@ public class qp_fib_image_text extends AppCompatActivity {
 
 
         // create the keyboard
-        aekbd = new AssessEasyKeyboard(this,R.id.aenumberkbd, R.xml.assesseasynumberkbd);
+        aekbd = new AssessEasyKeyboard(this,R.id.aenumberkbd, R.xml.assesseasynumberkbd1);
         //aekbd.showCustomKeyboard(findViewById(R.id.aenumberkbd));
 
         // Register the EditText box with the custom keyboard
@@ -209,5 +217,17 @@ public class qp_fib_image_text extends AppCompatActivity {
     public void clickedAudio(View view) {
 
         audioManager.playAudio(this.audio_base64string);
+    }
+
+    public void clickedToZoomQuestionImage(View view) {
+
+        ImageView questionimg = (ImageView)findViewById(R.id.expanded_image);
+        questionimg.setVisibility(View.VISIBLE);
+    }
+
+    public void clickedToCloseExpandedQuestionImage(View view) {
+
+        ImageView questionimg = (ImageView)findViewById(R.id.expanded_image);
+        questionimg.setVisibility(View.INVISIBLE);
     }
 }

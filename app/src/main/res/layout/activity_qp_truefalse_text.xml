@@ -133,6 +133,7 @@
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="@dimen/qp_mcq_text_questiontext"
+        android:lineSpacingMultiplier="@dimen/linespacemultiplier_forquestiontext"
         android:textStyle="bold"
         android:typeface="sans"
         app:layout_constraintBottom_toTopOf="@+id/guideline_top2"

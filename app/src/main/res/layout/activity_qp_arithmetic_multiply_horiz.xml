@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.83" />
+        app:layout_constraintGuide_percent="0.85" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_left1"
@@ -136,6 +136,7 @@
         android:text=""
         android:textColor="@color/colorPrimaryDark"
         android:textSize="@dimen/qp_multiply_questiontext"
+        android:lineSpacingMultiplier="@dimen/linespacemultiplier_forquestiontext"
         android:textStyle="bold"
         android:typeface="sans"
         android:textAlignment="center"

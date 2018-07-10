@@ -47,6 +47,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
         sessionManager=new SessionManager(getApplicationContext());
 
+     /*   edtMobileNumber.setText("9916712375");
+        edtPassword.setText("test");*/
 
         btnLogin.setOnClickListener(this);
         btnRegister.setOnClickListener(this);

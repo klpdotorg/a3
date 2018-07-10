@@ -15,13 +15,15 @@ public class globalvault {
 
     public static int backclickedonquestionid; // questionid on which back button was clicked (so that while moving forward again, the animation will not be played until this questionid is reached
     public static int currentquestionid = 0;
+    public static boolean finished = false; // Will be set to 'true' when the Assessment is over (when clicked on 'Exit' button on the final page
 
-    // Passed from the ContainerApp while invoking this activit
+    // Passed from the ContainerApp while invoking this activity
     public static long a3app_institutionId;
     public static int  a3app_gradeId;
     public static String a3app_gradeString;
     public static String a3app_childId;
     public static String a3app_language;
+    public static String a3app_titletext = "Akshara Assessment App"; // Default value. The actual text is passed by the ContainerApp
 
     public static String containerapp_invokefromactivity = "com.akshara.assessment.a3.AssessmentSelectorActivity";
     public static String containerapp_returntoactivity = "com.akshara.assessment.a3.StudentListMainActivity";

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 
 import com.akshara.assessment.a3.R;
 
@@ -21,6 +22,14 @@ public class finalpage_boywins extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finalpage_boywins);
+
+        // Set the Title of the App on the Action Bar at the top
+        try {
+            setTitle(globalvault.a3app_titletext);
+        }
+        catch(Exception e) {
+            Log.e("EASYASSESS", "setTitle Exception: errormsg:"+e.toString());
+        }
     }
 
     public void clickedBack(View vw) {
@@ -41,50 +50,65 @@ public class finalpage_boywins extends AppCompatActivity {
 
     public void clickedFinish(View view) { // Clicked Tick button (Finish the Assessment)
 
+        ImageButton finishbutton = (ImageButton)findViewById(R.id.buttonFinish);
+        finishbutton.setEnabled(false); // Disable the 'Finish' button once clicked
+
+        ImageButton backbutton = (ImageButton)findViewById(R.id.buttonBack);
+        backbutton.setEnabled(false); // Disable the 'Back' button as well when the 'Finish' button is clicked
+
+        if(globalvault.finished) // If already clicked on 'Exit' and the app is in this function and User clicked 'Exit' agai
+            return;
+        else
+            globalvault.finished = true;
+
         // Save the telemetry data in the local device database
+        try {
 
-        int score = 0;
-
-        for(int i = 0; i < globalvault.questions.length; i++) {
-            if(globalvault.questions[i].getPass() == "P")
-                score += 1;
-        }
-
-        String[] records_assessment = new String[5];
-        records_assessment[0] = globalvault.a3app_childId;
-        records_assessment[1] = Integer.toString(globalvault.questionsetid);
-        records_assessment[2] = Integer.toString(score);
-
-        if(globalvault.datetime_assessment_start  == 0)
-            globalvault.datetime_assessment_start = System.currentTimeMillis();
-        records_assessment[3] = Long.toString(globalvault.datetime_assessment_start / 1000);
-        records_assessment[4] = Long.toString(System.currentTimeMillis() / 1000); // Submission time
-
-        String assementid = globalvault.dsmgr.saveAssessment(records_assessment);
-
-        if(assementid != null) {
+            int score = 0;
 
             for (int i = 0; i < globalvault.questions.length; i++) {
+                if (globalvault.questions[i].getPass() == "P")
+                    score += 1;
+            }
 
-                if (MainActivity.debugalerts)
-                    Log.d("EASYASSESS", "finalpage_boywins:clickedFinish(). correctAnswer:" + globalvault.questions[i].getAnswerCorrect() + " givenAnswer:" + globalvault.questions[i].getAnswerGiven() + " Pass:" + globalvault.questions[i].getPass());
+            String[] records_assessment = new String[5];
+            records_assessment[0] = globalvault.a3app_childId;
+            records_assessment[1] = Integer.toString(globalvault.questionsetid);
+            records_assessment[2] = Integer.toString(score);
 
-                String[] records_assessment_detail = new String[4];
-                records_assessment_detail[0] = assementid;
-                records_assessment_detail[1] = globalvault.questions[i].getQustionID();
-                records_assessment_detail[2] = globalvault.questions[i].getAnswerGiven();
-                records_assessment_detail[3] = globalvault.questions[i].getPass();
+            if (globalvault.datetime_assessment_start == 0)
+                globalvault.datetime_assessment_start = System.currentTimeMillis();
+            records_assessment[3] = Long.toString(globalvault.datetime_assessment_start / 1000);
+            records_assessment[4] = Long.toString(System.currentTimeMillis() / 1000); // Submission time
 
-                globalvault.dsmgr.saveAssessmentDetail(records_assessment_detail);
+            String assementid = globalvault.dsmgr.saveAssessment(records_assessment);
+
+            if (assementid != null) {
+
+                for (int i = 0; i < globalvault.questions.length; i++) {
+
+                    if (MainActivity.debugalerts)
+                        Log.d("EASYASSESS", "finalpage_boywins:clickedFinish(). correctAnswer:" + globalvault.questions[i].getAnswerCorrect() + " givenAnswer:" + globalvault.questions[i].getAnswerGiven() + " Pass:" + globalvault.questions[i].getPass());
+
+                    String[] records_assessment_detail = new String[4];
+                    records_assessment_detail[0] = assementid;
+                    records_assessment_detail[1] = globalvault.questions[i].getQustionID();
+                    records_assessment_detail[2] = globalvault.questions[i].getAnswerGiven();
+                    records_assessment_detail[3] = globalvault.questions[i].getPass();
+
+                    globalvault.dsmgr.saveAssessmentDetail(records_assessment_detail);
+                }
+            }
+
+            // Sync the telemetry data with the Server, if the device is online
+            if (globalvault.autosynctelemetry) {
+                if (isDeviceOnline())
+                    globalvault.dsmgr.syncTelemetry(globalvault.a3_telemetryapi_baseurl);
             }
         }
-
-        // Sync the telemetry data with the Server, if the device is online
-        if(globalvault.autosynctelemetry) {
-            if(isDeviceOnline())
-                globalvault.dsmgr.syncTelemetry(globalvault.a3_telemetryapi_baseurl);
+        catch(Exception e) {
+            Log.e("EASYASSESS", "finalpage_boywins:clickedFinish: Exception: "+e.toString());
         }
-
 
         globalvault.questions = null;
 
@@ -96,6 +120,7 @@ public class finalpage_boywins extends AppCompatActivity {
             intent.putExtra("A3APP_GRADESTRING", globalvault.a3app_gradeString);
             intent.putExtra("A3APP_LANGUAGE",globalvault.a3app_language);
             intent.putExtra("A3APP_CHILDID",globalvault.a3app_childId);
+            intent.putExtra("A3APP_TITLETEXT",globalvault.a3app_titletext);
             intent.putExtra("EASYASEESS_QUESTIONSETID", globalvault.questionsetid);
 
             intent.putExtra("EASYASSESS_CLICKEDBACKARROW", false);
