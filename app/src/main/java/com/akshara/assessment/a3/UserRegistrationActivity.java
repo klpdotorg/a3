@@ -250,7 +250,7 @@ public class UserRegistrationActivity extends BaseActivity  {
                         focusView = spnRespondantType;
                         // ReqDate=getRevDate(dateofBirth);
                         //    Toast.makeText(getApplicationContext(),ReqDate,Toast.LENGTH_SHORT).show();
-                        DailogUtill.showDialog(getResources().getString(R.string.pleaseSelectrespondanttype),getSupportFragmentManager(),getApplicationContext());
+                        DailogUtill.showDialog(getResources().getString(R.string.pleaseSelectrespondanttype),getSupportFragmentManager(),UserRegistrationActivity.this);
 
                          // Toast.makeText(getApplicationContext(), getResources().getString(R.string.pleaseSelectrespondanttype), Toast.LENGTH_SHORT).show();
                         cancel = true;
@@ -303,20 +303,20 @@ public class UserRegistrationActivity extends BaseActivity  {
                                     Register400Error messageObject = gson.fromJson(response.errorBody().charStream(), Register400Error.class);
                                     String messsage = getResources().getString(R.string.oops);
                                     if (messageObject != null && messageObject.getEmail() != null && messageObject.getEmail().size() != 0 && messageObject.getMobileNo() != null && messageObject.getMobileNo().size() != 0) {
-                                        DailogUtill.showDialog(messageObject.getMobileNo().get(0) + "\n" + messageObject.getEmail().get(0), getSupportFragmentManager(), getApplicationContext());
+                                        DailogUtill.showDialog(messageObject.getMobileNo().get(0) + "\n" + messageObject.getEmail().get(0), getSupportFragmentManager(), UserRegistrationActivity.this);
                                     } else if (messageObject != null && messageObject.getMobileNo() != null && messageObject.getMobileNo().size() != 0) {
-                                        DailogUtill.showDialog(messageObject.getMobileNo().get(0), getSupportFragmentManager(), getApplicationContext());
+                                        DailogUtill.showDialog(messageObject.getMobileNo().get(0), getSupportFragmentManager(), UserRegistrationActivity.this);
 
                                     } else if (messageObject != null && messageObject.getEmail() != null && messageObject.getEmail().size() != 0) {
-                                        DailogUtill.showDialog(messageObject.getEmail().get(0), getSupportFragmentManager(), getApplicationContext());
+                                        DailogUtill.showDialog(messageObject.getEmail().get(0), getSupportFragmentManager(), UserRegistrationActivity.this);
 
                                     } else {
-                                        DailogUtill.showDialog(messsage, getSupportFragmentManager(), getApplicationContext());
+                                        DailogUtill.showDialog(messsage, getSupportFragmentManager(), UserRegistrationActivity.this);
                                     }
 
 
                                 } else {
-                                    DailogUtill.showDialog(getResources().getString(R.string.oops), getSupportFragmentManager(), getApplicationContext());
+                                    DailogUtill.showDialog(getResources().getString(R.string.oops), getSupportFragmentManager(), UserRegistrationActivity.this);
 
                                 }
 
@@ -325,7 +325,7 @@ public class UserRegistrationActivity extends BaseActivity  {
                             @Override
                             public void onFailure(Call<RegstrationResponsePojo> call, Throwable t) {
                                 showProgress(false);
-                                DailogUtill.showDialog(getFailureMessage(t), getSupportFragmentManager(), getApplicationContext());
+                                DailogUtill.showDialog(getFailureMessage(t), getSupportFragmentManager(),UserRegistrationActivity.this);
 
                             }
                         });

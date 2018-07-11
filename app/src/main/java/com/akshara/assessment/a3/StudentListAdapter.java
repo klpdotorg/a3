@@ -23,6 +23,7 @@ import com.akshara.assessment.a3.db.KontactDatabase;
 import com.akshara.assessment.a3.db.QuestionSetDetailTable;
 import com.akshara.assessment.a3.db.QuestionTable;
 import com.akshara.assessment.a3.db.StudentTable;
+import com.crashlytics.android.Crashlytics;
 import com.gka.akshara.assesseasy.deviceDatastoreMgr;
 import com.yahoo.squidb.data.SquidCursor;
 import com.yahoo.squidb.sql.Query;
@@ -98,20 +99,29 @@ class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.Student
             public void onClick(View view) {
                 //    Toast.makeText(activity,"Coming soon",Toast.LENGTH_SHORT).show();
                 //  DailogUtill.showDialog("Coming soon",activity.getSupportFragmentManager(),activity);
-                long id = students.get(position).stsid;
-                ArrayList<StudentTable> studentIds = new ArrayList<>();
-                Query studentQuery = Query.select().from(StudentTable.TABLE)
-                        .where(StudentTable.INSTITUTION.eq(A3APP_INSTITUTIONID).and(StudentTable.STUDENT_GRADE.eq(A3APP_GRADEID).and(StudentTable.ID.eq(id)))).orderBy(StudentTable.UID.asc());
-                SquidCursor<StudentTable> studentCursor = db.query(StudentTable.class, studentQuery);
-                if (studentCursor != null && studentCursor.getCount() > 0) {
-                    while (studentCursor.moveToNext()) {
-                        StudentTable studentTable = new StudentTable(studentCursor);
-                        studentIds.add(studentTable);
+                try {
+                    long id = students.get(position).stsid;
+                    ArrayList<StudentTable> studentIds = new ArrayList<>();
+                    Query studentQuery = Query.select().from(StudentTable.TABLE)
+                            .where(StudentTable.INSTITUTION.eq(A3APP_INSTITUTIONID).and(StudentTable.STUDENT_GRADE.eq(A3APP_GRADEID).and(StudentTable.ID.eq(id)))).orderBy(StudentTable.UID.asc());
+                    SquidCursor<StudentTable> studentCursor = db.query(StudentTable.class, studentQuery);
+                    if (studentCursor != null && studentCursor.getCount() > 0) {
+                        while (studentCursor.moveToNext()) {
+                            StudentTable studentTable = new StudentTable(studentCursor);
+                            studentIds.add(studentTable);
 
+                        }
                     }
-                }
 
-                checkData(studentIds, position);
+                    checkData(studentIds, position);
+                }catch (Exception e)
+                {
+                    Crashlytics.log("report crash student list adapter:"+e.getMessage());
+                    DailogUtill.showDialog(activity.getResources().getString(R.string.oops),activity.getSupportFragmentManager(),activity);
+
+                    //   DailogUtill.showDialog("Oops some thing went wrong",activity.getSupportFragmentManager(),activity);
+
+                }
                 //Toast.makeText(activity,studentIds.size()+"",Toast.LENGTH_SHORT).show();
 
 
@@ -136,7 +146,7 @@ class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.Student
                 bundle.putString("A3APP_TITLETEXT", A3APP_TITLETEXT);
 
 
-                Log.d("shri",A3APP_TITLETEXT);
+            //    Log.d("shri",A3APP_TITLETEXT);
                 intent.putExtras(bundle);
                 activity.startActivity(intent);
                 activity.overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);

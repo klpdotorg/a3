@@ -308,7 +308,7 @@ public class UpdateProfileBeforeLoginActivity extends BaseActivity {
                         public void setFailed(String message) {
                             showProgress(false, "");
                             //showSignupResultDialog(getString(R.string.app_name),message,getResources().getString(R.string.Ok));
-                            DailogUtill.showDialog(message, getSupportFragmentManager(), getApplicationContext());
+                            DailogUtill.showDialog(message, getSupportFragmentManager(), UpdateProfileBeforeLoginActivity.this);
 
 
                         }

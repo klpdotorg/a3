@@ -60,7 +60,7 @@ ProgressDialog progressDialog;
                         @Override
                         public void setFailed(String message) {
                             closeProgress();
-                            DailogUtill.showDialog(message,getSupportFragmentManager(),getApplicationContext());
+                            DailogUtill.showDialog(message,getSupportFragmentManager(),ForgotPasswordOTP.this);
                         }
                     });
 

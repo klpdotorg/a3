@@ -11,9 +11,7 @@ import com.akshara.assessment.a3.LoginActivity;
 import com.akshara.assessment.a3.R;
 
 
-/**
- * Created by Subha on 5/31/16.
- */
+
 public class SignUpResultDialogFragment extends DialogFragment {
 
 

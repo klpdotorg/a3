@@ -51,6 +51,7 @@ import com.akshara.assessment.a3.db.State;
 import com.akshara.assessment.a3.db.StudentTable;
 import com.akshara.assessment.a3.db.SubjectTable;
 import com.akshara.assessment.a3.regstdrespPojo.RegisterStdPojoResp;
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.yahoo.squidb.data.SquidCursor;
 import com.yahoo.squidb.sql.Query;
@@ -487,15 +488,27 @@ public class A3NetWorkCalls {
             schol.setDise(response.body().getFeatures().get(i).getProperties().getDiseCode() + "");
 
             // Log.d("shri",response.body().getFeatures().get(i).getProperties().getGrades().size()+"===="+clusterId);
-            for (Grade grade : response.body().getFeatures().get(i).getProperties().getGrades()) {
-                InstititeGradeIdTable gradeIdTable = new InstititeGradeIdTable();
-                gradeIdTable.setId(grade.getGrpid());
-                gradeIdTable.setSchoolId(response.body().getFeatures().get(i).getProperties().getId());
-                gradeIdTable.setGradeName(grade.getGrpname());
-                db.insertNew(gradeIdTable);
+try {
+    for (Grade grade : response.body().getFeatures().get(i).getProperties().getGrades()) {
+        InstititeGradeIdTable gradeIdTable = new InstititeGradeIdTable();
+        gradeIdTable.setId(grade.getGrpid());
+        gradeIdTable.setSchoolId(response.body().getFeatures().get(i).getProperties().getId());
+        gradeIdTable.setGradeName(grade.getGrpname());
+        db.insertNew(gradeIdTable);
 
-            }
-
+    }
+}
+catch (Exception e)
+{
+  try {
+      Crashlytics.log("blockid:" + blockId);
+      Crashlytics.log("clusterId:" + clusterId);
+      Crashlytics.log("school Id:" + response.body().getFeatures().get(i).getProperties().getId());
+  }catch (Exception e1)
+  {
+      Crashlytics.log("Inner catch Exception in parse school");
+  }
+}
 
             try {
                 Boolean b = db.insertNew(schol);
@@ -913,7 +926,7 @@ public class A3NetWorkCalls {
                     if (response.body().getDescription() != null && !response.body().getDescription().equalsIgnoreCase("")) {
                         currentStateInterface.setFailed(response.body().getDescription());
                     } else {
-                        currentStateInterface.setFailed("Failure in server response format");
+                        currentStateInterface.setFailed(context.getResources().getString(R.string.oops));
                     }
                 }
             }

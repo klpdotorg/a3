@@ -74,7 +74,7 @@ public class OTP_VarifyActivity extends BaseActivity {
                             public void setFailed(String message) {
                                 showProgress(false, getResources().getString(R.string.resending_otp));
 
-                                DailogUtill.showDialog(message, getSupportFragmentManager(), getApplicationContext());
+                                DailogUtill.showDialog(message, getSupportFragmentManager(), OTP_VarifyActivity.this);
                             }
                         });
 
@@ -114,7 +114,7 @@ public class OTP_VarifyActivity extends BaseActivity {
                         @Override
                         public void setFailed(String message) {
                             showProgress(false, getResources().getString(R.string.authenticating));
-                            DailogUtill.showDialog(message, getSupportFragmentManager(), getApplicationContext());
+                            DailogUtill.showDialog(message, getSupportFragmentManager(), OTP_VarifyActivity.this);
                         }
                     });
 

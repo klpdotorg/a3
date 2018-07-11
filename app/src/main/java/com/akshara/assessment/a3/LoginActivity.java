@@ -234,7 +234,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void setFailed(String message) {
                 showProgress(false);
-                DailogUtill.showDialog(message,getSupportFragmentManager(),getApplicationContext());
+                DailogUtill.showDialog(message,getSupportFragmentManager(),LoginActivity.this);
             }
         });
 

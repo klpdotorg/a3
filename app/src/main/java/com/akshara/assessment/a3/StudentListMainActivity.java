@@ -107,13 +107,13 @@ public class StudentListMainActivity extends BaseActivity {
                     Menu menu = bottomNavigationView.getMenu();
                     selectFragment(menu.getItem(0));
 
-                    DailogUtill.showDialog(message, getSupportFragmentManager(), getApplicationContext());
+                    DailogUtill.showDialog(message, getSupportFragmentManager(), StudentListMainActivity.this);
                 }
 
                 @Override
                 public void failed(String message) {
                     finishProgress();
-                    DailogUtill.showDialog(message, getSupportFragmentManager(), getApplicationContext());
+                    DailogUtill.showDialog(message, getSupportFragmentManager(), StudentListMainActivity.this);
 
                 }
 

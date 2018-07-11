@@ -29,6 +29,7 @@ import com.akshara.assessment.a3.BaseActivity;
 import com.akshara.assessment.a3.BuildConfig;
 import com.akshara.assessment.a3.R;
 import com.akshara.assessment.a3.UtilsPackage.ConstantsA3;
+import com.akshara.assessment.a3.UtilsPackage.DailogUtill;
 import com.akshara.assessment.a3.UtilsPackage.SessionManager;
 import com.akshara.assessment.a3.db.KontactDatabase;
 import com.akshara.assessment.a3.db.QuestionSetDetailTable;
@@ -55,14 +56,6 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.yahoo.squidb.data.SquidCursor;
 import com.yahoo.squidb.sql.Query;
 
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -95,33 +88,39 @@ public class TelemetryRreportActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_telemetry_rreport);
-        db = ((A3Application) getApplicationContext()).getDb();
-        a3dsapiobj = new deviceDatastoreMgr();
-        a3dsapiobj.initializeDS(this);
-        mConceptList = new ArrayList<>();
-        reportRecyclerView = findViewById(R.id.reportRecyclerView);
-        A3APP_INSTITUTIONID = getIntent().getLongExtra("A3APP_INSTITUTIONID", 0L);
-        EASYASSESS_QUESTIONSETID = getIntent().getIntExtra("EASYASSESS_QUESTIONSETID", 0);
-        A3APP_GRADEID = getIntent().getIntExtra("A3APP_GRADEID", 0);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(getResources().getString(R.string.studentScore));
-        sessionManager = new SessionManager(getApplicationContext());
+        try {
+            db = ((A3Application) getApplicationContext()).getDb();
+            a3dsapiobj = new deviceDatastoreMgr();
+            a3dsapiobj.initializeDS(this);
+            mConceptList = new ArrayList<>();
+            reportRecyclerView = findViewById(R.id.reportRecyclerView);
+            A3APP_INSTITUTIONID = getIntent().getLongExtra("A3APP_INSTITUTIONID", 0L);
+            EASYASSESS_QUESTIONSETID = getIntent().getIntExtra("EASYASSESS_QUESTIONSETID", 0);
+            A3APP_GRADEID = getIntent().getIntExtra("A3APP_GRADEID", 0);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle(getResources().getString(R.string.studentScore));
+            sessionManager = new SessionManager(getApplicationContext());
 //        ArrayList<QuestionTable> QuestionTitles = getAllQuestionSetTitle(EASYASSESS_QUESTIONSETID);
-        reportRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+            reportRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        reportRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        studentIds = getStudentIds(A3APP_INSTITUTIONID, A3APP_GRADEID);
-        gradeS = getResources().getStringArray(R.array.array_grade)[A3APP_GRADEID - 1];
-        data = a3dsapiobj.getAllStudentsForReports(EASYASSESS_QUESTIONSETID + "", studentIds);
-        Collections.sort(data);
+            reportRecyclerView.setItemAnimator(new DefaultItemAnimator());
+            studentIds = getStudentIds(A3APP_INSTITUTIONID, A3APP_GRADEID);
+            gradeS = getResources().getStringArray(R.array.array_grade)[A3APP_GRADEID - 1];
+            data = a3dsapiobj.getAllStudentsForReports(EASYASSESS_QUESTIONSETID + "", studentIds);
+            Collections.sort(data);
 
-        ArrayList<String> titles = getAllQuestionSetTitle(EASYASSESS_QUESTIONSETID);
-        questionTables = getAllQuestions(EASYASSESS_QUESTIONSETID);
-        adapter = new TelemetryReportAdapter(this, data, questionTables, titles);
-        reportRecyclerView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+            ArrayList<String> titles = getAllQuestionSetTitle(EASYASSESS_QUESTIONSETID);
+            questionTables = getAllQuestions(EASYASSESS_QUESTIONSETID);
+            adapter = new TelemetryReportAdapter(this, data, questionTables, titles);
+            reportRecyclerView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
 
+        } catch (Exception e) {
+            Crashlytics.log("TelemetryRreportActivity report crash:" + e.getMessage());
+            //     DailogUtill.showDialog("Oops some thing went wrong",getSupportFragmentManager(),getApplicationContext());
+            DailogUtill.showDialog(getResources().getString(R.string.oops), getSupportFragmentManager(), TelemetryRreportActivity.this);
 
+        }
         //  saveExcelFile(getApplicationContext(),"shreee.xls");
 
     }
@@ -139,13 +138,26 @@ public class TelemetryRreportActivity extends BaseActivity {
     public void downloadStudents(MenuItem item) {
         if (item.getItemId() == R.id.action_download) {
             try {
+                // DailogUtill.showDialog("Error while generating report",getSupportFragmentManager(),TelemetryRreportActivity.this);
+
                 //   requestStoragePermission();
-                generatePDFData();
+                if(studentIds.size()>0) {
+                    generatePDFData();
+                }else {
+                    DailogUtill.showDialog("No Students found to generate report", getSupportFragmentManager(), TelemetryRreportActivity.this);
+
+                }
             } catch (Exception e) {
 
-                Crashlytics.log("Error while generating report");
-                Crashlytics.log("Institution Id:"+A3APP_INSTITUTIONID);
-                Toast.makeText(getApplicationContext(), "Error while generating report", Toast.LENGTH_SHORT).show();
+                try {
+                    Crashlytics.log("Error while generating report");
+                    Crashlytics.log("Institution Id:" + A3APP_INSTITUTIONID);
+                } catch (Exception e1) {
+                    Crashlytics.log("Error while generating report inner try catch block:" + e.getMessage());
+                }
+                DailogUtill.showDialog("Error while generating report", getSupportFragmentManager(), TelemetryRreportActivity.this);
+
+                //Toast.makeText(getApplicationContext(), "Error while generating report", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -187,17 +199,14 @@ public class TelemetryRreportActivity extends BaseActivity {
 
             Calendar calendar = Calendar.getInstance();
             String fileName = getResources().getString(R.string.app_name) + calendar.getTimeInMillis();
-
-            // pdfFile = new File(docsFolder.getAbsolutePath(), fileName);
             File storageDir = getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
             File file = File.createTempFile(
-                    fileName,  /* prefix */
-                    ".pdf",         /* suffix */
-                    storageDir      /* directory */
+                    fileName,
+                    ".pdf",
+                    storageDir
             );
-
             pdfFile = file;
-            OutputStream output = new FileOutputStream(pdfFile);
+             OutputStream output = new FileOutputStream(pdfFile);
             Document document = new Document(PageSize.A3.rotate());
 
 
@@ -355,7 +364,7 @@ public class TelemetryRreportActivity extends BaseActivity {
                     intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
 // generate URI, I defined authority as the application ID in the Manifest, the last param is file I want to open
-                    Uri uri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID, file);
+                    Uri uri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID, pdfFile);
 
 // I am opening a PDF file so I give it a valid MIME type
                     intent.setDataAndType(uri, "application/pdf");
@@ -366,9 +375,16 @@ public class TelemetryRreportActivity extends BaseActivity {
                         try {
                             startActivity(intent);
                         } catch (Exception e) {
-                            Crashlytics.log("Institution Id:"+A3APP_INSTITUTIONID);
-                            Crashlytics.log("PDF reader not found");
-                            Toast.makeText(getApplicationContext(), "PDF reader not found", Toast.LENGTH_SHORT).show();
+                            try {
+                                Crashlytics.log("Institution Id:" + A3APP_INSTITUTIONID);
+                                Crashlytics.log("PDF reader not found");
+                            } catch (Exception e1) {
+                                Crashlytics.log("PDF reader not found inner catch");
+                            }
+
+                            DailogUtill.showDialog("PDF reader not found", getSupportFragmentManager(), getApplicationContext());
+
+                            //  Toast.makeText(getApplicationContext(), "PDF reader not found", Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -379,7 +395,9 @@ public class TelemetryRreportActivity extends BaseActivity {
 
         } catch (Exception e) {
             Crashlytics.log("Error-" + e.getMessage());
-            Toast.makeText(getApplicationContext(), "Error-" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            DailogUtill.showDialog(getResources().getString(R.string.oops), getSupportFragmentManager(), TelemetryRreportActivity.this);
+
+            // Toast.makeText(getApplicationContext(), "Error-" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
 

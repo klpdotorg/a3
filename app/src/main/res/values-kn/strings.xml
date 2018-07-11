@@ -81,7 +81,7 @@
     <string name="districtLeveldataLoadedSchussfully">ಜಿಲ್ಲಾ ಮಟ್ಟದ ಡೇಟಾವನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಲೋಡ್ ಮಾಡಲಾಗಿದೆ</string>
     <string name="pleaseLoadDataforSelectedState">ಆಯ್ಕೆಮಾಡಿದ ರಾಜ್ಯಕ್ಕಾಗಿ ಜಿಲ್ಲಾ ಡೇಟಾವನ್ನು ಲೋಡ್ ಮಾಡಿ</string>
     <string name="doyouwantToLogout">ಲಾಗ್ ಔಟ್ ಮಾಡಲು ನೀವು ಖಚಿತವಾಗಿ ಬಯಸುವಿರಾ?</string>
-    <string name="districtDataAlreadyFound">district: blocks and clusters already downloaded. Do you want to re-download?</string>
+    <string name="districtDataAlreadyFound">ಜಿಲ್ಲಾ ಹಂತದ  ಬ್ಲಾಕ್ ಹಾಗು ಕ್ಲಸ್ಟರ್ ಈಗಾಗಲೇ ಡೌನ್ಲೋಡ್ ಆಗಿದೆ. ನೀವು ಪುನಃ ಡೌನ್ಲೋಡ್ ಮಾಡಲು ಇಚ್ಛಿಸುತ್ತೀರಾ?</string>
 
      <string name="blockLeveldataLoadedSchussfully">ಬ್ಲಾಕ್ ಮಟ್ಟದ ಡೇಟಾವನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಲೋಡ್ ಮಾಡಲಾಗಿದೆ</string>
     <string name="action_logout">ಲಾಗ್ ಔಟ್</string>

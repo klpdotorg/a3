@@ -71,7 +71,7 @@ public class ForgotPasswordActivity extends BaseActivity {
                             @Override
                             public void setFailed(String message) {
                                 progressDialog.dismiss();
-                                DailogUtill.showDialog(message, getSupportFragmentManager(), getApplicationContext());
+                                DailogUtill.showDialog(message, getSupportFragmentManager(), ForgotPasswordActivity.this);
                             }
                         });
 
@@ -118,7 +118,7 @@ public class ForgotPasswordActivity extends BaseActivity {
                         @Override
                         public void setFailed(String message) {
                             progressDialog.dismiss();
-                            DailogUtill.showDialog(message, getSupportFragmentManager(), getApplicationContext());
+                            DailogUtill.showDialog(message, getSupportFragmentManager(), ForgotPasswordActivity.this);
                         }
                     });
 

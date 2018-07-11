@@ -36,6 +36,7 @@ public class A3Application extends Application {
 */
        /* Fabric.with(this, new Crashlytics.Builder().core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build()).build());
         */
+
         initSingletons();
         updateLanguage(this);
 

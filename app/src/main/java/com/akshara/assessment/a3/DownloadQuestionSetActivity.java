@@ -79,7 +79,7 @@ public class DownloadQuestionSetActivity extends BaseActivity {
         String url = A3Services.QUESTIONSET_URL;
 
         // String url="http://www.kodvin.com/a3portal/getQuestionSets";
-        new A3NetWorkCalls(getApplicationContext()).downloadQuestionset(url, qestionPojo, new CurrentStateInterface() {
+        new A3NetWorkCalls(DownloadQuestionSetActivity.this).downloadQuestionset(url, qestionPojo, new CurrentStateInterface() {
             @Override
             public void setSuccess(String message) {
                 finishProgress();

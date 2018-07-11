@@ -163,9 +163,10 @@ public class LanguageSelectionActivity extends BaseActivity {
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-                                    //  System.exit(0);
-                                    ActivityCompat.finishAffinity(LanguageSelectionActivity.this);
+                                  //  ActivityCompat.finishAffinity(LanguageSelectionActivity.this);
+                                    LanguageSelectionActivity.this.finish();
                                     overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+
 
 
                                 } else {

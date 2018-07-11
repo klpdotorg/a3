@@ -52,12 +52,12 @@ public class SpalashScreenActivity extends BaseActivity {
         db = ((A3Application) getApplicationContext()).getDb();
         btnInternt = findViewById(R.id.btnInternt);
         btnInternt.setVisibility(View.GONE);
-//Log.d("shri", this.getLocalClassName());
+       // Log.d("shri",this.getLocalClassName());
+       // Log.d("shri",this.getClass().getSimpleName());
         dailog = findViewById(R.id.progressBar);
         //dailog = ProgressUtil.showProgress(SpalashScreenActivity.this, getResources().getString(R.string.authenticating));
         //   dailog=new ProgressDialog(SpalashScreenActivity.this);
         //dailog.setProgressStyle();
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimaryToolbar));

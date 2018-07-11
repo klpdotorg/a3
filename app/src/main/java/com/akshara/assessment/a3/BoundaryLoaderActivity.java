@@ -174,7 +174,7 @@ public class BoundaryLoaderActivity extends BaseActivity implements OnItemSelect
         select_district.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.d("shri","dist");
+               // Log.d("shri","dist");
                  if (flagForDistrict) {
 
                     //   boundaryForSelector.id.toString()
@@ -221,7 +221,7 @@ public class BoundaryLoaderActivity extends BaseActivity implements OnItemSelect
                         }
                     } else {
                         //Toast.makeText(getApplicationContext(), "load district", Toast.LENGTH_SHORT).show();
-                        DailogUtill.showDialog(getResources().getString(R.string.pleaseLoadDataforSelectedState), getSupportFragmentManager(), getApplicationContext());
+                        DailogUtill.showDialog(getResources().getString(R.string.pleaseLoadDataforSelectedState), getSupportFragmentManager(), BoundaryLoaderActivity.this);
                     }
                 } else {
 
@@ -326,7 +326,7 @@ select_school.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 
                             int position = select_school.getSelectedItemPosition();
-                            DailogUtill.showDialog(select_school.getSelectedItem().toString() + " " + message, getSupportFragmentManager(), getApplicationContext());
+                            DailogUtill.showDialog(select_school.getSelectedItem().toString() + " " + message, getSupportFragmentManager(), BoundaryLoaderActivity.this);
                             flagForSchool=false;
                             checkSchool();
                             flagForSchool=false;
@@ -342,7 +342,7 @@ select_school.setOnItemSelectedListener(new OnItemSelectedListener() {
                     @Override
                     public void failed(String message) {
                         finishProgress();
-                        DailogUtill.showDialog(message, getSupportFragmentManager(), getApplicationContext());
+                        DailogUtill.showDialog(message, getSupportFragmentManager(),BoundaryLoaderActivity.this);
                     }
 
                     @Override
@@ -445,7 +445,7 @@ select_school.setOnItemSelectedListener(new OnItemSelectedListener() {
                         }
                     } else {
                         //Toast.makeText(getApplicationContext(), "load district", Toast.LENGTH_SHORT).show();
-                        DailogUtill.showDialog(getResources().getString(R.string.pleaseLoadDataforSelectedState), getSupportFragmentManager(), getApplicationContext());
+                        DailogUtill.showDialog(getResources().getString(R.string.pleaseLoadDataforSelectedState), getSupportFragmentManager(), BoundaryLoaderActivity.this);
                     }
                 } else {
                     flagForblock = true;
@@ -534,14 +534,14 @@ select_school.setOnItemSelectedListener(new OnItemSelectedListener() {
                 finishProgress();
                 flagForDistrict = false;
                 fill_dropdown(1, select_district.getId(), 1, ((StatePojo) select_state.getSelectedItem()).getStateKey());
-                DailogUtill.showDialog(message, getSupportFragmentManager(), getApplicationContext());
+                DailogUtill.showDialog(message, getSupportFragmentManager(), BoundaryLoaderActivity.this);
 
             }
 
             @Override
             public void setFailed(String message) {
                 finishProgress();
-                DailogUtill.showDialog(message, getSupportFragmentManager(), getApplicationContext());
+                DailogUtill.showDialog(message, getSupportFragmentManager(), BoundaryLoaderActivity.this);
 
             }
         });
@@ -601,7 +601,7 @@ select_school.setOnItemSelectedListener(new OnItemSelectedListener() {
                 SharedPreferences sharedPreferences = getSharedPreferences("Navigationboundary", MODE_PRIVATE);
                 sharedPreferences.edit().clear();
                 finishProgress();
-                DailogUtill.showDialog(message, getSupportFragmentManager(), getApplicationContext());
+                DailogUtill.showDialog(message, getSupportFragmentManager(), BoundaryLoaderActivity.this);
 
 
 
@@ -614,7 +614,7 @@ select_school.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void failed(String message) {
                 finishProgress();
-                DailogUtill.showDialog(message, getSupportFragmentManager(), getApplicationContext());
+                DailogUtill.showDialog(message, getSupportFragmentManager(), BoundaryLoaderActivity.this);
 
             }
 
@@ -746,7 +746,7 @@ select_school.setOnItemSelectedListener(new OnItemSelectedListener() {
 
             case R.id.select_district:
                 flagForDistrict = false;
-                Log.d("shri","view");
+            //    Log.d("shri","view");
                  if (boundaryForSelector != null) {
                     fill_dropdown(1, R.id.select_block, Integer.parseInt(boundaryForSelector.id.toString()), ((StatePojo) select_state.getSelectedItem()).getStateKey());
 
@@ -829,7 +829,7 @@ select_school.setOnItemSelectedListener(new OnItemSelectedListener() {
                     @Override
                     public void success(String message) {
                         finishProgress();
-                        DailogUtill.showDialog(select_district.getSelectedItem().toString() + " " + getResources().getString(R.string.blockandCLusterdownloaded), getSupportFragmentManager(), getApplicationContext());
+                        DailogUtill.showDialog(select_district.getSelectedItem().toString() + " " + getResources().getString(R.string.blockandCLusterdownloaded), getSupportFragmentManager(), BoundaryLoaderActivity.this);
                         int position = select_district.getSelectedItemPosition();
                         fill_dropdown(1, R.id.select_district, 1, ((StatePojo) select_state.getSelectedItem()).getStateKey());
                         select_district.setSelection(position);
@@ -845,7 +845,7 @@ select_school.setOnItemSelectedListener(new OnItemSelectedListener() {
                     @Override
                     public void failed(String message) {
                         finishProgress();
-                        DailogUtill.showDialog(message, getSupportFragmentManager(), getApplicationContext());
+                        DailogUtill.showDialog(message, getSupportFragmentManager(), BoundaryLoaderActivity.this);
                     }
 
                     @Override
@@ -862,7 +862,7 @@ select_school.setOnItemSelectedListener(new OnItemSelectedListener() {
             public void failed(String message) {
                 finishProgress();
 
-                DailogUtill.showDialog(message, getSupportFragmentManager(), getApplicationContext());
+                DailogUtill.showDialog(message, getSupportFragmentManager(), BoundaryLoaderActivity.this);
             }
 
             @Override

@@ -255,7 +255,7 @@ public class UpdateProfileActivity extends BaseActivity {
                             showProgress(false);
                             //showSignupResultDialog(getString(R.string.app_name),,getResources().getString(R.string.Ok));
 
-                            DailogUtill.showDialog(getResources().getString(R.string.profileUpdatedSuccessfully), getSupportFragmentManager(), getApplicationContext());
+                            DailogUtill.showDialog(getResources().getString(R.string.profileUpdatedSuccessfully), getSupportFragmentManager(), UpdateProfileActivity.this);
 
                             try {
                                 subscribetoTopicsForNotification(sessionManager.getState(), sessionManager.getUserType());
@@ -268,7 +268,7 @@ public class UpdateProfileActivity extends BaseActivity {
                         public void setFailed(String message) {
                             showProgress(false);
                             //showSignupResultDialog(getString(R.string.app_name),message,getResources().getString(R.string.Ok));
-                            DailogUtill.showDialog(message, getSupportFragmentManager(), getApplicationContext());
+                            DailogUtill.showDialog(message, getSupportFragmentManager(),UpdateProfileActivity.this);
 
 
                         }

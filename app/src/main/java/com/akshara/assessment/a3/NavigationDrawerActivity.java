@@ -171,7 +171,8 @@ public class NavigationDrawerActivity extends BaseActivity
 
             // finish();
         } else if (id == R.id.nav_download) {
-            //  Crashlytics.getInstance().crash();
+
+            // Crashlytics.getInstance().crash();
             startActivity(new Intent(getApplicationContext(), BoundaryLoaderActivity.class));
 
         } else if (id == R.id.nav_downloadQuestionSet) {
@@ -428,7 +429,7 @@ public class NavigationDrawerActivity extends BaseActivity
                 if ((b.getHierarchy().equalsIgnoreCase("district") || b.getHierarchy().equalsIgnoreCase("block")) && b.isFlag() == true) {
                     StringWithTags boundary = new StringWithTags(b.getName(), b.getId(), b.getHierarchy().equals("district") ? "1" : b.getParentId(), getLocTextBoundary(b), sessionManager, b.isFlag(), b.isFlagCB());
                     boundaryList.add(boundary);
-                    Log.d("shri", "dist block" + b.getName());
+                //    Log.d("shri", "dist block" + b.getName());
 
                 } else {
                     if (!b.getHierarchy().equalsIgnoreCase("district") && !b.getHierarchy().equalsIgnoreCase("block") && b.isFlag() == true) {

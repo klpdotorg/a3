@@ -93,7 +93,7 @@ public class TelematryIndetailAdapter extends RecyclerView.Adapter<TelematryInde
                     if (conceptName.equalsIgnoreCase(concept) && detail.getPass().equalsIgnoreCase("P")) {
                         answerCount = answerCount + 1;
                     totalanswerCount = totalanswerCount + 1;
-                        Log.d("shri",totalanswerCount+"-----------------");
+                        //Log.d("shri",totalanswerCount+"-----------------");
                     }
                 }
 
