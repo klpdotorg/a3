@@ -14,24 +14,19 @@ public class A3Services {
 
     public static final String AUTH_KEY = "A3APIAKSHARAAUTHKEY#2018";
 
-    /* public static final String PROGRAMSURL="http://dev.klp.org.in/a3/getPrograms";
-     public static final String ASSESSMENT_URL="http://dev.klp.org.in/a3/getAssessmentTypes";
-     public static final String QUESTIONSET_URL="http://dev.klp.org.in/a3/getQuestionSets";*/
-
 
 
     //   URLS
 
     //dev
-   /*public static final String PROGRAMSURL = BuildConfig.HOST_ASSESSMENT + "/a3/getPrograms";
+ /*  public static final String PROGRAMSURL = BuildConfig.HOST_ASSESSMENT + "/a3/getPrograms";
     public static final String ASSESSMENT_URL = BuildConfig.HOST_ASSESSMENT + "/a3/getAssessmentTypes";
     public static final String QUESTIONSET_URL = BuildConfig.HOST_ASSESSMENT + "/a3/getQuestionSets";*/
 
 
-  //Production
+ //Production
     public static final String PROGRAMSURL = BuildConfig.HOST_ASSESSMENT + "/getPrograms";
     public static final String ASSESSMENT_URL = BuildConfig.HOST_ASSESSMENT + "/getAssessmentTypes";
     public static final String QUESTIONSET_URL = BuildConfig.HOST_ASSESSMENT + "/getQuestionSets";
-
 
 }

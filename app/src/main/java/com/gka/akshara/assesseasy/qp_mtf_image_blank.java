@@ -149,6 +149,16 @@ public class qp_mtf_image_blank extends AppCompatActivity {
                 audioManager.playAudio(this.audio_base64string);
             }
         }
+
+        // Display the Question Number (on the right-top corner)
+        try {
+            TextView questionNumber = (TextView) findViewById(R.id.textViewQuestionNumber);
+            String displayQuestionNumber = questionid + "/" + globalvault.questions.length;
+            questionNumber.setText(displayQuestionNumber);
+        }
+        catch(Exception e) {
+            Log.e("EASYASSESS", "Setting Question Number. Exception: errormsg:"+e.toString());
+        }
     }
 
 

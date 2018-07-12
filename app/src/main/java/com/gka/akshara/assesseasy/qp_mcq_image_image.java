@@ -154,6 +154,16 @@ public class qp_mcq_image_image extends AppCompatActivity {
             }
         }
 
+        // Display the Question Number (on the right-top corner)
+        try {
+            TextView questionNumber = (TextView) findViewById(R.id.textViewQuestionNumber);
+            String displayQuestionNumber = questionid + "/" + globalvault.questions.length;
+            questionNumber.setText(displayQuestionNumber);
+        }
+        catch(Exception e) {
+            Log.e("EASYASSESS", "Setting Question Number. Exception: errormsg:"+e.toString());
+        }
+
     }
 
     @Override

@@ -124,6 +124,16 @@ public class qp_arithmetic_multiply_horiz extends AppCompatActivity {
                 audioManager.playAudio(this.audio_base64string);
             }
         }
+
+        // Display the Question Number (on the right-top corner)
+        try {
+            TextView questionNumber = (TextView) findViewById(R.id.textViewQuestionNumber);
+            String displayQuestionNumber = questionid + "/" + globalvault.questions.length;
+            questionNumber.setText(displayQuestionNumber);
+        }
+        catch(Exception e) {
+            Log.e("EASYASSESS", "Setting Question Number. Exception: errormsg:"+e.toString());
+        }
     }
 
     // When the phone/system back button is pressed

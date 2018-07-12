@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.95" />
+        app:layout_constraintGuide_percent="0.98" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_left1"
@@ -65,6 +65,26 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.80" />
 
+    <TextView
+        android:id="@+id/textViewQuestionNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:gravity="fill_vertical"
+        android:background="#00000000"
+        android:text=""
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="@dimen/questionnumbersize"
+        android:textStyle="bold"
+        android:typeface="sans"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/buttonAudio"
+        app:layout_constraintTop_toBottomOf="parent"/>
+
     <ImageButton
         android:id="@+id/buttonAudio"
         android:layout_width="wrap_content"
@@ -79,7 +99,7 @@
         android:visibility="invisible"
         android:onClick="clickedAudio"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewQuestionNumber"
         app:srcCompat="@drawable/audiosymbol" />
 
 

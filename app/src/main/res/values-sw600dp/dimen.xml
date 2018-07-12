@@ -2,6 +2,7 @@
 <resources>
 
     <dimen name="linespacemultiplier_forquestiontext">1.1</dimen>
+    <dimen name="questionnumbersize">20sp</dimen>
 
     <dimen name="qp_add_questiontext">28sp</dimen>
     <dimen name="qp_add_numbers">35sp</dimen>

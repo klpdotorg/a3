@@ -178,6 +178,7 @@
     <string name="title_activity_qp_arithmetic_multiply_horiz">qp_arithmetic_multiply_horiz</string>
     <string name="title_activity_qp_mcq_image_image">qp_mcq_image_image</string>
     <string name="title_activity_messagedisplay">messagedisplay</string>
+
     <string name="schoolsnotfoundforcluster">Schools not available for selected cluster</string>
     <string name="registeredblocksnotfound">Registered blocks not found for selected district</string>
     <string name="noQuestionSet">No question set found for %1$s  . Please download and continue assessment</string>
