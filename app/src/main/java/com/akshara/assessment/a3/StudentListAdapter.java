@@ -142,6 +142,7 @@ class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.Student
                 bundle.putInt("A3APP_GRADEID", A3APP_GRADEID);
                 bundle.putString("A3APP_GRADESTRING", A3APP_GRADESTRING);
                 bundle.putString("A3APP_CHILDID", students.get(position).stsid + "");
+             //   Log.d("shri",students.get(position).stsid + "student id");
                 bundle.putString("A3APP_LANGUAGE", A3APP_LANGUAGE);
                 bundle.putString("A3APP_TITLETEXT", A3APP_TITLETEXT);
 

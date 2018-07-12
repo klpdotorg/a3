@@ -82,7 +82,7 @@ public class TelemetryRreportActivity extends BaseActivity {
     ArrayList<StudentTable> studentIds;
     SessionManager sessionManager;
     String gradeS = "";
-    private static final int STORAGE_PERMISSION_CODE = 123;
+  //  private static final int STORAGE_PERMISSION_CODE = 123;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,7 +155,7 @@ public class TelemetryRreportActivity extends BaseActivity {
                 } catch (Exception e1) {
                     Crashlytics.log("Error while generating report inner try catch block:" + e.getMessage());
                 }
-                DailogUtill.showDialog("Error while generating report", getSupportFragmentManager(), TelemetryRreportActivity.this);
+                DailogUtill.showDialog("Error while generating report.Please try again", getSupportFragmentManager(), TelemetryRreportActivity.this);
 
                 //Toast.makeText(getApplicationContext(), "Error while generating report", Toast.LENGTH_SHORT).show();
             }
@@ -282,7 +282,7 @@ public class TelemetryRreportActivity extends BaseActivity {
 
                 PdfPCell pdfPCell;
                 if (m == 0) {
-                    Phrase phrase = new Phrase("Question type/ \nStudent Name");
+                    Phrase phrase = new Phrase("Concept type/ \nStudent Name");
                     pdfPCell = new PdfPCell(phrase);
                     //  pdfPCell.setNoWrap(false);
                     pdfPCell.setBackgroundColor(BaseColor.GRAY);

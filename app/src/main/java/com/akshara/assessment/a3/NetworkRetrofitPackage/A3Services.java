@@ -17,9 +17,21 @@ public class A3Services {
     /* public static final String PROGRAMSURL="http://dev.klp.org.in/a3/getPrograms";
      public static final String ASSESSMENT_URL="http://dev.klp.org.in/a3/getAssessmentTypes";
      public static final String QUESTIONSET_URL="http://dev.klp.org.in/a3/getQuestionSets";*/
-    public static final String PROGRAMSURL = BuildConfig.HOST_ASSESSMENT + "/a3/getPrograms";
+
+
+
+    //   URLS
+
+    //dev
+   /*public static final String PROGRAMSURL = BuildConfig.HOST_ASSESSMENT + "/a3/getPrograms";
     public static final String ASSESSMENT_URL = BuildConfig.HOST_ASSESSMENT + "/a3/getAssessmentTypes";
-    public static final String QUESTIONSET_URL = BuildConfig.HOST_ASSESSMENT + "/a3/getQuestionSets";
+    public static final String QUESTIONSET_URL = BuildConfig.HOST_ASSESSMENT + "/a3/getQuestionSets";*/
+
+
+  //Production
+    public static final String PROGRAMSURL = BuildConfig.HOST_ASSESSMENT + "/getPrograms";
+    public static final String ASSESSMENT_URL = BuildConfig.HOST_ASSESSMENT + "/getAssessmentTypes";
+    public static final String QUESTIONSET_URL = BuildConfig.HOST_ASSESSMENT + "/getQuestionSets";
 
 
 }

@@ -228,6 +228,8 @@
     <string name="select_program">--- Select program ---</string>
     <string name="updatedProAssessment"><![CDATA[All Programs & Assessments updated]]></string>
     <string name="nameorstsid">Name / STS ID</string>
+    <string name="student_registering">Student registering..</string>
+    <string name="select_gender">Select gender</string>
 
 
 </resources>

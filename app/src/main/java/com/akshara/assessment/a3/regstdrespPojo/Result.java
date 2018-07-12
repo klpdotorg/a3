@@ -6,148 +6,148 @@ import com.google.gson.annotations.SerializedName;
 
 public class Result {
 
-@SerializedName("id")
-@Expose
-private Integer id;
-@SerializedName("first_name")
-@Expose
-private String firstName;
-@SerializedName("middle_name")
-@Expose
-private String middleName;
-@SerializedName("last_name")
-@Expose
-private String lastName;
-@SerializedName("uid")
-@Expose
-private String uid;
-@SerializedName("dob")
-@Expose
-private String dob;
-@SerializedName("gender")
-@Expose
-private String gender;
-@SerializedName("mt")
-@Expose
-private String mt;
-@SerializedName("status")
-@Expose
-private String status;
-@SerializedName("institution")
-@Expose
-private long institution;
-@SerializedName("classes")
-@Expose
-private List<Class> classes = null;
-@SerializedName("father_name")
-@Expose
-private String fatherName;
-@SerializedName("mother_name")
-@Expose
-private String motherName;
+    @SerializedName("id")
+    @Expose
+    private Integer id;
+    @SerializedName("first_name")
+    @Expose
+    private String firstName;
+    @SerializedName("middle_name")
+    @Expose
+    private String middleName;
+    @SerializedName("last_name")
+    @Expose
+    private String lastName;
+    @SerializedName("uid")
+    @Expose
+    private String uid;
+    @SerializedName("dob")
+    @Expose
+    private String dob;
+    @SerializedName("gender")
+    @Expose
+    private String gender;
+    @SerializedName("mt")
+    @Expose
+    private String mt;
+    @SerializedName("status")
+    @Expose
+    private String status;
+    @SerializedName("institution")
+    @Expose
+    private Long institution;
+    @SerializedName("classes")
+    @Expose
+    private List<Class> classes = null;
+    @SerializedName("father_name")
+    @Expose
+    private Object fatherName;
+    @SerializedName("mother_name")
+    @Expose
+    private Object motherName;
 
-public Integer getId() {
-return id;
-}
+    public Integer getId() {
+        return id;
+    }
 
-public void setId(Integer id) {
-this.id = id;
-}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-public String getFirstName() {
-return firstName;
-}
+    public String getFirstName() {
+        return firstName;
+    }
 
-public void setFirstName(String firstName) {
-this.firstName = firstName;
-}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-public String getMiddleName() {
-return middleName;
-}
+    public String getMiddleName() {
+        return middleName;
+    }
 
-public void setMiddleName(String middleName) {
-this.middleName = middleName;
-}
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
 
-public String getLastName() {
-return lastName;
-}
+    public String getLastName() {
+        return lastName;
+    }
 
-public void setLastName(String lastName) {
-this.lastName = lastName;
-}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-public String getUid() {
-return uid;
-}
+    public String getUid() {
+        return uid;
+    }
 
-public void setUid(String uid) {
-this.uid = uid;
-}
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 
-public String getDob() {
-return dob;
-}
+    public String getDob() {
+        return dob;
+    }
 
-public void setDob(String dob) {
-this.dob = dob;
-}
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
 
-public String getGender() {
-return gender;
-}
+    public String getGender() {
+        return gender;
+    }
 
-public void setGender(String gender) {
-this.gender = gender;
-}
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 
-public String getMt() {
-return mt;
-}
+    public String getMt() {
+        return mt;
+    }
 
-public void setMt(String mt) {
-this.mt = mt;
-}
+    public void setMt(String mt) {
+        this.mt = mt;
+    }
 
-public String getStatus() {
-return status;
-}
+    public String getStatus() {
+        return status;
+    }
 
-public void setStatus(String status) {
-this.status = status;
-}
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-public long getInstitution() {
-return institution;
-}
+    public Long getInstitution() {
+        return institution;
+    }
 
-public void setInstitution(Integer institution) {
-this.institution = institution;
-}
+    public void setInstitution(Long institution) {
+        this.institution = institution;
+    }
 
-public List<Class> getClasses() {
-return classes;
-}
+    public List<Class> getClasses() {
+        return classes;
+    }
 
-public void setClasses(List<Class> classes) {
-this.classes = classes;
-}
+    public void setClasses(List<Class> classes) {
+        this.classes = classes;
+    }
 
-public String getFatherName() {
-return fatherName;
-}
+    public Object getFatherName() {
+        return fatherName;
+    }
 
-public void setFatherName(String fatherName) {
-this.fatherName = fatherName;
-}
+    public void setFatherName(Object fatherName) {
+        this.fatherName = fatherName;
+    }
 
-public String getMotherName() {
-return motherName;
-}
+    public Object getMotherName() {
+        return motherName;
+    }
 
-public void setMotherName(String motherName) {
-this.motherName = motherName;
-}
+    public void setMotherName(Object motherName) {
+        this.motherName = motherName;
+    }
 
 }

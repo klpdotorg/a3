@@ -203,6 +203,8 @@
     <string name="select_program">--- ପ୍ରୋଗ୍ରାମ ବାଛନ୍ତୁ ---</string>
     <string name="updatedProAssessment"><![CDATA[All Programs & Assessments updated]]></string>
     <string name="nameorstsid">Name / STS ID</string>
+    <string name="student_registering">Student registering..</string>
+    <string name="select_gender">Select gender</string>
 
 
     <string-array name="array_subject">

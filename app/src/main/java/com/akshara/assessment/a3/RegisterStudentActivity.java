@@ -72,7 +72,7 @@ public class RegisterStudentActivity extends android.support.v4.app.Fragment {
                 );
         gradeIdCursor = database.query(InstititeGradeIdTable.class, GradeIDTable);
 
-        Log.d("shri", institution + ":" + grade);
+      //  Log.d("shri", institution + ":" + grade);
 
         btnRegisterstudent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +86,13 @@ public class RegisterStudentActivity extends android.support.v4.app.Fragment {
                     String lastName = edtStuLastName.getText().toString().trim();
                     final RadioButton rb = getActivity().findViewById(studentGender.getCheckedRadioButtonId());
                     String gender = rb.getText().toString().trim().toLowerCase();
+                    if(gender.equalsIgnoreCase(getResources().getString(R.string.male)))
+                    {
+                        gender="male";
+                    }
+                    else {
+                        gender="female";
+                    }
                     String stsId = edtStsId.getText().toString().trim();
                     RegisterStudentPojo studentPojo =
                             new RegisterStudentPojo(firstName, lastName, gender, institution + "", "AC", getAcademicYear(), stsId);
@@ -97,11 +104,13 @@ public class RegisterStudentActivity extends android.support.v4.app.Fragment {
                     if (groupId == 0l) {
                         activity.finish();
                     }
-                    Log.d("shri", "groupId:" + groupId);
-                    Log.d("shri", "inst:" + institution);
+                  //  Log.d("shri", "groupId:" + groupId);
+                   // Log.d("shri", "inst:" + institution);
                     ArrayList<RegisterStudentPojo> list = new ArrayList<>();
                     list.add(studentPojo);
                     initPorgresssDialogForSchool();
+
+                //    Log.d("shri",groupId+":insti="+institution+":"+sessionManager.getToken()+":"+getAcademicYear());
                  new A3NetWorkCalls(activity).registerStudentservice(groupId, sessionManager.getToken(), list, new CurrentStateInterface() {
                    // new A3NetWorkCalls(activity).registerStudentservice(groupId, "Token f68deebe2fa4f85ec53ea012197dd66cc2b785cb", list, new CurrentStateInterface() {
                         @Override
@@ -140,7 +149,7 @@ public class RegisterStudentActivity extends android.support.v4.app.Fragment {
 
     private void initPorgresssDialogForSchool() {
         progressDialog = new ProgressDialog(activity);
-        progressDialog.setMessage("Student registering..");
+        progressDialog.setMessage(getResources().getString(R.string.student_registering));
 
 
         progressDialog.show();
@@ -167,7 +176,7 @@ public class RegisterStudentActivity extends android.support.v4.app.Fragment {
             return false;
         } else if (!gender) {
 
-            Toast.makeText(getActivity(), "select gender", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getResources().getString(R.string.select_gender), Toast.LENGTH_SHORT).show();
             return false;
 
         } else if (gradeIdvalidation() == false) {
