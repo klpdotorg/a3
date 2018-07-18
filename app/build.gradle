@@ -7,7 +7,7 @@ android {
     flavorDimensions "default"
     defaultConfig {
         applicationId "com.akshara.assessment.a3"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 26
         versionCode 4
 

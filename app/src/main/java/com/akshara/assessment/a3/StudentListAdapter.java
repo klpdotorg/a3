@@ -54,11 +54,21 @@ class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.Student
         EASYASEESS_QUESTIONSETID = activity.getIntent().getIntExtra("EASYASEESS_QUESTIONSETID", 0);
         A3APP_LANGUAGE = activity.getIntent().getStringExtra("A3APP_LANGUAGE");
         a3dsapiobj = new deviceDatastoreMgr();
-        if( activity.getIntent().getStringExtra(ConstantsA3.A3APP_TITLETEXT)!=null) {
-            A3APP_TITLETEXT = activity.getIntent().getStringExtra(ConstantsA3.A3APP_TITLETEXT);
-        }
-        else {
-            A3APP_TITLETEXT=activity.getResources().getString(R.string.app_name);
+        try {
+            if (activity.getIntent().getStringExtra(ConstantsA3.A3APP_TITLETEXT) != null) {
+                A3APP_TITLETEXT = activity.getIntent().getStringExtra(ConstantsA3.A3APP_TITLETEXT);
+                A3APP_TITLETEXT = A3APP_TITLETEXT.split(":")[0];
+
+
+            } else if (activity.getIntent().getStringExtra("A3APP_TITLETEXT") != null) {
+                A3APP_TITLETEXT = activity.getIntent().getStringExtra("A3APP_TITLETEXT");
+                A3APP_TITLETEXT = A3APP_TITLETEXT.split(":")[0];
+            } else {
+                A3APP_TITLETEXT = activity.getResources().getString(R.string.app_name);
+            }
+        }catch (Exception e)
+        {
+            A3APP_TITLETEXT = activity.getResources().getString(R.string.app_name);
         }
         a3dsapiobj.initializeDS(activity);
         db = ((A3Application) activity.getApplicationContext()).getDb();
@@ -131,26 +141,31 @@ class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.Student
         holder.imagePlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(activity, com.gka.akshara.assesseasy.assessment_manager.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("EASYASSESS_FROMACTIVITY", "com.akshara.assessment.a3.AssessmentSelectorActivity");
-                bundle.putInt("EASYASSESS_QUESTIONSETID", EASYASEESS_QUESTIONSETID);
-                bundle.putBoolean("EASYASSESS_CLICKEDBACKARROW", false);
+                if(!activity.checkAssessmentTaken(EASYASEESS_QUESTIONSETID+"",students.get(position).stsid )) {
+                    Intent intent = new Intent(activity, com.gka.akshara.assesseasy.assessment_manager.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("EASYASSESS_FROMACTIVITY", "com.akshara.assessment.a3.AssessmentSelectorActivity");
+                    bundle.putInt("EASYASSESS_QUESTIONSETID", EASYASEESS_QUESTIONSETID);
+                    bundle.putBoolean("EASYASSESS_CLICKEDBACKARROW", false);
 
 
-                bundle.putLong("A3APP_INSTITUTIONID", A3APP_INSTITUTIONID);
-                bundle.putInt("A3APP_GRADEID", A3APP_GRADEID);
-                bundle.putString("A3APP_GRADESTRING", A3APP_GRADESTRING);
-                bundle.putString("A3APP_CHILDID", students.get(position).stsid + "");
-             //   Log.d("shri",students.get(position).stsid + "student id");
-                bundle.putString("A3APP_LANGUAGE", A3APP_LANGUAGE);
-                bundle.putString("A3APP_TITLETEXT", A3APP_TITLETEXT);
+                    bundle.putLong("A3APP_INSTITUTIONID", A3APP_INSTITUTIONID);
+                    bundle.putInt("A3APP_GRADEID", A3APP_GRADEID);
+                    bundle.putString("A3APP_GRADESTRING", A3APP_GRADESTRING);
+                    bundle.putString("A3APP_CHILDID", students.get(position).stsid + "");
+                    //   Log.d("shri",students.get(position).stsid + "student id");
+                    bundle.putString("A3APP_LANGUAGE", A3APP_LANGUAGE);
+                    bundle.putString("A3APP_TITLETEXT", A3APP_TITLETEXT+": "+students.get(position).name);
 
 
-            //    Log.d("shri",A3APP_TITLETEXT);
-                intent.putExtras(bundle);
-                activity.startActivity(intent);
-                activity.overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                    //    Log.d("shri",A3APP_TITLETEXT);
+                    intent.putExtras(bundle);
+                    activity.startActivity(intent);
+                    activity.overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                }else {
+               //     Toast.makeText(activity,"Already assesment taken",Toast.LENGTH_SHORT).show();
+                    DailogUtill.showDialog(activity.getResources().getString(R.string.assessmentAlreadyTaken),activity.getSupportFragmentManager(),activity);
+                }
 
             }
         });

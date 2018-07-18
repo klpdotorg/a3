@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.akshara.assessment.a3.db.KontactDatabase;
 import com.akshara.assessment.a3.db.StudentTable;
+import com.gka.akshara.assesseasy.deviceDatastoreMgr;
 import com.yahoo.squidb.data.SquidCursor;
 import com.yahoo.squidb.sql.Query;
 
@@ -52,6 +53,7 @@ public class StudentListFragment extends Fragment {
         studentTableList = new ArrayList<>();
         edtStudentSearch = view.findViewById(R.id.edtStudentSearch);
         studentsTemp = new ArrayList<>();
+
         institution = activity.getIntent().getLongExtra("A3APP_INSTITUTIONID", 0);
         gradeString = activity.getIntent().getStringExtra("A3APP_GRADESTRING");
         grade = activity.getIntent().getIntExtra("A3APP_GRADEID", 0);

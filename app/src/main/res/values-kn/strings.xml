@@ -206,6 +206,7 @@
     <string name="nameorstsid">ಹೆಸರು / STS ID</string>
     <string name="student_registering">ವಿದ್ಯಾರ್ಥಿಯನ್ನು ನೋಂದಾಯಿಸಲಾಗುತ್ತಿದೆ...</string>
     <string name="select_gender">ಲಿಂಗ ಆಯ್ಕೆಮಾಡಿ</string>
+    <string name="assessmentAlreadyTaken">ಆಯ್ದ ವಿದ್ಯಾರ್ಥಿಗಾಗಿ ಮೌಲ್ಯಮಾಪನ ಪೂರ್ಣಗೊಂಡಿದೆ</string>
 
 
     <string-array name="array_subject">

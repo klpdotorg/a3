@@ -231,6 +231,7 @@
     <string name="nameorstsid">Name / STS ID</string>
     <string name="student_registering">Student registering..</string>
     <string name="select_gender">Select gender</string>
+    <string name="assessmentAlreadyTaken">Assessment completed for selected student</string>
 
 
 </resources>

@@ -24,6 +24,7 @@ import com.akshara.assessment.a3.R;
 import com.akshara.assessment.a3.UtilsPackage.DailogUtill;
 import com.akshara.assessment.a3.UtilsPackage.SchoolStateInterface;
 import com.akshara.assessment.a3.UtilsPackage.StringWithTags;
+import com.gka.akshara.assesseasy.deviceDatastoreMgr;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,11 +36,13 @@ public class StudentListMainActivity extends BaseActivity {
     long schoolId;
     ProgressDialog progressDialog;
     int A3APP_GRADEID;
+    private deviceDatastoreMgr a3dsapiobj;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tabed_activity);
-
+        a3dsapiobj = new deviceDatastoreMgr();
+        a3dsapiobj.initializeDS(this);
         title = getIntent().getStringExtra("A3APP_GRADESTRING");
         A3APP_GRADEID=getIntent().getIntExtra("A3APP_GRADEID",0);
         schoolId= getIntent().getLongExtra("A3APP_INSTITUTIONID", 0L);
@@ -57,6 +60,12 @@ public class StudentListMainActivity extends BaseActivity {
 
     }
 
+    public boolean checkAssessmentTaken(String qId, long studentId)
+    {
+        return a3dsapiobj.isStudentAssessmentTaken(qId,studentId);
+
+
+    }
     private void finishProgress() {
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();

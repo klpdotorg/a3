@@ -623,4 +623,23 @@ import java.util.UUID;
             return reportDataWithStudentInfo;
 
         }
+
+        public boolean isStudentAssessmentTaken(String questionsetId,long studentID)
+        {
+            String tableName = "a3app_assessment_tbl";
+
+            Cursor cs1 = a3appdb.query(tableName, new String[]{"id", "id_assessment", "id_child",
+                    "id_questionset", "score", "datetime_start", "datetime_submission", "synced"}, "id_questionset=? AND id_child=?", new String[]{
+                    questionsetId, studentID + ""}, null, null, null);
+
+            if (cs1!=null&&cs1.getCount() > 0) {
+                //assessment  taken
+                return true;
+            }
+            else {
+
+                //assessment not taken
+                return false;
+            }
+        }
 }

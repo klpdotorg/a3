@@ -127,7 +127,7 @@ public class AsssessmentSelectorAdapter extends RecyclerView.Adapter {
                         bundle.putString("A3APP_GRADESTRING", A3APP_GRADESTRING);
                         //  bundle.putString("A3APP_CHILDID", A3APP_CHILDID);
                         bundle.putString("A3APP_LANGUAGE", A3APP_LANGUAGE);
-                        String title=activity.getResources().getString(R.string.app_name)+" "+A3APP_GRADESTRING+" "+questionSetTables.get(position).getAssesstypeName()+" "+questionSetTables.get(position).getSubjectName();
+                        String title=activity.getResources().getString(R.string.app_name)+">"+A3APP_GRADESTRING+">"+questionSetTables.get(position).getAssesstypeName()+">"+questionSetTables.get(position).getSubjectName();
                         bundle.putString(ConstantsA3.A3APP_TITLETEXT,title);
                         intent.putExtras(bundle);
                         activity.startActivity(intent);
