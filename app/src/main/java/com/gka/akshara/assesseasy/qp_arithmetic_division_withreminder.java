@@ -204,6 +204,16 @@ public class qp_arithmetic_division_withreminder extends AppCompatActivity {
                 else if(reminder.length() == 0) {
                     reminder = "0";
                 }
+                else if(reminder.length() > 1) {  // If Child enters '00' or '000' etc , the value should be considered as '0'
+                    boolean allzeros = true;
+                    for(int i = 0; i < reminder.length(); i++) {
+                        if(reminder.charAt(i) != '0') {
+                            allzeros = false;
+                            break;
+                        }
+                    }
+                    if(allzeros) reminder = "0";
+                }
                 else;
             }
             else

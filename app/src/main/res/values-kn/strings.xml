@@ -207,6 +207,16 @@
     <string name="student_registering">ವಿದ್ಯಾರ್ಥಿಯನ್ನು ನೋಂದಾಯಿಸಲಾಗುತ್ತಿದೆ...</string>
     <string name="select_gender">ಲಿಂಗ ಆಯ್ಕೆಮಾಡಿ</string>
     <string name="assessmentAlreadyTaken">ಆಯ್ದ ವಿದ್ಯಾರ್ಥಿಗಾಗಿ ಮೌಲ್ಯಮಾಪನ ಪೂರ್ಣಗೊಂಡಿದೆ</string>
+    <string name="hello">ಹೆಲ್ಲೋ %1$s  !</string>
+    <string name="inst1">ರೂಪಣಾತ್ಮಕ ಅಥವಾ ಸಂಕಲನಾತ್ಮಕ ಮೌಲ್ಯಮಾಪನಕ್ಕೆ ನಿಮಗೆ ಸ್ವಾಗತ.</string>
+    <string name="inst2">ಈ ಪ್ರಶ್ನೆ ಪತ್ರಿಕೆಯಲ್ಲಿ ನಿಮಗೆ ೧೨ ರಿಂದ ೧೫ ಗಣಿತ ಪ್ರಶ್ನೆಗಳನ್ನು ಉತ್ತರಿಸಬೇಕು</string>
+    <string name="inst3">ನಿಮಗೆ ೪೫ ನಿಮಿಷಗಳ ಕಾಲಾವಕಾಶವಿದೆ ಈ ಪ್ರಶ್ನೆಪತ್ರಿಕೆಯನ್ನು ಉತ್ತರಿಸಲು.</string>
+    <string name="inst4">ಪ್ರಶ್ನೆಯನ್ನು ಬಗೆಹರಿಸಲು ಪೆನ್ನು ಅಥವಾ ಪೆನ್ಸಿಲ್ ಹಾಗು ಖಾಲಿ ಹಾಳೆಗಳು ನಿಮ್ಮ ಬಳಿ ಇದೆಯೇ? ಉತ್ತರ ಕಂಡುಕೊಂಡಲ್ಲಿ, ಅದನ್ನು ಈ ಟ್ಯಾಬ್ಲೆಟ್ ನಲ್ಲಿ ಬರೆಯಿರಿ</string>
+    <string name="inst5">ಶುಭ ಹಾರೈಸುವ !</string>
+    <string name="inst6">- ಗಣಿತ ಕಲಿಕಾ ಆಂದೋಲನದ ಮಿತ್ರರು </string>
+    <string name="startAssessment">ಮೌಲ್ಯಮಾಪನ ಮುಂದುವರಿಸಿ</string>
+    <string name="sync">ಸಿಂಕ್</string>
+    <string name="dataSyncing">ಸಿಂಕ್ ಮಾಡಲಾಗುತ್ತಿದೆ...</string>
 
 
     <string-array name="array_subject">

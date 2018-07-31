@@ -5,6 +5,14 @@ import com.google.gson.annotations.SerializedName;
 
 public class RegisterStdPojoResp {
 
+    @Override
+    public String toString() {
+        return "RegisterStdPojoResp{" +
+                "results=" + results +
+                ", count=" + count +
+                '}';
+    }
+
     @SerializedName("results")
     @Expose
     private List<Result> results = null;

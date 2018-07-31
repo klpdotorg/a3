@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.akshara.assessment.a3.TelemetryReport.TelemetryReportAdapter;
 import com.akshara.assessment.a3.TelemetryReport.TelemetryReportIndetail;
 import com.akshara.assessment.a3.TelemetryReport.pojoReportData;
+import com.akshara.assessment.a3.UtilsPackage.AnalyticsConstants;
 import com.akshara.assessment.a3.UtilsPackage.AppStatus;
 import com.akshara.assessment.a3.UtilsPackage.ConstantsA3;
 import com.akshara.assessment.a3.UtilsPackage.DailogUtill;
@@ -43,6 +44,7 @@ class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.Student
     private deviceDatastoreMgr a3dsapiobj;
     KontactDatabase db;
     String A3APP_TITLETEXT = "";
+    SessionManager sessionManager;
 
     public StudentListAdapter(StudentListMainActivity activity, ArrayList<StudentPojo> students) {
 
@@ -54,6 +56,7 @@ class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.Student
         EASYASEESS_QUESTIONSETID = activity.getIntent().getIntExtra("EASYASEESS_QUESTIONSETID", 0);
         A3APP_LANGUAGE = activity.getIntent().getStringExtra("A3APP_LANGUAGE");
         a3dsapiobj = new deviceDatastoreMgr();
+        sessionManager = new SessionManager(this.activity.getApplicationContext());
         try {
             if (activity.getIntent().getStringExtra(ConstantsA3.A3APP_TITLETEXT) != null) {
                 A3APP_TITLETEXT = activity.getIntent().getStringExtra(ConstantsA3.A3APP_TITLETEXT);
@@ -66,8 +69,7 @@ class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.Student
             } else {
                 A3APP_TITLETEXT = activity.getResources().getString(R.string.app_name);
             }
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
             A3APP_TITLETEXT = activity.getResources().getString(R.string.app_name);
         }
         a3dsapiobj.initializeDS(activity);
@@ -91,7 +93,8 @@ class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.Student
     @Override
     public void onBindViewHolder(StudentViewHolder holder, final int position) {
 
-        holder.txtStudent.setText(students.get(position).name + " " + students.get(position).lastName);
+
+        holder.txtStudent.setText(students.get(position).name + " " + students.get(position).father);
         // Log.d("shri",students.get(position).stsid+":"+students.get(position).name);
         holder.txtStudentID.setText("STS ID: "
                 + (students.get(position).uid != null &&
@@ -124,10 +127,9 @@ class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.Student
                     }
 
                     checkData(studentIds, position);
-                }catch (Exception e)
-                {
-                    Crashlytics.log("report crash student list adapter:"+e.getMessage());
-                    DailogUtill.showDialog(activity.getResources().getString(R.string.oops),activity.getSupportFragmentManager(),activity);
+                } catch (Exception e) {
+                    Crashlytics.log("report crash student list adapter:" + e.getMessage());
+                    DailogUtill.showDialog(activity.getResources().getString(R.string.oops), activity.getSupportFragmentManager(), activity);
 
                     //   DailogUtill.showDialog("Oops some thing went wrong",activity.getSupportFragmentManager(),activity);
 
@@ -141,30 +143,49 @@ class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.Student
         holder.imagePlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!activity.checkAssessmentTaken(EASYASEESS_QUESTIONSETID+"",students.get(position).stsid )) {
-                    Intent intent = new Intent(activity, com.gka.akshara.assesseasy.assessment_manager.class);
+                if (!activity.checkAssessmentTaken(EASYASEESS_QUESTIONSETID + "", students.get(position).stsid)) {
+                    Intent intent = null;
+                    if (sessionManager.getProgramFromSession().equalsIgnoreCase("GKA")) {
+                        intent = new Intent(activity, FinalLauncherActivity.class);
+                    } else {
+                        intent = new Intent(activity, com.gka.akshara.assesseasy.assessment_manager.class);
+
+                        try {
+                            Bundle bundle = new Bundle();
+                            bundle.putString(AnalyticsConstants.Title, "Q.set:"+EASYASEESS_QUESTIONSETID);
+                            bundle.putString(AnalyticsConstants.Grade, A3APP_GRADESTRING);
+                            bundle.putString(AnalyticsConstants.Language, A3APP_LANGUAGE);
+                            bundle.putString(AnalyticsConstants.Program, sessionManager.getProgramFromSession());
+                            bundle.putString(AnalyticsConstants.State, sessionManager.getState());
+                            bundle.putString(AnalyticsConstants.Assessment, "START");
+                            A3Application.getAnalyticsObject().logEvent("ASSESSMENT_START", bundle);
+                        } catch (Exception e) {
+                            Crashlytics.log("Analytics exception in assessment start");
+                        }
+
+
+                    }
+
+
                     Bundle bundle = new Bundle();
                     bundle.putString("EASYASSESS_FROMACTIVITY", "com.akshara.assessment.a3.AssessmentSelectorActivity");
                     bundle.putInt("EASYASSESS_QUESTIONSETID", EASYASEESS_QUESTIONSETID);
                     bundle.putBoolean("EASYASSESS_CLICKEDBACKARROW", false);
-
-
                     bundle.putLong("A3APP_INSTITUTIONID", A3APP_INSTITUTIONID);
                     bundle.putInt("A3APP_GRADEID", A3APP_GRADEID);
                     bundle.putString("A3APP_GRADESTRING", A3APP_GRADESTRING);
                     bundle.putString("A3APP_CHILDID", students.get(position).stsid + "");
-                    //   Log.d("shri",students.get(position).stsid + "student id");
                     bundle.putString("A3APP_LANGUAGE", A3APP_LANGUAGE);
-                    bundle.putString("A3APP_TITLETEXT", A3APP_TITLETEXT+": "+students.get(position).name);
-
-
-                    //    Log.d("shri",A3APP_TITLETEXT);
+                    bundle.putString("A3APP_TITLETEXT", A3APP_TITLETEXT + ": " + students.get(position).name);
                     intent.putExtras(bundle);
+
+                    //  Intent intent = new Intent(activity, FinalLauncherActivity.class);
+                    intent.putExtra("NAME", students.get(position).name + " " + students.get(position).father);
                     activity.startActivity(intent);
                     activity.overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-                }else {
-               //     Toast.makeText(activity,"Already assesment taken",Toast.LENGTH_SHORT).show();
-                    DailogUtill.showDialog(activity.getResources().getString(R.string.assessmentAlreadyTaken),activity.getSupportFragmentManager(),activity);
+
+                } else {
+                    DailogUtill.showDialog(activity.getResources().getString(R.string.assessmentAlreadyTaken), activity.getSupportFragmentManager(), activity);
                 }
 
             }

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="1dp" android:padding="2dp"
+    android:background="@drawable/rounded_rect_stu"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:padding="4dp"
+        android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_hello_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginBottom="5dp"
+        android:text="@string/hello" />
+
+    <TextView
+        android:id="@+id/tv_inst1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="16sp"
+        android:text="@string/inst1" />
+
+    <TextView
+        android:id="@+id/tv_inst2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="16sp"
+        android:text="@string/inst2" />
+
+    <TextView
+        android:id="@+id/tv_inst3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="16sp"
+        android:text="@string/inst3" />
+
+    <TextView
+        android:id="@+id/tv_inst4"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textSize="16sp"
+        android:text="@string/inst4" />
+
+    <TextView
+        android:id="@+id/tv_inst5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:layout_marginTop="5dp"
+        android:textSize="16sp"
+        android:text="@string/inst5" />
+
+    <TextView
+        android:id="@+id/tv_inst6"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:typeface="sans"
+        android:text="@string/inst6" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center">
+
+
+            <Button
+                android:id="@+id/btnnextAssessment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_roundedrect"
+                android:minHeight="45dp"
+                android:minWidth="160dp"
+                android:padding="10dp"
+
+                android:text="@string/startAssessment"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

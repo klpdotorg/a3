@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -93,7 +94,9 @@ public class assessment_manager extends AppCompatActivity {
             globalvault.dsmgr.initializeDS(this);
 
             // Add Test Questions to the Database For testing (Used ONLY for testing)
-            // this.addTestQuestionsToDatabase();
+            //globalvault.dsmgr.dropTables();
+            //globalvault.dsmgr.initializeDS(this);
+            //this.addTestQuestionsToDatabase();
 
             // Read the Questions from the Database (for the given QuestionSet ID)
             boolean rtn = globalvault.dsmgr.readQuestions(globalvault.questionsetid); // returns false if failed to read the QuestionSet from the DB
@@ -277,7 +280,7 @@ public class assessment_manager extends AppCompatActivity {
             Log.d("EASYASSESS", "assessmentmanager:addTestQuestionsToDatabase. addQuestionSet done");
 
         assessquestion[] dbquestions;
-        dbquestions = new assessquestion[2];
+        dbquestions = new assessquestion[4];
 
         // Sample Question for Question Template Type 'FIB_ADD'
         dbquestions[0] = new assessquestion();
@@ -296,7 +299,7 @@ public class assessment_manager extends AppCompatActivity {
         paramadd1.datatype = "text";
         paramadd1.role = "parameter";
         paramadd1.position = "left";
-        paramadd1.value = "8, 12, 14";
+        paramadd1.value = "8,12,14";
         paramadd1.filecontent_base64 = "";
         dbquestions[0].addQuestionData(paramadd1);
 
@@ -306,7 +309,7 @@ public class assessment_manager extends AppCompatActivity {
         paramadd2.datatype = "text";
         paramadd2.role = "parameter";
         paramadd2.position = " ";
-        paramadd2.value = "5, 9, 7";
+        paramadd2.value = "5,9,7";
         paramadd2.filecontent_base64 = "";
         dbquestions[0].addQuestionData(paramadd2);
 
@@ -435,6 +438,52 @@ public class assessment_manager extends AppCompatActivity {
         dbquestions[1].setAnswerCorrect("2");
 
         globalvault.dsmgr.addQuestion(dbquestions[1], qsetid);
+
+
+        //*********   Sample Question for Question Type 'WORD_TXT' ****************
+
+        dbquestions[2] = new assessquestion();
+
+        String randomstr3= UUID.randomUUID().toString();
+        String qid3 =  randomstr3.substring(2, 5)+  randomstr3.substring(14,17)+randomstr3.substring(24,32);
+        dbquestions[2].setQuestionID(qid3);
+
+        dbquestions[2].setQuestionTemplType("WORD_TXT");
+        dbquestions[2].setQuestionText("25 x 5 = ");
+        dbquestions[2].setAnswerUnitLabel("Meters");
+        dbquestions[2].setAnswerCorrect("125");
+
+        globalvault.dsmgr.addQuestion(dbquestions[2], qsetid);
+
+
+        // Sample Question for Question Template Type 'FIB_DIVISION_WITHREMINDER'
+
+        dbquestions[3] = new assessquestion();
+
+        String randomstr4= UUID.randomUUID().toString();
+        String qid4 =  randomstr4.substring(2, 5)+  randomstr4.substring(14,17)+randomstr4.substring(24,32);
+        dbquestions[3].setQuestionID(qid4);
+
+        dbquestions[3].setQuestionTemplType("FIB_DIVISION_WITHREMINDER");
+        dbquestions[3].setQuestionText("Perform the division and enter the Quotient and the Reminder");
+
+        assessquestiondata paramdivrem1 = new assessquestiondata();
+        paramdivrem1.name = "dividend";
+        paramdivrem1.label = "Dividend";
+        paramdivrem1.datatype = "text";
+        paramdivrem1.role = "parameter";
+        paramdivrem1.value = "15,9,18";
+        dbquestions[3].addQuestionData(paramdivrem1);
+
+        assessquestiondata paramdivrem2= new assessquestiondata();
+        paramdivrem2.name = "divisor";
+        paramdivrem2.label = "Divisor";
+        paramdivrem2.datatype = "text";
+        paramdivrem2.role = "parameter";
+        paramdivrem2.value = "5,6,9";
+        dbquestions[3].addQuestionData(paramdivrem2);
+
+        globalvault.dsmgr.addQuestion(dbquestions[3], qsetid);
 
     }
 
@@ -1452,6 +1501,7 @@ public class assessment_manager extends AppCompatActivity {
         globalvault.questions[indexq].setQuestionTemplType(globalvault.questionTemplTypes[indexq]);
         globalvault.questions[indexq].setQuestionText("There are _________ number of Tomatoes in the picture below");
         globalvault.questions[indexq].setAnswerCorrect("1");
+        globalvault.questions[indexq].setAnswerUnitLabel("Numbers");
 
         assessquestiondata attribwordtxtimg = new assessquestiondata();
         attribwordtxtimg.name = "questionimg";
@@ -1477,6 +1527,7 @@ public class assessment_manager extends AppCompatActivity {
         globalvault.questions[indexq].setQuestionTemplType(globalvault.questionTemplTypes[indexq]);
         globalvault.questions[indexq].setQuestionText("Cat has _______ number of legs");
         globalvault.questions[indexq].setAnswerCorrect("1");
+        globalvault.questions[indexq].setAnswerUnitLabel("Numbers");
 
 
         indexq++;

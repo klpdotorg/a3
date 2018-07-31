@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/boywithtrophy"
+    android:background="@drawable/bg1"
     android:onClick="clickedScreen"
     tools:context="com.gka.akshara.assesseasy.finalpage_boywins">
 
@@ -13,35 +13,35 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.12" />
+        app:layout_constraintGuide_percent="0.10" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_mid1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.25" />
+        app:layout_constraintGuide_percent="0.35" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_bottom1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.75" />
+        app:layout_constraintGuide_percent="0.80" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_left1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.20" />
+        app:layout_constraintGuide_percent="0.10" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_right1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.80" />
+        app:layout_constraintGuide_percent="0.90" />
 
     <ImageButton
         android:id="@+id/buttonBack"
@@ -75,25 +75,24 @@
         app:layout_constraintTop_toTopOf="@+id/guideline_top1"
         app:srcCompat="@drawable/greentickclick" />
 
+
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:id="@+id/textViewThankYou"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="0dp"
-        android:background="@drawable/yellowcircle"
+        android:layout_marginTop="8dp"
         android:gravity="fill_vertical"
-        android:text=""
+        android:text="Great! You have completed the assessment. Thank you! Please press the Green button to submit the assessment."
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="@dimen/finalscore_textsize"
+        android:textSize="@dimen/qp_fib_text_questiontext"
+        android:lineSpacingMultiplier="@dimen/linespacemultiplier_forquestiontext"
         android:textStyle="bold"
         android:typeface="sans"
         app:layout_constraintBottom_toTopOf="@+id/guideline_mid1"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right1"
         app:layout_constraintStart_toStartOf="@+id/guideline_left1"
         app:layout_constraintTop_toTopOf="@+id/guideline_top1" />
+
 
 </android.support.constraint.ConstraintLayout>

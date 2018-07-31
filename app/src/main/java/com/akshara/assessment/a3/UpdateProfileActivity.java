@@ -27,6 +27,8 @@ import com.akshara.assessment.a3.UtilsPackage.SessionManager;
 import com.akshara.assessment.a3.db.KontactDatabase;
 import com.akshara.assessment.a3.db.Respondent;
 
+import com.crashlytics.android.Crashlytics;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.yahoo.squidb.data.SquidCursor;
 
 import java.text.SimpleDateFormat;
@@ -280,14 +282,19 @@ public class UpdateProfileActivity extends BaseActivity {
 
     private void subscribetoTopicsForNotification(String state, String stateUserType) {
 
-    /*    try {
-            FirebaseMessaging.getInstance().subscribeToTopic(state);
+        try {
+         //   FirebaseMessaging.getInstance().subscribeToTopic(state);
             FirebaseMessaging.getInstance().subscribeToTopic(state + "-" + RolesUtils.getUserRoleValueForFcmGroup(getApplicationContext(), db, stateUserType));
+            FirebaseMessaging.getInstance().subscribeToTopic(state + "-" + sessionManager.getLanguage());
+            FirebaseMessaging.getInstance().subscribeToTopic(state + "-" + sessionManager.getProgramFromSession().replaceAll("\\s+", ""));
             //   Toast.makeText(getApplicationContext(),state+"-"+state + ":" + RolesUtils.getUserRoleValueForFcmGroup(getApplicationContext(), db, stateUserType),Toast.LENGTH_SHORT).show();
         }catch (Exception e)
         {
             //may be topic contains some special symbols
-        }*/
+            Crashlytics.log("error in notification subscription in update screen");
+
+
+        }
     }
 
     public String getRevDate(String strDate) {

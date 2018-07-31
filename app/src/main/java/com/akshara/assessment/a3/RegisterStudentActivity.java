@@ -18,11 +18,13 @@ import android.widget.Toast;
 import com.akshara.assessment.a3.NetworkRetrofitPackage.A3NetWorkCalls;
 import com.akshara.assessment.a3.NetworkRetrofitPackage.CurrentStateInterface;
 import com.akshara.assessment.a3.Pojo.RegisterStudentPojo;
+import com.akshara.assessment.a3.UtilsPackage.AnalyticsConstants;
 import com.akshara.assessment.a3.UtilsPackage.DailogUtill;
 import com.akshara.assessment.a3.UtilsPackage.SessionManager;
 import com.akshara.assessment.a3.db.InstititeGradeIdTable;
 import com.akshara.assessment.a3.db.KontactDatabase;
 import com.akshara.assessment.a3.db.StudentTable;
+import com.crashlytics.android.Crashlytics;
 import com.yahoo.squidb.data.SquidCursor;
 import com.yahoo.squidb.sql.Query;
 
@@ -48,6 +50,7 @@ public class RegisterStudentActivity extends android.support.v4.app.Fragment {
     static String gradeString = "";
     SquidCursor<InstititeGradeIdTable> gradeIdCursor;
     SessionManager sessionManager;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -59,7 +62,7 @@ public class RegisterStudentActivity extends android.support.v4.app.Fragment {
         edtStsId = view.findViewById(R.id.edtStsId);
         edtFirstName = view.findViewById(R.id.edtFirstName);
         edtStuLastName = view.findViewById(R.id.edtStuLastName);
-        sessionManager=new SessionManager(getActivity().getApplicationContext());
+        sessionManager = new SessionManager(getActivity().getApplicationContext());
         btnRegisterstudent = view.findViewById(R.id.btnRegisterstudent);
         database = new KontactDatabase(activity);
         institution = activity.getIntent().getLongExtra("A3APP_INSTITUTIONID", 0);
@@ -72,7 +75,7 @@ public class RegisterStudentActivity extends android.support.v4.app.Fragment {
                 );
         gradeIdCursor = database.query(InstititeGradeIdTable.class, GradeIDTable);
 
-      //  Log.d("shri", institution + ":" + grade);
+        //  Log.d("shri", institution + ":" + grade);
 
         btnRegisterstudent.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,12 +89,10 @@ public class RegisterStudentActivity extends android.support.v4.app.Fragment {
                     String lastName = edtStuLastName.getText().toString().trim();
                     final RadioButton rb = getActivity().findViewById(studentGender.getCheckedRadioButtonId());
                     String gender = rb.getText().toString().trim().toLowerCase();
-                    if(gender.equalsIgnoreCase(getResources().getString(R.string.male)))
-                    {
-                        gender="male";
-                    }
-                    else {
-                        gender="female";
+                    if (gender.equalsIgnoreCase(getResources().getString(R.string.male))) {
+                        gender = "male";
+                    } else {
+                        gender = "female";
                     }
                     String stsId = edtStsId.getText().toString().trim();
                     RegisterStudentPojo studentPojo =
@@ -104,15 +105,15 @@ public class RegisterStudentActivity extends android.support.v4.app.Fragment {
                     if (groupId == 0l) {
                         activity.finish();
                     }
-                  //  Log.d("shri", "groupId:" + groupId);
-                   // Log.d("shri", "inst:" + institution);
+                    //  Log.d("shri", "groupId:" + groupId);
+                    // Log.d("shri", "inst:" + institution);
                     ArrayList<RegisterStudentPojo> list = new ArrayList<>();
                     list.add(studentPojo);
                     initPorgresssDialogForSchool();
 
-                //    Log.d("shri",groupId+":insti="+institution+":"+sessionManager.getToken()+":"+getAcademicYear());
-                 new A3NetWorkCalls(activity).registerStudentservice(groupId, sessionManager.getToken(), list, new CurrentStateInterface() {
-                   // new A3NetWorkCalls(activity).registerStudentservice(groupId, "Token f68deebe2fa4f85ec53ea012197dd66cc2b785cb", list, new CurrentStateInterface() {
+                    // Log.d("shri",groupId+":insti="+institution+":"+sessionManager.getToken()+":"+getAcademicYear());
+                    new A3NetWorkCalls(activity).registerStudentservice(groupId,grade, sessionManager.getToken(), list, new CurrentStateInterface() {
+                        // new A3NetWorkCalls(activity).registerStudentservice(groupId, "Token f68deebe2fa4f85ec53ea012197dd66cc2b785cb", list, new CurrentStateInterface() {
                         @Override
                         public void setSuccess(String message) {
                             finishProgress();
@@ -120,15 +121,21 @@ public class RegisterStudentActivity extends android.support.v4.app.Fragment {
                             edtStuLastName.setText("");
                             edtStsId.setText("");
                             rb.setChecked(false);
-
-                            DailogUtill.showDialog( message, getFragmentManager(), activity);
+                            try {
+                                Bundle bundle = new Bundle();
+                                bundle.putString(AnalyticsConstants.Registration, "Student Registration");
+                                A3Application.getAnalyticsObject().logEvent("STUDENT_REGISTRATION", bundle);
+                            } catch (Exception e) {
+                                Crashlytics.log("Analytics exception in program update");
+                            }
+                            DailogUtill.showDialog(message, getFragmentManager(), activity);
 
                         }
 
                         @Override
                         public void setFailed(String message) {
                             finishProgress();
-                            DailogUtill.showDialog( message, getFragmentManager(), activity);
+                            DailogUtill.showDialog(message, getFragmentManager(), activity);
                         }
                     });
                 }
@@ -195,12 +202,12 @@ public class RegisterStudentActivity extends android.support.v4.app.Fragment {
     public boolean gradeIdvalidation() {
         if (gradeIdCursor != null) {
             return gradeIdCursor.getCount() > 0 && grade > 0;
-          //  Log.d("shri", "kkkk" + gradeIdCursor.getCount() + ":" + grade);
+            //  Log.d("shri", "kkkk" + gradeIdCursor.getCount() + ":" + grade);
 
 
         }
 
-      //  Log.d("shri", "23232");
+        //  Log.d("shri", "23232");
         return false;
     }
 

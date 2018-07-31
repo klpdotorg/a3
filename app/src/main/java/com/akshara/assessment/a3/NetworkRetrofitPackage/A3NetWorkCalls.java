@@ -488,27 +488,24 @@ public class A3NetWorkCalls {
             schol.setDise(response.body().getFeatures().get(i).getProperties().getDiseCode() + "");
 
             // Log.d("shri",response.body().getFeatures().get(i).getProperties().getGrades().size()+"===="+clusterId);
-try {
-    for (Grade grade : response.body().getFeatures().get(i).getProperties().getGrades()) {
-        InstititeGradeIdTable gradeIdTable = new InstititeGradeIdTable();
-        gradeIdTable.setId(grade.getGrpid());
-        gradeIdTable.setSchoolId(response.body().getFeatures().get(i).getProperties().getId());
-        gradeIdTable.setGradeName(grade.getGrpname());
-        db.insertNew(gradeIdTable);
+            try {
+                for (Grade grade : response.body().getFeatures().get(i).getProperties().getGrades()) {
+                    InstititeGradeIdTable gradeIdTable = new InstititeGradeIdTable();
+                    gradeIdTable.setId(grade.getGrpid());
+                    gradeIdTable.setSchoolId(response.body().getFeatures().get(i).getProperties().getId());
+                    gradeIdTable.setGradeName(grade.getGrpname());
+                    db.insertNew(gradeIdTable);
 
-    }
-}
-catch (Exception e)
-{
-  try {
-      Crashlytics.log("blockid:" + blockId);
-      Crashlytics.log("clusterId:" + clusterId);
-      Crashlytics.log("school Id:" + response.body().getFeatures().get(i).getProperties().getId());
-  }catch (Exception e1)
-  {
-      Crashlytics.log("Inner catch Exception in parse school");
-  }
-}
+                }
+            } catch (Exception e) {
+                try {
+                    Crashlytics.log("blockid:" + blockId);
+                    Crashlytics.log("clusterId:" + clusterId);
+                    Crashlytics.log("school Id:" + response.body().getFeatures().get(i).getProperties().getId());
+                } catch (Exception e1) {
+                    Crashlytics.log("Inner catch Exception in parse school");
+                }
+            }
 
             try {
                 Boolean b = db.insertNew(schol);
@@ -573,7 +570,7 @@ catch (Exception e)
 
         int studentCount = 0;
         int particularCOunt = 0;
-        Log.d("shri", schoolId + "=============");
+      //  Log.d("shri", schoolId + "=============");
         for (int i = 0; i < response.getResults().size(); i++) {
             int gradeInt = 0;
             try {
@@ -583,11 +580,11 @@ catch (Exception e)
                 try {
                     gradeInt = Integer.parseInt(garde);
                 } catch (Exception e) {
-                  //  Log.d("shri", i + "=============");
+                    //  Log.d("shri", i + "=============");
                     continue;
                 }
             } catch (Exception e) {
-              //  Log.d("shri",   response.getResults().get(i).getId()+"----");
+                //  Log.d("shri",   response.getResults().get(i).getId()+"----");
                 continue;
             }
 
@@ -596,7 +593,7 @@ catch (Exception e)
                 StudentTable table = new StudentTable();
                 table.setId(result.getId());
                 table.setFirstName(result.getFirstName());
-                table.setLastName(result.getLastName());
+                table.setLastName(result.getLastName() != null ? result.getLastName().trim() : "");
                 table.setDob(result.getDob());
                 table.setGender(result.getGender());
                 table.setStatus(result.getStatus());
@@ -604,7 +601,7 @@ catch (Exception e)
                 table.setStudentGrade(gradeInt);
                 table.setUid(result.getUid());
                 table.setInstitution(result.getInstitution());
-                table.setMiddleName(result.getFather_name());
+                table.setMiddleName(result.getFather_name() != null ? result.getFather_name().trim() : "");
                 if (flag != 0 && flag == gradeInt) {
                     particularCOunt++;
                 }
@@ -1082,7 +1079,7 @@ catch (Exception e)
     }
 
 
-    public void registerStudentservice(long groupId, String authorization, ArrayList<RegisterStudentPojo> pojo, final CurrentStateInterface currentStateInterface) {
+    public void registerStudentservice(long groupId, final int grade, String authorization, ArrayList<RegisterStudentPojo> pojo, final CurrentStateInterface currentStateInterface) {
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
         Call<RegisterStdPojoResp> api = apiInterface.registerStudent(groupId, authorization, pojo);
         api.enqueue(new Callback<RegisterStdPojoResp>() {
@@ -1091,9 +1088,9 @@ catch (Exception e)
                 //Toast.makeText(context, response.code() + "", Toast.LENGTH_SHORT).show();
                 if (response.isSuccessful()) {
                     if (response.body() != null && response.body().getCount() > 0) {
-                      storeregistredStudent(response.body());
+                        storeregistredStudent(response.body(),grade);
                         currentStateInterface.setSuccess(context.getResources().getString(R.string.student_registration_success));
-                    }else {
+                    } else {
                         currentStateInterface.setFailed(context.getResources().getString(R.string.student_registration_failed));
 
                     }
@@ -1106,19 +1103,17 @@ catch (Exception e)
                         currentStateInterface.setFailed("STS ID already exists");
 
                     }*/
-                  try {
-                      StudentExistsPojo messageObject = gson.fromJson(response.errorBody().charStream(), StudentExistsPojo.class);
-                      currentStateInterface.setFailed(getDataFromList(messageObject.getResults().get(0).getUid()));
-                  }catch (Exception e)
-                  {
-                      try{
-                          currentStateInterface.setFailed(response.errorBody().string());
-                      }catch (Exception e1)
-                      {
-                          currentStateInterface.setFailed("STS ID already exists");
-                      }
+                    try {
+                        StudentExistsPojo messageObject = gson.fromJson(response.errorBody().charStream(), StudentExistsPojo.class);
+                        currentStateInterface.setFailed(getDataFromList(messageObject.getResults().get(0).getUid()));
+                    } catch (Exception e) {
+                        try {
+                            currentStateInterface.setFailed(response.errorBody().string());
+                        } catch (Exception e1) {
+                            currentStateInterface.setFailed("STS ID already exists");
+                        }
 
-                  }
+                    }
                 } else if (response.code() == 500) {
                     //email or password invalid
                     currentStateInterface.setFailed(funInternalServerError());
@@ -1160,20 +1155,23 @@ catch (Exception e)
 
     }
 
-    private void storeregistredStudent(RegisterStdPojoResp response) {
-
+    private void storeregistredStudent(RegisterStdPojoResp response,int grade) {
+       // Log.d("shri",response.toString());
 
         for (int i = 0; i < response.getResults().size(); i++) {
             try {
-                String garde = response.getResults().get(i).getClasses().get(0).getName();
-                int gradeInt = Integer.parseInt(garde);
+             //   Log.d("shri","1");
+               // String garde = response.getResults().get(i).getClasses().get(0).getName();
+               // int gradeInt = Integer.parseInt(garde);
+                int gradeInt = grade;
 
 
                 com.akshara.assessment.a3.regstdrespPojo.Result result = response.getResults().get(i);
+
                 StudentTable table = new StudentTable();
                 table.setId(result.getId());
                 table.setFirstName(result.getFirstName());
-                table.setLastName(result.getLastName());
+                table.setLastName(result.getLastName() != null ? result.getLastName().trim() : "");
                 table.setDob(result.getDob());
                 table.setGender(result.getGender());
                 table.setStatus(result.getStatus());
@@ -1181,12 +1179,14 @@ catch (Exception e)
                 table.setStudentGrade(gradeInt);
                 table.setUid(result.getUid());
                 table.setInstitution(result.getInstitution());
-                table.setMiddleName(result.getMiddleName());
+                table.setMiddleName(result.getMiddleName() != null ? result.getMiddleName().trim() : "");
+
+
+
                 db.insertNew(table);
-            }catch (Exception e)
-            {
-                Crashlytics.log("student register crash");
-                Toast.makeText(context,"please download all students from menu",Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                Crashlytics.log("student register insert crash");
+                Toast.makeText(context, "please download all students from menu", Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -1280,7 +1280,7 @@ catch (Exception e)
                             questionTable.setLevelName(question.getLevel());
                             questionTable.setQuestiontypeName(question.getQuestiontype());
                             questionTable.setQuestiontempltypeName(question.getQuestiontempltype());
-                            questionTable.setAssesstypeName(question.getAssessmenttype());
+                            questionTable.setAnswerunitlabel(question.getAnswerunitlabel());
                             questionTable.setConceptName(question.getConcept());
                             questionTable.setMconceptName(question.getMicroconcept());
 

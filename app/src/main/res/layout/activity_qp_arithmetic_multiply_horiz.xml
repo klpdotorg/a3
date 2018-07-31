@@ -198,14 +198,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.20" />
+        app:layout_constraintGuide_percent="0.15" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_right3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.80" />
+        app:layout_constraintGuide_percent="0.95" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_beforeright3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.70" />
 
     <TextView
         android:id="@+id/textViewNumber1"
@@ -286,34 +293,32 @@
         android:textStyle="bold"
         android:typeface="sans"
         app:layout_constraintBottom_toTopOf="@+id/guideline_bottom3"
-        app:layout_constraintEnd_toStartOf="@+id/editTextAnswer"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_beforeright3"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/textViewNumber2"
         app:layout_constraintTop_toTopOf="@+id/guideline_top3" />
 
-    <EditText
-        android:id="@+id/editTextAnswer"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="4dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:background="@drawable/editboxbg"
-        android:ems="10"
-        android:inputType="textNoSuggestions|number"
-        android:text=""
-        android:textAlignment="center"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="@dimen/qp_multiply_numbers"
-        android:textStyle="bold"
-        android:typeface="sans"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_bottom3"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right3"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textViewEqualSign"
-        app:layout_constraintTop_toTopOf="@+id/guideline_top3" />
+        <EditText
+            android:id="@+id/editTextAnswer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/editboxbg"
+            android:ems="10"
+            android:inputType="textNoSuggestions|number"
+            android:text=""
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/qp_multiply_numbers"
+            android:textStyle="bold"
+            android:typeface="sans"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_bottom3"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_right3"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/guideline_beforeright3"
+            app:layout_constraintTop_toTopOf="@+id/guideline_top3" />
 
     </android.support.constraint.ConstraintLayout>
 

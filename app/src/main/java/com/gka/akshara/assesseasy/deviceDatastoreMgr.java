@@ -50,7 +50,6 @@ import java.util.UUID;
 
                 a3appdb = SQLiteDatabase.openOrCreateDatabase(a3appdbfilepath, null);
                 a3appdb.setVersion(com.akshara.assessment.a3.db.DB_CONSTANTS.DB_VERSION);
-
                 if(a3appdb != null) {
                     if(MainActivity.debugalerts)
                         Log.d("EASYASSESS", "EASYASSESS.initializeDS: openOrCreateDatabase success. ");
@@ -93,7 +92,7 @@ import java.util.UUID;
 
             String query_createquestiontbl = "CREATE TABLE IF NOT EXISTS a3app_question_tbl ( \n" +
                     "id integer primary key autoincrement,  id_question text, \n"+
-                    "question_title text, question_text text,correct_answer text, language_name text, \n" +
+                    "question_title text, question_text text,correct_answer text, answerunitlabel text, language_name text, \n" +
                     "subject_name text,  grade_name text, level_name text, questiontype_name text, \n"+
                     "questiontempltype_name text, concept_name text, mconcept_name txt)";
 
@@ -397,7 +396,10 @@ import java.util.UUID;
                         question.setQuestionTemplType(questiontempltype_name);
                         String correct_answer = curs1.getString(curs1.getColumnIndex("correct_answer"));
                         question.setAnswerCorrect(correct_answer);
-
+                        String answerunitlabel = curs1.getString(curs1.getColumnIndex("answerunitlabel"));
+                        question.setAnswerUnitLabel(answerunitlabel);
+                        if(MainActivity.debugalerts)
+                            Log.d("EASYASSESS","deviceDatastoreMgr:readQuestions: answerunitlabel="+answerunitlabel);
                         globalvault.questions[n] = new assessquestion();
                         globalvault.questions[n] = question;
 
@@ -482,10 +484,10 @@ import java.util.UUID;
                 a3appdb.execSQL(query1, new String[]{Integer.toString(qsetid), question.getQustionID()});
 
                 String query2 = "INSERT INTO a3app_question_tbl ( \n" +
-                        "id_question, question_text, correct_answer, \n" +
-                        "questiontempltype_name) VALUES (?,?,?,?) ";
+                        "id_question, question_text, correct_answer, answerunitlabel, \n" +
+                        "questiontempltype_name) VALUES (?,?,?,?,?) ";
 
-                a3appdb.execSQL(query2, new String[]{question.getQustionID(), question.getQuestionText(), question.getAnswerCorrect(), question.getQuestionTemplType()});
+                a3appdb.execSQL(query2, new String[]{question.getQustionID(), question.getQuestionText(), question.getAnswerCorrect(), question.getAnswerUnitLabel(), question.getQuestionTemplType()});
 
                 ArrayList<assessquestiondata> arrquestiondata = question.getQuestionDataList();
 
@@ -511,6 +513,9 @@ import java.util.UUID;
 
             }
         }
+
+
+
 
 
 
@@ -632,14 +637,8 @@ import java.util.UUID;
                     "id_questionset", "score", "datetime_start", "datetime_submission", "synced"}, "id_questionset=? AND id_child=?", new String[]{
                     questionsetId, studentID + ""}, null, null, null);
 
-            if (cs1!=null&&cs1.getCount() > 0) {
-                //assessment  taken
-                return true;
-            }
-            else {
-
-                //assessment not taken
-                return false;
-            }
+            //assessment  taken
+//assessment not taken
+            return cs1 != null && cs1.getCount() > 0;
         }
 }

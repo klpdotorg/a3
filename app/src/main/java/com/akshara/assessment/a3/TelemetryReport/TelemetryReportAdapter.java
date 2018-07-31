@@ -14,6 +14,7 @@ import com.akshara.assessment.a3.R;
 import com.akshara.assessment.a3.UtilsPackage.AppStatus;
 import com.akshara.assessment.a3.db.QuestionTable;
 import com.akshara.assessment.a3.db.StudentTable;
+import com.crashlytics.android.Crashlytics;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -44,18 +45,29 @@ public class TelemetryReportAdapter extends RecyclerView.Adapter<TelemetryReport
     @Override
     public void onBindViewHolder(TelemetryViewHolder holder, final int position) {
         final StudentTable studentTable = data.get(position).getTable();
-        holder.tvStudentName.setText(studentTable.getFirstName());
-        holder.stsid.setText(studentTable.getUid()!=null&&!studentTable.getUid().equalsIgnoreCase("")?studentTable.getUid():"NA");
+        String name = studentTable.getFirstName();
+        try {
+            if (studentTable.getMiddleName() != null && !studentTable.getMiddleName().equalsIgnoreCase("")) {
+                name = name + " " + (studentTable.getMiddleName().substring(0, 1));
+            }
+
+
+        } catch (Exception e) {
+            Crashlytics.log("Error in middle name");
+        }
+        holder.tvStudentName.setText(name);
+
+
+        holder.stsid.setText(studentTable.getUid() != null && !studentTable.getUid().equalsIgnoreCase("") ? studentTable.getUid() : "NA");
         Map<Long, ArrayList<CombinePojo>> listData = data.get(position).getDetailReportsMap();
         if (listData.get(studentTable.getId()) != null && listData.get(studentTable.getId()).size() > 0) {
             ArrayList<CombinePojo> combinePojos = listData.get(studentTable.getId());
-            for(CombinePojo cd:listData.get(studentTable.getId()))
-            {
+            for (CombinePojo cd : listData.get(studentTable.getId())) {
                 //Log.d("shri",cd.getPojoAssessment().getScore()+"!!!!");
             }
             if (combinePojos.size() > 1) {
-                int size=combinePojos.size();
-                holder.tvMarks.setText(combinePojos.get((size-1)).getPojoAssessment().getScore() + "/" + questionTables.size());
+                int size = combinePojos.size();
+                holder.tvMarks.setText(combinePojos.get((size - 1)).getPojoAssessment().getScore() + "/" + questionTables.size());
 
             } else {
                 holder.tvMarks.setText(combinePojos.get(0).getPojoAssessment().getScore() + "/" + questionTables.size());
@@ -73,9 +85,9 @@ public class TelemetryReportAdapter extends RecyclerView.Adapter<TelemetryReport
                 AppStatus.questionTables = questionTables;
                 AppStatus.titles = titles;
                 Intent intent = new Intent(telemetryRreportActivity, TelemetryReportIndetail.class);
-                intent.putExtra("name",studentTable.getFirstName());
-                intent.putExtra("fatherName",studentTable.getMiddleName());
-                intent.putExtra("stsId",studentTable.getUid());
+                intent.putExtra("name", studentTable.getFirstName());
+                intent.putExtra("fatherName", studentTable.getMiddleName());
+                intent.putExtra("stsId", studentTable.getUid());
                 telemetryRreportActivity.startActivity(intent);
             }
         });

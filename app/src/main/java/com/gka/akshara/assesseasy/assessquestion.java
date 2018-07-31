@@ -13,6 +13,7 @@ public class assessquestion {
     private String questionTemplType;
     private String answerCorrect;
     private String answerGiven;
+    private String answerUnitLabel; // This is the label (e.g to display Units) displayed next to the Answer field (for WORD_TXT and WORD_TXT_IMG problems
     private String pass; // P - Pass, F - Fail, S - Skipped
     private ArrayList<assessquestiondata> listQuestionData;
 
@@ -89,6 +90,16 @@ public class assessquestion {
     public String getAnswerGiven() {
 
         return this.answerGiven;
+    }
+
+    public void setAnswerUnitLabel(String answerlabel) {
+
+        this.answerUnitLabel = answerlabel;
+    }
+
+    public String getAnswerUnitLabel() {
+
+        return this.answerUnitLabel;
     }
 
     public void setPass(String passstr) {

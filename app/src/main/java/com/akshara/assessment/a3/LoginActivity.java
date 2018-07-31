@@ -16,10 +16,16 @@ import android.widget.Toast;
 
 import com.akshara.assessment.a3.NetworkRetrofitPackage.A3NetWorkCalls;
 import com.akshara.assessment.a3.NetworkRetrofitPackage.CurrentStateInterface;
+import com.akshara.assessment.a3.UtilsPackage.AnalyticsConstants;
 import com.akshara.assessment.a3.UtilsPackage.DailogUtill;
+import com.akshara.assessment.a3.UtilsPackage.RolesUtils;
 import com.akshara.assessment.a3.UtilsPackage.SessionManager;
 
 import com.akshara.assessment.a3.db.KontactDatabase;
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.FirebaseAnalyticsEvent;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,7 +35,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
 
     EditText edtMobileNumber, edtPassword;
-    Button btnLogin,btnRegister;
+    Button btnLogin, btnRegister;
     private ProgressDialog progressDialog = null;
     SessionManager sessionManager;
     TextView btnForgotPassword;
@@ -46,7 +52,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         btnRegister = findViewById(R.id.btnRegister);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        sessionManager=new SessionManager(getApplicationContext());
+        sessionManager = new SessionManager(getApplicationContext());
 
      /*   edtMobileNumber.setText("9916712375");
         edtPassword.setText("test");*/
@@ -99,15 +105,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
 
             case R.id.btnRegister:
-                startActivity(new Intent(getApplicationContext(),UserRegistrationActivity.class));
+                startActivity(new Intent(getApplicationContext(), UserRegistrationActivity.class));
                 finish();
                 overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
                 break;
-             case R.id.btnForgotPassword:
+            case R.id.btnForgotPassword:
 
-                startActivity(new Intent(getApplicationContext(),ForgotPasswordOTP.class));
+                startActivity(new Intent(getApplicationContext(), ForgotPasswordOTP.class));
                 finish();
-                 overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
                 break;
 
 
@@ -115,8 +121,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
 
     }
-
-
 
 
     @Override
@@ -127,6 +131,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         finish();
         overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -141,11 +146,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
         return super.onOptionsItemSelected(item);
     }
-
-
-
-
-
 
 
     private void showProgress(final boolean show) {
@@ -170,7 +170,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         showProgress(true);
         String mobile = edtMobileNumber.getText().toString().trim();
         final String password = edtPassword.getText().toString().trim();
-        new A3NetWorkCalls(getApplicationContext()).login(mobile, password, "ka", new CurrentStateInterface() {
+        new A3NetWorkCalls(getApplicationContext()).login(mobile, password, sessionManager.getStateKey(), new CurrentStateInterface() {
             @Override
             public void setSuccess(String userInfo) {
                 showProgress(false);
@@ -179,10 +179,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     if (userLoginInfo.has("token")) {
                         // create session
 
-                        String users="PR";
+                        String users = "PR";
                         if (userLoginInfo.getString("user_type") != null &&
                                 !userLoginInfo.getString("user_type").trim().equalsIgnoreCase("null")
-                                &&!userLoginInfo.getString("user_type").trim().equalsIgnoreCase("")) {
+                                && !userLoginInfo.getString("user_type").trim().equalsIgnoreCase("")) {
 
                             users = userLoginInfo.getString("user_type").toUpperCase();
                             sessionManager.createLoginSession(
@@ -194,24 +194,45 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                     userLoginInfo.getString("mobile_no"),
                                     userLoginInfo.getString("dob"),
                                     users);
+                            try {
+
+                                try {
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString(AnalyticsConstants.App_Version, BuildConfig.VERSION_NAME);
+                                    A3Application.getAnalyticsObject().logEvent("APP_VERSION", bundle);
+                                } catch (Exception e) {
+                                    Crashlytics.log("login");
+                                }
+
+                                // A3Application.getAnalyticsObject().logEvent(FirebaseAnalytics.Event.);
+
+                                subscribetoTopicsForNotification(sessionManager.getState(), sessionManager.getUserType());
+                            } catch (Exception e) {
+
+                            }
                             Intent intent = new Intent(LoginActivity.this, BoundaryLoaderActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        intent.putExtra("LOGIN",true);
-                        startActivity(intent);
-                        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-                        finish();
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            intent.putExtra("LOGIN", true);
+                            startActivity(intent);
+                            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                            finish();
 
 
-                        }
+                        } else {
 
-                        else {
-
-                        //update Profile
-                          Intent intent=new Intent(getApplicationContext(), UpdateProfileBeforeLoginActivity.class);
-                            intent.putExtra("firstName",userLoginInfo.getString("first_name"));
-                            intent.putExtra("lastName",   userLoginInfo.getString("last_name"));
+                            try {
+                                Bundle bundle = new Bundle();
+                                bundle.putString(AnalyticsConstants.App_Version, BuildConfig.VERSION_NAME);
+                                A3Application.getAnalyticsObject().logEvent("APP_VERSION", bundle);
+                            } catch (Exception e) {
+                                Crashlytics.log("Login update");
+                            }
+                            //update Profile
+                            Intent intent = new Intent(getApplicationContext(), UpdateProfileBeforeLoginActivity.class);
+                            intent.putExtra("firstName", userLoginInfo.getString("first_name"));
+                            intent.putExtra("lastName", userLoginInfo.getString("last_name"));
                             intent.putExtra("mobile", userLoginInfo.getString("mobile_no"));
-                            intent.putExtra("email",userLoginInfo.getString("email"));
+                            intent.putExtra("email", userLoginInfo.getString("email"));
                             intent.putExtra("token", userLoginInfo.getString("token"));
 
                             startActivity(intent);
@@ -220,13 +241,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         }
 
 
-
-
-
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    Toast.makeText(getApplicationContext(),"Exception",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -236,9 +254,24 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             @Override
             public void setFailed(String message) {
                 showProgress(false);
-                DailogUtill.showDialog(message,getSupportFragmentManager(),LoginActivity.this);
+                DailogUtill.showDialog(message, getSupportFragmentManager(), LoginActivity.this);
             }
         });
 
+    }
+
+
+    private void subscribetoTopicsForNotification(String state, String stateUserType) {
+
+        try {
+            FirebaseMessaging.getInstance().subscribeToTopic(state);
+            FirebaseMessaging.getInstance().subscribeToTopic(state + "-" + RolesUtils.getUserRoleValueForFcmGroup(getApplicationContext(), db, stateUserType));
+            FirebaseMessaging.getInstance().subscribeToTopic(state + "-" + sessionManager.getLanguage());
+            FirebaseMessaging.getInstance().subscribeToTopic(state + "-" + sessionManager.getProgramFromSession().replaceAll("\\s+", ""));
+            //   Toast.makeText(getApplicationContext(),state+"-"+state + ":" + RolesUtils.getUserRoleValueForFcmGroup(getApplicationContext(), db, stateUserType),Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            //may be topic contains some special symbols
+            Crashlytics.log("error in notification subscription in login screen");
+        }
     }
 }

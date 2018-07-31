@@ -73,7 +73,7 @@ public class StudentListFragment extends Fragment {
         if (studentTableSquidCursor != null) {
             while (studentTableSquidCursor.moveToNext()) {
                 StudentTable b = new StudentTable(studentTableSquidCursor);
-                StudentPojo studentPojo = new StudentPojo(b.getFirstName(), b.getGender(), b.getLastName(), b.getId(),b.getUid());
+                StudentPojo studentPojo = new StudentPojo(b.getFirstName(), b.getGender(), b.getLastName(), b.getId(),b.getUid(),b.getMiddleName());
                 students.add(studentPojo);
 
 

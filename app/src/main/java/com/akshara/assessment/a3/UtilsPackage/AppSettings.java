@@ -24,6 +24,7 @@ import com.akshara.assessment.a3.db.Boundary;
 import com.akshara.assessment.a3.db.KontactDatabase;
 
 import com.akshara.assessment.a3.db.State;
+import com.crashlytics.android.Crashlytics;
 import com.yahoo.squidb.data.SquidCursor;
 import com.yahoo.squidb.sql.Query;
 
@@ -52,6 +53,7 @@ public class AppSettings extends BaseActivity {
     private long mBackPressed;
 
     Spinner spnSelectProgram;
+
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,12 +72,10 @@ public class AppSettings extends BaseActivity {
         dataList.add(0, pojo);
 
         spnSelectProgram.setAdapter(new ArrayAdapter(AppSettings.this, R.layout.spinnertextview, dataList));
-        for(int i=0;i<dataList.size();i++)
-        {
-            if(sessionManager.getProgramFromSession().equalsIgnoreCase(dataList.get(i).getProgramName()))
-            {
+        for (int i = 0; i < dataList.size(); i++) {
+            if (sessionManager.getProgramFromSession().equalsIgnoreCase(dataList.get(i).getProgramName())) {
                 spnSelectProgram.setSelection(i);
-               break;
+                break;
             }
         }
 
@@ -86,7 +86,7 @@ public class AppSettings extends BaseActivity {
         tv2.setText(getResources().getString(R.string.selectLanguage));
         String stateKey = sessionManager.getStateSelection();
         getSupportActionBar().setTitle(getResources().getString(R.string.changeLanguage));
-         stateList = new ArrayList<>();
+        stateList = new ArrayList<>();
         languageList = new ArrayList<>();
 
         spnSelectStae.setVisibility(View.INVISIBLE);
@@ -119,7 +119,8 @@ public class AppSettings extends BaseActivity {
 
                                 stateList.get(spnSelectStae.getSelectedItemPosition()).getLanguage(),
                                 stateList.get(spnSelectStae.getSelectedItemPosition()).getLangKey(),
-                                false);  }
+                                false);
+                    }
 
                 } else {
                     statelistAdp = new ArrayAdapter(AppSettings.this, R.layout.spinnertextview, new ArrayList());
@@ -146,56 +147,61 @@ public class AppSettings extends BaseActivity {
                 if (spnSelectLanguage.getSelectedItemPosition() > 0)
 
                 {
-                    if(spnSelectProgram.getSelectedItemPosition()>0){
-                    if (checkDistrictCount(stateList.get(spnSelectStae.getSelectedItemPosition()).getStateKey()) > 0) {
-                        String language = languageList.get(spnSelectLanguage.getSelectedItemPosition()).getLanguageEng();
-                        String languagekey = languageList.get(spnSelectLanguage.getSelectedItemPosition()).getKey();
-                        String state = stateList.get(spnSelectStae.getSelectedItemPosition()).getState();
-                        final String stateKeyString = stateList.get(spnSelectStae.getSelectedItemPosition()).getStateKey();
+                    if (spnSelectProgram.getSelectedItemPosition() > 0) {
+                        if (checkDistrictCount(stateList.get(spnSelectStae.getSelectedItemPosition()).getStateKey()) > 0) {
+                            String language = languageList.get(spnSelectLanguage.getSelectedItemPosition()).getLanguageEng();
+                            String languagekey = languageList.get(spnSelectLanguage.getSelectedItemPosition()).getKey();
+                            String state = stateList.get(spnSelectStae.getSelectedItemPosition()).getState();
+                            final String stateKeyString = stateList.get(spnSelectStae.getSelectedItemPosition()).getStateKey();
 
-                  /*  if (!state.equalsIgnoreCase("odisha")) {*/
-                        //  subscribetoTopicsForNotification(state.toString().trim(), sessionManager.getUserType().trim().toUpperCase());
-                        sessionManager.setLanguage(state, language, languagekey, stateKeyString);
-                        sessionManager.setStateSelection(stateKeyString);
-                        sessionManager.setProgram(spnSelectProgram.getSelectedItem().toString().trim());
-                        sessionManager.setProgramId(((ProgramPojo) spnSelectProgram.getSelectedItem()).getId());
+                            sessionManager.setLanguage(state, language, languagekey, stateKeyString);
+                            sessionManager.setStateSelection(stateKeyString);
+                            sessionManager.setProgram(spnSelectProgram.getSelectedItem().toString().trim());
+                            sessionManager.setProgramId(((ProgramPojo) spnSelectProgram.getSelectedItem()).getId());
 
 
-                        A3Application.setLanguage(getApplicationContext(), languagekey);
-                        sessionManager.setLanguagePosition(spnSelectLanguage.getSelectedItemPosition());
+                            try {
+                                Bundle bundle = new Bundle();
+                                bundle.putString(AnalyticsConstants.State, sessionManager.getState());
+                                bundle.putString(AnalyticsConstants.Language, sessionManager.getLanguage());
+                                bundle.putString(AnalyticsConstants.Program, sessionManager.getProgramFromSession());
+                                A3Application.getAnalyticsObject().logEvent("LANGUAGE_SELECTION_AFTER_SIGNIN", bundle);
+                            } catch (Exception e) {
+                                Crashlytics.log("Analytics exception in language & program Selection signin");
+                            }
 
-                        Intent intent=new Intent(getApplicationContext(), NavigationDrawerActivity.class);
-                       intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-                            System.exit(0);
-                            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-                        }
-                        else {
-                            finish();
-                            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-                        }
+                            A3Application.setLanguage(getApplicationContext(), languagekey);
+                            sessionManager.setLanguagePosition(spnSelectLanguage.getSelectedItemPosition());
 
-                    } else {
+                            Intent intent = new Intent(getApplicationContext(), NavigationDrawerActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+                                System.exit(0);
+                                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                            } else {
+                                finish();
+                                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                            }
 
-                        showSignupResultDialog(
-                                getResources().getString(R.string.app_name),
-                                getResources().getString(R.string.pleaseLoadDataforSelectedState),
-                                getResources().getString(R.string.Ok_));
+                        } else {
 
-                    }
-
-
-                }
-                        else
-                        {
                             showSignupResultDialog(
                                     getResources().getString(R.string.app_name),
-                                    getResources().getString(R.string.pleaseSelectProgram),
+                                    getResources().getString(R.string.pleaseLoadDataforSelectedState),
                                     getResources().getString(R.string.Ok_));
+
                         }
 
-                } else{
+
+                    } else {
+                        showSignupResultDialog(
+                                getResources().getString(R.string.app_name),
+                                getResources().getString(R.string.pleaseSelectProgram),
+                                getResources().getString(R.string.Ok_));
+                    }
+
+                } else {
 
 
                     showSignupResultDialog(
@@ -250,7 +256,7 @@ public class AppSettings extends BaseActivity {
             try {
                 while (stateCursor.moveToNext()) {
                     State survey = new State(stateCursor);
-                    StatePojo pojo = new StatePojo(survey.getState(), survey.getState(), survey.getStatekey(), survey.getLangKey(),survey.getLangName());
+                    StatePojo pojo = new StatePojo(survey.getState(), survey.getState(), survey.getStatekey(), survey.getLangKey(), survey.getLangName());
                     stateList.add(pojo);
                 }
                 // Toast.makeText(getApplicationContext(),stateList.size()+":"+b,Toast.LENGTH_SHORT).show();
@@ -259,7 +265,7 @@ public class AppSettings extends BaseActivity {
                     stateCursor.close();
                 }
             }
-            StatePojo pojo = new StatePojo(getString(R.string.selectYourState), getString(R.string.selectYourState), "0","","");
+            StatePojo pojo = new StatePojo(getString(R.string.selectYourState), getString(R.string.selectYourState), "0", "", "");
             stateList.add(0, pojo);
 
             if (stateList != null && stateList.size() > 1) {
@@ -269,14 +275,15 @@ public class AppSettings extends BaseActivity {
 
                 if (b) {
                     for (int i = 0; i < stateList.size(); i++) {
-                        if (sessionManager.getStateKey() .equalsIgnoreCase( stateList.get(i).getStateKey())) {
+                        if (sessionManager.getStateKey().equalsIgnoreCase(stateList.get(i).getStateKey())) {
                             spnSelectStae.setSelection(i);
                             getLanguage(stateList.get(spnSelectStae.getSelectedItemPosition()).getStateKey(),
                                     stateList.get(spnSelectStae.getSelectedItemPosition()).getLanguage(),
 
                                     stateList.get(spnSelectStae.getSelectedItemPosition()).getLanguage(),
                                     stateList.get(spnSelectStae.getSelectedItemPosition()).getLangKey(),
-                                    true);      flag = true;
+                                    true);
+                            flag = true;
 
                             //   Toast.makeText(getApplicationContext(),stateList.get(i).getState(),Toast.LENGTH_SHORT).show();
                             break;

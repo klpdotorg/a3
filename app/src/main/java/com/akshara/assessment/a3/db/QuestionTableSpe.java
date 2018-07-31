@@ -38,6 +38,11 @@ public class QuestionTableSpe {
     public String correct_answer;
 
 
+    @ColumnSpec(name="answerunitlabel")
+
+    public String answerunitlabel;
+
+
 
     @ColumnSpec(name="language_name")
     @NonNull
@@ -75,10 +80,6 @@ public class QuestionTableSpe {
     public String questiontempltype_name;
 
 
-
-    @ColumnSpec(name="assesstype_name")
-    @NonNull
-    public String assesstype_name;
 
 
     @ColumnSpec(name="concept_name")

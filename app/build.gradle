@@ -9,16 +9,21 @@ android {
         applicationId "com.akshara.assessment.a3"
         minSdkVersion 23
         targetSdkVersion 26
-        versionCode 4
+        versionCode 1
 
-        versionName "1.3"
+        versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+                   release {
+
+                       lintOptions {
+                           checkReleaseBuilds false
+                           abortOnError false
+                       }
+                minifyEnabled false
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
         }
 
@@ -41,9 +46,9 @@ android {
            buildConfigField 'String', 'HOST', '"https://dev.ilp.org.in"'
             buildConfigField 'String', 'HOST_ASSESSMENT', '"http://dev.klp.org.in"'
         }
-        production {
-            applicationId 'com.akshara.assessment.a3.production'
-            resValue "string", "app_name", "Akshara Assessment"
+       production {
+            applicationId 'com.akshara.assessment.a3'
+            resValue "string", "app_name", "Akshara Formative Assessment"
             buildConfigField 'String', 'HOST', '"https://prod.ilp.org.in"'
             buildConfigField 'String', 'HOST_ASSESSMENT', '"https://a3.klp.org.in"'
 

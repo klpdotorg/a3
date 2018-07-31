@@ -63,7 +63,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.85" />
+        app:layout_constraintGuide_percent="0.90" />
 
     <TextView
         android:id="@+id/textViewQuestionNumber"
@@ -177,14 +177,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.02" />
+            app:layout_constraintGuide_percent="0.01" />
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline_right3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.80" />
+            app:layout_constraintGuide_percent="0.60" />
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline_left4"
@@ -198,7 +198,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.98" />
+            app:layout_constraintGuide_percent="0.95" />
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline_top4"
@@ -254,11 +254,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="16dp"
             android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
+            android:layout_marginLeft="4dp"
             android:background="@drawable/editboxbg"
             android:ems="10"
+            android:minEms="10"
             android:inputType="textNoSuggestions|number"
             android:singleLine="true"
             android:textAlignment="center"
@@ -267,9 +268,26 @@
             android:textStyle="bold"
             android:typeface="sans"
             app:layout_constraintBottom_toTopOf="@+id/guideline_bottom4"
-            app:layout_constraintEnd_toStartOf="@+id/guideline_right4"
+            app:layout_constraintEnd_toStartOf="@+id/textViewAnswerUnitLabel"
             app:layout_constraintStart_toStartOf="@+id/guideline_right3" />
 
+        <TextView
+            android:id="@+id/textViewAnswerUnitLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginBottom="16dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:text=""
+            android:textAlignment="textStart"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/qp_fib_text_answer"
+            android:textStyle="bold"
+            android:typeface="sans"
+            app:layout_constraintStart_toEndOf="@+id/editTextAnswer"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_right4"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_bottom4" />
 
     </android.support.constraint.ConstraintLayout>
 

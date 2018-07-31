@@ -98,8 +98,10 @@ public class qp_fib_image_text extends AppCompatActivity {
              tvAnswer.setText(answer);
         }
 
-        if (MainActivity.debugalerts)
-            Log.d("EASYASSESS", "qp_fib_image_text: answer set");
+        // set the Answer Unit Label
+        String answerunitlabel = globalvault.questions[questionid-1].getAnswerUnitLabel();
+        TextView txtviewunitlabel = (TextView)findViewById(R.id.textViewAnswerUnitLabel);
+        txtviewunitlabel.setText(answerunitlabel);
 
         // To hide the keyboard initially, remove the focus from the EditText field and move it to the dummy view.
         // When user clicks on the EditText field, the keyboard will appear

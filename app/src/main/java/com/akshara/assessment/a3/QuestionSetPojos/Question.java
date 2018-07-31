@@ -40,10 +40,19 @@ private String grade;
 @SerializedName("level")
 @Expose
 private String level;
-@SerializedName("assessmenttype")
+@SerializedName("answerunitlabel")
 @Expose
-private String assessmenttype;
-@SerializedName("concept")
+private String answerunitlabel;
+
+    public String getAnswerunitlabel() {
+        return answerunitlabel;
+    }
+
+    public void setAnswerunitlabel(String answerunitlabel) {
+        this.answerunitlabel = answerunitlabel;
+    }
+
+    @SerializedName("concept")
 @Expose
 private String concept;
 @SerializedName("microconcept")
@@ -115,13 +124,6 @@ public void setLevel(String level) {
 this.level = level;
 }
 
-public String getAssessmenttype() {
-return assessmenttype;
-}
-
-public void setAssessmenttype(String assessmenttype) {
-this.assessmenttype = assessmenttype;
-}
 
 public String getConcept() {
 return concept;

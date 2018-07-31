@@ -100,10 +100,10 @@ public class KontactDatabase extends SquidDatabase {
 
       switch(oldVersion) {
            case 1:
-               recreate();
+             //  recreate();
 
           case 2:
-              recreate();
+             // recreate();
               break;
                // These tables were added in v2
               /* tryCreateTable(Boundary.TABLE);

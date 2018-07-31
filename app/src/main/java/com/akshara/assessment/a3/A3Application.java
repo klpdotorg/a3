@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import com.akshara.assessment.a3.db.KontactDatabase;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.Locale;
 
@@ -25,6 +26,7 @@ import io.fabric.sdk.android.Fabric;
  */
 public class A3Application extends Application {
     KontactDatabase db;
+    private static FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     public void onCreate() {
@@ -39,10 +41,17 @@ public class A3Application extends Application {
 
         initSingletons();
         updateLanguage(this);
-
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
     }
 
+
+
+    public static FirebaseAnalytics getAnalyticsObject()
+    {
+
+        return  mFirebaseAnalytics;
+    }
     private void initSingletons() {
         db = new KontactDatabase(this);
     }

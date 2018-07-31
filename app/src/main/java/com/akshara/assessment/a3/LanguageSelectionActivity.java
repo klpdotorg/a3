@@ -20,12 +20,15 @@ import com.akshara.assessment.a3.Pojo.LanguagePojo;
 import com.akshara.assessment.a3.Pojo.Program;
 import com.akshara.assessment.a3.Pojo.ProgramPojo;
 import com.akshara.assessment.a3.Pojo.StatePojo;
+import com.akshara.assessment.a3.UtilsPackage.AnalyticsConstants;
 import com.akshara.assessment.a3.UtilsPackage.ProgressUtil;
 import com.akshara.assessment.a3.UtilsPackage.RolesUtils;
 import com.akshara.assessment.a3.UtilsPackage.SessionManager;
 import com.akshara.assessment.a3.UtilsPackage.SignUpResultDialogFragment;
 import com.akshara.assessment.a3.db.KontactDatabase;
 import com.akshara.assessment.a3.db.State;
+import com.crashlytics.android.Crashlytics;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.yahoo.squidb.data.SquidCursor;
 import com.yahoo.squidb.sql.Query;
 
@@ -159,9 +162,28 @@ public class LanguageSelectionActivity extends BaseActivity {
                                 // Toast.makeText(getApplicationContext(),stateKey+":"+languagekey,Toast.LENGTH_SHORT).show();
                                 A3Application.setLanguage(getApplicationContext(), languagekey);
                                 sessionManager.setLanguagePosition(spnSelectLanguage.getSelectedItemPosition());
+
+                                try {
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString(AnalyticsConstants.State, sessionManager.getState());
+                                    bundle.putString(AnalyticsConstants.Language, sessionManager.getLanguage());
+                                    bundle.putString(AnalyticsConstants.Program, sessionManager.getProgramFromSession());
+                                    A3Application.getAnalyticsObject().logEvent("LANGUAGE_SELECTION",bundle);
+                                }
+                                catch (Exception e)
+                                {
+                                    Crashlytics.log("Analytics exception in language Selection");
+                                }
+
+
+
+
                                 Intent intent = new Intent(new Intent(getApplicationContext(), LoginActivity.class));
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
+
+
+
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
                                   //  ActivityCompat.finishAffinity(LanguageSelectionActivity.this);
                                     LanguageSelectionActivity.this.finish();

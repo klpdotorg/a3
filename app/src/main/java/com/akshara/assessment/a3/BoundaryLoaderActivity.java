@@ -33,6 +33,7 @@ import com.akshara.assessment.a3.db.Respondent;
 import com.akshara.assessment.a3.db.School;
 import com.akshara.assessment.a3.db.State;
 
+import com.crashlytics.android.Crashlytics;
 import com.yahoo.squidb.data.SquidCursor;
 import com.yahoo.squidb.sql.Query;
 
@@ -129,7 +130,12 @@ public class BoundaryLoaderActivity extends BaseActivity implements OnItemSelect
 
         fill_dropdown(1, select_district.getId(), 1, ((StatePojo) select_state.getSelectedItem()).getStateKey());
         int dist = getSharedPreferences("loader", MODE_PRIVATE).getInt("dist",0);
-        select_district.setSelection(dist);
+   try {
+       select_district.setSelection(dist);
+   }catch (Exception e)
+   {
+
+   }
         if(dist!=0)
         {
             fill_dropdown(1, select_block.getId(), Integer.parseInt(((StringWithTags) select_district.getSelectedItem()).id.toString()), ((StatePojo) select_state.getSelectedItem()).getStateKey());
@@ -832,7 +838,13 @@ select_school.setOnItemSelectedListener(new OnItemSelectedListener() {
                         DailogUtill.showDialog(select_district.getSelectedItem().toString() + " " + getResources().getString(R.string.blockandCLusterdownloaded), getSupportFragmentManager(), BoundaryLoaderActivity.this);
                         int position = select_district.getSelectedItemPosition();
                         fill_dropdown(1, R.id.select_district, 1, ((StatePojo) select_state.getSelectedItem()).getStateKey());
-                        select_district.setSelection(position);
+                        try {
+                            select_district.setSelection(position);
+                        }
+                       catch (Exception e)
+                       {
+                           Crashlytics.log("exception in set selection district");
+                       }
                         flagForDistrict = false;
                         flagForblock = false;
                         flagForSchool=false;

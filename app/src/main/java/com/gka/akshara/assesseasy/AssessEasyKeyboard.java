@@ -60,6 +60,8 @@ class AssessEasyKeyboard {
         public final static int CodeNext     = 55005;
         public final static int CodeClear    = 55006;
 
+        public final static int CodeDot   = 158; // Keyboard.KEYCODE_NUMPAD_DOT; added for handling decimal point
+
         @Override public void onKey(int primaryCode, int[] keyCodes) {
             // NOTE We can say '<Key android:codes="49,50" ... >' in the xml file; all codes come in keyCodes, the first in this list in primaryCode
             // Get the EditText and its Editable
@@ -67,6 +69,7 @@ class AssessEasyKeyboard {
             View focusCurrent = mHostActivity.getWindow().getCurrentFocus();
             if(focusCurrent == null) return;
 
+            Log.e("EASYASSESS", "AssessEasyKeyboard. Primarycode:"+primaryCode);
             /*
             if( (focusCurrent == null) || (focusCurrent.getClass() != EditText.class) ) { // Class is android.support.v7.widget.AppCompatEditText - suresh
                 Log.d("KEY","Inside OnKey. class:"+focusCurrent.getClass());
@@ -98,6 +101,8 @@ class AssessEasyKeyboard {
             } else if( primaryCode==CodeNext ) {
                 View focusNew= edittext.focusSearch(View.FOCUS_FORWARD);
                 if( focusNew!=null ) focusNew.requestFocus();
+            } else if( primaryCode==CodeDot ) { // Added for dot key for decimal values
+                editable.insert(start, ".");
             } else { // insert character
                 // Log.d("KEY","Inside OnKey case: insert Character. Primary code:"+Integer.toString(primaryCode));
                 //editable.insert(start, Character.toString((char) primaryCode));

@@ -199,7 +199,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.10" />
+            app:layout_constraintGuide_percent="0.05" />
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline_right3"
@@ -213,7 +213,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="4dp"
-            android:layout_marginLeft="4dp"
             android:layout_marginTop="@dimen/qp_divisionreminder_quotienttopmargin"
             app:layout_constraintBottom_toTopOf="@+id/guideline_bottom3"
             app:layout_constraintEnd_toStartOf="@+id/guideline_right3"
@@ -231,6 +230,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/qp_divisionreminder_quotientremind"
+                android:ems="10"
                 android:textStyle="bold"
                 android:typeface="sans"
                 app:layout_constraintBottom_toTopOf="@+id/textViewDividend"
@@ -255,42 +255,42 @@
                 app:layout_constraintTop_toBottomOf="@+id/editTextQuotient" />
 
 
-        <EditText
-            android:id="@+id/editTextReminder"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/editboxbg"
-            android:ems="10"
-            android:inputType="textNoSuggestions|number"
-            android:singleLine="true"
-            android:textAlignment="center"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="@dimen/qp_divisionreminder_quotientremind"
-            android:textStyle="bold"
-            android:typeface="sans"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/textViewDividend"
-            app:layout_constraintTop_toBottomOf="@+id/textViewDividend" />
+            <EditText
+                android:id="@+id/editTextReminder"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/editboxbg"
+                android:ems="10"
+                android:inputType="textNoSuggestions|number"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/qp_divisionreminder_quotientremind"
+                android:textStyle="bold"
+                android:typeface="sans"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textViewDividend"
+                app:layout_constraintTop_toBottomOf="@+id/textViewDividend" />
 
-        <TextView
-            android:id="@+id/textViewDivisor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="@dimen/qp_divisionreminder_divisortopmargin"
-            android:text=""
-            android:textAlignment="textEnd"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="@dimen/qp_divisionreminder_numbers"
-            android:textStyle="bold"
-            android:typeface="sans"
-            app:layout_constraintBottom_toBottomOf="@+id/textViewDividend"
-            app:layout_constraintEnd_toStartOf="@+id/textViewDividend"
-            app:layout_constraintTop_toTopOf="@+id/textViewDividend" />
+            <TextView
+                android:id="@+id/textViewDivisor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="@dimen/qp_divisionreminder_divisortopmargin"
+                android:text=""
+                android:textAlignment="textEnd"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/qp_divisionreminder_numbers"
+                android:textStyle="bold"
+                android:typeface="sans"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewDividend"
+                app:layout_constraintEnd_toStartOf="@+id/textViewDividend"
+                app:layout_constraintTop_toTopOf="@+id/textViewDividend" />
 
         </android.support.constraint.ConstraintLayout>
     </android.support.constraint.ConstraintLayout>

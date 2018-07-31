@@ -208,6 +208,16 @@
     <string name="student_registering">Student registering..</string>
     <string name="select_gender">Select gender</string>
     <string name="assessmentAlreadyTaken">Assessment completed for selected student</string>
+    <string name="hello">Hello %1$s  !</string>
+    <string name="inst1">Welcome to Formative and Assessment Mathematics Assessment for your grade.</string>
+    <string name="inst2">You will have to attempt 12 to 15 mathematics questions in this assessment.</string>
+    <string name="inst3">You will get 45 mins to attempt all the questions.</string>
+    <string name="inst4">Make sure to have your pen / pencil and paper ready for any rough work. Please enter the answer into this tablet after you solve the problem.</string>
+    <string name="inst5">All the very best!</string>
+    <string name="inst6">- Team Ganitha Kalika Andolana</string>
+    <string name="startAssessment">Continue Assessment</string>
+    <string name="sync">Sync</string>
+    <string name="dataSyncing">Data Syncing...</string>
 
 
     <string-array name="array_subject">

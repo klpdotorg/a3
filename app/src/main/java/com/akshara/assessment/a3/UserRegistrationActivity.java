@@ -27,6 +27,7 @@ import com.akshara.assessment.a3.ErrorPojoPackage.Register400Error;
 import com.akshara.assessment.a3.NetworkRetrofitPackage.ApiClient;
 import com.akshara.assessment.a3.NetworkRetrofitPackage.ApiInterface;
 import com.akshara.assessment.a3.Pojo.RegstrationResponsePojo;
+import com.akshara.assessment.a3.UtilsPackage.AnalyticsConstants;
 import com.akshara.assessment.a3.UtilsPackage.DailogUtill;
 
 import com.akshara.assessment.a3.UtilsPackage.RolesUtils;
@@ -34,6 +35,8 @@ import com.akshara.assessment.a3.UtilsPackage.SessionManager;
 import com.akshara.assessment.a3.UtilsPackage.SignUpResultDialogFragment;
 import com.akshara.assessment.a3.db.KontactDatabase;
 import com.akshara.assessment.a3.db.Respondent;
+import com.crashlytics.android.Crashlytics;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.gson.Gson;
 import com.yahoo.squidb.data.SquidCursor;
 import com.yahoo.squidb.sql.Query;
@@ -288,6 +291,25 @@ public class UserRegistrationActivity extends BaseActivity  {
                                 showProgress(false);
                                 // Toast.makeText(getApplicationContext(), response.code()+"", Toast.LENGTH_SHORT).show();
                                 if (response.isSuccessful()) {
+
+
+                                    try {
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString(AnalyticsConstants.State,sessionManager.getState());
+                                        bundle.putString(AnalyticsConstants.Registration,"Un Authorized Users(OTP SENT)");
+                                         A3Application.getAnalyticsObject().logEvent("USER_REGISTRATION", bundle);
+                                    } catch (Exception e) {
+                                        Crashlytics.log("Analytics exception in registration");
+                                    }
+
+
+
+
+
+
+
+
+
 
 
                                     //  Toast.makeText(getApplicationContext(),response.body().getSmsVerificationPin()+"",Toast.LENGTH_LONG).show();

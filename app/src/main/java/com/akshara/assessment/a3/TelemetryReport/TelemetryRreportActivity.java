@@ -82,7 +82,7 @@ public class TelemetryRreportActivity extends BaseActivity {
     ArrayList<StudentTable> studentIds;
     SessionManager sessionManager;
     String gradeS = "";
-  //  private static final int STORAGE_PERMISSION_CODE = 123;
+    //  private static final int STORAGE_PERMISSION_CODE = 123;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,9 +141,9 @@ public class TelemetryRreportActivity extends BaseActivity {
                 // DailogUtill.showDialog("Error while generating report",getSupportFragmentManager(),TelemetryRreportActivity.this);
 
                 //   requestStoragePermission();
-                if(studentIds.size()>0) {
+                if (studentIds.size() > 0) {
                     generatePDFData();
-                }else {
+                } else {
                     DailogUtill.showDialog("No Students found to generate report", getSupportFragmentManager(), TelemetryRreportActivity.this);
 
                 }
@@ -164,6 +164,11 @@ public class TelemetryRreportActivity extends BaseActivity {
 
     private void pdfCellStyles(PdfPCell pdfPCell) {
         pdfPCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        pdfPCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+    }
+
+    private void pdfCellStyles1(PdfPCell pdfPCell) {
+      //  pdfPCell.setHorizontalAlignment(Element.ALIGN_CENTER);
         pdfPCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
     }
 
@@ -206,7 +211,7 @@ public class TelemetryRreportActivity extends BaseActivity {
                     storageDir
             );
             pdfFile = file;
-             OutputStream output = new FileOutputStream(pdfFile);
+            OutputStream output = new FileOutputStream(pdfFile);
             Document document = new Document(PageSize.A3.rotate());
 
 
@@ -253,10 +258,11 @@ public class TelemetryRreportActivity extends BaseActivity {
 
                     // pdfPCell.setColspan(1);
                     pdfPTableforContent.addCell(pdfPCell);
-                    pdfPCell = new PdfPCell(new Phrase("Concept Name"));
+                    pdfPCell = new PdfPCell(new Phrase("Question title & Concept name"));
                     pdfPCell.setBackgroundColor(BaseColor.GRAY);
+                    pdfCellStyles1(pdfPCell);
 
-                    pdfCellStyles(pdfPCell);
+
                     pdfPTableforContent.addCell(pdfPCell);
                 }
 
@@ -265,7 +271,8 @@ public class TelemetryRreportActivity extends BaseActivity {
                 pdfCellStyles(pdfPCell);
                 pdfPTableforContent.addCell(pdfPCell);
 
-                pdfPCell = new PdfPCell(new Phrase(mConceptList.get(i)));
+                //pdfPCell = new PdfPCell(new Phrase(mConceptList.get(i)));
+                pdfPCell = new PdfPCell(new Phrase(mConceptList.get(i).split("@@")[2]+"   -  "+mConceptList.get(i).split("@@")[0]));
                 pdfPTableforContent.addCell(pdfPCell);
                 //pdfCellStyles(pdfPCell);
 
@@ -314,7 +321,19 @@ public class TelemetryRreportActivity extends BaseActivity {
 
             for (int j = 0; j < data.size(); j++) {
                 StudentTable table = data.get(j).getTable();
-                pdfPTable.addCell(new PdfPCell(new Phrase(table.getFirstName())));
+                String name = table.getFirstName();
+                try {
+                    if (table.getMiddleName() != null && !table.getMiddleName().equalsIgnoreCase("")) {
+                        name = name + " " + (table.getMiddleName().substring(0, 1));
+                    }
+
+                 /*   if (table.getLastName() != null && !table.getLastName().equalsIgnoreCase("")) {
+                        name = name + " " + (table.getLastName().substring(0, 1));
+                    }*/
+                } catch (Exception e) {
+
+                }
+                pdfPTable.addCell(new PdfPCell(new Phrase(name)));
 
                 for (int k = 0; k < mConceptList.size(); k++) {
                     if (data.get(j).getDetailReportsMap().get(table.getId()) != null) {
@@ -404,16 +423,18 @@ public class TelemetryRreportActivity extends BaseActivity {
     }
 
 
-    public int getAnswer(String mconceptName, CombinePojo pojo) {
+    public int getAnswer(String mconceptName1, CombinePojo pojo) {
         int answerCount = 0;
 
 
         for (pojoAssessmentDetail detail : pojo.getPojoAssessmentDetail()) {
 
             if (detail != null) {
-                String mConceptName = getMConceptName(detail.getId_question());
+               // String mConceptName = getMConceptName(detail.getId_question());
                 //   Log.d("shri",concept+"------"+conceptName+":"+detail.getPass()+"qidAss"+detail.getId_assessment()+"-QID"+detail.getId_question()+"--id--"+detail.getId());
-                if (mconceptName.equalsIgnoreCase(mConceptName) && detail.getPass().equalsIgnoreCase("P")) {
+
+                //0 index concept,1 index will have question id,2 will have qtitle
+                if ( mconceptName1.split("@@")[1].equalsIgnoreCase(detail.getId_question()) && detail.getPass()!=null&&detail.getPass().equalsIgnoreCase("P")) {
                     answerCount = answerCount + 1;
 
                     //  Log.d("shri",totalanswerCount+"-----------------");
@@ -428,7 +449,7 @@ public class TelemetryRreportActivity extends BaseActivity {
     }
 
 
-    public String getMConceptName(String questionId) {
+  /*  public String getMConceptName(String questionId) {
         Query question = Query.select().from(QuestionTable.TABLE)
                 .where(QuestionTable.ID_QUESTION.eq(questionId));
         SquidCursor<QuestionTable> studentCursor = db.query(QuestionTable.class, question);
@@ -441,7 +462,7 @@ public class TelemetryRreportActivity extends BaseActivity {
         }
         return "";
 
-    }
+    }*/
 
 
     @Override
@@ -520,9 +541,9 @@ public class TelemetryRreportActivity extends BaseActivity {
 
                 while (questionCursoe.moveToNext()) {
                     QuestionTable questionTable = new QuestionTable(questionCursoe);
-                    if (!mConceptList.contains(questionTable.getMconceptName())) {
-                        mConceptList.add(questionTable.getMconceptName());
-                    }
+                  //  if (!mConceptList.contains(questionTable.getMconceptName())) {
+                        mConceptList.add(questionTable.getMconceptName()+"@@"+questionTable.getIdQuestion()+"@@"+questionTable.getQuestionTitle());
+                    //}
                     listAllQuestions.add(questionTable);
 
                 }

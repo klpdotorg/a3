@@ -16,9 +16,12 @@ import android.widget.Toast;
 
 import com.akshara.assessment.a3.NetworkRetrofitPackage.A3NetWorkCalls;
 import com.akshara.assessment.a3.NetworkRetrofitPackage.CurrentStateInterface;
+import com.akshara.assessment.a3.UtilsPackage.AnalyticsConstants;
 import com.akshara.assessment.a3.UtilsPackage.DailogUtill;
 import com.akshara.assessment.a3.UtilsPackage.SessionManager;
 import com.akshara.assessment.a3.UtilsPackage.SignUpResultDialogFragment;
+import com.crashlytics.android.Crashlytics;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 
 /**
@@ -104,15 +107,34 @@ public class OTP_VarifyActivity extends BaseActivity {
                     new A3NetWorkCalls(getApplicationContext()).varifyOTPAfterSignup(mobile, edtOTPNumber.getText().toString().trim(), sessionManager.getStateSelection(), new CurrentStateInterface() {
                         @Override
                         public void setSuccess(String message) {
+
                             showProgress(false, getResources().getString(R.string.authenticating));
+
+                            try {
+                                Bundle bundle = new Bundle();
+
+                                bundle.putString(AnalyticsConstants.Registration,"Authorized Users(OTP AUTHENTICATED)");
+                                bundle.putString(AnalyticsConstants.State, sessionManager.getState());
+                                bundle.putString(AnalyticsConstants.Language, sessionManager.getLanguage());
+                                bundle.putString(AnalyticsConstants.Program, sessionManager.getProgramFromSession());
+                                A3Application.getAnalyticsObject().logEvent("USER_REGISTRATION", bundle);
+                            } catch (Exception e) {
+                                Crashlytics.log("Analytics exception in otp");
+                            }
+
                             showSignupResultDialog(
                                     getResources().getString(R.string.app_name),
                                     getResources().getString(R.string.signupsuccess),
                                     getResources().getString(R.string.login));
+
+
+
+
                         }
 
                         @Override
                         public void setFailed(String message) {
+
                             showProgress(false, getResources().getString(R.string.authenticating));
                             DailogUtill.showDialog(message, getSupportFragmentManager(), OTP_VarifyActivity.this);
                         }

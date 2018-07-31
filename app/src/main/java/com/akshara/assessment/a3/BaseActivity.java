@@ -24,8 +24,8 @@ public class BaseActivity  extends AppCompatActivity {
 
     @Override
     protected void attachBaseContext(Context newBase) {
-
-
        super.attachBaseContext(A3Application.updateLanguage(newBase));
     }
+
+
 }

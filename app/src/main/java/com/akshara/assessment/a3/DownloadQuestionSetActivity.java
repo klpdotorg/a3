@@ -18,9 +18,12 @@ import com.akshara.assessment.a3.NetworkRetrofitPackage.CurrentStateInterface;
 import com.akshara.assessment.a3.Pojo.QuestionSetPojo;
 import com.akshara.assessment.a3.Pojo.StatePojo;
 import com.akshara.assessment.a3.Pojo.SubjectTempPojo;
+import com.akshara.assessment.a3.UtilsPackage.AnalyticsConstants;
 import com.akshara.assessment.a3.UtilsPackage.RolesUtils;
 import com.akshara.assessment.a3.UtilsPackage.StringWithTags;
 import com.akshara.assessment.a3.db.KontactDatabase;
+import com.crashlytics.android.Crashlytics;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 
@@ -66,14 +69,17 @@ public class DownloadQuestionSetActivity extends BaseActivity {
                 String subject = spn_subject.getSelectedItem().toString().trim();
                 String grade = spn_selectGrade.getSelectedItem().toString().trim();
                 String assessment = spn_selectAssessment.getSelectedItem().toString().trim();
-                QuestionSetPojo qestionPojo = new QuestionSetPojo(language, subject, grade, assessment, smanger.getProgramFromSession(), "A3APIAKSHARAAUTHKEY#2018");
+                QuestionSetPojo qestionPojo = new QuestionSetPojo(language, subject, grade, assessment, smanger.getProgramFromSession(), A3Services.AUTH_KEY);
 
-                downloadQuestion(qestionPojo);
+                String analyticsEvent=language+"_S_"+subject+"_"+grade+"_"+assessment+"_"+smanger.getProgramFromSession();
+
+                  downloadQuestion(qestionPojo, analyticsEvent, subject, grade, assessment);
+
             }
         });
     }
 
-    private void downloadQuestion(QuestionSetPojo qestionPojo) {
+    private void downloadQuestion(QuestionSetPojo qestionPojo, final String event, final String subject, final String grade, final String assessment) {
 
         initPorgresssDialogForSchool();
         String url = A3Services.QUESTIONSET_URL;
@@ -92,7 +98,24 @@ public class DownloadQuestionSetActivity extends BaseActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
+                                try {
+                               //     A3Application.getAnalyticsObject().setUserProperty("DOWNLOAD_Q_SET_SUCCESS","DOWNLOAD_QUESTION_SET_SUCCESS");
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString(AnalyticsConstants.State, smanger.getState());
+                                    bundle.putString(AnalyticsConstants.Language, smanger.getLanguage());
+                                    bundle.putString(AnalyticsConstants.Program, smanger.getProgramFromSession());
+                                    bundle.putString(AnalyticsConstants.Subject, subject);
+                                    bundle.putString(AnalyticsConstants.Grade, grade);
+                                    bundle.putString(AnalyticsConstants.Assessment, assessment);
+                                    bundle.putString(AnalyticsConstants.Download_Assessments, event);
+                                   // A3Application.getAnalyticsObject().logEvent("DOWNLOAD_QUESTION_SET_SUCCESS", bundle);
+                                    A3Application.getAnalyticsObject().logEvent("DOWNLOAD_QUESTION_SET_SUCCESS", bundle);
 
+
+                                }catch (Exception e)
+                                {
+                                    Crashlytics.log("Exception while downloading question set");
+                                }
                             }
                         });
 

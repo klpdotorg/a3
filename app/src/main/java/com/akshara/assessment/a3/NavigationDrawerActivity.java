@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,7 +19,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +27,7 @@ import com.akshara.assessment.a3.NetworkRetrofitPackage.A3NetWorkCalls;
 import com.akshara.assessment.a3.NetworkRetrofitPackage.A3Services;
 import com.akshara.assessment.a3.NetworkRetrofitPackage.CurrentStateInterface;
 import com.akshara.assessment.a3.Pojo.AuthKeyPojo;
+import com.akshara.assessment.a3.UtilsPackage.AnalyticsConstants;
 import com.akshara.assessment.a3.UtilsPackage.AppSettings;
 import com.akshara.assessment.a3.UtilsPackage.AppStatus;
 import com.akshara.assessment.a3.UtilsPackage.ConstantsA3;
@@ -35,10 +35,12 @@ import com.akshara.assessment.a3.UtilsPackage.DailogUtill;
 import com.akshara.assessment.a3.UtilsPackage.SessionManager;
 import com.akshara.assessment.a3.UtilsPackage.StringWithTags;
 import com.akshara.assessment.a3.db.Boundary;
-import com.akshara.assessment.a3.db.DBHelper;
 import com.akshara.assessment.a3.db.KontactDatabase;
 import com.akshara.assessment.a3.db.School;
 import com.crashlytics.android.Crashlytics;
+import com.gka.akshara.assesseasy.deviceDatastoreMgr;
+import com.gka.akshara.assesseasy.globalvault;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.yahoo.squidb.data.SquidCursor;
 import com.yahoo.squidb.sql.Query;
 
@@ -59,7 +61,7 @@ public class NavigationDrawerActivity extends BaseActivity
     SquidCursor<Boundary> boundary_cursor = null;
     SquidCursor<School> school_cursor = null;
 
-    DBHelper dbHelper;
+    //DBHelper dbHelper;
 
     LinearLayout linBackSchool;
     KontactDatabase db;
@@ -125,6 +127,59 @@ public class NavigationDrawerActivity extends BaseActivity
         sp_cluster.setSelection(c);
 
 
+        try {
+
+            if (AppStatus.isConnected(getApplicationContext())) {
+                deviceDatastoreMgr dsmgr = new deviceDatastoreMgr();
+                dsmgr.initializeDS(this);
+                //  Toast.makeText(getApplicationContext(),"syching5",Toast.LENGTH_SHORT).show();
+
+                dsmgr.syncTelemetry(globalvault.a3_telemetryapi_baseurl);
+                // Toast.makeText(getApplicationContext(),"syching",Toast.LENGTH_SHORT).show();
+
+
+            }
+
+        } catch (Exception e) {
+            // Toast.makeText(getApplicationContext(),"sych"+e.getMessage(),Toast.LENGTH_SHORT).show();
+            try {
+                Bundle bundle = new Bundle();
+
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, e.getMessage() + "-in Sync");
+                A3Application.getAnalyticsObject().logEvent("Craash", bundle);
+            } catch (Exception e1) {
+                Crashlytics.log("Analytics exception in navigation Selection");
+            }
+
+        }
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+
+
+        getMenuInflater().inflate(R.menu.sync, menu);
+
+        return true;
+    }
+
+
+    public void sync(MenuItem item) {
+        if (item.getItemId() == R.id.action_sync) {
+
+            if (AppStatus.isConnected(getApplicationContext())) {
+
+                Toast.makeText(getApplicationContext(),getResources().getString(R.string.dataSyncing),Toast.LENGTH_SHORT).show();
+                deviceDatastoreMgr dsmgr = new deviceDatastoreMgr();
+                dsmgr.initializeDS(this);
+                dsmgr.syncTelemetry(globalvault.a3_telemetryapi_baseurl);
+            }else {
+                DailogUtill.showDialog(getResources().getString(R.string.netWorkError), getSupportFragmentManager(), getApplicationContext());
+            }
+        }
+
     }
 
 
@@ -172,7 +227,7 @@ public class NavigationDrawerActivity extends BaseActivity
             // finish();
         } else if (id == R.id.nav_download) {
 
-            // Crashlytics.getInstance().crash();
+
             startActivity(new Intent(getApplicationContext(), BoundaryLoaderActivity.class));
 
         } else if (id == R.id.nav_downloadQuestionSet) {
@@ -182,7 +237,7 @@ public class NavigationDrawerActivity extends BaseActivity
             startActivity(new Intent(getApplicationContext(), AppSettings.class));
 
         } else if (id == R.id.nav_updateProgram) {
-           // Crashlytics.getInstance().crash();
+            // Crashlytics.getInstance().crash();
 
             updateProgram();
 
@@ -196,6 +251,13 @@ public class NavigationDrawerActivity extends BaseActivity
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
+                            try {
+                                Bundle bundle = new Bundle();
+                                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "logout");
+                                A3Application.getAnalyticsObject().logEvent("USER_LOGOUT", bundle);
+                            } catch (Exception e) {
+                                Crashlytics.log("Exception in Analytics while logout");
+                            }
                             sessionManager.logoutUserDB();
                             finish();
 
@@ -230,6 +292,14 @@ public class NavigationDrawerActivity extends BaseActivity
                 new A3NetWorkCalls(NavigationDrawerActivity.this).getAssessmentList(pojo, new CurrentStateInterface() {
                     @Override
                     public void setSuccess(String message) {
+
+                        try {
+                            Bundle bundle = new Bundle();
+                            bundle.putString(AnalyticsConstants.Program, "No.times updated");
+                            A3Application.getAnalyticsObject().logEvent("UPDATE_PROGRAM", bundle);
+                        } catch (Exception e) {
+                            Crashlytics.log("Analytics exception in program update");
+                        }
 
                         showProgress(false);
                         DailogUtill.showDialog(getResources().getString(R.string.updatedProAssessment), getSupportFragmentManager(), getApplicationContext());
@@ -350,7 +420,7 @@ public class NavigationDrawerActivity extends BaseActivity
                 editor.commit();
                 long id = new Long(schoolArrayAdapter.getItem(i).id.toString());
                 String name = ((TextView) view.findViewById(R.id.cust_view)).getText().toString();
-                showAltertDailog(id,name);
+                showAltertDailog(id, name);
                  /*Intent gradeIntent=new Intent(getApplicationContext(),GradeActivity.class);
                 gradeIntent.putExtra("A3APP_INSTITUTIONID",id);
                 gradeIntent.putExtra("institutionName",name);
@@ -393,7 +463,7 @@ public class NavigationDrawerActivity extends BaseActivity
             public void onClick(DialogInterface dialogInterface, int i) {
                 int grade = Integer.parseInt(mSpinner.getSelectedItem().toString());
                 String gradeS = getResources().getStringArray(R.array.array_grade)[grade - 1];
-                ConstantsA3.schoolName=name;
+                ConstantsA3.schoolName = name;
                 // Toast.makeText(getApplicationContext(),"GradeId:"+grade+":Insti:"+schoolid+":grade"+gradeS,Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getApplicationContext(), AssessmentSelectorActivity.class)
                         .putExtra("A3APP_INSTITUTIONID", schoolid).
@@ -429,7 +499,7 @@ public class NavigationDrawerActivity extends BaseActivity
                 if ((b.getHierarchy().equalsIgnoreCase("district") || b.getHierarchy().equalsIgnoreCase("block")) && b.isFlag() == true) {
                     StringWithTags boundary = new StringWithTags(b.getName(), b.getId(), b.getHierarchy().equals("district") ? "1" : b.getParentId(), getLocTextBoundary(b), sessionManager, b.isFlag(), b.isFlagCB());
                     boundaryList.add(boundary);
-                //    Log.d("shri", "dist block" + b.getName());
+                    //    Log.d("shri", "dist block" + b.getName());
 
                 } else {
                     if (!b.getHierarchy().equalsIgnoreCase("district") && !b.getHierarchy().equalsIgnoreCase("block") && b.isFlag() == true) {

@@ -24,6 +24,26 @@ public class Result {
     @SerializedName("dob")
     @Expose
     private String dob;
+
+    @Override
+    public String toString() {
+        return "Result{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", uid='" + uid + '\'' +
+                ", dob='" + dob + '\'' +
+                ", gender='" + gender + '\'' +
+                ", mt='" + mt + '\'' +
+                ", status='" + status + '\'' +
+                ", institution=" + institution +
+                ", classes=" + classes +
+                ", fatherName=" + fatherName +
+                ", motherName=" + motherName +
+                '}';
+    }
+
     @SerializedName("gender")
     @Expose
     private String gender;

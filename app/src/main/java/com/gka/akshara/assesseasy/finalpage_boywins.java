@@ -10,7 +10,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.akshara.assessment.a3.A3Application;
 import com.akshara.assessment.a3.R;
+import com.akshara.assessment.a3.UtilsPackage.AnalyticsConstants;
+import com.crashlytics.android.Crashlytics;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -113,6 +116,18 @@ public class finalpage_boywins extends AppCompatActivity {
         globalvault.questions = null;
 
         try {
+
+            try {
+                Bundle bundle = new Bundle();
+                bundle.putString(AnalyticsConstants.Assessment, "END");
+                A3Application.getAnalyticsObject().logEvent("ASSESSMENT_START", bundle);
+            } catch (Exception e) {
+                Crashlytics.log("Analytics exception in assessment start");
+            }
+
+
+
+
             // Return to the ContainerApp
             Intent intent = new Intent(this, Class.forName(globalvault.containerapp_returntoactivity));
             intent.putExtra("A3APP_INSTITUTIONID", globalvault.a3app_institutionId);
