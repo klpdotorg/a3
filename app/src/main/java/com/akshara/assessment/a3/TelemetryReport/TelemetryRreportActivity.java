@@ -1,25 +1,20 @@
 package com.akshara.assessment.a3.TelemetryReport;
 
-import android.Manifest;
+import android.app.Instrumentation;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.Intent;
+import android.content.pm.InstrumentationInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Environment;
-import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
+import android.os.Handler;
 import android.support.v4.content.FileProvider;
-import android.support.v4.text.BidiFormatter;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.util.Property;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -27,9 +22,15 @@ import android.widget.Toast;
 import com.akshara.assessment.a3.A3Application;
 import com.akshara.assessment.a3.BaseActivity;
 import com.akshara.assessment.a3.BuildConfig;
+import com.akshara.assessment.a3.NetworkRetrofitPackage.A3NetWorkCalls;
+import com.akshara.assessment.a3.NetworkRetrofitPackage.A3Services;
+import com.akshara.assessment.a3.NetworkRetrofitPackage.CurrentStateInterface;
+import com.akshara.assessment.a3.Pojo.TelemetryPojo;
 import com.akshara.assessment.a3.R;
+import com.akshara.assessment.a3.UtilsPackage.AppStatus;
 import com.akshara.assessment.a3.UtilsPackage.ConstantsA3;
 import com.akshara.assessment.a3.UtilsPackage.DailogUtill;
+import com.akshara.assessment.a3.UtilsPackage.SchoolStateInterface;
 import com.akshara.assessment.a3.UtilsPackage.SessionManager;
 import com.akshara.assessment.a3.db.KontactDatabase;
 import com.akshara.assessment.a3.db.QuestionSetDetailTable;
@@ -42,15 +43,10 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
-import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.FontProvider;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
-import com.itextpdf.text.pdf.BaseFont;
-import com.itextpdf.text.pdf.FontSelector;
 import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPRow;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.yahoo.squidb.data.SquidCursor;
@@ -61,9 +57,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
+import java.util.Locale;
 
 public class TelemetryRreportActivity extends BaseActivity {
 
@@ -77,12 +76,14 @@ public class TelemetryRreportActivity extends BaseActivity {
     private File pdfFile;
 
     ArrayList<QuestionTable> questionTables;
-    ArrayList<pojoReportData> data;
+    ArrayList<pojoReportData> dataInternal;
     ArrayList<String> mConceptList;
     ArrayList<StudentTable> studentIds;
     SessionManager sessionManager;
     String gradeS = "";
     //  private static final int STORAGE_PERMISSION_CODE = 123;
+    ProgressDialog progressDialog;
+    ArrayList<String> titles = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +93,8 @@ public class TelemetryRreportActivity extends BaseActivity {
             db = ((A3Application) getApplicationContext()).getDb();
             a3dsapiobj = new deviceDatastoreMgr();
             a3dsapiobj.initializeDS(this);
+
+
             mConceptList = new ArrayList<>();
             reportRecyclerView = findViewById(R.id.reportRecyclerView);
             A3APP_INSTITUTIONID = getIntent().getLongExtra("A3APP_INSTITUTIONID", 0L);
@@ -106,12 +109,12 @@ public class TelemetryRreportActivity extends BaseActivity {
             reportRecyclerView.setItemAnimator(new DefaultItemAnimator());
             studentIds = getStudentIds(A3APP_INSTITUTIONID, A3APP_GRADEID);
             gradeS = getResources().getStringArray(R.array.array_grade)[A3APP_GRADEID - 1];
-            data = a3dsapiobj.getAllStudentsForReports(EASYASSESS_QUESTIONSETID + "", studentIds);
-            Collections.sort(data);
+            dataInternal = a3dsapiobj.getAllStudentsForReports(EASYASSESS_QUESTIONSETID + "", studentIds, true, ConstantsA3.assessmenttype, true);
+            Collections.sort(dataInternal);
 
-            ArrayList<String> titles = getAllQuestionSetTitle(EASYASSESS_QUESTIONSETID);
+            titles = getAllQuestionSetTitle(EASYASSESS_QUESTIONSETID);
             questionTables = getAllQuestions(EASYASSESS_QUESTIONSETID);
-            adapter = new TelemetryReportAdapter(this, data, questionTables, titles);
+            adapter = new TelemetryReportAdapter(this, dataInternal, questionTables, titles);
             reportRecyclerView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
 
@@ -123,6 +126,15 @@ public class TelemetryRreportActivity extends BaseActivity {
         }
         //  saveExcelFile(getApplicationContext(),"shreee.xls");
 
+    }
+
+    private void initPorgresssDialogForSchool() {
+        progressDialog = new ProgressDialog(TelemetryRreportActivity.this);
+        progressDialog.setMessage(getResources().getString(R.string.loadingStudent));
+        //  progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+
+        progressDialog.show();
+        progressDialog.setCancelable(false);
     }
 
     @Override
@@ -141,12 +153,14 @@ public class TelemetryRreportActivity extends BaseActivity {
                 // DailogUtill.showDialog("Error while generating report",getSupportFragmentManager(),TelemetryRreportActivity.this);
 
                 //   requestStoragePermission();
-                if (studentIds.size() > 0) {
-                    generatePDFData();
+                //  generatePDFData();
+                if (AppStatus.isConnected(getApplicationContext())) {
+                    downloadStudentsFirst();
                 } else {
-                    DailogUtill.showDialog("No Students found to generate report", getSupportFragmentManager(), TelemetryRreportActivity.this);
+                    DailogUtill.showDialog(getResources().getString(R.string.netWorkError), getSupportFragmentManager(), TelemetryRreportActivity.this);
 
                 }
+
             } catch (Exception e) {
 
                 try {
@@ -162,23 +176,95 @@ public class TelemetryRreportActivity extends BaseActivity {
         }
     }
 
-    private void pdfCellStyles(PdfPCell pdfPCell) {
-        pdfPCell.setHorizontalAlignment(Element.ALIGN_CENTER);
-        pdfPCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+    public void downloadStudentsFirst() {
+        initPorgresssDialogForSchool();
+        String URL = BuildConfig.HOST + "/api/v1/institutions/" + A3APP_INSTITUTIONID + "/students/";
+        //   String URL =  BuildConfig.HOST +"/api/v1/institutestudents/?institution_id="+schoolId;
+        new A3NetWorkCalls(TelemetryRreportActivity.this).downloadStudent(URL, A3APP_INSTITUTIONID, A3APP_GRADEID, new SchoolStateInterface() {
+            @Override
+            public void success(String message) {
+                //  finishProgress();
+                studentIds = getStudentIds(A3APP_INSTITUTIONID, A3APP_GRADEID);
+                ArrayList<String> childIds = new ArrayList<>();
+                for (StudentTable child : studentIds) {
+                    childIds.add(child.getId() + "");
+                }
+
+                if (childIds.size() > 0) {
+                    //   ArrayList<String> temp = new ArrayList<>();
+                    //  temp.add("5455736");
+
+                    TelemetryPojo pojo = new TelemetryPojo(sessionManager.getLanguage(), ConstantsA3.subject, gradeS, sessionManager.getProgramFromSession(), ConstantsA3.assessmenttype, "", "", A3Services.AUTH_KEY, childIds);
+                    //TelemetryPojo pojo = new TelemetryPojo(sessionManager.getLanguage(), ConstantsA3.subject, gradeS, sessionManager.getProgramFromSession(), ConstantsA3.assessmenttype, "2017:08:01", "2018:08:16", A3Services.AUTH_KEY, temp);
+                    new A3NetWorkCalls(TelemetryRreportActivity.this).getTelmetryData(pojo, new CurrentStateInterface() {
+                        @Override
+                        public void setSuccess(String message) {
+                            finishProgress();
+                            //  a3dsapiobj.a3appdb.close();
+                            // a3dsapiobj = new deviceDatastoreMgr();
+                            //a3dsapiobj.initializeDS(TelemetryRreportActivity.this);
+                            //   Log.d("shri",dataInternal.size()+"Internal");
+                            dataInternal = a3dsapiobj.getAllStudentsForReports(EASYASSESS_QUESTIONSETID + "", studentIds, true, ConstantsA3.assessmenttype, true);
+                            Collections.sort(dataInternal);
+                            //    final ArrayList<pojoReportData> data2=data;
+                            //    Log.d("shri",data2.size()+"p");
+                            try {
+
+                                try {
+                                    generatePDFData(dataInternal);
+                                } catch (Exception e) {
+                                    DailogUtill.showDialog("Error while generating report.Please try again", getSupportFragmentManager(), TelemetryRreportActivity.this);
+
+                                }
+
+
+                            } catch (Exception e) {
+                                Toast.makeText(TelemetryRreportActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+
+                            //  dataInternal = a3dsapiobj.getAllStudentsForReports(EASYASSESS_QUESTIONSETID + "", studentIds, true, ConstantsA3.assessmenttype, true);
+                            // Collections.sort(dataInternal);
+
+                            adapter = new TelemetryReportAdapter(TelemetryRreportActivity.this, dataInternal, questionTables, titles);
+                            reportRecyclerView.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+
+                            //DailogUtill.showDialog(message, getSupportFragmentManager(), TelemetryRreportActivity.this);
+
+                        }
+
+                        @Override
+                        public void setFailed(String message) {
+                            finishProgress();
+                            DailogUtill.showDialog(message, getSupportFragmentManager(), TelemetryRreportActivity.this);
+
+                        }
+                    });
+
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "No Childrens info found", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void failed(String message) {
+                finishProgress();
+                DailogUtill.showDialog(message, getSupportFragmentManager(), TelemetryRreportActivity.this);
+
+            }
+
+            @Override
+            public void update(int message) {
+
+            }
+        });
+
+
     }
 
-    private void pdfCellStyles1(PdfPCell pdfPCell) {
-      //  pdfPCell.setHorizontalAlignment(Element.ALIGN_CENTER);
-        pdfPCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-    }
-
-    private void pdfCellStylesInside(PdfPCell pdfPCell) {
-        //pdfPCell.setHorizontalAlignment(Element.ALIGN_CENTER);
-        pdfPCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-    }
-
-
-    private void generatePDFData() throws DocumentException {
+    private void generatePDFData(ArrayList<pojoReportData> data) throws DocumentException {
 
 
         int tableSize = mConceptList.size() + 2;
@@ -201,15 +287,38 @@ public class TelemetryRreportActivity extends BaseActivity {
         pdfPTable.setWidths(bytes);
         pdfPTable.setWidthPercentage(100);
         try {
+         /*   File root = Environment.getExternalStorageDirectory();
+            File dir = new File (root.getAbsolutePath() + "/downloadAK");
+           if(!dir.exists())
+            dir.mkdirs();*/
 
             Calendar calendar = Calendar.getInstance();
             String fileName = getResources().getString(R.string.app_name) + calendar.getTimeInMillis();
-            File storageDir = getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-            File file = File.createTempFile(
+
+            // File file = new File(dir, fileName+".pdf");
+
+            //  File storageDir = getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+           /* File file = File.createTempFile(
                     fileName,
                     ".pdf",
                     storageDir
+            );*/
+            File storageDir = getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+            File file = File.createTempFile(
+                    fileName,  /* prefix */
+                    ".pdf",         /* suffix */
+                    storageDir      /* directory */
             );
+
+           /* File file = File.createTempFile(
+                    fileName,  *//* prefix *//*
+                    ".pdf",         *//* suffix *//*
+                    dir      *//* directory *//*
+            );*/
+
+
+            //   String  mCurrentPhotoPath = "file:" + file.getAbsolutePath();
+            String imageFilePath = file.getAbsolutePath();
             pdfFile = file;
             OutputStream output = new FileOutputStream(pdfFile);
             Document document = new Document(PageSize.A3.rotate());
@@ -224,20 +333,26 @@ public class TelemetryRreportActivity extends BaseActivity {
             Paragraph paragraphappName = new Paragraph(title, font);
             paragraphappName.setAlignment(Element.ALIGN_CENTER);
             paragraphappName.setLeading(0, 1);
-            paragraphappName.setSpacingAfter(30);
+            paragraphappName.setSpacingAfter(20);
             document.add(paragraphappName);
+
+            Paragraph paragraphappName2 = new Paragraph("ASSESSMENT TYPE: " + ConstantsA3.assessmenttype, font);
+            paragraphappName2.setAlignment(Element.ALIGN_CENTER);
+            paragraphappName2.setLeading(0, 1);
+            paragraphappName2.setSpacingAfter(30);
+            document.add(paragraphappName2);
 
 
             Paragraph paragraphUserName = new Paragraph(sessionManager.getUserType() + ": " + sessionManager.getFirstName(), font2);
             Paragraph gradeParagraph = new Paragraph("Grade: " + gradeS, font2);
-            Paragraph paraAsstypetitle = new Paragraph("Assessment type title: " + ConstantsA3.surveyTitle, font2);
-            Paragraph paraAsstype = new Paragraph("Assessment type: " + ConstantsA3.assessmenttype, font2);
+            //  Paragraph paraAsstypetitle = new Paragraph("Assessment type title: " + ConstantsA3.surveyTitle, font2);
+            //  Paragraph paraAsstype = new Paragraph("ASSESSMENT TYPE: " + ConstantsA3.assessmenttype, font2);
             Paragraph paralang = new Paragraph("Language: " + sessionManager.getLanguage(), font2);
             Paragraph paraSubjecttype = new Paragraph("Subject: " + ConstantsA3.subject, font2);
             paraSubjecttype.setSpacingAfter(15);
             document.add(paragraphUserName);
-            document.add(paraAsstypetitle);
-            document.add(paraAsstype);
+            //  document.add(paraAsstypetitle);
+            //  document.add(paraAsstype);
             document.add(gradeParagraph);
 
             document.add(paralang);
@@ -272,7 +387,8 @@ public class TelemetryRreportActivity extends BaseActivity {
                 pdfPTableforContent.addCell(pdfPCell);
 
                 //pdfPCell = new PdfPCell(new Phrase(mConceptList.get(i)));
-                pdfPCell = new PdfPCell(new Phrase(mConceptList.get(i).split("@@")[2]+"   -  "+mConceptList.get(i).split("@@")[0]));
+                // pdfPCell = new PdfPCell(new Phrase(mConceptList.get(i).split("@@")[2] + "   -  " + mConceptList.get(i).split("@@")[0]));
+                pdfPCell = new PdfPCell(new Phrase(" " + mConceptList.get(i).split("@@")[0]));
                 pdfPTableforContent.addCell(pdfPCell);
                 //pdfCellStyles(pdfPCell);
 
@@ -374,7 +490,7 @@ public class TelemetryRreportActivity extends BaseActivity {
                     document.add(pdfPTable);
                     pdfPTable.setHeaderRows(1);
                     document.close();
-                    Toast.makeText(getApplicationContext(), "report created", Toast.LENGTH_SHORT).show();
+                    //  output.close();
 
 
                     Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -383,8 +499,9 @@ public class TelemetryRreportActivity extends BaseActivity {
                     intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
 // generate URI, I defined authority as the application ID in the Manifest, the last param is file I want to open
-                    Uri uri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID, pdfFile);
+                    //  Uri uri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID, pdfFile);
 
+                    Uri uri = FileProvider.getUriForFile(TelemetryRreportActivity.this, BuildConfig.APPLICATION_ID + ".provider", pdfFile);
 // I am opening a PDF file so I give it a valid MIME type
                     intent.setDataAndType(uri, "application/pdf");
 
@@ -422,6 +539,28 @@ public class TelemetryRreportActivity extends BaseActivity {
 
     }
 
+    private void finishProgress() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+
+    }
+
+    private void pdfCellStyles(PdfPCell pdfPCell) {
+        pdfPCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        pdfPCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+    }
+
+    private void pdfCellStyles1(PdfPCell pdfPCell) {
+        //  pdfPCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        pdfPCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+    }
+
+    private void pdfCellStylesInside(PdfPCell pdfPCell) {
+        //pdfPCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        pdfPCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+    }
+
 
     public int getAnswer(String mconceptName1, CombinePojo pojo) {
         int answerCount = 0;
@@ -430,14 +569,15 @@ public class TelemetryRreportActivity extends BaseActivity {
         for (pojoAssessmentDetail detail : pojo.getPojoAssessmentDetail()) {
 
             if (detail != null) {
-               // String mConceptName = getMConceptName(detail.getId_question());
+                String mConceptName = getMConceptName(detail.getId_question());
                 //   Log.d("shri",concept+"------"+conceptName+":"+detail.getPass()+"qidAss"+detail.getId_assessment()+"-QID"+detail.getId_question()+"--id--"+detail.getId());
 
                 //0 index concept,1 index will have question id,2 will have qtitle
-                if ( mconceptName1.split("@@")[1].equalsIgnoreCase(detail.getId_question()) && detail.getPass()!=null&&detail.getPass().equalsIgnoreCase("P")) {
-                    answerCount = answerCount + 1;
+                //   if (mconceptName1.split("@@")[1].equalsIgnoreCase(detail.getId_question()) && detail.getPass() != null && detail.getPass().equalsIgnoreCase("P")) {
+                if (mconceptName1.split("@@")[0].equalsIgnoreCase(mConceptName) && detail.getPass() != null && detail.getPass().equalsIgnoreCase("P")&&mconceptName1.split("@@")[1].equalsIgnoreCase(detail.getId_question())) {
+                    //answerCount = answerCount + 1;
+                    answerCount = 1;
 
-                    //  Log.d("shri",totalanswerCount+"-----------------");
                 }
             }
 
@@ -449,7 +589,7 @@ public class TelemetryRreportActivity extends BaseActivity {
     }
 
 
-  /*  public String getMConceptName(String questionId) {
+    public String getMConceptName(String questionId) {
         Query question = Query.select().from(QuestionTable.TABLE)
                 .where(QuestionTable.ID_QUESTION.eq(questionId));
         SquidCursor<QuestionTable> studentCursor = db.query(QuestionTable.class, question);
@@ -462,7 +602,7 @@ public class TelemetryRreportActivity extends BaseActivity {
         }
         return "";
 
-    }*/
+    }
 
 
     @Override
@@ -502,6 +642,7 @@ public class TelemetryRreportActivity extends BaseActivity {
 
             }
         }
+        //Log.d("shri","Student size"+studentIds.size());
         return studentIds;
 
 
@@ -525,6 +666,7 @@ public class TelemetryRreportActivity extends BaseActivity {
     }
 
     public ArrayList<QuestionTable> getAllQuestions(int questionsetId) {
+        ArrayList<String> qIDtemp = new ArrayList<>();
 
         mConceptList = new ArrayList<>();
         ArrayList<QuestionTable> listAllQuestions = new ArrayList<>();
@@ -541,10 +683,14 @@ public class TelemetryRreportActivity extends BaseActivity {
 
                 while (questionCursoe.moveToNext()) {
                     QuestionTable questionTable = new QuestionTable(questionCursoe);
-                  //  if (!mConceptList.contains(questionTable.getMconceptName())) {
-                        mConceptList.add(questionTable.getMconceptName()+"@@"+questionTable.getIdQuestion()+"@@"+questionTable.getQuestionTitle());
-                    //}
-                    listAllQuestions.add(questionTable);
+
+                    if (!qIDtemp.contains(questionTable.getIdQuestion())) {
+                        qIDtemp.add(questionTable.getIdQuestion());
+                        //if (!mConceptList.contains(questionTable.getMconceptName())) {
+                        mConceptList.add(questionTable.getMconceptName() + "@@" + questionTable.getIdQuestion() + "@@" + questionTable.getQuestionTitle());
+                        //  }
+                        listAllQuestions.add(questionTable);
+                    }
 
                 }
 
@@ -554,7 +700,7 @@ public class TelemetryRreportActivity extends BaseActivity {
     }
 
     public ArrayList<String> getAllQuestionSetTitle(int questionsetId) {
-
+        ArrayList<String> qIDtemp = new ArrayList<>();
 
         ArrayList<String> listQuestionTitle = new ArrayList<>();
         Query QuestionsetQuery = Query.select().from(QuestionSetDetailTable.TABLE)
@@ -570,8 +716,11 @@ public class TelemetryRreportActivity extends BaseActivity {
 
                 while (questionCursoe.moveToNext()) {
                     QuestionTable questionTable = new QuestionTable(questionCursoe);
-                    if (!listQuestionTitle.contains(questionTable.getConceptName())) {
-                        listQuestionTitle.add(questionTable.getConceptName());
+                    if (!qIDtemp.contains(questionTable.getIdQuestion())) {
+                        qIDtemp.add(questionTable.getIdQuestion());
+                        if (!listQuestionTitle.contains(questionTable.getConceptName())) {
+                            listQuestionTitle.add(questionTable.getConceptName());
+                        }
                     }
                 }
 

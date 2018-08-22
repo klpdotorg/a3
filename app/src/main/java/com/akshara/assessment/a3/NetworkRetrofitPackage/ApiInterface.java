@@ -12,9 +12,11 @@ import com.akshara.assessment.a3.Pojo.QuestionSetPojo;
 import com.akshara.assessment.a3.Pojo.RegisterStudentPojo;
 import com.akshara.assessment.a3.Pojo.RegstrationResponsePojo;
 import com.akshara.assessment.a3.Pojo.ResetPasswordPojo;
+import com.akshara.assessment.a3.Pojo.TelemetryPojo;
 import com.akshara.assessment.a3.QuestionSetPojos.QuestionSetPojos;
 import com.akshara.assessment.a3.SchoolDataPojo.SchoolDataPojo;
 import com.akshara.assessment.a3.StudentPojopack.SchoolStudentPojo;
+import com.akshara.assessment.a3.TelPojos.TelmetryResPojo;
 import com.akshara.assessment.a3.UserRolePack.UserRolesPojos;
 import com.akshara.assessment.a3.regstdrespPojo.RegisterStdPojoResp;
 
@@ -113,6 +115,11 @@ public interface ApiInterface {
     Call<RegisterStdPojoResp> registerStudent(@Path("id") long id,
                                               @Header("Authorization") String authHeader,
                                               @Body ArrayList<RegisterStudentPojo> pojo);
+
+
+    @POST
+    Call<TelmetryResPojo> telemetryData(@Url String url,
+                                        @Body TelemetryPojo pojo);
 
 
     @POST

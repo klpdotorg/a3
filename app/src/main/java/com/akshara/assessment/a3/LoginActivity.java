@@ -1,12 +1,22 @@
 package com.akshara.assessment.a3;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.util.Linkify;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +27,7 @@ import android.widget.Toast;
 import com.akshara.assessment.a3.NetworkRetrofitPackage.A3NetWorkCalls;
 import com.akshara.assessment.a3.NetworkRetrofitPackage.CurrentStateInterface;
 import com.akshara.assessment.a3.UtilsPackage.AnalyticsConstants;
+import com.akshara.assessment.a3.UtilsPackage.ConstantsA3;
 import com.akshara.assessment.a3.UtilsPackage.DailogUtill;
 import com.akshara.assessment.a3.UtilsPackage.RolesUtils;
 import com.akshara.assessment.a3.UtilsPackage.SessionManager;
@@ -27,6 +38,7 @@ import com.crashlytics.android.answers.FirebaseAnalyticsEvent;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -185,38 +197,52 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                 && !userLoginInfo.getString("user_type").trim().equalsIgnoreCase("")) {
 
                             users = userLoginInfo.getString("user_type").toUpperCase();
-                            sessionManager.createLoginSession(
-                                    userLoginInfo.getString("first_name"),
-                                    userLoginInfo.getString("id"),
-                                    userLoginInfo.getString("token"),
-                                    userLoginInfo.getString("last_name"),
-                                    userLoginInfo.getString("email"),
-                                    userLoginInfo.getString("mobile_no"),
-                                    userLoginInfo.getString("dob"),
-                                    users);
-                            try {
 
+                            if(userLoginInfo.getJSONArray("groups")!=null&&validateIsA3User(userLoginInfo.getJSONArray("groups"))) {
+
+
+                                sessionManager.createLoginSession(
+                                        userLoginInfo.getString("first_name"),
+                                        userLoginInfo.getString("id"),
+                                        userLoginInfo.getString("token"),
+                                        userLoginInfo.getString("last_name"),
+                                        userLoginInfo.getString("email"),
+                                        userLoginInfo.getString("mobile_no"),
+                                        userLoginInfo.getString("dob"),
+                                        users);
                                 try {
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString(AnalyticsConstants.App_Version, BuildConfig.VERSION_NAME);
-                                    A3Application.getAnalyticsObject().logEvent("APP_VERSION", bundle);
+
+                                    try {
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString(AnalyticsConstants.App_Version, BuildConfig.VERSION_NAME);
+                                        A3Application.getAnalyticsObject().logEvent("APP_VERSION", bundle);
+                                    } catch (Exception e) {
+                                        Crashlytics.log("login");
+                                    }
+
+                                    // A3Application.getAnalyticsObject().logEvent(FirebaseAnalytics.Event.);
+
+                                    subscribetoTopicsForNotification(sessionManager.getState(), sessionManager.getUserType());
                                 } catch (Exception e) {
-                                    Crashlytics.log("login");
+
                                 }
-
-                                // A3Application.getAnalyticsObject().logEvent(FirebaseAnalytics.Event.);
-
-                                subscribetoTopicsForNotification(sessionManager.getState(), sessionManager.getUserType());
-                            } catch (Exception e) {
-
+                                Intent intent = new Intent(LoginActivity.this, BoundaryLoaderActivity.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                intent.putExtra("LOGIN", true);
+                                startActivity(intent);
+                                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                                finish();
                             }
-                            Intent intent = new Intent(LoginActivity.this, BoundaryLoaderActivity.class);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            intent.putExtra("LOGIN", true);
-                            startActivity(intent);
-                            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-                            finish();
+                            else {
+                                try {
+                                    notAUthDialog();
+                                }catch (Exception e)
+                                {
+                                    DailogUtill.showDialog(getResources().getString(R.string.notauth), getSupportFragmentManager(), LoginActivity.this);
 
+                                }
+                                //DailogUtill.showDialog(getResources().getString(R.string.notauth), getSupportFragmentManager(), LoginActivity.this);
+                            }
 
                         } else {
 
@@ -260,6 +286,64 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     }
 
+
+
+public void notAUthDialog()
+{
+
+    AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+
+
+    builder.setMessage(getResources().getString(R.string.notauth));
+
+    builder.setPositiveButton(getResources().getString(R.string.call), new DialogInterface.OnClickListener() {
+
+        public void onClick(DialogInterface dialog, int which) {
+
+            // Do nothing, but close the dialog
+            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", ConstantsA3.PHONENUMBER, null));
+            startActivity(intent);
+            dialog.dismiss();
+        }
+    });
+
+    builder.setNegativeButton(getResources().getString(R.string.Cancel), new DialogInterface.OnClickListener() {
+
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+
+            // Do nothing
+            dialog.dismiss();
+        }
+    });
+
+    AlertDialog alert = builder.create();
+    alert.show();
+
+}
+
+
+  private boolean  validateIsA3User(JSONArray groups)
+    {
+        boolean flag=false;
+        if(groups!=null&&groups.length()>0)
+        {
+            for(int i=0;i<groups.length();i++)
+            {
+                try {
+                    if(groups.getJSONObject(i).getString("name").equalsIgnoreCase("a3_users"))
+                    {
+                        return true;
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+        return flag;
+    }
 
     private void subscribetoTopicsForNotification(String state, String stateUserType) {
 

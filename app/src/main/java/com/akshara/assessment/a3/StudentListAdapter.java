@@ -4,15 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.akshara.assessment.a3.TelemetryReport.TelemetryReportAdapter;
 import com.akshara.assessment.a3.TelemetryReport.TelemetryReportIndetail;
 import com.akshara.assessment.a3.TelemetryReport.pojoReportData;
 import com.akshara.assessment.a3.UtilsPackage.AnalyticsConstants;
@@ -106,7 +103,7 @@ class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.Student
             holder.image_gender.setImageResource(R.drawable.girl);
         }
 
-
+holder.imageReportbtn.setVisibility(View.GONE);
         holder.imageReportbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -251,7 +248,7 @@ class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.Student
     public void checkData(ArrayList<StudentTable> stsId, int position) {
 
 
-        ArrayList<pojoReportData> data = a3dsapiobj.getAllStudentsForReports(EASYASEESS_QUESTIONSETID + "", stsId);
+        ArrayList<pojoReportData> data = a3dsapiobj.getAllStudentsForReports(EASYASEESS_QUESTIONSETID + "", stsId,false, ConstantsA3.assessmenttype, false);
         Collections.sort(data);
 
         ArrayList<String> titles = getAllQuestionSetTitle(EASYASEESS_QUESTIONSETID);

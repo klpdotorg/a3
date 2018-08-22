@@ -49,7 +49,7 @@ public class DailogUtill extends DialogFragment {
 
 
     public static void showDialog(String message, FragmentManager manager, Context context) {
-        Bundle dialogBundle = new Bundle();
+       Bundle dialogBundle = new Bundle();
         dialogBundle.putString("title", context.getString(R.string.app_name));
         dialogBundle.putString("result", message);
         dialogBundle.putString("buttonText", context.getString(R.string.OK));

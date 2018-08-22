@@ -1,11 +1,13 @@
 package com.akshara.assessment.a3;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -24,12 +26,14 @@ import android.widget.Toast;
 
 import com.akshara.assessment.a3.NetworkRetrofitPackage.A3NetWorkCalls;
 import com.akshara.assessment.a3.NetworkRetrofitPackage.CurrentStateInterface;
+import com.akshara.assessment.a3.UtilsPackage.ConstantsA3;
 import com.akshara.assessment.a3.UtilsPackage.DailogUtill;
 import com.akshara.assessment.a3.UtilsPackage.RolesUtils;
 import com.akshara.assessment.a3.UtilsPackage.SessionManager;
 import com.akshara.assessment.a3.UtilsPackage.SignUpResultDialogFragment;
 import com.akshara.assessment.a3.db.KontactDatabase;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -187,7 +191,27 @@ public class UpdateProfileBeforeLoginActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private boolean  validateIsA3User(JSONArray groups)
+    {
+        boolean flag=false;
+        if(groups!=null&&groups.length()>0)
+        {
+            for(int i=0;i<groups.length();i++)
+            {
+                try {
+                    if(groups.getJSONObject(i).getString("name").equalsIgnoreCase("a3_users"))
+                    {
+                        return true;
 
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+        return flag;
+    }
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -282,16 +306,36 @@ public class UpdateProfileBeforeLoginActivity extends BaseActivity {
                                     new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
+                                            JSONObject userLoginInfo = null;
+                                            try {
+                                                userLoginInfo = new JSONObject(message);
 
-                                            Intent intent = new Intent(UpdateProfileBeforeLoginActivity.this, BoundaryLoaderActivity.class);
-                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                            intent.putExtra("LOGIN", true);
+                                                if(userLoginInfo.getJSONArray("groups")!=null&&validateIsA3User(userLoginInfo.getJSONArray("groups"))) {
 
-                                            startActivity(intent);
-                                            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-                                            finish();
 
-                                            dialog.dismiss();
+                                                    Intent intent = new Intent(UpdateProfileBeforeLoginActivity.this, BoundaryLoaderActivity.class);
+                                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                    intent.putExtra("LOGIN", true);
+
+                                                    startActivity(intent);
+                                                    overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                                                    finish();
+
+                                                    dialog.dismiss();
+                                                }
+                                                else {
+                                                    try {
+                                                        notAUthDialog();
+                                                    }catch (Exception e)
+                                                    {
+                                                       DailogUtill.showDialog(getResources().getString(R.string.notauth), getSupportFragmentManager(), UpdateProfileBeforeLoginActivity.this);
+
+                                                    }
+
+                                                    }
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
                                         }
                                     });
                             alertDialog.show();
@@ -301,6 +345,41 @@ public class UpdateProfileBeforeLoginActivity extends BaseActivity {
 
                             //downloadSurveyInfo(message, "");
 
+
+                        }
+
+
+                        public void notAUthDialog()
+                        {
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(UpdateProfileBeforeLoginActivity.this);
+
+
+                            builder.setMessage(getResources().getString(R.string.notauth));
+
+                            builder.setPositiveButton(getResources().getString(R.string.call), new DialogInterface.OnClickListener() {
+
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    // Do nothing, but close the dialog
+                                    Intent intent = new Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", ConstantsA3.PHONENUMBER, null));
+                                    startActivity(intent);
+                                    dialog.dismiss();
+                                }
+                            });
+
+                            builder.setNegativeButton(getResources().getString(R.string.Cancel), new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    // Do nothing
+                                    dialog.dismiss();
+                                }
+                            });
+
+                            AlertDialog alert = builder.create();
+                            alert.show();
 
                         }
 

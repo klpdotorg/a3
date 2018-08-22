@@ -36,7 +36,7 @@ public class globalvault {
     public static String a3_telemetryapi_baseurl = "https://a3.klp.org.in/"; // "http://dev.klp.org.in/a3/";
 
     //dev
-    //  public static String a3_telemetryapi_baseurl = "http://dev.klp.org.in/a3/"; // "http://dev.klp.org.in/a3/";
+    // public static String a3_telemetryapi_baseurl = "http://dev.klp.org.in/a3/"; // "http://dev.klp.org.in/a3/";
     public static String a3_telemetryapi_authkey = "A3APIAKSHARAAUTHKEY#2018";
 
     // Background images for Question Pages. An image is randomly picked from this array

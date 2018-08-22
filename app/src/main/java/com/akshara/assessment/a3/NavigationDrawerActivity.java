@@ -99,6 +99,13 @@ public class NavigationDrawerActivity extends BaseActivity
 
 
         //     dbHelper=new DBHelper(this);
+        try {
+            Bundle bundle = new Bundle();
+            bundle.putString(AnalyticsConstants.App_Version, BuildConfig.VERSION_NAME);
+            A3Application.getAnalyticsObject().logEvent("APP_VERSION", bundle);
+        } catch (Exception e) {
+            Crashlytics.log("nav");
+        }
 
 
         //

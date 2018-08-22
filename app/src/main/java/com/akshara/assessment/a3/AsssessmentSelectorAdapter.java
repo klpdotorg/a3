@@ -29,7 +29,7 @@ public class AsssessmentSelectorAdapter extends RecyclerView.Adapter {
     long A3APP_INSTITUTIONID;
     int A3APP_GRADEID;
     String A3APP_GRADESTRING;
-    String A3APP_CHILDID;
+   // String A3APP_CHILDID;
     String A3APP_LANGUAGE;
     private final int EMPTY = 0;
     private final int DATA = 1;
@@ -90,7 +90,7 @@ public class AsssessmentSelectorAdapter extends RecyclerView.Adapter {
                 holder.tvSubject.setText(questionSetTables.get(position).getSubjectName());
                 holder.tvAssementtype.setText(questionSetTables.get(position).getAssesstypeName());
 
-
+               holder.imageReport.setVisibility(View.GONE);
 
                 holder.imageReport.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -101,7 +101,7 @@ public class AsssessmentSelectorAdapter extends RecyclerView.Adapter {
                         bundle.putLong("A3APP_INSTITUTIONID", A3APP_INSTITUTIONID);
                         bundle.putInt("EASYASSESS_QUESTIONSETID", questionSetTables.get(position).getIdQuestionset());
                         bundle.putInt("A3APP_GRADEID", A3APP_GRADEID);
-                        ConstantsA3.surveyTitle=questionSetTables.get(position).getQsetTitle();
+                       // ConstantsA3.surveyTitle=questionSetTables.get(position).getQsetTitle();
                         ConstantsA3.subject=questionSetTables.get(position).getSubjectName();
                         ConstantsA3.assessmenttype=questionSetTables.get(position).getAssesstypeName();
                         intent.putExtras(bundle);

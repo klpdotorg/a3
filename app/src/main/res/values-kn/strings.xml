@@ -217,6 +217,10 @@
     <string name="startAssessment">ಮೌಲ್ಯಮಾಪನ ಮುಂದುವರಿಸಿ</string>
     <string name="sync">ಸಿಂಕ್</string>
     <string name="dataSyncing">ಸಿಂಕ್ ಮಾಡಲಾಗುತ್ತಿದೆ...</string>
+    <string name="notauth">ನಿಮಗೆ ಈ ಮೌಲ್ಯಮಾಪನ ಮಾಡುವ ಅನುಮತಿ ಇಲ್ಲ. ದಯವಿಟ್ಟು ಅಕ್ಷರ ಫೌಂಡೇಶನ್ ಸಿಬ್ಬಂದಿಗೆ ಸಂಪರ್ಕಿಸಿ. 9845079590</string>
+    <string name="call">ಕರೆ</string>
+    <string name="telemetry_report_loading_failed">Telemetry report loading failed</string>
+    <string name="downloadAssessment">ಮೌಲ್ಯಮಾಪನದ ವರದಿ</string>
 
 
     <string-array name="array_subject">

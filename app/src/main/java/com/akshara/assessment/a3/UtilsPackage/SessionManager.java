@@ -299,7 +299,8 @@ public class SessionManager {
 
         A3Application.setLanguage(_context, "en");
 
-        db.deleteAll(Boundary.class);
+
+        /*db.deleteAll(Boundary.class);
         db.deleteAll(School.class);
         db.deleteAll(StudentTable.class);
         db.deleteAll(QuestionSetDetailTable.class);
@@ -311,7 +312,7 @@ public class SessionManager {
         db.deleteAll(ProgramTable.class);
         db.deleteAll(InstititeGradeIdTable.class);
         db.deleteAll(AssessmentTypeTable.class);
-        db.clear();
+        db.clear();*/
         _context.getSharedPreferences("Navigationboundary", MODE_PRIVATE).edit().clear().commit();
         _context.getSharedPreferences("loader", MODE_PRIVATE).edit().clear().commit();
 

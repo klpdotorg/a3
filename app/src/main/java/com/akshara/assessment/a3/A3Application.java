@@ -6,6 +6,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.database.CursorWindow;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.preference.PreferenceManager;
@@ -16,6 +17,7 @@ import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+import java.lang.reflect.Field;
 import java.util.Locale;
 
 import io.fabric.sdk.android.Fabric;
@@ -36,8 +38,8 @@ public class A3Application extends Application {
     /*   this. registerReceiver(new NetworkChangeReceiver(),
                 new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 */
-       /* Fabric.with(this, new Crashlytics.Builder().core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build()).build());
-        */
+      //  Fabric.with(this, new Crashlytics.Builder().core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build()).build());
+     //   fix();
 
         initSingletons();
         updateLanguage(this);
@@ -45,7 +47,15 @@ public class A3Application extends Application {
 
     }
 
-
+    public static void fix() {
+      /*  try {
+            Field field = CursorWindow.class.getDeclaredField("sCursorWindowSize");
+            field.setAccessible(true);
+            field.set(null, 102400 * 1024); //the 102400 is the new size added
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
+    }
 
     public static FirebaseAnalytics getAnalyticsObject()
     {

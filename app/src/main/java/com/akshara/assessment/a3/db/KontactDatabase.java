@@ -77,9 +77,9 @@ public class KontactDatabase extends SquidDatabase {
                 QuestionSetDetailTable.TABLE,
                 ProgramTable.TABLE,
                 AssessmentTypeTable.TABLE,
-                SubjectTable.TABLE
-
-
+                SubjectTable.TABLE,
+                Assessment_Detail_Table.TABLE,
+                Assessment_Table.TABLE
 
 
         };
@@ -96,16 +96,19 @@ public class KontactDatabase extends SquidDatabase {
         // nothing happens
         // to create tables, try like this -> tryCreateTable(School.TABLE)
         // https://github.com/yahoo/squidb/wiki/Implementing-database-upgrades
-        Log.d("shri","dim:"+oldVersion);
+        //Log.d("shri", "dim:" + oldVersion);
 
-      switch(oldVersion) {
-           case 1:
-             //  recreate();
+        switch (oldVersion) {
+            case 1:
+            //   Log.d("shri", "dimssss:" + oldVersion);
+                tryCreateTable(Assessment_Detail_Table.TABLE);
+                tryCreateTable(Assessment_Table.TABLE);
+                break;
 
-          case 2:
-             // recreate();
-              break;
-               // These tables were added in v2
+            case 2:
+                // recreate();
+                break;
+            // These tables were added in v2
               /* tryCreateTable(Boundary.TABLE);
              tryCreateTable(State.TABLE);
              tryCreateTable(Respondent.TABLE);*/
@@ -131,11 +134,10 @@ public class KontactDatabase extends SquidDatabase {
     }
 
 
-
     @Override
     protected void onMigrationFailed(MigrationFailedException failure) {
         super.onMigrationFailed(failure);
-      recreate();
+        recreate();
     }
 
     public boolean insertNew(TableModel item) {

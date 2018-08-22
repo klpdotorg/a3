@@ -24,7 +24,12 @@ import com.akshara.assessment.a3.R;
 import com.akshara.assessment.a3.UtilsPackage.DailogUtill;
 import com.akshara.assessment.a3.UtilsPackage.SchoolStateInterface;
 import com.akshara.assessment.a3.UtilsPackage.StringWithTags;
+import com.akshara.assessment.a3.db.KontactDatabase;
+import com.akshara.assessment.a3.db.QuestionSetDetailTable;
+import com.akshara.assessment.a3.db.QuestionSetTable;
 import com.gka.akshara.assesseasy.deviceDatastoreMgr;
+import com.yahoo.squidb.data.SquidCursor;
+import com.yahoo.squidb.sql.Query;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,15 +42,18 @@ public class StudentListMainActivity extends BaseActivity {
     ProgressDialog progressDialog;
     int A3APP_GRADEID;
     private deviceDatastoreMgr a3dsapiobj;
+    KontactDatabase database;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tabed_activity);
         a3dsapiobj = new deviceDatastoreMgr();
+        database = new KontactDatabase(getApplicationContext());
         a3dsapiobj.initializeDS(this);
         title = getIntent().getStringExtra("A3APP_GRADESTRING");
-        A3APP_GRADEID=getIntent().getIntExtra("A3APP_GRADEID",0);
-        schoolId= getIntent().getLongExtra("A3APP_INSTITUTIONID", 0L);
+        A3APP_GRADEID = getIntent().getIntExtra("A3APP_GRADEID", 0);
+        schoolId = getIntent().getLongExtra("A3APP_INSTITUTIONID", 0L);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(title);
         setupNavigationView();
@@ -60,12 +68,27 @@ public class StudentListMainActivity extends BaseActivity {
 
     }
 
-    public boolean checkAssessmentTaken(String qId, long studentId)
-    {
-        return a3dsapiobj.isStudentAssessmentTaken(qId,studentId);
+    public boolean checkAssessmentTaken(String qId, long studentId) {
+        ArrayList<String> QsetIds = new ArrayList<>();
+        Query QuestionsetQuery = Query.select().from(QuestionSetTable.TABLE)
+                .where(QuestionSetTable.ID_QUESTIONSET.eq(qId));
+        SquidCursor<QuestionSetTable> questionsetCursor = database.query(QuestionSetTable.class, QuestionsetQuery);
+        questionsetCursor.moveToNext();
+        String assmenttype = new QuestionSetTable(questionsetCursor).getAssesstypeName();
+
+        Query QuestionsetQuery2 = Query.select().from(QuestionSetTable.TABLE)
+                .where(QuestionSetTable.ASSESSTYPE_NAME.eq(assmenttype));
+        SquidCursor<QuestionSetTable> questionsetCursor2 = database.query(QuestionSetTable.class, QuestionsetQuery2);
+        while (questionsetCursor2.moveToNext()) {
+            QsetIds.add(new QuestionSetTable(questionsetCursor2).getIdQuestionset() + "");
+        }
+
+
+        return a3dsapiobj.isStudentAssessmentTaken(QsetIds, studentId,assmenttype);
 
 
     }
+
     private void finishProgress() {
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
@@ -95,19 +118,18 @@ public class StudentListMainActivity extends BaseActivity {
         if (item.getItemId() == R.id.action_download) {
 
 
-           if(schoolId==0)
-           {
-               finish();
-           }
+            if (schoolId == 0) {
+                finish();
+            }
             initPorgresssDialogForSchool();
             updateProgressMessage(getResources().getString(R.string.loadingStudent), 0);
 
-        //  Toast.makeText(getApplicationContext(),schoolId+"",Toast.LENGTH_SHORT).show();
-        //    updateProgressMessage(select_school.getSelectedItem().toString() + " " + getResources().getString(R.string.loadingStudent), 0);
+            //  Toast.makeText(getApplicationContext(),schoolId+"",Toast.LENGTH_SHORT).show();
+            //    updateProgressMessage(select_school.getSelectedItem().toString() + " " + getResources().getString(R.string.loadingStudent), 0);
 //Log.d("shri",((StringWithTags) select_school.getSelectedItem()).id.toString());
-             String URL = BuildConfig.HOST + "/api/v1/institutions/" + schoolId + "/students/";
+            String URL = BuildConfig.HOST + "/api/v1/institutions/" + schoolId + "/students/";
             //   String URL =  BuildConfig.HOST +"/api/v1/institutestudents/?institution_id="+schoolId;
-            new A3NetWorkCalls(StudentListMainActivity.this).downloadStudent(URL, schoolId,A3APP_GRADEID, new SchoolStateInterface() {
+            new A3NetWorkCalls(StudentListMainActivity.this).downloadStudent(URL, schoolId, A3APP_GRADEID, new SchoolStateInterface() {
                 @Override
                 public void success(String message) {
                     finishProgress();
@@ -145,6 +167,7 @@ public class StudentListMainActivity extends BaseActivity {
         progressDialog.show();
         progressDialog.setCancelable(false);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

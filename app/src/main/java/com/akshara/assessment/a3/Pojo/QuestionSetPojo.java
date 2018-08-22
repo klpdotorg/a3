@@ -12,4 +12,28 @@ public class QuestionSetPojo {
     }
 
     String language,subject,grade,assessmenttype,authkey,program;
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public String getGrade() {
+        return grade;
+    }
+
+    public String getAssessmenttype() {
+        return assessmenttype;
+    }
+
+    public String getAuthkey() {
+        return authkey;
+    }
+
+    public String getProgram() {
+        return program;
+    }
 }
