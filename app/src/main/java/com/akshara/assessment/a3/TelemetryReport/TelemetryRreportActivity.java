@@ -6,6 +6,9 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.InstrumentationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
@@ -43,9 +46,12 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.pdf.FontSelector;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -64,6 +70,10 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
 
+import static com.itextpdf.text.html.HtmlTags.FONT;
+import static com.itextpdf.text.pdf.BaseFont.IDENTITY_H;
+import static com.itextpdf.text.pdf.PdfName.TEXT;
+
 public class TelemetryRreportActivity extends BaseActivity {
 
     KontactDatabase db;
@@ -78,6 +88,7 @@ public class TelemetryRreportActivity extends BaseActivity {
     ArrayList<QuestionTable> questionTables;
     ArrayList<pojoReportData> dataInternal;
     ArrayList<String> mConceptList;
+
     ArrayList<StudentTable> studentIds;
     SessionManager sessionManager;
     String gradeS = "";
@@ -96,6 +107,7 @@ public class TelemetryRreportActivity extends BaseActivity {
 
 
             mConceptList = new ArrayList<>();
+          //  mConceptList2nd = new ArrayList<>();
             reportRecyclerView = findViewById(R.id.reportRecyclerView);
             A3APP_INSTITUTIONID = getIntent().getLongExtra("A3APP_INSTITUTIONID", 0L);
             EASYASSESS_QUESTIONSETID = getIntent().getIntExtra("EASYASSESS_QUESTIONSETID", 0);
@@ -211,7 +223,7 @@ public class TelemetryRreportActivity extends BaseActivity {
                             try {
 
                                 try {
-                                    generatePDFData(dataInternal);
+                                    generatePDFData();
                                 } catch (Exception e) {
                                     DailogUtill.showDialog("Error while generating report.Please try again", getSupportFragmentManager(), TelemetryRreportActivity.this);
 
@@ -264,7 +276,7 @@ public class TelemetryRreportActivity extends BaseActivity {
 
     }
 
-    private void generatePDFData(ArrayList<pojoReportData> data) throws DocumentException {
+    private void generatePDFData() throws DocumentException {
 
 
         int tableSize = mConceptList.size() + 2;
@@ -343,12 +355,18 @@ public class TelemetryRreportActivity extends BaseActivity {
             document.add(paragraphappName2);
 
 
+
+
+
+
             Paragraph paragraphUserName = new Paragraph(sessionManager.getUserType() + ": " + sessionManager.getFirstName(), font2);
             Paragraph gradeParagraph = new Paragraph("Grade: " + gradeS, font2);
             //  Paragraph paraAsstypetitle = new Paragraph("Assessment type title: " + ConstantsA3.surveyTitle, font2);
             //  Paragraph paraAsstype = new Paragraph("ASSESSMENT TYPE: " + ConstantsA3.assessmenttype, font2);
             Paragraph paralang = new Paragraph("Language: " + sessionManager.getLanguage(), font2);
             Paragraph paraSubjecttype = new Paragraph("Subject: " + ConstantsA3.subject, font2);
+
+
             paraSubjecttype.setSpacingAfter(15);
             document.add(paragraphUserName);
             //  document.add(paraAsstypetitle);
@@ -373,7 +391,7 @@ public class TelemetryRreportActivity extends BaseActivity {
 
                     // pdfPCell.setColspan(1);
                     pdfPTableforContent.addCell(pdfPCell);
-                    pdfPCell = new PdfPCell(new Phrase("Question title & Concept name"));
+                    pdfPCell = new PdfPCell(new Phrase("Concept name"));
                     pdfPCell.setBackgroundColor(BaseColor.GRAY);
                     pdfCellStyles1(pdfPCell);
 
@@ -435,8 +453,8 @@ public class TelemetryRreportActivity extends BaseActivity {
                 }
             }
 
-            for (int j = 0; j < data.size(); j++) {
-                StudentTable table = data.get(j).getTable();
+            for (int j = 0; j < dataInternal.size(); j++) {
+                StudentTable table = dataInternal.get(j).getTable();
                 String name = table.getFirstName();
                 try {
                     if (table.getMiddleName() != null && !table.getMiddleName().equalsIgnoreCase("")) {
@@ -452,10 +470,10 @@ public class TelemetryRreportActivity extends BaseActivity {
                 pdfPTable.addCell(new PdfPCell(new Phrase(name)));
 
                 for (int k = 0; k < mConceptList.size(); k++) {
-                    if (data.get(j).getDetailReportsMap().get(table.getId()) != null) {
-                        int size = data.get(j).getDetailReportsMap().get(table.getId()).size();
-                        CombinePojo pojo = data.get(j).getDetailReportsMap().get(table.getId()).get(size - 1);
-                        PdfPCell pdfPCell = new PdfPCell(new PdfPCell(new Phrase(getAnswer(mConceptList.get(k), pojo) + "")));
+                    if (dataInternal.get(j).getDetailReportsMap().get(table.getId()) != null) {
+                        int size = dataInternal.get(j).getDetailReportsMap().get(table.getId()).size();
+                        CombinePojo pojo = dataInternal.get(j).getDetailReportsMap().get(table.getId()).get(size - 1);
+                        PdfPCell pdfPCell = new PdfPCell(new PdfPCell(new Phrase(getAnswer(mConceptList.get(k), pojo ,j,table.getId(),(size-1))+"")));
                         pdfCellStyles(pdfPCell);
                         pdfPTable.addCell(pdfPCell);
                         // getAnswer(mConceptList.get(k),pojo);
@@ -471,9 +489,9 @@ public class TelemetryRreportActivity extends BaseActivity {
 
 
                     if (k == mConceptList.size() - 1) {
-                        if (data.get(j).getDetailReportsMap().get(table.getId()) != null) {
-                            int size = data.get(j).getDetailReportsMap().get(table.getId()).size();
-                            int score = data.get(j).getDetailReportsMap().get(table.getId()).get(size - 1).getPojoAssessment().getScore();
+                        if (dataInternal.get(j).getDetailReportsMap().get(table.getId()) != null) {
+                            int size = dataInternal.get(j).getDetailReportsMap().get(table.getId()).size();
+                            int score = dataInternal.get(j).getDetailReportsMap().get(table.getId()).get(size - 1).getPojoAssessment().getScore();
                             PdfPCell pdfPCell = new PdfPCell(new PdfPCell(new Phrase(String.valueOf(score))));
                             pdfCellStyles(pdfPCell);
                             pdfPTable.addCell(pdfPCell);
@@ -486,7 +504,7 @@ public class TelemetryRreportActivity extends BaseActivity {
 
                 }
 
-                if (j == data.size() - 1) {
+                if (j == dataInternal.size() - 1) {
                     document.add(pdfPTable);
                     pdfPTable.setHeaderRows(1);
                     document.close();
@@ -562,27 +580,55 @@ public class TelemetryRreportActivity extends BaseActivity {
     }
 
 
-    public int getAnswer(String mconceptName1, CombinePojo pojo) {
+    public int getAnswer(String mconceptName1, CombinePojo pojo, int j, long stuid, int i) {
         int answerCount = 0;
 
 
-        for (pojoAssessmentDetail detail : pojo.getPojoAssessmentDetail()) {
+           // Log.d("shri","-----------------start ---:"+stuid);
+
+
+        for (int m=0;m< pojo.getPojoAssessmentDetail().size();m++) {
+
+            pojoAssessmentDetail detail = pojo.getPojoAssessmentDetail().get(m);
+           /* if(detail.getId_assessment().equalsIgnoreCase("2c54c984e21cc4"))
+            {
+                Log.d("shri",detail.toString());
+            }*/
 
             if (detail != null) {
+             //   Log.d("shri",de)
                 String mConceptName = getMConceptName(detail.getId_question());
                 //   Log.d("shri",concept+"------"+conceptName+":"+detail.getPass()+"qidAss"+detail.getId_assessment()+"-QID"+detail.getId_question()+"--id--"+detail.getId());
-
+                     //   pojo.getPojoAssessment().id_questionset;
                 //0 index concept,1 index will have question id,2 will have qtitle
                 //   if (mconceptName1.split("@@")[1].equalsIgnoreCase(detail.getId_question()) && detail.getPass() != null && detail.getPass().equalsIgnoreCase("P")) {
-                if (mconceptName1.split("@@")[0].equalsIgnoreCase(mConceptName) && detail.getPass() != null && detail.getPass().equalsIgnoreCase("P")&&mconceptName1.split("@@")[1].equalsIgnoreCase(detail.getId_question())) {
-                    //answerCount = answerCount + 1;
-                    answerCount = 1;
 
+                if (mconceptName1.split("@@")[0].equalsIgnoreCase(mConceptName) && detail.getPass() != null
+                        && detail.getPass().equalsIgnoreCase("P")&&detail.isFlag()==false) {
+                    //answerCount = answerCount + 1;
+                                   answerCount = 1;
+
+                   //    dataInternal.get(j).getDetailReportsMap().get(stuid).get(i).getPojoAssessmentDetail().remove(m);
+                   //   pojo.getPojoAssessmentDetail().remove(m);
+                    dataInternal.get(j).getDetailReportsMap().get(stuid).get(i).getPojoAssessmentDetail().get(m).setFlag(true);
+                  return   answerCount;
+                    //  m=m-1;
+                }else if(mconceptName1.split("@@")[0].equalsIgnoreCase(mConceptName) &&detail.isFlag()==false)
+                {
+
+                     dataInternal.get(j).getDetailReportsMap().get(stuid).get(i).getPojoAssessmentDetail().get(m).setFlag(true);
+                    // pojo.getPojoAssessmentDetail().remove(m);
+                     // m=m-1;
+                    return answerCount;
                 }
+
+
+
             }
 
 
         }
+
 
         return answerCount;
 
@@ -669,6 +715,7 @@ public class TelemetryRreportActivity extends BaseActivity {
         ArrayList<String> qIDtemp = new ArrayList<>();
 
         mConceptList = new ArrayList<>();
+      //  mConceptList2nd = new ArrayList<>();
         ArrayList<QuestionTable> listAllQuestions = new ArrayList<>();
         Query QuestionsetQuery = Query.select().from(QuestionSetDetailTable.TABLE)
                 .where(QuestionSetDetailTable.ID_QUESTIONSET.eq(questionsetId));
@@ -688,6 +735,7 @@ public class TelemetryRreportActivity extends BaseActivity {
                         qIDtemp.add(questionTable.getIdQuestion());
                         //if (!mConceptList.contains(questionTable.getMconceptName())) {
                         mConceptList.add(questionTable.getMconceptName() + "@@" + questionTable.getIdQuestion() + "@@" + questionTable.getQuestionTitle());
+                       // mConceptList2nd.add(questionTable.getIdQuestion() );
                         //  }
                         listAllQuestions.add(questionTable);
                     }

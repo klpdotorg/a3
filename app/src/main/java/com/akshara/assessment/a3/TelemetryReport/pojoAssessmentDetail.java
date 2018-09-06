@@ -7,6 +7,15 @@ public class pojoAssessmentDetail {
     int id,synced;
     String id_assessment,id_question,answer_given,pass;
 
+    boolean flag;
+
+    public boolean isFlag() {
+        return flag;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
+    }
 
     @Override
     public String toString() {
