@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.akshara.assessment.a3.WebViewActivity">
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+
+
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+
+        android:layout_marginBottom="54dp"
+        android:layout_marginEnd="32dp"
+        android:onClick="printPDF"
+        android:src="@drawable/vector_download" />
+    <WebView
+        android:id="@+id/myWebView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+</RelativeLayout>

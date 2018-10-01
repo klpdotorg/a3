@@ -103,8 +103,6 @@
     <string name="selectLanguage">Please select application language</string>
 
 
-
-
     <string-array name="grade">
         <item>1</item>
         <item>2</item>

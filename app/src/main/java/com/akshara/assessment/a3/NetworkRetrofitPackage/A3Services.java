@@ -21,6 +21,7 @@ public class A3Services {
 
 
 
+/*
 
 
     public static final String PROGRAMSURL = BuildConfig.HOST_ASSESSMENT + "/a3/getPrograms";
@@ -31,11 +32,12 @@ public class A3Services {
   public static final String GET_TELEMETRY_DATA = BuildConfig.HOST_ASSESSMENT + "/a3/getAssessmentTelemetryData";
 
 
+*/
 
 
 
     //Production
-/*
+
 
 
    public static final String ASSESSMENT_URL = BuildConfig.HOST_ASSESSMENT + "/getAssessmentTypes";
@@ -44,7 +46,7 @@ public class A3Services {
     public static final String GET_TELEMETRY_DATA = BuildConfig.HOST_ASSESSMENT + "/getAssessmentTelemetryData";
 
 
-*/
+
 
 
 
