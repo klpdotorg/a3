@@ -86,7 +86,7 @@ dependencies {
     //implementation 'com.itextpdf:itextg:5.5.10'
     implementation 'com.itextpdf:itextpdf:5.5.13'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.3'
-    implementation 'com.crittercism.dexmaker:dexmaker:1.4'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

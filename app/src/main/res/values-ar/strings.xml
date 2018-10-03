@@ -217,7 +217,7 @@
     <string name="inst6">- Team Ganitha Kalika Andolana</string>
     <string name="startAssessment">Continue Assessment</string>
     <string name="sync">Sync</string>
-    <string name="dataSyncing">Data Syncing...</string>
+    <string name="dataSyncing">Your data will be synced..</string>
     <string name="notauth">You are not authorized to conduct this assessment. Please contact Akshara.9845079590</string>
     <string name="call">Call</string>
     <string name="telemetry_report_loading_failed">Telemetry report loading failed</string>

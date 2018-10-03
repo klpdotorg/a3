@@ -277,17 +277,25 @@ public class TelemetryRreportActivity extends BaseActivity {
                 "    padding: 5px;\n" +
                 "    text-align: left;   style=\"width:100%\"  \n" +
                 "}\n" +
-                "</style>\n" +
+                "th span \n" +
+                "{\n" +
+                "  -ms-writing-mode: tb-rl;\n" +
+                "  -webkit-writing-mode: vertical-rl;\n" +
+                "  writing-mode: vertical-rl;\n" +
+                "  transform: rotate(180deg);\n" +
+                "  white-space: nowrap;\n" +
+                "}</style>\n" +
                 "</head>\n" +
                 "<body>\n";
 
         final String bodyEnd = "</body></html>";
+
         String title = ConstantsA3.subject + " " + "Assessment for " + ConstantsA3.schoolName;
-        String assessmenttype = "ASSESSMENT TYPE: " + ConstantsA3.assessmenttype;
+        String assessmenttype = "ASSESSMENT TYPE: " + ConstantsA3.assessmenttype+" , "+gradeS;
         String userName = sessionManager.getUserType() + ": " + sessionManager.getFirstName();
-        String grade = "Grade: " + gradeS;
         String language = "Language: " + sessionManager.getLanguage();
         String subject = "Subject: " + ConstantsA3.subject;
+        String grade = "Grade: " +gradeS ;
 
         String headers1 = "<h2><center>" + title + "</center></h2>";
         String headers2 = "<h2><center>" + assessmenttype + "</center></h2>";
@@ -296,24 +304,65 @@ public class TelemetryRreportActivity extends BaseActivity {
         String Print3 = "<h3>" + language + "</h3>";
         String Print4 = "<h3>" + subject + "</h3>";
 
-        final String tableStart="<table style=\"width:100%\"> <tr>";
-         StringBuilder htmlData = new StringBuilder(dataTillBodyTagOpen + headers1 + headers2 + Print1 + Print2 + Print3 + Print4 +tableStart);
+
+
+        StringBuilder firstTable =new StringBuilder();
+
+        firstTable.append("<table style=\\\"width:100%\\\"> <tr>");
+
+        for (int i = 0; i < mConceptList.size(); i++) {
+
+            if (i == 0) {
+                String tableheader1 =" <th style='text-align:center;vertical-align:middle;font-weight:bold;background-color:#cccccc';width=\"20%\"> Sl.No</th><th style='font-weight:bold;background-color:#cccccc';width=\\\"80%\\\">Micro-concept name</th></tr>";
+                firstTable.append(tableheader1);
+            }
+
+
+             String mconcept= mConceptList.get(i).split("@@")[0];
+             String tableheader1 ="<tr><th style='text-align:center;vertical-align:middle'; width=\"20%\">"+(i+1)+"</th><th width=\"80%\">"+mconcept+"</th></tr>";
+             firstTable.append(tableheader1);
+
+
+
+            if (i == mConceptList.size() - 1) {
+             //   document.add(pdfPTableforContent);
+              //  document.newPage();
+                firstTable.append("</table><p style=\"page-break-before: always\">");
+            }
+
+        }
+
+
+
+
+        final String tableStart="<table style=\"width:100%\";page-break-before: always> <tr>";
+         StringBuilder htmlData = new StringBuilder(dataTillBodyTagOpen + headers1 + headers2 + Print1 +  Print3 + Print4 +firstTable+tableStart);
         String tempSize = (75 / mConceptList.size())+"%";
         for (int m = 0; m < mConceptList.size(); m++) {
 
             if (m == 0) {
-                String tableheader1 =" <th width=\"15%\"> Student Name</th>";
+                String tableheader1 =" <th style='font-weight:bold;background-color:#cccccc';width=\"15%\"> Student Name</th>";
                 htmlData.append(tableheader1);
 
             }
+            //0 index mconcept,1 index will have question id,2 will have qtitle& 3 concept
+
+            //
+            String concept=mConceptList.get(m).split("@@")[3];
+            try {
+                concept = concept.split("-", 2)[1];
+            }catch (Exception e)
+            {
+
+            }
            // String tablemconceptsheader="<th style='text-align:center;vertical-align:middle';width="+tempSize+">"+String.valueOf(m + 1)+"</th>";
-            String tablemconceptsheader="<th style='text-align:center;vertical-align:middle';width="+tempSize+">"+mConceptList.get(m).split("@@")[0]+"</th>";
+            String tablemconceptsheader="<th style='text-align:center;vertical-align:middle;font-weight:bold;background-color:#cccccc';width="+tempSize+"><span>"+concept+"</span></th>";
             htmlData.append(tablemconceptsheader);
             //Phrase phrase = new Phrase(String.valueOf(mConceptList.get(m).split("@@")[0]),getFont());
 
             if (m == (mConceptList.size() - 1)) {
                 String sizetemp="10%";
-                htmlData.append("<th style='text-align:center;vertical-align:middle' width="+sizetemp+">Score</th> </tr>");
+                htmlData.append("<th style='text-align:center;vertical-align:middle;font-weight:bold;background-color:#cccccc' width="+sizetemp+">Score</th> </tr>");
             }
         }
          //first header completed
@@ -747,7 +796,6 @@ public class TelemetryRreportActivity extends BaseActivity {
                 String mConceptName = getMConceptName(detail.getId_question());
                 //   Log.d("shri",concept+"------"+conceptName+":"+detail.getPass()+"qidAss"+detail.getId_assessment()+"-QID"+detail.getId_question()+"--id--"+detail.getId());
                 //   pojo.getPojoAssessment().id_questionset;
-                //0 index concept,1 index will have question id,2 will have qtitle
                 //   if (mconceptName1.split("@@")[1].equalsIgnoreCase(detail.getId_question()) && detail.getPass() != null && detail.getPass().equalsIgnoreCase("P")) {
 
                 if (mconceptName1.split("@@")[0].equalsIgnoreCase(mConceptName) && detail.getPass() != null
@@ -879,7 +927,7 @@ public class TelemetryRreportActivity extends BaseActivity {
                     if (!qIDtemp.contains(questionTable.getIdQuestion())) {
                         qIDtemp.add(questionTable.getIdQuestion());
                         //if (!mConceptList.contains(questionTable.getMconceptName())) {
-                        mConceptList.add(questionTable.getMconceptName() + "@@" + questionTable.getIdQuestion() + "@@" + questionTable.getQuestionTitle());
+                        mConceptList.add(questionTable.getMconceptName() + "@@" + questionTable.getIdQuestion() + "@@" + questionTable.getQuestionTitle()+"@@"+questionTable.getConceptName());
                         // mConceptList2nd.add(questionTable.getIdQuestion() );
                         //  }
                         listAllQuestions.add(questionTable);

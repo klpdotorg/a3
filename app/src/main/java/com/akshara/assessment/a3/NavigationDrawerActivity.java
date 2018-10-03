@@ -1,11 +1,21 @@
 package com.akshara.assessment.a3;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -38,6 +48,7 @@ import com.akshara.assessment.a3.db.Boundary;
 import com.akshara.assessment.a3.db.KontactDatabase;
 import com.akshara.assessment.a3.db.School;
 import com.crashlytics.android.Crashlytics;
+import com.gka.akshara.assesseasy.MainActivity;
 import com.gka.akshara.assesseasy.deviceDatastoreMgr;
 import com.gka.akshara.assesseasy.globalvault;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -97,8 +108,14 @@ public class NavigationDrawerActivity extends BaseActivity
 
         db = ((A3Application) getApplicationContext()).getDb();
 
-
-        //     dbHelper=new DBHelper(this);
+        if(!Settings.System.canWrite(getApplicationContext())) {
+            if(ConstantsA3.SAID_NO_WRITE_PERMISSION==false) {
+                alertDailogCode();
+            }
+        }else {
+            bitnessPermission(NavigationDrawerActivity.this);
+        }
+          //     dbHelper=new DBHelper(this);
         try {
             Bundle bundle = new Bundle();
             bundle.putString(AnalyticsConstants.App_Version, BuildConfig.VERSION_NAME);
@@ -188,6 +205,92 @@ public class NavigationDrawerActivity extends BaseActivity
         }
 
     }
+public void alertDailogCode()
+{
+    AlertDialog.Builder builder1 = new AlertDialog.Builder(NavigationDrawerActivity.this);
+    builder1.setMessage("Please provide write permission to control app brightness..");
+    builder1.setCancelable(true);
+
+    builder1.setPositiveButton(
+            "Yes",
+            new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+
+                    dialog.cancel();
+                    bitnessPermission(NavigationDrawerActivity.this);
+
+
+                }
+            });
+
+    builder1.setNegativeButton(
+            "No",
+            new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.cancel();
+                    ConstantsA3.SAID_NO_WRITE_PERMISSION=true;
+                }
+            });
+
+    AlertDialog alert11 = builder1.create();
+    alert11.show();
+
+}
+    private void changeScreenBrightness(Context context)
+    {
+        // Change the screen brightness change mode to manual.
+        Settings.System.putInt(context.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
+        // Apply the screen brightness value to the system, this will change the value in Settings ---> Display ---> Brightness level.
+        // It will also change the screen brightness for the device.
+        Settings.System.putInt(context.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, 160);
+
+        /*
+        Window window = getWindow();
+        WindowManager.LayoutParams layoutParams = window.getAttributes();
+        layoutParams.screenBrightness = screenBrightnessValue / 255f;
+        window.setAttributes(layoutParams);
+        */
+    }
+    public  void bitnessPermission(Activity context){
+        boolean permission;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            permission = Settings.System.canWrite(context);
+        } else {
+            permission = ContextCompat.checkSelfPermission(context, android.Manifest.permission.WRITE_SETTINGS) == PackageManager.PERMISSION_GRANTED;
+        }
+        if (permission) {
+            changeScreenBrightness(getApplicationContext());
+            //do your code
+        }  else {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
+                intent.setData(Uri.parse("package:" + context.getPackageName()));
+                context.startActivityForResult(intent, 123);
+            } else {
+                ActivityCompat.requestPermissions(context, new String[]{android.Manifest.permission.WRITE_SETTINGS}, 123);
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 123 && Settings.System.canWrite(this)){
+            Log.d("TAG", "MainActivity.CODE_WRITE_SETTINGS_PERMISSION success");
+            //do your code
+            changeScreenBrightness(getApplicationContext());
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 123 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            //do your code
+            changeScreenBrightness(getApplicationContext());
+        }
+    }
+
 
 
     @Override

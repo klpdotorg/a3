@@ -216,10 +216,10 @@
     <string name="inst6">- ಗಣಿತ ಕಲಿಕಾ ಆಂದೋಲನದ ಮಿತ್ರರು </string>
     <string name="startAssessment">ಮೌಲ್ಯಮಾಪನ ಮುಂದುವರಿಸಿ</string>
     <string name="sync">ಸಿಂಕ್</string>
-    <string name="dataSyncing">ಸಿಂಕ್ ಮಾಡಲಾಗುತ್ತಿದೆ...</string>
+    <string name="dataSyncing">ನಿಮ್ಮ ಡೇಟಾವನ್ನು ಸಿಂಕ್ ಮಾಡಲಾಗುವುದು ...</string>
     <string name="notauth">ನಿಮಗೆ ಈ ಮೌಲ್ಯಮಾಪನ ಮಾಡುವ ಅನುಮತಿ ಇಲ್ಲ. ದಯವಿಟ್ಟು ಅಕ್ಷರ ಫೌಂಡೇಶನ್ ಸಿಬ್ಬಂದಿಗೆ ಸಂಪರ್ಕಿಸಿ. 9845079590</string>
     <string name="call">ಕರೆ</string>
-    <string name="telemetry_report_loading_failed">Telemetry report loading failed</string>
+    <string name="telemetry_report_loading_failed">ಟೆಲಿಮೆಟ್ರಿ ವರದಿ ಲೋಡ್ ವಿಫಲವಾಗಿದೆ</string>
     <string name="downloadAssessment">ಮೌಲ್ಯಮಾಪನದ ವರದಿ</string>
 
 
