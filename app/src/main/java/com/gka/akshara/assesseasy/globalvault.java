@@ -33,10 +33,13 @@ public class globalvault {
 
     // Telemetry REST API URL
 //  prod
-   // public static String a3_telemetryapi_baseurl = "https://a3.klp.org.in/"; // "http://dev.klp.org.in/a3/";
+     public static String a3_telemetryapi_baseurl = "https://a3.klp.org.in/"; // "http://dev.klp.org.in/a3/";
 
     //dev
-   public static String a3_telemetryapi_baseurl = "http://dev.klp.org.in/a3/"; // "http://dev.klp.org.in/a3/";
+    // "https://dev.a3.klp.org.in:8080/";
+   // public static String a3_telemetryapi_baseurl = "http://dev.klp.org.in/a3/"; // "http://dev.klp.org.in/a3/";
+ //   public static String a3_telemetryapi_baseurl = "https://dev.a3.ilp.org.in:8080/"; // "http://dev.klp.org.in/a3/";
+   // public static String a3_telemetryapi_authkey = "A3APIAKSHARAAUTHKEY#2018";
     public static String a3_telemetryapi_authkey = "A3APIAKSHARAAUTHKEY#2018";
 
     // Background images for Question Pages. An image is randomly picked from this array

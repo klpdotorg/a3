@@ -43,6 +43,20 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.90" />
 
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_leftconfirmlayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.01" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_rightconfirmlayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.99" />
+
     <ImageButton
         android:id="@+id/buttonBack"
         android:layout_width="wrap_content"
@@ -93,6 +107,130 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline_right1"
         app:layout_constraintStart_toStartOf="@+id/guideline_left1"
         app:layout_constraintTop_toTopOf="@+id/guideline_top1" />
+
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/insideconfirmationmsgconstraintlayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/bg_workarea"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_bottom1"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_rightconfirmlayout"
+        app:layout_constraintStart_toStartOf="@+id/guideline_leftconfirmlayout"
+        app:layout_constraintTop_toTopOf="@+id/guideline_top1"
+        android:visibility="invisible">
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_top2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.05" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_bottom2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.50" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_left2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.05" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_right2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.90" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_left3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.30" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_right3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.70" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_top3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.60" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline_bottom3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.98" />
+
+        <TextView
+            android:id="@+id/textViewConfirmation"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="fill_vertical"
+            android:text="Have you completed the assessments? Are you sure you want to exit?"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/qp_fib_text_questiontext"
+            android:lineSpacingMultiplier="@dimen/linespacemultiplier_forquestiontext"
+            android:textStyle="bold"
+            android:typeface="sans"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_right2"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left2"
+            app:layout_constraintTop_toTopOf="@+id/guideline_top2"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_bottom2" />
+
+        <ImageButton
+            android:id="@+id/buttonConfirmWrong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:background="#00000000"
+            android:onClick="clickedConfirmWrong"
+            app:layout_constraintStart_toStartOf="@+id/guideline_left3"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_bottom3"
+            app:layout_constraintTop_toTopOf="@+id/guideline_top3"
+            app:srcCompat="@drawable/wrong" />
+
+        <ImageButton
+            android:id="@+id/buttonConfirmRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="8dp"
+            android:background="#00000000"
+            android:onClick="clickedConfirmRight"
+            app:layout_constraintEnd_toStartOf="@+id/guideline_right3"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_bottom3"
+            app:layout_constraintTop_toTopOf="@+id/guideline_top3"
+            app:srcCompat="@drawable/greentickclick" />
+
+    </android.support.constraint.ConstraintLayout>
 
 
 </android.support.constraint.ConstraintLayout>

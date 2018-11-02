@@ -221,6 +221,12 @@
     <string name="call">ಕರೆ</string>
     <string name="telemetry_report_loading_failed">ಟೆಲಿಮೆಟ್ರಿ ವರದಿ ಲೋಡ್ ವಿಫಲವಾಗಿದೆ</string>
     <string name="downloadAssessment">ಮೌಲ್ಯಮಾಪನದ ವರದಿ</string>
+    <string name="studntName">ವಿದ್ಯಾರ್ಥಿಯ ಹೆಸರು</string>
+    <string name="stscore">ಗಳಿಸಿದ ಅಂಕ</string>
+    <string name="slno">ಕ್ರಮ ಸಂಖ್ಯೆ</string>
+    <string name="micro">ಪರಿಕಲ್ಪನೆ</string>
+    <string name="assessment_type_rep">ಮೌಲ್ಯಮಾಪನದ ವಿಧ: </string>
+    <string name="subject_rep">ವಿಷಯ: </string>
 
 
     <string-array name="array_subject">

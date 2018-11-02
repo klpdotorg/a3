@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,9 +16,6 @@ import com.akshara.assessment.a3.R;
 import com.akshara.assessment.a3.UtilsPackage.AnalyticsConstants;
 import com.crashlytics.android.Crashlytics;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.time.LocalTime;
 
 public class finalpage_boywins extends AppCompatActivity {
 
@@ -51,15 +49,51 @@ public class finalpage_boywins extends AppCompatActivity {
     public void clickedScreen(View view) { // clicking anywhere on the screen
     }
 
+    public void clickedConfirmRight(View view) { // Clicked 'Right tick' on the 'You want to Exit?' confirmation pop-up
+
+        ConstraintLayout confirmlayout = (ConstraintLayout)findViewById(R.id.insideconfirmationmsgconstraintlayout);
+        confirmlayout.setVisibility(View.INVISIBLE);
+
+        if (MainActivity.debugalerts)
+            Log.d("EASYASSESS", "finalpage_boywins:clickedConfirmRight(). Clicked RIGHT on Confirmation popup." );
+
+
+        saveAndSyncTelemetry();
+    }
+
+    public void clickedConfirmWrong(View view) { // Clicked 'Wrong X' on the 'You want to Exit?' confirmation pop-up
+
+        ConstraintLayout confirmlayout = (ConstraintLayout)findViewById(R.id.insideconfirmationmsgconstraintlayout);
+        confirmlayout.setVisibility(View.INVISIBLE);
+
+        ImageButton finishbutton = (ImageButton) findViewById(R.id.buttonFinish);
+        finishbutton.setEnabled(true); // Enable the 'Finish' button again
+
+        ImageButton backbutton = (ImageButton) findViewById(R.id.buttonBack);
+        backbutton.setEnabled(true); // Enable the 'Back' button again
+
+        if (MainActivity.debugalerts)
+            Log.d("EASYASSESS", "finalpage_boywins:clickedConfirmWrong(). Clicked WRONG on Confirmation popup." );
+    }
+
     public void clickedFinish(View view) { // Clicked Tick button (Finish the Assessment)
 
-        ImageButton finishbutton = (ImageButton)findViewById(R.id.buttonFinish);
+        ConstraintLayout confirmlayout = (ConstraintLayout)findViewById(R.id.insideconfirmationmsgconstraintlayout);
+        confirmlayout.setVisibility(View.VISIBLE); // Make the 'You want to Exit' confirmation pop-up visible
+
+        ImageButton finishbutton = (ImageButton) findViewById(R.id.buttonFinish);
         finishbutton.setEnabled(false); // Disable the 'Finish' button once clicked
 
-        ImageButton backbutton = (ImageButton)findViewById(R.id.buttonBack);
+        ImageButton backbutton = (ImageButton) findViewById(R.id.buttonBack);
         backbutton.setEnabled(false); // Disable the 'Back' button as well when the 'Finish' button is clicked
 
-        if(globalvault.finished) // If already clicked on 'Exit' and the app is in this function and User clicked 'Exit' agai
+        if (MainActivity.debugalerts)
+            Log.d("EASYASSESS", "finalpage_boywins:clickedFinish(). Clicked Finish." );
+    }
+
+    public void saveAndSyncTelemetry() {
+
+        if(globalvault.finished) // If already clicked on 'Exit' and the app is in this function and User clicked 'Exit' again
             return;
         else
             globalvault.finished = true;
@@ -91,7 +125,7 @@ public class finalpage_boywins extends AppCompatActivity {
                 for (int i = 0; i < globalvault.questions.length; i++) {
 
                     if (MainActivity.debugalerts)
-                        Log.d("EASYASSESS", "finalpage_boywins:clickedFinish(). correctAnswer:" + globalvault.questions[i].getAnswerCorrect() + " givenAnswer:" + globalvault.questions[i].getAnswerGiven() + " Pass:" + globalvault.questions[i].getPass());
+                        Log.d("EASYASSESS", "finalpage_boywins:saveAndSyncTelemetry(). correctAnswer:" + globalvault.questions[i].getAnswerCorrect() + " givenAnswer:" + globalvault.questions[i].getAnswerGiven() + " Pass:" + globalvault.questions[i].getPass());
 
                     String[] records_assessment_detail = new String[4];
                     records_assessment_detail[0] = assementid;
@@ -110,7 +144,7 @@ public class finalpage_boywins extends AppCompatActivity {
             }
         }
         catch(Exception e) {
-            Log.e("EASYASSESS", "finalpage_boywins:clickedFinish: Exception: "+e.toString());
+            Log.e("EASYASSESS", "finalpage_boywins:saveAndSyncTelemetry: Exception: "+e.toString());
         }
 
         globalvault.questions = null;
@@ -124,10 +158,6 @@ public class finalpage_boywins extends AppCompatActivity {
             } catch (Exception e) {
                 Crashlytics.log("Analytics exception in assessment start");
             }
-
-
-
-
             // Return to the ContainerApp
             Intent intent = new Intent(this, Class.forName(globalvault.containerapp_returntoactivity));
             intent.putExtra("A3APP_INSTITUTIONID", globalvault.a3app_institutionId);
@@ -144,7 +174,7 @@ public class finalpage_boywins extends AppCompatActivity {
             startActivity(intent);
         }
         catch(Exception e) {
-            Log.e("EASYASSESS", "finalpage_boywins:clickedFinish: Exception:"+e.toString());
+            Log.e("EASYASSESS", "finalpage_boywins:saveAndSyncTelemetry: Exception:"+e.toString());
         }
     }
 

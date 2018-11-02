@@ -26,12 +26,14 @@ import android.support.v4.os.CancellationSignal;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import com.akshara.assessment.a3.TelemetryReport.TelemetryRreportActivity;
+import com.akshara.assessment.a3.UtilsPackage.ConstantsA3;
 import com.akshara.assessment.a3.UtilsPackage.DailogUtill;
 import com.crashlytics.android.Crashlytics;
 
@@ -62,6 +64,8 @@ public class WebViewActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
         webView = findViewById(R.id.myWebView);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle(getResources().getString(R.string.studentScore));
 
         data = getIntent().getStringExtra("data");
         //     webView.loadData(data, "text/html", "UTF-8");
@@ -76,7 +80,25 @@ public class WebViewActivity extends BaseActivity {
         });
 
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
 
+
+                finish();
+                overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+    }
   /*  public void genPdfFile() {
         String currentDateandTime = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date());
 
@@ -115,7 +137,7 @@ public class WebViewActivity extends BaseActivity {
         android.print.PdfPrint pdfPrint = new android.print.PdfPrint(attributes);
         String currentDateandTime = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date());
 
-        String fileName = "output_" + currentDateandTime + ".pdf";
+        String fileName = ConstantsA3.pdftitle+"_" + currentDateandTime + ".pdf";
 
         pdfPrint.print(webView.createPrintDocumentAdapter(jobName), path, fileName);
 

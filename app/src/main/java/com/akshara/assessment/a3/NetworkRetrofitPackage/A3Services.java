@@ -24,15 +24,15 @@ public class A3Services {
 /*
 
 
-    public static final String PROGRAMSURL = BuildConfig.HOST_ASSESSMENT + "/a3/getPrograms";
-    public static final String ASSESSMENT_URL = BuildConfig.HOST_ASSESSMENT + "/a3/getAssessmentTypes";
-    public static final String QUESTIONSET_URL = BuildConfig.HOST_ASSESSMENT + "/a3/getQuestionSets";
 
-
-  public static final String GET_TELEMETRY_DATA = BuildConfig.HOST_ASSESSMENT + "/a3/getAssessmentTelemetryData";
-
-
+    public static final String PROGRAMSURL = BuildConfig.HOST_ASSESSMENT + "/getPrograms";
+    public static final String ASSESSMENT_URL = BuildConfig.HOST_ASSESSMENT + "/getAssessmentTypes";
+    public static final String QUESTIONSET_URL = BuildConfig.HOST_ASSESSMENT + "/getQuestionSets";
+    public static final String GET_TELEMETRY_DATA = BuildConfig.HOST_ASSESSMENT + "/getAssessmentTelemetryData";
 */
+
+
+
 
 
 
@@ -40,10 +40,12 @@ public class A3Services {
 
 
 
+
    public static final String ASSESSMENT_URL = BuildConfig.HOST_ASSESSMENT + "/getAssessmentTypes";
     public static final String QUESTIONSET_URL = BuildConfig.HOST_ASSESSMENT + "/getQuestionSets";
     public static final String PROGRAMSURL = BuildConfig.HOST_ASSESSMENT + "/getPrograms";
     public static final String GET_TELEMETRY_DATA = BuildConfig.HOST_ASSESSMENT + "/getAssessmentTelemetryData";
+
 
 
 

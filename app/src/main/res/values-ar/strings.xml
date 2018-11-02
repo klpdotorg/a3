@@ -222,6 +222,12 @@
     <string name="call">Call</string>
     <string name="telemetry_report_loading_failed">Telemetry report loading failed</string>
     <string name="downloadAssessment">Assessment Report</string>
+    <string name="studntName">Student Name</string>
+    <string name="stscore">Score</string>
+    <string name="slno">Sl.No</string>
+    <string name="micro">Micro-concept name</string>
+    <string name="assessment_type_rep">ASSESSMENT TYPE: </string>
+    <string name="subject_rep">Subject: </string>
 
 
     <string-array name="array_subject">

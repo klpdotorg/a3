@@ -112,6 +112,7 @@ public class AssessmentSelectorActivity extends BaseActivity {
                         // ConstantsA3.surveyTitle=questionSetTables.get(position).getQsetTitle();
                         ConstantsA3.subject=arrayAdapter.getItem(which).getSubject_name();
                         ConstantsA3.assessmenttype=arrayAdapter.getItem(which).getAssesstype_name();
+                        ConstantsA3.pdftitle=gradeName+"_"+strName+"_"+ConstantsA3.schoolName;
                         intent.putExtras(bundle);
                         startActivity(intent);
                         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);

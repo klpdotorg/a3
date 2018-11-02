@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -34,17 +35,6 @@ import com.akshara.assessment.a3.db.QuestionTable;
 import com.akshara.assessment.a3.db.StudentTable;
 import com.crashlytics.android.Crashlytics;
 import com.gka.akshara.assesseasy.deviceDatastoreMgr;
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
 import com.yahoo.squidb.data.SquidCursor;
 import com.yahoo.squidb.sql.Query;
 
@@ -101,7 +91,7 @@ public class TelemetryRreportActivity extends BaseActivity {
             sessionManager = new SessionManager(getApplicationContext());
 //        ArrayList<QuestionTable> QuestionTitles = getAllQuestionSetTitle(EASYASSESS_QUESTIONSETID);
             reportRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+            Log.d("shri","----"+EASYASSESS_QUESTIONSETID);
             reportRecyclerView.setItemAnimator(new DefaultItemAnimator());
             studentIds = getStudentIds(A3APP_INSTITUTIONID, A3APP_GRADEID);
             gradeS = getResources().getStringArray(R.array.array_grade)[A3APP_GRADEID - 1];
@@ -115,7 +105,7 @@ public class TelemetryRreportActivity extends BaseActivity {
             adapter.notifyDataSetChanged();
 
         } catch (Exception e) {
-            Crashlytics.log("TelemetryRreportActivity report crash:" + e.getMessage());
+            Crashlytics.log("TelemetryRreportActivity report crash:");
             //     DailogUtill.showDialog("Oops some thing went wrong",getSupportFragmentManager(),getApplicationContext());
             DailogUtill.showDialog(getResources().getString(R.string.oops), getSupportFragmentManager(), TelemetryRreportActivity.this);
 
@@ -266,7 +256,7 @@ public class TelemetryRreportActivity extends BaseActivity {
     public void GenerateHtmlString() {
         final String dataTillBodyTagOpen = "<!DOCTYPE html>\n" +
                 "<html>\n" +
-                "<meta lang=\"zh\" charset=\"UTF-8\"/>\n" +
+                "<meta charset=\"UTF-8\"/>\n" +
                 "<head>\n" +
                 "<style>\n" +
                 "table, th, td {\n" +
@@ -291,17 +281,17 @@ public class TelemetryRreportActivity extends BaseActivity {
         final String bodyEnd = "</body></html>";
 
         String title = ConstantsA3.subject + " " + "Assessment for " + ConstantsA3.schoolName;
-        String assessmenttype = "ASSESSMENT TYPE: " + ConstantsA3.assessmenttype+" , "+gradeS;
+        String assessmenttype = getResources().getString(R.string.assessment_type_rep)+" "+ ConstantsA3.assessmenttype+" , "+gradeS;
         String userName = sessionManager.getUserType() + ": " + sessionManager.getFirstName();
-        String language = "Language: " + sessionManager.getLanguage();
-        String subject = "Subject: " + ConstantsA3.subject;
-        String grade = "Grade: " +gradeS ;
+       // String language = "Language: " + sessionManager.getLanguage();
+        String subject = getResources().getString(R.string.subject_rep) +" "+ ConstantsA3.subject;
+        //String grade = "Grade: " +gradeS ;
 
         String headers1 = "<h2><center>" + title + "</center></h2>";
         String headers2 = "<h2><center>" + assessmenttype + "</center></h2>";
         String Print1 = "<h3>" + userName + "</h3>";
-        String Print2 = "<h3>" + grade + "</h3>";
-        String Print3 = "<h3>" + language + "</h3>";
+       // String Print2 = "<h3>" + grade + "</h3>";
+       // String Print3 = "<h3>" + language + "</h3>";
         String Print4 = "<h3>" + subject + "</h3>";
 
 
@@ -313,7 +303,7 @@ public class TelemetryRreportActivity extends BaseActivity {
         for (int i = 0; i < mConceptList.size(); i++) {
 
             if (i == 0) {
-                String tableheader1 =" <th style='text-align:center;vertical-align:middle;font-weight:bold;background-color:#cccccc';width=\"20%\"> Sl.No</th><th style='font-weight:bold;background-color:#cccccc';width=\\\"80%\\\">Micro-concept name</th></tr>";
+                String tableheader1 =" <th style='text-align:center;vertical-align:middle;font-weight:bold;background-color:#cccccc';width=\"20%\">"+getResources().getString(R.string.slno)+"</th><th style='font-weight:bold;background-color:#cccccc';width=\\\"80%\\\">"+getResources().getString(R.string.micro)+"</th></tr>";
                 firstTable.append(tableheader1);
             }
 
@@ -336,15 +326,16 @@ public class TelemetryRreportActivity extends BaseActivity {
 
 
         final String tableStart="<table style=\"width:100%\";page-break-before: always> <tr>";
-         StringBuilder htmlData = new StringBuilder(dataTillBodyTagOpen + headers1 + headers2 + Print1 +  Print3 + Print4 +firstTable+tableStart);
+         StringBuilder htmlData = new StringBuilder(dataTillBodyTagOpen + headers1 + headers2 + Print1  + Print4 +firstTable+tableStart);
         String tempSize = (75 / mConceptList.size())+"%";
         for (int m = 0; m < mConceptList.size(); m++) {
 
             if (m == 0) {
-                String tableheader1 =" <th style='font-weight:bold;background-color:#cccccc';width=\"15%\"> Student Name</th>";
+                String tableheader1 =" <th style='font-weight:bold;background-color:#cccccc';width=\"15%\">"+ getResources().getString(R.string.studntName)+"</th>";
                 htmlData.append(tableheader1);
 
             }
+            //0 index mconcept,1 index will have question id,2 will have qtitle& 3 concept
             //0 index mconcept,1 index will have question id,2 will have qtitle& 3 concept
 
             //
@@ -356,13 +347,13 @@ public class TelemetryRreportActivity extends BaseActivity {
 
             }
            // String tablemconceptsheader="<th style='text-align:center;vertical-align:middle';width="+tempSize+">"+String.valueOf(m + 1)+"</th>";
-            String tablemconceptsheader="<th style='text-align:center;vertical-align:middle;font-weight:bold;background-color:#cccccc';width="+tempSize+"><span>"+concept+"</span></th>";
+            String tablemconceptsheader="<th style='text-align:center;vertical-align:middle;font-weight:bold;background-color:#cccccc';width="+tempSize+">"+concept+"</th>";
             htmlData.append(tablemconceptsheader);
             //Phrase phrase = new Phrase(String.valueOf(mConceptList.get(m).split("@@")[0]),getFont());
 
             if (m == (mConceptList.size() - 1)) {
                 String sizetemp="10%";
-                htmlData.append("<th style='text-align:center;vertical-align:middle;font-weight:bold;background-color:#cccccc' width="+sizetemp+">Score</th> </tr>");
+                htmlData.append("<th style='text-align:center;vertical-align:middle;font-weight:bold;background-color:#cccccc' width="+sizetemp+">"+getResources().getString(R.string.stscore)+"</th> </tr>");
             }
         }
          //first header completed
@@ -459,9 +450,10 @@ public class TelemetryRreportActivity extends BaseActivity {
 
 
 
+/*
 
 
-    private void generatePDFData() throws DocumentException {
+   private void generatePDFData() throws DocumentException {
 
 
         int tableSize = mConceptList.size() + 2;
@@ -484,10 +476,12 @@ public class TelemetryRreportActivity extends BaseActivity {
         pdfPTable.setWidths(bytes);
         pdfPTable.setWidthPercentage(100);
         try {
-         /*   File root = Environment.getExternalStorageDirectory();
+         */
+/*   File root = Environment.getExternalStorageDirectory();
             File dir = new File (root.getAbsolutePath() + "/downloadAK");
            if(!dir.exists())
-            dir.mkdirs();*/
+            dir.mkdirs();*//*
+
 
             Calendar calendar = Calendar.getInstance();
             String fileName = getResources().getString(R.string.app_name) + calendar.getTimeInMillis();
@@ -495,23 +489,45 @@ public class TelemetryRreportActivity extends BaseActivity {
             // File file = new File(dir, fileName+".pdf");
 
             //  File storageDir = getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-           /* File file = File.createTempFile(
+           */
+/* File file = File.createTempFile(
                     fileName,
                     ".pdf",
                     storageDir
-            );*/
+            );*//*
+
             File storageDir = getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
             File file = File.createTempFile(
-                    fileName,  /* prefix */
-                    ".pdf",         /* suffix */
-                    storageDir      /* directory */
+                    fileName,  */
+/* prefix *//*
+
+                    ".pdf",         */
+/* suffix *//*
+
+                    storageDir      */
+/* directory *//*
+
             );
 
-           /* File file = File.createTempFile(
-                    fileName,  *//* prefix *//*
-                    ".pdf",         *//* suffix *//*
-                    dir      *//* directory *//*
-            );*/
+           */
+/* File file = File.createTempFile(
+                    fileName,  *//*
+*/
+/* prefix *//*
+*/
+/*
+                    ".pdf",         *//*
+*/
+/* suffix *//*
+*/
+/*
+                    dir      *//*
+*/
+/* directory *//*
+*/
+/*
+            );*//*
+
 
 
             //   String  mCurrentPhotoPath = "file:" + file.getAbsolutePath();
@@ -539,7 +555,7 @@ public class TelemetryRreportActivity extends BaseActivity {
 
             //  Font f = FontFactory.getFont(FONT, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
 
-            Paragraph paragraphappName2 = new Paragraph("ASSESSMENT TYPE: " + ConstantsA3.assessmenttype, font);
+            Paragraph paragraphappName2 = new Paragraph(getResources().getString(R.string.assessment_type_rep) + ConstantsA3.assessmenttype, font);
             paragraphappName2.setAlignment(Element.ALIGN_CENTER);
             paragraphappName2.setLeading(0, 1);
             paragraphappName2.setSpacingAfter(30);
@@ -550,8 +566,8 @@ public class TelemetryRreportActivity extends BaseActivity {
             Paragraph gradeParagraph = new Paragraph("Grade: " + gradeS, font2);
             //  Paragraph paraAsstypetitle = new Paragraph("Assessment type title: " + ConstantsA3.surveyTitle, font2);
             //  Paragraph paraAsstype = new Paragraph("ASSESSMENT TYPE: " + ConstantsA3.assessmenttype, font2);
-            Paragraph paralang = new Paragraph("Language: " + sessionManager.getLanguage(), font2);
-            Paragraph paraSubjecttype = new Paragraph("Subject: " + ConstantsA3.subject, font2);
+         //   Paragraph paralang = new Paragraph("Language: " + sessionManager.getLanguage(), font2);
+            Paragraph paraSubjecttype = new Paragraph(getResources().getString(R.string.subject_rep) + ConstantsA3.subject, font2);
 
 
             paraSubjecttype.setSpacingAfter(15);
@@ -560,7 +576,7 @@ public class TelemetryRreportActivity extends BaseActivity {
             //  document.add(paraAsstype);
             document.add(gradeParagraph);
 
-            document.add(paralang);
+          //  document.add(paralang);
             document.add(paraSubjecttype);
             // BidiFormatter myBidiFormatter = BidiFormatter.getInstance();
 
@@ -654,9 +670,11 @@ public class TelemetryRreportActivity extends BaseActivity {
                         name = name + " " + (table.getMiddleName().substring(0, 1));
                     }
 
-                 /*   if (table.getLastName() != null && !table.getLastName().equalsIgnoreCase("")) {
+                 */
+/*   if (table.getLastName() != null && !table.getLastName().equalsIgnoreCase("")) {
                         name = name + " " + (table.getLastName().substring(0, 1));
-                    }*/
+                    }*//*
+
                 } catch (Exception e) {
 
                 }
@@ -750,7 +768,8 @@ public class TelemetryRreportActivity extends BaseActivity {
         }
 
 
-    }
+
+    }*/
 
 
     private void finishProgress() {
@@ -760,7 +779,7 @@ public class TelemetryRreportActivity extends BaseActivity {
 
     }
 
-    private void pdfCellStyles(PdfPCell pdfPCell) {
+   /* private void pdfCellStyles(PdfPCell pdfPCell) {
         pdfPCell.setHorizontalAlignment(Element.ALIGN_CENTER);
         pdfPCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
     }
@@ -773,7 +792,7 @@ public class TelemetryRreportActivity extends BaseActivity {
     private void pdfCellStylesInside(PdfPCell pdfPCell) {
         //pdfPCell.setHorizontalAlignment(Element.ALIGN_CENTER);
         pdfPCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-    }
+    }*/
 
 
     public int getAnswer(String mconceptName1, CombinePojo pojo, int j, long stuid, int i) {

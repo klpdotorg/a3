@@ -84,11 +84,13 @@ public class qp_fib_text extends AppCompatActivity {
         TextView txtviewunitlabel = (TextView)findViewById(R.id.textViewAnswerUnitLabel);
         txtviewunitlabel.setText(answerunitlabel);
 
+        /**** This is commented out on 11-oct-18 as the requirement changed to make the input field active by default and display the keyboard
         // To hide the keyboard initially, remove the focus from the EditText field and move it to the dummy view.
         // When user clicks on the EditText field, the keyboard will appear
         View dummyview = (View) findViewById(R.id.dummyViewForFocus);
         tvAnswer.clearFocus();
         dummyview.requestFocus();
+        ***/
 
         // create the keyboard
         aekbd = new AssessEasyKeyboard(this,R.id.aenumberkbd, R.xml.assesseasynumberkbd1);

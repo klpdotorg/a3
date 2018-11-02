@@ -47,6 +47,7 @@ public class RESTAPIsyncMgr implements Runnable {
         HttpURLConnection apiConnection = null;
 
         try {
+            Log.d("EASYASSESS",a3restapiurl);
             URL apiurl = new URL(a3restapiurl);
 
             // Create connection
