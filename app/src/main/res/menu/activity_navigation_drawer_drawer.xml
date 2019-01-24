@@ -24,7 +24,7 @@
 
     </group>
 
-    <item android:title="Settings">
+    <item android:title="@string/action_settings">
         <menu>
 
             <item

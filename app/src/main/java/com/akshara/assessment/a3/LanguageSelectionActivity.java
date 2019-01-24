@@ -161,6 +161,7 @@ public class LanguageSelectionActivity extends BaseActivity {
                                 sessionManager.setProgramId(((ProgramPojo) spnProgram.getSelectedItem()).getId());
                                 // Toast.makeText(getApplicationContext(),stateKey+":"+languagekey,Toast.LENGTH_SHORT).show();
                                 A3Application.setLanguage(getApplicationContext(), languagekey);
+
                                 sessionManager.setLanguagePosition(spnSelectLanguage.getSelectedItemPosition());
 
                                 try {

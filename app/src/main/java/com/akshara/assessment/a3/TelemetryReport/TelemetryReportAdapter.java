@@ -16,6 +16,8 @@ import com.akshara.assessment.a3.db.QuestionTable;
 import com.akshara.assessment.a3.db.StudentTable;
 import com.crashlytics.android.Crashlytics;
 
+import org.apache.commons.lang3.text.WordUtils;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
@@ -45,17 +47,18 @@ public class TelemetryReportAdapter extends RecyclerView.Adapter<TelemetryReport
     @Override
     public void onBindViewHolder(TelemetryViewHolder holder, final int position) {
         final StudentTable studentTable = data.get(position).getTable();
-        String name = studentTable.getFirstName();
+        String name = studentTable.getFirstName().toLowerCase();
+        Log.d("shri",studentTable.getId()+"");
         try {
             if (studentTable.getMiddleName() != null && !studentTable.getMiddleName().equalsIgnoreCase("")) {
-                name = name + " " + (studentTable.getMiddleName().substring(0, 1));
+                name = name + " " + (studentTable.getMiddleName().substring(0, 1)).toLowerCase();
             }
 
 
         } catch (Exception e) {
             Crashlytics.log("Error in middle name");
         }
-        holder.tvStudentName.setText(name);
+        holder.tvStudentName.setText(WordUtils.capitalize(name));
 
 
         holder.stsid.setText(studentTable.getUid() != null && !studentTable.getUid().equalsIgnoreCase("") ? studentTable.getUid() : "NA");

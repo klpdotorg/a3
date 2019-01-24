@@ -23,6 +23,7 @@ import com.akshara.assessment.a3.NetworkRetrofitPackage.A3NetWorkCalls;
 import com.akshara.assessment.a3.R;
 import com.akshara.assessment.a3.UtilsPackage.DailogUtill;
 import com.akshara.assessment.a3.UtilsPackage.SchoolStateInterface;
+import com.akshara.assessment.a3.UtilsPackage.SessionManager;
 import com.akshara.assessment.a3.UtilsPackage.StringWithTags;
 import com.akshara.assessment.a3.db.KontactDatabase;
 import com.akshara.assessment.a3.db.QuestionSetDetailTable;
@@ -43,6 +44,7 @@ public class StudentListMainActivity extends BaseActivity {
     int A3APP_GRADEID;
     private deviceDatastoreMgr a3dsapiobj;
     KontactDatabase database;
+    SessionManager sessionManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class StudentListMainActivity extends BaseActivity {
         a3dsapiobj = new deviceDatastoreMgr();
         database = new KontactDatabase(getApplicationContext());
         a3dsapiobj.initializeDS(this);
+        sessionManager=new SessionManager(getApplicationContext());
         title = getIntent().getStringExtra("A3APP_GRADESTRING");
         A3APP_GRADEID = getIntent().getIntExtra("A3APP_GRADEID", 0);
         schoolId = getIntent().getLongExtra("A3APP_INSTITUTIONID", 0L);
@@ -129,7 +132,7 @@ public class StudentListMainActivity extends BaseActivity {
 //Log.d("shri",((StringWithTags) select_school.getSelectedItem()).id.toString());
             String URL = BuildConfig.HOST + "/api/v1/institutions/" + schoolId + "/students/";
             //   String URL =  BuildConfig.HOST +"/api/v1/institutestudents/?institution_id="+schoolId;
-            new A3NetWorkCalls(StudentListMainActivity.this).downloadStudent(URL, schoolId, A3APP_GRADEID, new SchoolStateInterface() {
+            new A3NetWorkCalls(StudentListMainActivity.this).downloadStudent(URL, schoolId, A3APP_GRADEID,sessionManager.getToken(), new SchoolStateInterface() {
                 @Override
                 public void success(String message) {
                     finishProgress();

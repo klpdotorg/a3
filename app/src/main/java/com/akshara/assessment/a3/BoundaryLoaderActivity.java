@@ -48,16 +48,16 @@ public class BoundaryLoaderActivity extends BaseActivity implements OnItemSelect
     ArrayAdapter statelistAdp;
     private KontactDatabase db;
     private ArrayList<StatePojo> stateList;
-    NoDefaultSpinner select_state, select_district, select_block,select_cluster,select_school;
+    NoDefaultSpinner select_state, select_district, select_block, select_cluster, select_school;
     SquidCursor<Boundary> boundary_cursor = null;
 
     ProgressDialog progressDialog;
     SessionManager mSession;
     TextView tvNoteText;
-    boolean flagForState, flagForDistrict, flagForblock,flagForCluster,flagForSchool;
+    boolean flagForState, flagForDistrict, flagForblock, flagForCluster, flagForSchool;
     CardView linLayState;
     Button btnNext;
-    boolean LOGIN=false;
+    boolean LOGIN = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,13 +78,15 @@ public class BoundaryLoaderActivity extends BaseActivity implements OnItemSelect
         select_state.setOnItemSelectedListener(this);
         select_block.setOnItemSelectedListener(this);
         select_district.setOnItemSelectedListener(this);
-         select_cluster.setOnItemSelectedListener(this);
+        select_cluster.setOnItemSelectedListener(this);
         select_school.setOnItemSelectedListener(this);
-        LOGIN=getIntent().getBooleanExtra("LOGIN",false);
+        LOGIN = getIntent().getBooleanExtra("LOGIN", false);
         final String statePersonalKey = mSession.getStateSelection();
         SquidCursor<State> stateCursor = db.query(State.class, listStateQuery);
         stateList = new ArrayList<>();
         btnNext.setVisibility(View.GONE);
+        mSession.clearBoundaryCache();
+
         if (stateCursor.getCount() > 0) {
             // we have surveys in DB, get them
             try {
@@ -129,29 +131,27 @@ public class BoundaryLoaderActivity extends BaseActivity implements OnItemSelect
 
 
         fill_dropdown(1, select_district.getId(), 1, ((StatePojo) select_state.getSelectedItem()).getStateKey());
-        int dist = getSharedPreferences("loader", MODE_PRIVATE).getInt("dist",0);
-   try {
-       select_district.setSelection(dist);
-   }catch (Exception e)
-   {
+        int dist = getSharedPreferences("loader", MODE_PRIVATE).getInt("dist", 0);
+        try {
+            select_district.setSelection(dist);
+        } catch (Exception e) {
 
-   }
-        if(dist!=0)
-        {
+        }
+        if (dist != 0) {
             fill_dropdown(1, select_block.getId(), Integer.parseInt(((StringWithTags) select_district.getSelectedItem()).id.toString()), ((StatePojo) select_state.getSelectedItem()).getStateKey());
             fill_dropdown(1, select_cluster.getId(), Integer.parseInt(((StringWithTags) select_block.getSelectedItem()).id.toString()), ((StatePojo) select_state.getSelectedItem()).getStateKey());
 
-        }else {
+        } else {
             fill_dropdown(1, select_block.getId(), 0, ((StatePojo) select_state.getSelectedItem()).getStateKey());
             fill_dropdown(1, select_cluster.getId(), 0, ((StatePojo) select_state.getSelectedItem()).getStateKey());
         }
 
-        flagForDistrict=false;
+        flagForDistrict = false;
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent intent=new Intent(getApplicationContext(),NavigationDrawerActivity.class);
+                Intent intent = new Intent(getApplicationContext(), NavigationDrawerActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
@@ -180,8 +180,8 @@ public class BoundaryLoaderActivity extends BaseActivity implements OnItemSelect
         select_district.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-               // Log.d("shri","dist");
-                 if (flagForDistrict) {
+                // Log.d("shri","dist");
+                if (flagForDistrict) {
 
                     //   boundaryForSelector.id.toString()
                     if (select_district.getSelectedItem() != null) {
@@ -244,19 +244,17 @@ public class BoundaryLoaderActivity extends BaseActivity implements OnItemSelect
         });
 
 
-
-
         select_cluster.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                flagForSchool=false;
-                if(flagForCluster) {
+                flagForSchool = false;
+                if (flagForCluster) {
                     if (select_cluster.getSelectedItemPosition() != 0) {
 
-                       fill_SchoolsForSpinner(Integer.parseInt(((StringWithTags) select_cluster.getSelectedItem()).id.toString()));
+                        fill_SchoolsForSpinner(Integer.parseInt(((StringWithTags) select_cluster.getSelectedItem()).id.toString()));
 
-                     if (((StringWithTags) select_cluster.getSelectedItem()).flag == true) {
+                        if (((StringWithTags) select_cluster.getSelectedItem()).flag == true) {
                             android.support.v7.app.AlertDialog noAnswerDialog = new android.support.v7.app.AlertDialog.Builder(BoundaryLoaderActivity.this).create();
 
                             noAnswerDialog.setCancelable(false);
@@ -266,7 +264,7 @@ public class BoundaryLoaderActivity extends BaseActivity implements OnItemSelect
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             dialog.dismiss();
-                                            loadSchooldataForBlock(Long.parseLong(((StringWithTags) select_cluster.getSelectedItem()).id.toString()), ((StatePojo) select_state.getSelectedItem()).getStateKey(), Long.parseLong(((StringWithTags) select_district.getSelectedItem()).id.toString()), mSession.getToken(),Long.parseLong(((StringWithTags) select_block.getSelectedItem()).id.toString()));
+                                            loadSchooldataForBlock(Long.parseLong(((StringWithTags) select_cluster.getSelectedItem()).id.toString()), ((StatePojo) select_state.getSelectedItem()).getStateKey(), Long.parseLong(((StringWithTags) select_district.getSelectedItem()).id.toString()), mSession.getToken(), Long.parseLong(((StringWithTags) select_block.getSelectedItem()).id.toString()));
                                         }
                                     });
                             noAnswerDialog.setButton(android.support.v7.app.AlertDialog.BUTTON_NEGATIVE, getString(R.string.response_negative),
@@ -281,16 +279,15 @@ public class BoundaryLoaderActivity extends BaseActivity implements OnItemSelect
 
 
                         } else {
-                            loadSchooldataForBlock(Long.parseLong(((StringWithTags) select_cluster.getSelectedItem()).id.toString()), ((StatePojo) select_state.getSelectedItem()).getStateKey(), Long.parseLong(((StringWithTags) select_district.getSelectedItem()).id.toString()), mSession.getToken(),Long.parseLong(((StringWithTags) select_block.getSelectedItem()).id.toString()));
-                           }
+                            loadSchooldataForBlock(Long.parseLong(((StringWithTags) select_cluster.getSelectedItem()).id.toString()), ((StatePojo) select_state.getSelectedItem()).getStateKey(), Long.parseLong(((StringWithTags) select_district.getSelectedItem()).id.toString()), mSession.getToken(), Long.parseLong(((StringWithTags) select_block.getSelectedItem()).id.toString()));
+                        }
 
 
-                    }
-                    else {
+                    } else {
                         checkSchool();
                     }
-                }else {
-                    flagForCluster=true;
+                } else {
+                    flagForCluster = true;
                 }
 
 
@@ -303,70 +300,70 @@ public class BoundaryLoaderActivity extends BaseActivity implements OnItemSelect
         });
 
 
-select_school.setOnItemSelectedListener(new OnItemSelectedListener() {
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        if (flagForSchool) {
-          //  Toast.makeText(getApplicationContext(),"clicked",Toast.LENGTH_SHORT).show();
+        select_school.setOnItemSelectedListener(new OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (flagForSchool) {
+                    //  Toast.makeText(getApplicationContext(),"clicked",Toast.LENGTH_SHORT).show();
 
-            if (select_school.getSelectedItemPosition() > 0) {
-      initPorgresssDialogForSchool();
+                    if (select_school.getSelectedItemPosition() > 0) {
+                        initPorgresssDialogForSchool();
 
                         updateProgressMessage(select_school.getSelectedItem().toString() + " " + getResources().getString(R.string.loadingStudent), 0);
 //Log.d("shri",((StringWithTags) select_school.getSelectedItem()).id.toString());
-            int schoolId=Integer.parseInt(((StringWithTags) select_school.getSelectedItem()).id.toString());
-                String URL =  BuildConfig.HOST +"/api/v1/institutions/"+schoolId+"/students";
-             //   String URL =  BuildConfig.HOST +"/api/v1/institutestudents/?institution_id="+schoolId;
-                int flag=0;
-                new A3NetWorkCalls(BoundaryLoaderActivity.this).downloadStudent(URL,schoolId,flag, new SchoolStateInterface() {
-                    public void success(String message) {
-                        finishProgress();
-                        if (mSession.isSetupDone() == false) {
+                        int schoolId = Integer.parseInt(((StringWithTags) select_school.getSelectedItem()).id.toString());
+                        String URL = BuildConfig.HOST + "/api/v1/institutions/" + schoolId + "/students";
+                        //   String URL =  BuildConfig.HOST +"/api/v1/institutestudents/?institution_id="+schoolId;
+                        int flag = 0;
+                        new A3NetWorkCalls(BoundaryLoaderActivity.this).downloadStudent(URL, schoolId, flag, mSession.getToken(), new SchoolStateInterface() {
+                            public void success(String message) {
+                                finishProgress();
+                                if (mSession.isSetupDone() == false) {
 
-                            mSession.updateSetup(true);
-                            Intent intent = new Intent(getApplicationContext(), NavigationDrawerActivity.class);
-                            startActivity(intent);
-                            finish();
-                            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-                        } else {
-
-
-                            int position = select_school.getSelectedItemPosition();
-                            DailogUtill.showDialog(select_school.getSelectedItem().toString() + " " + message, getSupportFragmentManager(), BoundaryLoaderActivity.this);
-                            flagForSchool=false;
-                            checkSchool();
-                            flagForSchool=false;
-                            select_school.setSelection(position);
-
-                            SharedPreferences sharedPreferences = getSharedPreferences("Navigationboundary", MODE_PRIVATE);
-                            sharedPreferences.edit().clear();
+                                    mSession.updateSetup(true);
+                                    Intent intent = new Intent(getApplicationContext(), NavigationDrawerActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                    overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+                                } else {
 
 
-                        }
+                                    int position = select_school.getSelectedItemPosition();
+                                    DailogUtill.showDialog(select_school.getSelectedItem().toString() + " " + message, getSupportFragmentManager(), BoundaryLoaderActivity.this);
+                                    flagForSchool = false;
+                                    checkSchool();
+                                    flagForSchool = false;
+                                    select_school.setSelection(position);
+
+                                    //  SharedPreferences sharedPreferences = getSharedPreferences("Navigationboundary", MODE_PRIVATE);
+                                    //  sharedPreferences.edit().clear();
+
+
+                                }
+                            }
+
+                            @Override
+                            public void failed(String message) {
+                                finishProgress();
+                                DailogUtill.showDialog(message, getSupportFragmentManager(), BoundaryLoaderActivity.this);
+                            }
+
+                            @Override
+                            public void update(int message) {
+
+                            }
+                        });
                     }
-
-                    @Override
-                    public void failed(String message) {
-                        finishProgress();
-                        DailogUtill.showDialog(message, getSupportFragmentManager(),BoundaryLoaderActivity.this);
-                    }
-
-                    @Override
-                    public void update(int message) {
-
-                    }
-                });
+                } else {
+                    flagForSchool = true;
+                }
             }
-            } else {
-                flagForSchool = true;
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
             }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
-});
+        });
      /*   select_school.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -432,8 +429,7 @@ select_school.setOnItemSelectedListener(new OnItemSelectedListener() {
         select_block.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 
-
-                        @Override
+            @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
                 if (flagForblock) {
@@ -441,11 +437,10 @@ select_school.setOnItemSelectedListener(new OnItemSelectedListener() {
                     if (select_block.getSelectedItem() != null) {
                         if (select_block.getSelectedItemPosition() == 0) {
 
-                          checkCluster();
-                          checkSchool();
+                            checkCluster();
+                            checkSchool();
 
-                        } else
-                        {
+                        } else {
                             fill_dropdown(1, select_cluster.getId(), Integer.parseInt(((StringWithTags) select_block.getSelectedItem()).id.toString()), ((StatePojo) select_state.getSelectedItem()).getStateKey());
                             checkSchool();
                         }
@@ -511,13 +506,12 @@ select_school.setOnItemSelectedListener(new OnItemSelectedListener() {
     }
 
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                if(!LOGIN) {
+                if (!LOGIN) {
                     Intent intent = new Intent(getApplicationContext(), NavigationDrawerActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
@@ -567,15 +561,16 @@ select_school.setOnItemSelectedListener(new OnItemSelectedListener() {
 
     @Override
     public void onBackPressed() {
-        if(!LOGIN){
-        super.onBackPressed();
-        Intent intent=new Intent(getApplicationContext(),NavigationDrawerActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);}
+        if (!LOGIN) {
+            super.onBackPressed();
+            Intent intent = new Intent(getApplicationContext(), NavigationDrawerActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+        }
     }
 
-    private void loadSchooldataForBlock(final long id, String stateKey, long distId, String token,long blockId) {
+    private void loadSchooldataForBlock(final long id, String stateKey, long distId, String token, long blockId) {
         initPorgresssDialogForSchool();
 
         updateProgressMessage(select_cluster.getSelectedItem().toString() + " "
@@ -585,7 +580,7 @@ select_school.setOnItemSelectedListener(new OnItemSelectedListener() {
         String URL = BuildConfig.HOST + A3Services.SCHOOLS + "&geometry=yes&admin3=" +
                 id + "&state=" + stateKey.toLowerCase();
 
-        new A3NetWorkCalls(BoundaryLoaderActivity.this).DownloadSchoolData(URL, id, distId, token,blockId, new SchoolStateInterface() {
+        new A3NetWorkCalls(BoundaryLoaderActivity.this).DownloadSchoolData(URL, id, distId, token, blockId, new SchoolStateInterface() {
             @Override
             public void success(String message) {
 
@@ -593,26 +588,21 @@ select_school.setOnItemSelectedListener(new OnItemSelectedListener() {
                 SharedPreferences sharedPreferences1 = getSharedPreferences("loader", MODE_PRIVATE);
 
                 SharedPreferences.Editor editor = sharedPreferences1.edit();
-                editor.putInt("dist",select_district.getSelectedItemPosition());
+                editor.putInt("dist", select_district.getSelectedItemPosition());
                 editor.commit();
                 int position = select_cluster.getSelectedItemPosition();
                 fill_dropdown(1, select_cluster.getId(), Integer.parseInt(((StringWithTags) select_block.getSelectedItem()).id.toString()), ((StatePojo) select_state.getSelectedItem()).getStateKey());
 
 
-                flagForCluster=false;
+                flagForCluster = false;
 
                 select_cluster.setSelection(position);
                 fill_SchoolsForSpinner(Integer.parseInt(((StringWithTags) select_cluster.getSelectedItem()).id.toString()));
-                flagForSchool=false;
-                SharedPreferences sharedPreferences = getSharedPreferences("Navigationboundary", MODE_PRIVATE);
-                sharedPreferences.edit().clear();
+                flagForSchool = false;
+                // SharedPreferences sharedPreferences = getSharedPreferences("Navigationboundary", MODE_PRIVATE);
+                //  sharedPreferences.edit().clear();
                 finishProgress();
                 DailogUtill.showDialog(message, getSupportFragmentManager(), BoundaryLoaderActivity.this);
-
-
-
-
-
 
 
             }
@@ -638,28 +628,26 @@ select_school.setOnItemSelectedListener(new OnItemSelectedListener() {
     private void fill_dropdown(int type, int id, int parent, String statekey) {
         List<StringWithTags> stringWithTags = get_boundary_data(parent, statekey, id);
         NoDefaultSpinner spinner = findViewById(id);
-    //     spinner.setOnItemSelectedListener(this);
+        //     spinner.setOnItemSelectedListener(this);
         ArrayAdapter<StringWithTags> boundaryArrayAdapter = new ArrayAdapter<StringWithTags>(this, R.layout.spinnertextview, stringWithTags);
-        if(id==R.id.select_district) {
+        if (id == R.id.select_district) {
 
 
             select_district.setAdapter(boundaryArrayAdapter);
 
-        }else if(id==R.id.select_block)
-        {
+        } else if (id == R.id.select_block) {
 
 
             select_block.setAdapter(boundaryArrayAdapter);
 
-        }else if(id==R.id.select_cluster)
-        {
+        } else if (id == R.id.select_cluster) {
 
 
             select_cluster.setAdapter(boundaryArrayAdapter);
 
         }
         boundaryArrayAdapter.setDropDownViewResource(R.layout.spinnertextview);
-      //  boundaryArrayAdapter.notifyDataSetChanged();
+        //  boundaryArrayAdapter.notifyDataSetChanged();
     }
 
 
@@ -683,10 +671,10 @@ select_school.setOnItemSelectedListener(new OnItemSelectedListener() {
             boundary_cursor.close();
         if (idview == R.id.select_district) {
             boundaryList.add(0, new StringWithTags(getResources().getString(R.string.selectDistrict), "0", "0", getResources().getString(R.string.selectDistrict), mSession, false, false));
-        } else if(idview == R.id.select_block) {
+        } else if (idview == R.id.select_block) {
             boundaryList.add(0, new StringWithTags(getResources().getString(R.string.selectblock), "0", "0", getResources().getString(R.string.selectblock), mSession, false, false));
 
-        }else {
+        } else {
             boundaryList.add(0, new StringWithTags(getResources().getString(R.string.selectCluster), "0", "0", getResources().getString(R.string.selectCluster), mSession, false, false));
 
         }
@@ -703,8 +691,6 @@ select_school.setOnItemSelectedListener(new OnItemSelectedListener() {
             return b.getLocName() != null ? b.getLocName() : b.getName();
         }
     }
-
-
 
 
     public void onItemSelected(AdapterView<?> parent, View view,
@@ -741,10 +727,9 @@ select_school.setOnItemSelectedListener(new OnItemSelectedListener() {
 
                 }
 
-              checkCluster();
+                checkCluster();
 
-            checkSchool();
-
+                checkSchool();
 
 
                 break;
@@ -752,8 +737,8 @@ select_school.setOnItemSelectedListener(new OnItemSelectedListener() {
 
             case R.id.select_district:
                 flagForDistrict = false;
-            //    Log.d("shri","view");
-                 if (boundaryForSelector != null) {
+                //    Log.d("shri","view");
+                if (boundaryForSelector != null) {
                     fill_dropdown(1, R.id.select_block, Integer.parseInt(boundaryForSelector.id.toString()), ((StatePojo) select_state.getSelectedItem()).getStateKey());
 
                 } else {
@@ -761,20 +746,19 @@ select_school.setOnItemSelectedListener(new OnItemSelectedListener() {
 
                 }
 
-               checkCluster();
+                checkCluster();
                 checkSchool();
-
 
 
                 break;
 
             case R.id.select_block:
                 checkCluster();
-               checkSchool();
+                checkSchool();
                 break;
-                case R.id.select_cluster:
-                   checkSchool();
-                    break;
+            case R.id.select_cluster:
+                checkSchool();
+                break;
 
 
             default:
@@ -786,22 +770,20 @@ select_school.setOnItemSelectedListener(new OnItemSelectedListener() {
 
     }
 
-    public void checkSchool()
-    {
-        if(select_cluster.getSelectedItemPosition()>0) {
+    public void checkSchool() {
+        if (select_cluster.getSelectedItemPosition() > 0) {
             fill_SchoolsForSpinner(Integer.parseInt(((StringWithTags) select_cluster.getSelectedItem()).id.toString()));
 
-        }else {
+        } else {
             fill_SchoolsForSpinner(0);
 
         }
     }
 
 
-    public void checkCluster()
-    {
-        if (select_block.getSelectedItemPosition()!=0&& select_block.getSelectedItem() != null) {
-            fill_dropdown(1, R.id.select_cluster, Integer.parseInt(((StringWithTags)select_block.getSelectedItem()).id.toString()), ((StatePojo) select_state.getSelectedItem()).getStateKey());
+    public void checkCluster() {
+        if (select_block.getSelectedItemPosition() != 0 && select_block.getSelectedItem() != null) {
+            fill_dropdown(1, R.id.select_cluster, Integer.parseInt(((StringWithTags) select_block.getSelectedItem()).id.toString()), ((StatePojo) select_state.getSelectedItem()).getStateKey());
 
         } else {
             fill_dropdown(1, R.id.select_cluster, 0, ((StatePojo) select_state.getSelectedItem()).getStateKey());
@@ -840,14 +822,12 @@ select_school.setOnItemSelectedListener(new OnItemSelectedListener() {
                         fill_dropdown(1, R.id.select_district, 1, ((StatePojo) select_state.getSelectedItem()).getStateKey());
                         try {
                             select_district.setSelection(position);
+                        } catch (Exception e) {
+                            Crashlytics.log("exception in set selection district");
                         }
-                       catch (Exception e)
-                       {
-                           Crashlytics.log("exception in set selection district");
-                       }
                         flagForDistrict = false;
                         flagForblock = false;
-                        flagForSchool=false;
+                        flagForSchool = false;
                         //setPosition();
                         fill_dropdown(1, R.id.select_block, Integer.parseInt(((StringWithTags) select_district.getSelectedItem()).id.toString()), ((StatePojo) select_state.getSelectedItem()).getStateKey());
                         checkCluster();
@@ -897,7 +877,7 @@ select_school.setOnItemSelectedListener(new OnItemSelectedListener() {
         List<StringWithTags> schoolList;
         schoolList = get_school_data(parent);
 
-        ArrayAdapter<StringWithTags> adapter=new ArrayAdapter<StringWithTags>(this, R.layout.spinnertextview, schoolList);
+        ArrayAdapter<StringWithTags> adapter = new ArrayAdapter<StringWithTags>(this, R.layout.spinnertextview, schoolList);
 
         select_school.setAdapter(adapter);
         adapter.setDropDownViewResource(R.layout.spinnertextview);
@@ -913,24 +893,25 @@ select_school.setOnItemSelectedListener(new OnItemSelectedListener() {
         Query listschool = Query.select().from(School.TABLE)
                 .where(School.BOUNDARY_ID.eq(parent));
         List<StringWithTags> schoolList = new ArrayList<StringWithTags>();
-      SquidCursor<School>  school_cursor = db.query(School.class, listschool);
+        SquidCursor<School> school_cursor = db.query(School.class, listschool);
         if (school_cursor.moveToFirst()) {
             do {
                 School sch = new School(school_cursor);
-                StringWithTags school = new StringWithTags(sch.getName(), sch.getId(), 1,sch.getName() , mSession,false, false);
+                StringWithTags school = new StringWithTags(sch.getName(), sch.getId(), 1, sch.getName(), mSession, false, false);
 
-               // StringWithTags school = new StringWithTags(sch.getName(), sch.getId(), 1, true, mSession);
+                // StringWithTags school = new StringWithTags(sch.getName(), sch.getId(), 1, true, mSession);
                 schoolList.add(school);
 
             } while (school_cursor.moveToNext());
         }
         if (school_cursor != null)
             school_cursor.close();
-        StringWithTags school = new StringWithTags(getResources().getString(R.string.selectSchool), 0, 0,getResources().getString(R.string.selectSchool) , mSession,false, false);
+        StringWithTags school = new StringWithTags(getResources().getString(R.string.selectSchool), 0, 0, getResources().getString(R.string.selectSchool), mSession, false, false);
 
-         schoolList.add(0,school);
+        schoolList.add(0, school);
         return schoolList;
     }
+
     private void initPorgresssDialogForSchool() {
         progressDialog = new ProgressDialog(BoundaryLoaderActivity.this);
         progressDialog.setMessage("");

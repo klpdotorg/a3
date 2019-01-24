@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name_ext">Akshara Assessment</string>
+
 
     <string name="mobilehint">Mobile Number</string>
     <string name="hintPassword">Password</string>
@@ -40,7 +40,6 @@
     <string name="prompt_enter_email1_">E-MAIL (OPTIONAL)</string>
     <string name="register">REGISTER</string>
     <string name="doesnotmatcherwithpass">This field is required and must match the value entered in the password field</string>
-    <string name="pleaseSelectrespondanttypequestion">Select respondent type</string>
     <string name="pleaseSelectrespondanttype">SELECT RESPONDENT TYPE</string>
     <string name="enterValidDate">Enter valid date format(DD-MM-YYYY)</string>
     <string name="signupsuccess">You have been successfully signed up. Please Login.</string>
@@ -111,11 +110,8 @@
         <item>5</item>
     </string-array>
 
-    <string name="title_activity_navigation_drawer">NavigationDrawerActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="Profile">Profile</string>
@@ -139,11 +135,8 @@
     <string name="errorFirstName">enter student first name</string>
     <string name="errorLastName">enter student last name</string>
     <string name="errorStudentId">enter student ID</string>
-    <string name="clusterLeveldataLoadedSchussfully">cluster level schools loaded successfully</string>
     <string name="clusterDataAlreadyFound">cluster schools already downloaded. Do you want to re-download?</string>
     <string name="school">SCHOOLS</string>
-    <string name="title_activity_tabed_student">TabedStudentActivity</string>
-    <string name="section_format">Hello World from section: %1$d</string>
     <string name="prompt_school">Select School</string>
     <string name="selectSchool">-- Select School --</string>
     <string name="schoolStudentDownloaded">school student downloaded successfully</string>
@@ -154,14 +147,8 @@
     <string name="string_select_subject">Select Subject</string>
     <string name="string_select_grade">Select Grade</string>
     <string name="string_select_AsseesmentType">Select Assessment Type</string>
-    <string name="institution_id">Institution Id</string>
 
 
-    <string-array name="array_subject">
-        <item>English</item>
-        <item>Mathematics</item>
-
-    </string-array>
 
     <string-array name="array_grade">
         <item>1st Grade</item>
@@ -173,9 +160,6 @@
     </string-array>
 
 
-    <string name="title_activity_qp_arithmetic_multiply_horiz">qp_arithmetic_multiply_horiz</string>
-    <string name="title_activity_qp_mcq_image_image">qp_mcq_image_image</string>
-    <string name="title_activity_messagedisplay">messagedisplay</string>
 
     <string name="schoolsnotfoundforcluster">Schools not available for selected cluster</string>
     <string name="registeredblocksnotfound">Registered blocks not found for selected district</string>
@@ -250,6 +234,12 @@
     <string name="micro">Micro-concept name</string>
     <string name="assessment_type_rep">ASSESSMENT TYPE: </string>
     <string name="subject_rep">Subject: </string>
+    <string name="sln">Sl.No</string>
+    <string name="attemptedStudents">Assessment Attempted Students:</string>
+    <string name="totalStudents">Total Students :</string>
+    <string name="coorect_answers">Number of correct answers to the question</string>
+    <string name="kitQ">* For any question if the number of correct answers are less than 5, the concept has to be taught by giving more emphasis to usage of TLMs of Math Kit.</string>
+    <string name="synced">All taken assessments are synced</string>
 
 
 </resources>

@@ -1,11 +1,8 @@
 package com.akshara.assessment.a3.db;
 
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.akshara.assessment.a3.SchoolDataPojo.Boundary;
 import com.yahoo.squidb.android.AndroidOpenHelper;
 import com.yahoo.squidb.data.ISQLiteDatabase;
 import com.yahoo.squidb.data.ISQLiteOpenHelper;
@@ -13,7 +10,6 @@ import com.yahoo.squidb.data.SquidDatabase;
 import com.yahoo.squidb.data.TableModel;
 import com.yahoo.squidb.sql.Table;
 import com.yahoo.squidb.sql.TableStatement;
-
 
 import org.json.JSONException;
 import org.json.JSONObject;

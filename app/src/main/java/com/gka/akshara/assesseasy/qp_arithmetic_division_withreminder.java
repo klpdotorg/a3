@@ -79,7 +79,7 @@ public class qp_arithmetic_division_withreminder extends AppCompatActivity {
         int randindex = 0;
         if(dividendset != null) {
             randindex = rand.nextInt(dividendset.length);
-            tvNumber1.setText(dividendset[randindex]);
+            tvNumber1.setText(AssessEasyKeyboard.replaceEnglishnumeralsToLocal(dividendset[randindex]));
         }
 
         TextView tvNumber2 = (TextView)findViewById(R.id.textViewDivisor);
@@ -87,7 +87,7 @@ public class qp_arithmetic_division_withreminder extends AppCompatActivity {
             if (randindex >= divisorset.length) {
                 randindex = 0;
             }
-            tvNumber2.setText(divisorset[randindex]); // Choose the value for the Divisor that corresponds (same index) to the value of the Dividend
+            tvNumber2.setText(AssessEasyKeyboard.replaceEnglishnumeralsToLocal(divisorset[randindex])); // Choose the value for the Divisor that corresponds (same index) to the value of the Dividend
         }
 
         // sets the number and answer fields (when navigating backwards, fill the numbers randomly generated earlier and the answer entered before)
@@ -121,7 +121,15 @@ public class qp_arithmetic_division_withreminder extends AppCompatActivity {
          ***/
 
         // create the keyboard
-        aekbd = new AssessEasyKeyboard(this,R.id.aenumberkbd, R.xml.assesseasynumberkbd1);
+        // aekbd = new AssessEasyKeyboard(this,R.id.aenumberkbd, R.xml.assesseasynumberkbd1);
+        String keyboardxmlname = "assesseasynumberkbd_" + globalvault.keyboardlanguage.toLowerCase();
+
+        int keyboardxmlresid = getResources().getIdentifier(keyboardxmlname, "xml", getPackageName());
+
+        if(keyboardxmlresid != 0)
+            aekbd = new AssessEasyKeyboard(this,R.id.aenumberkbd, keyboardxmlresid);
+        else  // If Failed to load the resource (keyboard XML file corresponding to the language), use default english numerals keyboard
+            aekbd = new AssessEasyKeyboard(this,R.id.aenumberkbd, R.xml.assesseasynumberkbd_english);
 
         // Register the EditText box with the custom keyboard
         aekbd.registerEditText(R.id.editTextQuotient);
@@ -201,25 +209,26 @@ public class qp_arithmetic_division_withreminder extends AppCompatActivity {
 
                 // If Child has not entered anything for remainder, treat it as 0 internally (this default '0' is not displayed on the remainder field though
                 if (reminder == null)  {
-                    reminder = "0";
+                    reminder = AssessEasyKeyboard.replaceEnglishnumeralsToLocal("0");
                 }
                 else if(reminder.length() == 0) {
-                    reminder = "0";
+                    reminder = AssessEasyKeyboard.replaceEnglishnumeralsToLocal("0");
                 }
                 else if(reminder.length() > 1) {  // If Child enters '00' or '000' etc , the value should be considered as '0'
                     boolean allzeros = true;
-                    for(int i = 0; i < reminder.length(); i++) {
-                        if(reminder.charAt(i) != '0') {
+                    String remindereng = AssessEasyKeyboard.replaceLocalnumeralsToEnglish(reminder);
+                    for(int i = 0; i < remindereng.length(); i++) {
+                        if(remindereng.charAt(i) != '0') {
                             allzeros = false;
                             break;
                         }
                     }
-                    if(allzeros) reminder = "0";
+                    if(allzeros) reminder = AssessEasyKeyboard.replaceEnglishnumeralsToLocal("0");;
                 }
                 else;
             }
             else
-                reminder = "0";
+                reminder = AssessEasyKeyboard.replaceEnglishnumeralsToLocal("0");;
 
             if(quotient.equals("")) {
                 if (MainActivity.debugalerts)
@@ -248,14 +257,14 @@ public class qp_arithmetic_division_withreminder extends AppCompatActivity {
                 String answerstr = dividend+","+divisor+","+quotient+","+reminder;
 
                 try {
-                    int intFirstnum = Integer.parseInt(dividend.trim());
-                    int intSecondnum = Integer.parseInt(divisor.trim());
+                    int intFirstnum = Integer.parseInt(AssessEasyKeyboard.replaceLocalnumeralsToEnglish(dividend.trim()));
+                    int intSecondnum = Integer.parseInt(AssessEasyKeyboard.replaceLocalnumeralsToEnglish(divisor.trim()));
                     int answer_quotient = intFirstnum / intSecondnum;
                     int answer_reminder = intFirstnum % intSecondnum;
                     String correct_answer = answer_quotient+","+answer_reminder;
                     globalvault.questions[questionid - 1].setAnswerCorrect(correct_answer);
 
-                    if ( (quotient.equals(Integer.toString(answer_quotient))) && (reminder.equals(Integer.toString(answer_reminder))))
+                    if ( (AssessEasyKeyboard.replaceLocalnumeralsToEnglish(quotient.trim()).equals(Integer.toString(answer_quotient))) && (AssessEasyKeyboard.replaceLocalnumeralsToEnglish(reminder.trim()).equals(Integer.toString(answer_reminder))))
                         globalvault.questions[questionid - 1].setPass("P");
                     else
                         globalvault.questions[questionid - 1].setPass("F");

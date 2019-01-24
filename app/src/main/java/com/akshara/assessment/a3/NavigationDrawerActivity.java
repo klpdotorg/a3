@@ -83,6 +83,7 @@ public class NavigationDrawerActivity extends BaseActivity
 
     TextView txBlock, txCluster;
     boolean b = false;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,8 +109,8 @@ public class NavigationDrawerActivity extends BaseActivity
 
         db = ((A3Application) getApplicationContext()).getDb();
 
-       
-          //     dbHelper=new DBHelper(this);
+
+        //     dbHelper=new DBHelper(this);
         try {
             Bundle bundle = new Bundle();
             bundle.putString(AnalyticsConstants.App_Version, BuildConfig.VERSION_NAME);
@@ -130,19 +131,19 @@ public class NavigationDrawerActivity extends BaseActivity
         linBackSchool = findViewById(R.id.linBackSchool);
 
 
-        fill_dropdown(1, sp_district.getId(), 1);
+        fill_dropdown(0, sp_district.getId(), 1);
 //        Log.d("dim",dbHelper.getData()+"");
 
 
-        SharedPreferences sharedPreferences = getSharedPreferences("Navigationboundary", MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("Navigationboundary", MODE_PRIVATE);
 
         int d = sharedPreferences.getInt("dist", 0);
-        int b = sharedPreferences.getInt("block", 0);
-        int c = sharedPreferences.getInt("cluster", 0);
+    //    int b = sharedPreferences.getInt("block", 0);
+      //  int c = sharedPreferences.getInt("cluster", 0);
 
         sp_district.setSelection(d);
-        sp_block.setSelection(b);
-        sp_cluster.setSelection(c);
+        //sp_block.setSelection(b);
+       // sp_cluster.setSelection(c);
 
 
         try {
@@ -187,22 +188,26 @@ public class NavigationDrawerActivity extends BaseActivity
     public void sync(MenuItem item) {
         if (item.getItemId() == R.id.action_sync) {
 
-            if (AppStatus.isConnected(getApplicationContext())) {
+            deviceDatastoreMgr dsmgr = new deviceDatastoreMgr();
+            dsmgr.initializeDS(this);
 
-                Toast.makeText(getApplicationContext(),getResources().getString(R.string.dataSyncing),Toast.LENGTH_SHORT).show();
-                deviceDatastoreMgr dsmgr = new deviceDatastoreMgr();
-                dsmgr.initializeDS(this);
-                dsmgr.syncTelemetry(globalvault.a3_telemetryapi_baseurl);
-            }else {
-                DailogUtill.showDialog(getResources().getString(R.string.netWorkError), getSupportFragmentManager(), getApplicationContext());
+            if (dsmgr.checkSysncedData()) {
+
+
+                if (AppStatus.isConnected(getApplicationContext())) {
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.dataSyncing), Toast.LENGTH_SHORT).show();
+                    dsmgr.syncTelemetry(globalvault.a3_telemetryapi_baseurl);
+                } else {
+                    DailogUtill.showDialog(getResources().getString(R.string.netWorkError), getSupportFragmentManager(), getApplicationContext());
+
+                }
+            } else {
+                Toast.makeText(getApplicationContext(), getResources().getString(R.string.synced), Toast.LENGTH_SHORT).show();
+
             }
         }
 
     }
-
-
-
-
 
 
     @Override
@@ -264,11 +269,11 @@ public class NavigationDrawerActivity extends BaseActivity
             updateProgram();
 
         } else if (id == R.id.nav_logout) {
-            android.support.v7.app.AlertDialog alertDailog = new android.support.v7.app.AlertDialog.Builder(NavigationDrawerActivity.this).create();
+            AlertDialog alertDailog = new AlertDialog.Builder(NavigationDrawerActivity.this).create();
 
             alertDailog.setCancelable(false);
             alertDailog.setMessage(getResources().getString(R.string.doyouwantToLogout));
-            alertDailog.setButton(android.support.v7.app.AlertDialog.BUTTON_POSITIVE, getString(R.string.response_positive),
+            alertDailog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.response_positive),
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -285,7 +290,7 @@ public class NavigationDrawerActivity extends BaseActivity
 
                         }
                     });
-            alertDailog.setButton(android.support.v7.app.AlertDialog.BUTTON_NEGATIVE, getString(R.string.response_negative),
+            alertDailog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.response_negative),
                     new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -380,9 +385,9 @@ public class NavigationDrawerActivity extends BaseActivity
         switch (viewid) {
             case R.id.select_district:
                 fill_dropdown(1, R.id.select_block, Integer.parseInt(boundaryForSelector.id.toString()));
-                fill_dropdown(1, R.id.select_cluster, Integer.parseInt(boundaryForSelector.id.toString()));
+                fill_dropdown(2, R.id.select_cluster, Integer.parseInt(boundaryForSelector.id.toString()));
                 fill_schools(R.id.school_list, Integer.parseInt(boundaryForSelector.id.toString()));
-                editor.putInt("dist", pos);
+              //  editor.putInt("dist", pos);
                 //  Toast.makeText(getApplicationContext(),"district",Toast.LENGTH_SHORT).show();
                 district = ((StringWithTags) parent.getItemAtPosition(pos)).string;
                 distrciId = ((StringWithTags) parent.getItemAtPosition(pos)).id.toString();
@@ -390,8 +395,10 @@ public class NavigationDrawerActivity extends BaseActivity
 
                 break;
             case R.id.select_block:
-                fill_dropdown(1, R.id.select_cluster, Integer.parseInt(boundaryForSelector.id.toString()));
-                editor.putInt("block", pos);
+                fill_dropdown(2, R.id.select_cluster, Integer.parseInt(boundaryForSelector.id.toString()));
+               // editor.putInt("block", pos);
+                fill_schools(R.id.school_list, Integer.parseInt(boundaryForSelector.id.toString()));
+
                 //     Toast.makeText(getApplicationContext(),"block",Toast.LENGTH_SHORT).show();
                 block = ((StringWithTags) parent.getItemAtPosition(pos)).string;
                 blockid = (((StringWithTags) parent.getItemAtPosition(pos)).id.toString());
@@ -401,7 +408,7 @@ public class NavigationDrawerActivity extends BaseActivity
                 fill_schools(R.id.school_list, Integer.parseInt(boundaryForSelector.id.toString()));
                 //   Toast.makeText(getApplicationContext(),"school",Toast.LENGTH_SHORT).show();
                 cluster = ((StringWithTags) parent.getItemAtPosition(pos)).string;
-                editor.putInt("cluster", pos);
+               // editor.putInt("cluster", pos);
                 bid = new Long(((StringWithTags) parent.getItemAtPosition(pos)).id.toString());
                 //  Toast.makeText(getApplicationContext(), bid + ":cluster", Toast.LENGTH_SHORT).show();
                 break;
@@ -414,14 +421,51 @@ public class NavigationDrawerActivity extends BaseActivity
     }
 
     private void fill_dropdown(int type, int id, int parent) {
-        List<StringWithTags> stringWithTags = get_boundary_data(parent);
-        Spinner spinner = findViewById(id);
-        spinner.setOnItemSelectedListener(this);
-        ArrayAdapter<StringWithTags> boundaryArrayAdapter = new ArrayAdapter<StringWithTags>(this, R.layout.spinnertextview, stringWithTags);
-        spinner.setAdapter(boundaryArrayAdapter);
-        boundaryArrayAdapter.setDropDownViewResource(R.layout.spinnertextview);
+        try {
 
 
+            List<StringWithTags> stringWithTags = get_boundary_data(parent, type);
+            Spinner spinner = findViewById(id);
+            spinner.setOnItemSelectedListener(this);
+            ArrayAdapter<StringWithTags> boundaryArrayAdapter = new ArrayAdapter<StringWithTags>(this, R.layout.spinnertextview, stringWithTags);
+            spinner.setAdapter(boundaryArrayAdapter);
+
+            sharedPreferences = getSharedPreferences("Navigationboundary", MODE_PRIVATE);
+
+            int d = sharedPreferences.getInt("dist", 0);
+            int b = sharedPreferences.getInt("block", 0);
+            int c = sharedPreferences.getInt("cluster", 0);
+            String name=sharedPreferences.getString("dist_name","");
+            String name2=((StringWithTags)sp_district.getSelectedItem()).string;
+            Log.d("shri",name+":"+name2);
+            if(d!=sp_district.getSelectedItemPosition()&&!name.equalsIgnoreCase(name2)) {
+
+
+                b = 0;
+                c = 0;
+            }
+
+
+            if (type == 1) {
+                //block
+                if(spinner.getAdapter().getCount()>b){
+                    spinner.setSelection(b, true);
+                }
+
+            }
+            if (type == 2) {
+                //cluster
+                if(spinner.getAdapter().getCount()>c){
+                spinner.setSelection(c, true);
+                }
+            }
+            boundaryArrayAdapter.setDropDownViewResource(R.layout.spinnertextview);
+
+
+        }catch (Exception e)
+        {
+
+        }
     }
 
 
@@ -437,6 +481,7 @@ public class NavigationDrawerActivity extends BaseActivity
 
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putInt("dist", sp_district.getSelectedItemPosition());
+                editor.putString("dist_name", ((StringWithTags)sp_district.getSelectedItem()).string);
                 editor.putInt("block", sp_block.getSelectedItemPosition());
                 editor.putInt("cluster", sp_cluster.getSelectedItemPosition());
                 editor.commit();
@@ -477,10 +522,12 @@ public class NavigationDrawerActivity extends BaseActivity
         final Spinner mSpinner = promptsView
 
                 .findViewById(R.id.spn_grade);
+        TextView tvSchool = promptsView.findViewById(R.id.tvSchool);
+        tvSchool.setText(name);
 
         mSpinner.setAdapter(gradeAdapter);
 
-        alertDialog.setButton(android.support.v7.app.AlertDialog.BUTTON_POSITIVE, getString(R.string.response_positive), new DialogInterface.OnClickListener() {
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.response_positive), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 int grade = Integer.parseInt(mSpinner.getSelectedItem().toString());
@@ -508,7 +555,12 @@ public class NavigationDrawerActivity extends BaseActivity
 
     }
 
-    private List<StringWithTags> get_boundary_data(int parent) {
+
+    public void getAllDistrict(int parentId) {
+
+    }
+
+    private List<StringWithTags> get_boundary_data(int parent, int type) {
         Query listboundary = Query.select().from(Boundary.TABLE)
                 .where(Boundary.PARENT_ID.eq(parent).and(Boundary.TYPE.eq("primaryschool").and(Boundary.STATE_KEY.eqCaseInsensitive(sessionManager.getStateSelection()))))
                 .orderBy(Boundary.NAME.asc());
@@ -516,19 +568,29 @@ public class NavigationDrawerActivity extends BaseActivity
         List<StringWithTags> boundaryList = new ArrayList<StringWithTags>();
         boundary_cursor = db.query(Boundary.class, listboundary);
         if (boundary_cursor.moveToFirst()) {
+            if (type == 0) {
+                StringWithTags boundary = new StringWithTags(getResources().getString(R.string.selectDistrict), 0, 0, getResources().getString(R.string.selectDistrict), sessionManager, false, false);
+                boundaryList.add(boundary);
+            } else if (type == 1) {
+                StringWithTags boundary = new StringWithTags(getResources().getString(R.string.selectblock), 0, 0, getResources().getString(R.string.selectblock), sessionManager, false, false);
+                boundaryList.add(boundary);
+            } else if (type == 2) {
+                StringWithTags boundary = new StringWithTags(getResources().getString(R.string.selectCluster), 0, 0, getResources().getString(R.string.selectCluster), sessionManager, false, false);
+                boundaryList.add(boundary);
+            }
             do {
                 Boundary b = new Boundary(boundary_cursor);
                 if ((b.getHierarchy().equalsIgnoreCase("district") || b.getHierarchy().equalsIgnoreCase("block")) && b.isFlag() == true) {
                     StringWithTags boundary = new StringWithTags(b.getName(), b.getId(), b.getHierarchy().equals("district") ? "1" : b.getParentId(), getLocTextBoundary(b), sessionManager, b.isFlag(), b.isFlagCB());
                     boundaryList.add(boundary);
-                    //    Log.d("shri", "dist block" + b.getName());
+                    // Log.d("shri", "dist block-" + b.getName());
 
                 } else {
                     if (!b.getHierarchy().equalsIgnoreCase("district") && !b.getHierarchy().equalsIgnoreCase("block") && b.isFlag() == true) {
                         StringWithTags boundary = new StringWithTags(b.getName(), b.getId(), b.getHierarchy().equals("district") ? "1" : b.getParentId(), getLocTextBoundary(b), sessionManager, b.isFlag(), b.isFlagCB());
                         boundaryList.add(boundary);
                         //cluster
-                        // Log.d("shri","cluster"+b.getName());
+                        //    Log.d("shri","cluster-"+b.getName());
                     }
                 }
             } while (boundary_cursor.moveToNext());

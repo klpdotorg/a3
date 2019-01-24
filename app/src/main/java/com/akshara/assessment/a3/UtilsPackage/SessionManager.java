@@ -87,6 +87,13 @@ public class SessionManager {
     /**
      * Create login session
      */
+
+    public void clearBoundaryCache()
+    {
+       _context. getSharedPreferences("Navigationboundary", MODE_PRIVATE).edit().clear().commit();
+
+    }
+
     public void createLoginSession(String name, String id, String token, String lastName, String email, String mobile, String dob, String usertype) {
 
         editor.putBoolean(IS_LOGGED_IN, true);

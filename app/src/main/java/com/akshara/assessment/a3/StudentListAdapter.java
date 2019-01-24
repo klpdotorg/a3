@@ -26,6 +26,8 @@ import com.gka.akshara.assesseasy.deviceDatastoreMgr;
 import com.yahoo.squidb.data.SquidCursor;
 import com.yahoo.squidb.sql.Query;
 
+import org.apache.commons.lang3.text.WordUtils;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -91,7 +93,7 @@ class StudentListAdapter extends RecyclerView.Adapter<StudentListAdapter.Student
     public void onBindViewHolder(StudentViewHolder holder, final int position) {
 
 
-        holder.txtStudent.setText(students.get(position).name + " " + students.get(position).father);
+        holder.txtStudent.setText(WordUtils.capitalize(students.get(position).name.toLowerCase() ) + " " +WordUtils.capitalize( students.get(position).father.toLowerCase()));
         // Log.d("shri",students.get(position).stsid+":"+students.get(position).name);
         holder.txtStudentID.setText("STS ID: "
                 + (students.get(position).uid != null &&
@@ -173,11 +175,11 @@ holder.imageReportbtn.setVisibility(View.GONE);
                     bundle.putString("A3APP_GRADESTRING", A3APP_GRADESTRING);
                     bundle.putString("A3APP_CHILDID", students.get(position).stsid + "");
                     bundle.putString("A3APP_LANGUAGE", A3APP_LANGUAGE);
-                    bundle.putString("A3APP_TITLETEXT", A3APP_TITLETEXT + ": " + students.get(position).name);
+                    bundle.putString("A3APP_TITLETEXT", A3APP_TITLETEXT + ": " + WordUtils.capitalize(students.get(position).name.toLowerCase()));
                     intent.putExtras(bundle);
 
                     //  Intent intent = new Intent(activity, FinalLauncherActivity.class);
-                    intent.putExtra("NAME", students.get(position).name + " " + students.get(position).father);
+                    intent.putExtra("NAME", WordUtils.capitalize(students.get(position).name.toLowerCase() )+ " " + WordUtils.capitalize(students.get(position).father.toLowerCase()));
                     activity.startActivity(intent);
                     activity.overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
 

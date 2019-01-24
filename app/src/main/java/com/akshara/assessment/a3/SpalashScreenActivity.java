@@ -1,5 +1,8 @@
 package com.akshara.assessment.a3;
 
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Build;
 
@@ -67,13 +70,13 @@ public class SpalashScreenActivity extends BaseActivity {
         // check state and language if user first time login
 
         if (mSession.isLoggedIn()) {
-            Log.d("shri", mSession.isLoggedIn() + "------");
+         //   Log.d("shri", mSession.isLoggedIn() + "------");
             //langauge screen
             if (getStateCount() == 0) {
                 loadStateDeatil();
             } else {
                 if (mSession.isLoggedIn() && mSession.isSetupDone()) {
-                    Log.d("shri", mSession.isSetupDone() + "----set--");
+                   // Log.d("shri", mSession.isSetupDone() + "----set--");
                     Intent intent = new Intent(getApplicationContext(), NavigationDrawerActivity.class);
                     startActivity(intent);
                     finish();

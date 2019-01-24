@@ -84,9 +84,6 @@
     <string name="doyouwantToLogout">Are you sure you want to log out?</string>
     <string name="districtDataAlreadyFound">district: blocks and clusters already downloaded. Do you want to re-download?</string>
 
-    <string name="blockDataAlreadyFound">block data already downloaded. Do you want to re-download?</string>
-    <string name="blockSchoolLoading">block: schools loading. It will take few minutes for download to complete. Thanks for your patience !!!</string>
-    <string name="blockLeveldataLoadedSchussfully">block level data loaded successfully</string>
     <string name="action_logout">Logout</string>
     <string name="selectDistrict">--Select District--</string>
     <string name="clusterDataLoadingFailed">Cluster data loading failed.Please try again</string>
@@ -228,6 +225,12 @@
     <string name="micro">Micro-concept name</string>
     <string name="assessment_type_rep">ASSESSMENT TYPE: </string>
     <string name="subject_rep">Subject: </string>
+    <string name="sln">Sl.No</string>
+    <string name="attemptedStudents">Assessment Attempted Students:</string>
+    <string name="totalStudents">Total Students :</string>
+    <string name="coorect_answers">Number of correct answers to the question</string>
+    <string name="kitQ">* For any question if the number of correct answers are less than 5, the concept has to be taught by giving more emphasis to usage of TLMs of Math Kit.</string>
+    <string name="synced">All taken assessments are synced</string>
 
 
     <string-array name="array_subject">

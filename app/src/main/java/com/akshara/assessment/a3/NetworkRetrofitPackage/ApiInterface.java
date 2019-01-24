@@ -106,7 +106,7 @@ public interface ApiInterface {
 
 
     @GET
-    Call<SchoolStudentPojo> getStudentAtClusterLevel(@Url String url);
+    Call<SchoolStudentPojo> getStudentAtClusterLevel(@Url String url,@Header("Authorization") String authHeader);
 
     @POST
     Call<QuestionSetPojos> getQuestionset(@Url String url, @Body QuestionSetPojo questionset);

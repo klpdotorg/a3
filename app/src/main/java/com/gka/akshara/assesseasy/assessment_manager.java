@@ -64,6 +64,11 @@ public class assessment_manager extends AppCompatActivity {
 
                 globalvault.datetime_assessment_start = System.currentTimeMillis(); // In seconds
 
+                if(globalvault.a3app_language != null) {
+                    if(!TextUtils.isEmpty(globalvault.a3app_language))
+                        globalvault.keyboardlanguage = globalvault.a3app_language;
+                }
+
             }
 
             if(!TextUtils.isEmpty(this.fromactivityname)) {
@@ -511,7 +516,7 @@ public class assessment_manager extends AppCompatActivity {
         paramadd1.label = "First Number";
         paramadd1.datatype = "text";
         paramadd1.role = "parameter";
-        paramadd1.value = "10, 12, 15";
+        paramadd1.value = "10,12,15";
         globalvault.questions[indexq].addQuestionData(paramadd1);
 
         assessquestiondata paramadd2 = new assessquestiondata();
@@ -519,7 +524,7 @@ public class assessment_manager extends AppCompatActivity {
         paramadd2.label = "Second Number";
         paramadd2.datatype = "text";
         paramadd2.role = "parameter";
-        paramadd2.value = "5, 9, 7";
+        paramadd2.value = "5,9,7";
         globalvault.questions[indexq].addQuestionData(paramadd2);
 
         indexq++;
@@ -533,7 +538,7 @@ public class assessment_manager extends AppCompatActivity {
         paramsub1.label = "First Number";
         paramsub1.datatype = "text";
         paramsub1.role = "parameter";
-        paramsub1.value = "20, 22, 25";
+        paramsub1.value = "20,22,25";
         globalvault.questions[indexq].addQuestionData(paramsub1);
 
         assessquestiondata paramsub2 = new assessquestiondata();
@@ -541,7 +546,7 @@ public class assessment_manager extends AppCompatActivity {
         paramsub2.label = "Second Number";
         paramsub2.datatype = "text";
         paramsub2.role = "parameter";
-        paramsub2.value = "15, 19, 17";
+        paramsub2.value = "15,19,17";
         globalvault.questions[indexq].addQuestionData(paramsub2);
 
         indexq++;
@@ -555,7 +560,7 @@ public class assessment_manager extends AppCompatActivity {
         parammul1.label = "First Number";
         parammul1.datatype = "text";
         parammul1.role = "parameter";
-        parammul1.value = "8, 5, 3";
+        parammul1.value = "8,5,3";
         globalvault.questions[indexq].addQuestionData(parammul1);
 
         assessquestiondata parammul2= new assessquestiondata();
@@ -563,7 +568,7 @@ public class assessment_manager extends AppCompatActivity {
         parammul2.label = "Second Number";
         parammul2.datatype = "text";
         parammul2.role = "parameter";
-        parammul2.value = "2, 5, 3";
+        parammul2.value = "2,5,3";
         globalvault.questions[indexq].addQuestionData(parammul2);
 
         indexq++;
@@ -578,7 +583,7 @@ public class assessment_manager extends AppCompatActivity {
         paramdivwhole1.label = "Dividend";
         paramdivwhole1.datatype = "text";
         paramdivwhole1.role = "parameter";
-        paramdivwhole1.value = "20, 10, 30";
+        paramdivwhole1.value = "20,10,30";
         globalvault.questions[indexq].addQuestionData(paramdivwhole1);
 
         assessquestiondata paramdivwhole2= new assessquestiondata();
@@ -586,7 +591,7 @@ public class assessment_manager extends AppCompatActivity {
         paramdivwhole2.label = "Divisor";
         paramdivwhole2.datatype = "text";
         paramdivwhole2.role = "parameter";
-        paramdivwhole2.value = "5, 2, 10";
+        paramdivwhole2.value = "5,2,10";
         globalvault.questions[indexq].addQuestionData(paramdivwhole2);
 
         indexq++;
@@ -601,7 +606,7 @@ public class assessment_manager extends AppCompatActivity {
         paramdivrem1.label = "Dividend";
         paramdivrem1.datatype = "text";
         paramdivrem1.role = "parameter";
-        paramdivrem1.value = "15, 9, 17";
+        paramdivrem1.value = "15,9,17";
         globalvault.questions[indexq].addQuestionData(paramdivrem1);
 
         assessquestiondata paramdivrem2= new assessquestiondata();
@@ -609,7 +614,7 @@ public class assessment_manager extends AppCompatActivity {
         paramdivrem2.label = "Divisor";
         paramdivrem2.datatype = "text";
         paramdivrem2.role = "parameter";
-        paramdivrem2.value = "4, 6, 2";
+        paramdivrem2.value = "4,6,2";
         globalvault.questions[indexq].addQuestionData(paramdivrem2);
 
         indexq++;

@@ -69,7 +69,9 @@ public class WebViewActivity extends BaseActivity {
 
         data = getIntent().getStringExtra("data");
         //     webView.loadData(data, "text/html", "UTF-8");
-
+        webView.getSettings().setBuiltInZoomControls(true);
+        webView.getSettings().setLoadWithOverviewMode(true);
+        webView.getSettings().setUseWideViewPort(true);
         webView.loadDataWithBaseURL(null, data, "text/HTML", "UTF-8", null);
         webView.setWebViewClient(new WebViewClient() {
 

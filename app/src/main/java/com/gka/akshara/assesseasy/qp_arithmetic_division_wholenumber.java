@@ -79,7 +79,7 @@ public class qp_arithmetic_division_wholenumber extends AppCompatActivity {
         int randindex = 0;
         if(dividendset != null) {
             randindex = rand.nextInt(dividendset.length);
-            tvNumber1.setText(dividendset[randindex]);
+            tvNumber1.setText(AssessEasyKeyboard.replaceEnglishnumeralsToLocal(dividendset[randindex]));
         }
 
         TextView tvNumber2 = (TextView)findViewById(R.id.textViewDivisor);
@@ -87,7 +87,7 @@ public class qp_arithmetic_division_wholenumber extends AppCompatActivity {
             if (randindex >= divisorset.length) {
                 randindex = 0;
             }
-            tvNumber2.setText(divisorset[randindex]); // Choose the value for the Divisor that corresponds (same index) to the value of the Dividend
+            tvNumber2.setText(AssessEasyKeyboard.replaceEnglishnumeralsToLocal(divisorset[randindex])); // Choose the value for the Divisor that corresponds (same index) to the value of the Dividend
         }
 
         // sets the number and answer fields (when navigating backwards, fill the numbers randomly generated earlier and the answer entered before)
@@ -112,7 +112,17 @@ public class qp_arithmetic_division_wholenumber extends AppCompatActivity {
         ****/
 
         // create the keyboard
-        aekbd = new AssessEasyKeyboard(this,R.id.aenumberkbd, R.xml.assesseasynumberkbd1);
+        // aekbd = new AssessEasyKeyboard(this,R.id.aenumberkbd, R.xml.assesseasynumberkbd1);
+        String keyboardxmlname = "assesseasynumberkbd_" + globalvault.keyboardlanguage.toLowerCase();
+
+        int keyboardxmlresid = getResources().getIdentifier(keyboardxmlname, "xml", getPackageName());
+
+        if(keyboardxmlresid != 0)
+            aekbd = new AssessEasyKeyboard(this,R.id.aenumberkbd, keyboardxmlresid);
+        else  // If Failed to load the resource (keyboard XML file corresponding to the language), use default english numerals keyboard
+            aekbd = new AssessEasyKeyboard(this,R.id.aenumberkbd, R.xml.assesseasynumberkbd_english);
+
+
         //aekbd.showCustomKeyboard(findViewById(R.id.aenumberkbd));
 
         // Register the EditText box with the custom keyboard
@@ -210,12 +220,12 @@ public class qp_arithmetic_division_wholenumber extends AppCompatActivity {
                 String answerstr = firstnumber+","+secondnumber+","+answer;
 
                 try {
-                    int intFirstnum = Integer.parseInt(firstnumber.trim());
-                    int intSecondnum = Integer.parseInt(secondnumber.trim());
+                    int intFirstnum = Integer.parseInt(AssessEasyKeyboard.replaceLocalnumeralsToEnglish(firstnumber.trim()));
+                    int intSecondnum = Integer.parseInt(AssessEasyKeyboard.replaceLocalnumeralsToEnglish(secondnumber.trim()));
                     int correctAnswer = intFirstnum / intSecondnum;
                     globalvault.questions[questionid - 1].setAnswerCorrect(Integer.toString(correctAnswer));
 
-                    if (correctAnswer == Integer.parseInt(answer.trim()))
+                    if (correctAnswer == Integer.parseInt(AssessEasyKeyboard.replaceLocalnumeralsToEnglish(answer.trim())))
                         globalvault.questions[questionid - 1].setPass("P");
                     else
                         globalvault.questions[questionid - 1].setPass("F");

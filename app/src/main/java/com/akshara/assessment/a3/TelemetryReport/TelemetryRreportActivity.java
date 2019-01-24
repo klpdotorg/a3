@@ -39,6 +39,8 @@ import com.yahoo.squidb.data.SquidCursor;
 import com.yahoo.squidb.sql.Query;
 
 
+import org.apache.commons.lang3.text.WordUtils;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -47,6 +49,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TelemetryRreportActivity extends BaseActivity {
 
@@ -167,7 +171,7 @@ public class TelemetryRreportActivity extends BaseActivity {
         initPorgresssDialogForSchool();
         String URL = BuildConfig.HOST + "/api/v1/institutions/" + A3APP_INSTITUTIONID + "/students/";
         //   String URL =  BuildConfig.HOST +"/api/v1/institutestudents/?institution_id="+schoolId;
-        new A3NetWorkCalls(TelemetryRreportActivity.this).downloadStudent(URL, A3APP_INSTITUTIONID, A3APP_GRADEID, new SchoolStateInterface() {
+        new A3NetWorkCalls(TelemetryRreportActivity.this).downloadStudent(URL, A3APP_INSTITUTIONID, A3APP_GRADEID,sessionManager.getToken(), new SchoolStateInterface() {
             @Override
             public void success(String message) {
                 //  finishProgress();
@@ -192,6 +196,7 @@ public class TelemetryRreportActivity extends BaseActivity {
                             //a3dsapiobj.initializeDS(TelemetryRreportActivity.this);
                             //   Log.d("shri",dataInternal.size()+"Internal");
                             dataInternal = a3dsapiobj.getAllStudentsForReports(EASYASSESS_QUESTIONSETID + "", studentIds, true, ConstantsA3.assessmenttype, true);
+                            Log.d("shri",EASYASSESS_QUESTIONSETID+"---"+studentIds.toString()+"----" +ConstantsA3.assessmenttype);
                             Collections.sort(dataInternal);
                             GenerateHtmlString();
                             //    final ArrayList<pojoReportData> data2=data;
@@ -254,6 +259,12 @@ public class TelemetryRreportActivity extends BaseActivity {
     }
 
     public void GenerateHtmlString() {
+        int totalAssessmentAttemptedStu=0;
+        int totalStudents=0;
+        Map<Integer, Integer> freq = new HashMap<Integer, Integer>();
+
+
+        final String thStyle=" ";
         final String dataTillBodyTagOpen = "<!DOCTYPE html>\n" +
                 "<html>\n" +
                 "<meta charset=\"UTF-8\"/>\n" +
@@ -326,12 +337,16 @@ public class TelemetryRreportActivity extends BaseActivity {
 
 
         final String tableStart="<table style=\"width:100%\";page-break-before: always> <tr>";
-         StringBuilder htmlData = new StringBuilder(dataTillBodyTagOpen + headers1 + headers2 + Print1  + Print4 +firstTable+tableStart);
-        String tempSize = (75 / mConceptList.size())+"%";
+        //  StringBuilder htmlData = new StringBuilder(dataTillBodyTagOpen+ headers1 + headers2 + Print1  + Print4 +firstTable+tableStart);
+         StringBuilder htmlData = new StringBuilder();
+         //StringBuilder htmlData = new StringBuilder(dataTillBodyTagOpen + headers1 + headers2 + Print1  + Print4 +firstTable+tableStart);
+        String tempSize = (70 / mConceptList.size())+"%";
         for (int m = 0; m < mConceptList.size(); m++) {
 
             if (m == 0) {
                 String tableheader1 =" <th style='font-weight:bold;background-color:#cccccc';width=\"15%\">"+ getResources().getString(R.string.studntName)+"</th>";
+                String tableheader2 =" <th style='font-weight:bold;background-color:#cccccc';width=\"5%\">"+getResources().getString(R.string.sln)+"</th>";
+                htmlData.append(tableheader2);
                 htmlData.append(tableheader1);
 
             }
@@ -347,7 +362,7 @@ public class TelemetryRreportActivity extends BaseActivity {
 
             }
            // String tablemconceptsheader="<th style='text-align:center;vertical-align:middle';width="+tempSize+">"+String.valueOf(m + 1)+"</th>";
-            String tablemconceptsheader="<th style='text-align:center;vertical-align:middle;font-weight:bold;background-color:#cccccc';width="+tempSize+">"+concept+"</th>";
+            String tablemconceptsheader="<th style='text-align:center;vertical-align:middle;font-weight:bold;background-color:#cccccc';width="+tempSize+">("+(m+1)+")"+concept+"</th>";
             htmlData.append(tablemconceptsheader);
             //Phrase phrase = new Phrase(String.valueOf(mConceptList.get(m).split("@@")[0]),getFont());
 
@@ -361,10 +376,11 @@ public class TelemetryRreportActivity extends BaseActivity {
 
         for (int j = 0; j < dataInternal.size(); j++) {
             StudentTable table = dataInternal.get(j).getTable();
-            String name = " "+table.getFirstName();
+            String name = " "+table.getFirstName().toLowerCase();
+            Log.d("shri",table.getFirstName()+"--"+table.getId());
             try {
                 if (table.getMiddleName() != null && !table.getMiddleName().equalsIgnoreCase("")) {
-                    name = name + " " + (table.getMiddleName().substring(0, 1));
+                    name = name + " " + (table.getMiddleName().substring(0, 1)).toLowerCase();
                 }
 
             } catch (Exception e) {
@@ -373,21 +389,32 @@ public class TelemetryRreportActivity extends BaseActivity {
 
 
             //pdfPTable.addCell(new PdfPCell(new Phrase(name)));
-            String startDataH = "<tr><th>" + name + "</th>";
+            String startDataH = "<tr><th style='text-align:center;vertical-align:middle'>"+(j+1)+"</th><th>" + WordUtils.capitalize(name) + "</th>";
             htmlData.append(startDataH);
 
             for (int k = 0; k < mConceptList.size(); k++) {
                 if (dataInternal.get(j).getDetailReportsMap().get(table.getId()) != null) {
                     int size = dataInternal.get(j).getDetailReportsMap().get(table.getId()).size();
+                    Log.d("shri",size+"---------------------");
                     CombinePojo pojo = dataInternal.get(j).getDetailReportsMap().get(table.getId()).get(size - 1);
                     int marks = getAnswer(mConceptList.get(k), pojo, j, table.getId(), (size - 1));
                     htmlData.append("<th style='text-align:center;vertical-align:middle'>" + marks + "</th>");
 
                     // getAnswer(mConceptList.get(k),pojo);
+                   // if(marks!=0) {
+                        Integer count = freq.get(k);
+                        if (count == null) {
+                            freq.put(k, marks);
+                        } else {
+                            freq.put(k, count + marks);
+                        }
+                   // }
+
 
 
                 } else {
                     String nodata = "-";
+
                     htmlData.append("<th style='text-align:center;vertical-align:middle'>" + nodata + "</th>");
 
 
@@ -396,6 +423,8 @@ public class TelemetryRreportActivity extends BaseActivity {
 
                 if (k == mConceptList.size() - 1) {
                     if (dataInternal.get(j).getDetailReportsMap().get(table.getId()) != null) {
+                        totalAssessmentAttemptedStu++;
+                        totalStudents++;
                         int size = dataInternal.get(j).getDetailReportsMap().get(table.getId()).size();
                         int score = dataInternal.get(j).getDetailReportsMap().get(table.getId()).get(size - 1).getPojoAssessment().getScore();
                         htmlData.append("<th style='text-align:center;vertical-align:middle'>" + score + "</th></tr>");
@@ -403,6 +432,7 @@ public class TelemetryRreportActivity extends BaseActivity {
                         //end score
                     } else {
                         String score = "-";
+                        totalStudents++;
                         htmlData.append("<th style='text-align:center;vertical-align:middle'>" + score + "</th></tr>");
 
                     }
@@ -414,10 +444,38 @@ public class TelemetryRreportActivity extends BaseActivity {
 
 
             if (j == dataInternal.size() - 1) {
-                htmlData.append(bodyEnd);
+                String Print5 = "<h3>" + getResources().getString(R.string.attemptedStudents) +""+totalAssessmentAttemptedStu+ "</h3>";
+                String Print6 = "<h3>" + getResources().getString(R.string.totalStudents) +""+totalStudents+ "</h3>";
+
+                StringBuilder htmlData2 = new StringBuilder(dataTillBodyTagOpen+ headers1 + headers2 + Print1  + Print4 +Print6+Print5+firstTable+tableStart);
+                htmlData2.append(htmlData);
+
+                if(freq!=null&&freq.size()>0) {
+                    String lastTotlalString = "<tr><th style='text-align:center;vertical-align:middle;font-weight:bold;background-color:#cccccc'>  </th><th style='text-align:center;vertical-align:middle;font-weight:bold;background-color:#cccccc'>"+ getResources().getString(R.string.coorect_answers)+"</th>";
+                    StringBuilder builder = new StringBuilder(lastTotlalString);
+                    for (Integer val : freq.values()) {
+                       // if (val <= 4) {
+                      //      builder.append("<th style='text-align:center;vertical-align:middle;font-weight:bold;background-color:#F00'><font color=\"#FFDF00\">" + val + "</font></th>");
+
+                      //  } else {
+                            builder.append("<th style='text-align:center;vertical-align:middle;font-weight:bold;background-color:#cccccc'>" + val + "</th>");
+                      //  }
+                    }
+                    builder.append("<th style='text-align:center;vertical-align:middle;font-weight:bold;background-color:#cccccc'> </th></tr>");
+
+
+                    htmlData2.append(builder);
+                    String s="</table><h4><left>" + getResources().getString(R.string.kitQ) + "</left></h4>";
+                    htmlData2.append(s);
+                }
+                htmlData2.append(bodyEnd);
+
+
+
+            // Log.d("shri",freq.toString());
               //  genPdfFile(htmlData.toString());
                 Intent intent = new Intent(getApplicationContext(), WebViewActivity.class);
-                intent.putExtra("data", htmlData.toString());
+                intent.putExtra("data", htmlData2.toString());
                 startActivity(intent);
 
 
@@ -891,7 +949,7 @@ public class TelemetryRreportActivity extends BaseActivity {
     public ArrayList<StudentTable> getStudentIds(long institution, int gradeId) {
         ArrayList<StudentTable> studentIds = new ArrayList<>();
         Query studentQuery = Query.select().from(StudentTable.TABLE)
-                .where(StudentTable.INSTITUTION.eq(institution).and(StudentTable.STUDENT_GRADE.eq(gradeId))).orderBy(StudentTable.UID.asc());
+                .where(StudentTable.INSTITUTION.eq(institution).and(StudentTable.STUDENT_GRADE.eq(gradeId))).orderBy(StudentTable.FIRST_NAME.asc());
         SquidCursor<StudentTable> studentCursor = db.query(StudentTable.class, studentQuery);
         if (studentCursor != null && studentCursor.getCount() > 0) {
             while (studentCursor.moveToNext()) {

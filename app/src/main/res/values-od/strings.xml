@@ -1,46 +1,45 @@
 <resources>
 
-    <string name="app_name_ext">Akshara Assessment App</string>
+
 
     <string name="mobilehint">ମୋବାଇଲ ନ.</string>
     <string name="hintPassword">ପାସୱାର୍ଡ୍</string>
     <string name="btnLogin">ଲଗ୍ ଇନ୍</string>
     <string name="btnForgotPassword">ପାସୱାର୍ଡ୍ ଭୁଲି ଗଲେ କି?</string>
     <string name="btnRegister">ରେଜିଷ୍ଟର</string>
-    <string name="entermobilenumber">ମୋବାଇଲ ନ. ଲେଖନ୍ତୁ</string>
-    <string name="enter10digitmobilenumber">10 ଅଙ୍କ ମୋବାଇଲ ନ. ଲେଖନ୍ତୁ</string>
-    <string name="enterPassword">ପାସୱାର୍ଡ୍ ଲେଖନ୍ତୁ</string>
-    <string name="oops">ହାଏ! କିଛି ତ୍ରୁଟି ହୋଇ ଯାଇଛି| କିଛି ସମୟ ପରେ ଚେଷ୍ଟା କରନ୍ତୁ | </string>
-    <string name="userLoging">ଉପଭୋକ୍ତାଙ୍କ ଲଗ ଇନ ଚାଲିଛି ...</string>
-    <string name="error_field_required">ଏହି ଡାଟାଟି  ନିହାତି ଜ଼ରୁରୀ</string>
-    <string name="netWorkError">ନେଟ୍‌ୱାର୍କ୍ ତ୍ରୁଟି</string>
+    <string name="entermobilenumber">ମୋବାଇଲେ ନ. ଏଣ୍ଟେର କରନ୍ତୁ</string>
+    <string name="enter10digitmobilenumber">ଦୟା କରି ସଠିକ ଦଶ ଅଙ୍କ ମୋବାଇଲ ନମ୍ବର ଏଣ୍ଟେର କରନ୍ତୁ </string>
+    <string name="enterPassword">ପାସ୍ୱାର୍ଡ ଦିଅ</string>
+    <string name="oops">ଓହୋ ନାଃ, କିଛି  ଅସୁବିଧା ହେଇଯାଇଛି, ଦୟାକରି ଆଉଥରେ ଚେଷ୍ଟା କରନ୍ତୁ</string>
+    <string name="userLoging">ୟୁଜର ଲଗ୍ ଇନ୍  କରୁଛନ୍ତି...</string>
+    <string name="error_field_required">ଆବଶ୍ୟକ କ୍ଷେତ୍ର</string>
+    <string name="netWorkError">ନେଟ୍‌ୱାର୍କ୍ ତ୍ରୁଟି...ନିଜର ଇଣ୍ଟର୍ନେଟ୍ ସଂଯୋଗକୁ ଯାଞ୍ଚ କରି ପୁନଃବାର ଚେଷ୍ଟା କରନ୍ତୁ </string>
     <string name="login">ଲଗ୍ ଇନ୍</string>
     <string name="invalidOTP">ଅବୈଧ OTP</string>
     <string name="otpSentonNumber">OTP ଆପଣଙ୍କ ରେଜିଷ୍ଟର କରିଥିବା ମୋବାଇଲେରେ ପଠା ଯାଇଛି</string>
     <string name="enterOTPCode">OTP ଏଣ୍ଟେର କରନ୍ତୁ</string>
-    <string name="passwordChanged">ପାସୱାର୍ଡ୍ ରିସେଟ୍ ସଫଳ</string>
+    <string name="passwordChanged">ପାସୱାର୍ଡ୍ ରିସେଟ୍ ସଫଳ </string>
     <string name="new_Password">ନୂଆ ପାସ୍ଓ୍ୱାର୍ଡ଼</string>
     <string name="forgotPasswordqu">ପାସୱାର୍ଡ୍ ଭୁଲି ଗଲେ କି?</string>
-    <string name="enterMobileNumber">ମୋବାଇଲ ନ. ଲେଖନ୍ତୁ </string>
+    <string name="enterMobileNumber">ମୋବାଇଲେ ନ. ଏଣ୍ଟେର କରନ୍ତୁ</string>
     <string name="sendOTP">OTP ପଠାନ୍ତୁ</string>
     <string name="OK">ଓକେ</string>
     <string name="resetPassword">ପାସୱାର୍ଡ୍ ରିସେଟ୍</string>
-    <string name="enter_ten_digit_number">10 ଅଙ୍କ ମୋବାଇଲ ନ. ଲେଖନ୍ତୁ</string>
-    <string name="enter_valid_email_or_Phone">ଦୟା କରି ସଠିକ ଦଶ ଅଙ୍କ ମୋବାଇଲ ନମ୍ବର ଏଣ୍ଟେର କରନ୍ତୁ </string>
-    <string name="authenticating">ପ୍ରାମାଣିକତା ଚାଲିଛି…</string>
-    <string name="resettingpassword">ପାସୱାର୍ଡ୍ ରିସେଟ୍ ଚାଲିଛି…</string>
+    <string name="enter_ten_digit_number">ଦୟା କରି ସଠିକ ଦଶ ଅଙ୍କ ମୋବାଇଲ ନମ୍ବର ଏଣ୍ଟେର କରନ୍ତୁ </string>
+    <string name="enter_valid_email_or_Phone">ସଠିକ ମୋବାଇଲ ନମ୍ବର ଦିଅନ୍ତୁ </string>
+    <string name="authenticating">ପ୍ରାମାଣିକତା ଚାଲିଛି...</string>
+    <string name="resettingpassword">ପାସୱାର୍ଡ୍ ରିସେଟ୍ ଚାଲିଛି...</string>
     <string name="prompt_enter_password">ପାସୱାର୍ଡ୍</string>
-    <string name="prompt_verify_password">ରି-ଏଣ୍ଟର ପାସୱାର୍ଡ୍</string>
+    <string name="prompt_verify_password"> ରି-ଏଣ୍ଟର ପାସୱାର୍ଡ୍</string>
     <string name="first_name">ପ୍ରଥମ ନାମ</string>
     <string name="last_name">ଶେଷ ନାମ</string>
     <string name="mobile_number">ମୋବାଇଲ ନ.</string>
     <string name="action_register">ରେଜିଷ୍ଟର</string>
     <string name="confirmPassword">ପାସୱାର୍ଡ୍ ସୁନିଶ୍ଚିତ କରନ୍ତୁ</string>
-    <string name="dob">ଜନ୍ମ ତାରିଖ(DD-MM-YYYY)</string>
+    <string name="dob">ଜନ୍ମ ତାରିଖ (ଦିନ-ମାସ- ବର୍ଷ)</string>
     <string name="prompt_enter_email1_">ଇମେଲ୍ (Optional)</string>
     <string name="register">ରେଜିଷ୍ଟର</string>
     <string name="doesnotmatcherwithpass">ଏହି ଫିଲ୍ଡଟି ନିହାତି ଜ଼ରୁରୀ ଏବଂ ଏହା ପାସୱାର୍ଡ୍ ସହ ସମାନ ହେବା ଦରକାର </string>
-    <string name="pleaseSelectrespondanttypequestion">ପ୍ରତିବାଦୀଙ୍କ ପ୍ରକାର ବାଛନ୍ତୁ</string>
     <string name="pleaseSelectrespondanttype">ପ୍ରତିବାଦୀଙ୍କ ପ୍ରକାର ବାଛନ୍ତୁ</string>
     <string name="enterValidDate">ବୈଧ ତାରିଖ ଫର୍ମାଟ୍(DD-MM-YYYY) Enter କରନ୍ତୁ</string>
     <string name="signupsuccess">ଆପଣ ସଫଳତାର ସହ ସାଇନ୍ଅପ୍ କରି ପାରିଛନ୍ତି | ଏବେ ଲଗ୍ ଇନ୍ କରନ୍ତୁ </string>
@@ -51,11 +50,11 @@
     <string name="selectStateForLanguage">ରାଜ୍ୟ ବାଛନ୍ତୁ</string>
     <string name="selectLanguageForLanguage">ଭାଷା ବାଛନ୍ତୁ</string>
     <string name="selectYourState">---- ରାଜ୍ୟ ବାଛନ୍ତୁ ----</string>
-    <string name="selectYourLanguage">----ଭାଷା ବାଛନ୍ତୁ----</string>
-    <string name="selectState">ରାଜ୍ୟ ବାଛନ୍ତୁ</string>
+    <string name="selectYourLanguage">---- ଭାଷା ବାଛନ୍ତୁ ----</string>
+    <string name="selectState">ଦୟାକରି ତୁମ ରାଜ୍ୟ ଚୟନ କର</string>
 
     <string name="Submit">ସବମିଟ</string>
-    <string name="Cancel">କ୍ୟାନସଲ</string>
+    <string name="Cancel">କ୍ୟାନସଲ </string>
     <string name="Ok">ଓକେ</string>
     <string name="Ok_">ଓକେ</string>
     <string name="nextbutton">ପରବର୍ତ୍ତୀ</string>
@@ -63,29 +62,28 @@
     <string name="english">English</string>
     <string name="districtDownloaded">ଜିଲା ଡାଉନ୍‌ଲୋଡ୍ ଶେଷ</string>
     <string name="districtDataLoadingFailed">ଜିଲା ଡାଟା ଲୋଡ୍ ଅସଫଳ... ପୁନଃବାର ଚେଷ୍ଟା କରନ୍ତୁ</string>
-    <string name="pleaseSelectsurveyLanguage">ଆପଣଙ୍କ ସର୍ବେକ୍ଷଣ ରାଜ୍ୟ ଏବଂ ଭାଷା ବାଛନ୍ତୁ</string>
+    <string name="pleaseSelectsurveyLanguage">ରାଜ୍ୟ ଏବଂ ଭାଷା ବାଛନ୍ତୁ </string>
     <string name="prompt_district">ଜିଲ୍ଲା ବାଛନ୍ତୁ</string>
     <string name="prompt_block">ବ୍ଲକ ବାଛନ୍ତୁ</string>
     <string name="prompt_cluster">କ୍ଲଷ୍ଟର ବାଛନ୍ତୁ</string>
-    <string name="downloadDistrcitData">ନୋଟ: ଦରକାର ଥିବା ଜିଲାର ଡାଟା ଡାଉନ୍‌ଲୋଡ୍ କରନ୍ତୁ</string>
-    <string name="downloadDistrcitDataNext">ନୋଟ: ଜିଲା ଡାଟା ଡାଉନ୍‌ଲୋଡ୍ କରନ୍ତୁ ପରବର୍ତୀ ନେଭିଗେଟ୍ କରିବା ପାଇଁ </string>
+    <string name="downloadDistrcitData">ନୋଟ  : ବିଦ୍ୟାର୍ଥୀ ମାନଙ୍କର ଡିଟେଲ(ବିବରଣୀ)  ଜାଣିବା ପାଇଁ ଦୟାକରି ସ୍କୁଲକୁ ଚୟନ କର.</string>
+    <string name="downloadDistrcitDataNext">ନୋଟ : ପର ସ୍କ୍ରିନକୁ ଯିବା ପାଇଁ ଜିଲା ସ୍ତରୀୟ ଡାଟା ଡାଉନଲୋଡ଼ କର.</string>
     <string name="selectblock">--ବ୍ଲକ ବାଛନ୍ତୁ--</string>
-    <string name="blockandCLusterdownloaded">ଜିଲାର ବ୍ଲକ ଏବଂ କ୍ଲଷ୍ଟର ଡାଟା ଡାଉନ୍‌ଲୋଡ୍ ସରିଛି| ପୁନଃବାର ଡାଉନ୍‌ଲୋଡ୍ ଚାହାନ୍ତି କି?</string>
+    <string name="blockandCLusterdownloaded">ଜିଲ୍ଲା : ବ୍ଲକ ଗୁଡିକ  ଏବଂ କ୍ଲଷ୍ଟର ଗୁଡିକକୁ ଡାଉନଲୋଡ ହେଯିଯାୟୀଛି</string>
     <string name="response_neutral">ଓକେ</string>
     <string name="response_positive">ହଁ</string>
     <string name="response_negative">ନା</string>
-    <string name="loadingStateDistrict">ଜିଲା ଲୋଡ୍ ଚାଲିଛି …</string>
-    <string name="districtblockloading">ଜିଲାର: ବ୍ଲକ ଲୋଡ୍ ଚାଲିଛି …</string>
-    <string name="districtClusterLoading">ଜିଲାର: Cluster ଲୋଡ୍ ଚାଲିଛି …</string>
-    <string name="districtsSchoolLoading">ଜିଲାର ସ୍କୁଲ ଲୋଡ୍ ଚାଲିଛି .It will take few minutes for download to complete. Thanks for your patience !!!</string>
+    <string name="loadingStateDistrict">ଜିଲା ଲୋଡ୍ ଚାଲିଛି ..</string>
+    <string name="districtblockloading">ଜିଲାର ବ୍ଲକ ଲୋଡ୍ ଚାଲିଛି ...</string>
+    <string name="districtClusterLoading">ଜିଲାର କ୍ଲଷ୍ଟର ଲୋଡ୍ ଚାଲିଛି ...</string>
+    <string name="districtsSchoolLoading">ଜିଲ୍ଲା ସ୍କୁଲ ଲୋଡ଼ ହଉଛି ,ଡାଉନଲୋଡ଼ ପୁରା ହବା ପାଇଁ କିଛି ଅଧିକ ମିନିଟ ଲାଗିବ ଆପଣଙ୍କ  ଆପଣଙ୍କର ଧର୍ଯ୍ୟ ପାଇଁ ଧନ୍ୟବାଦ.!!!</string>
     <string name="districtLeveldataLoadedSchussfully">ଜିଲା ଡାଟା ଲୋଡ୍ ସଫଳ</string>
     <string name="pleaseLoadDataforSelectedState">ଚୟନ କରାଯାଇଥିବା ରାଜ୍ୟ ପାଇଁ ଡାଟା ଲୋଡ୍ କରନ୍ତୁ</string>
     <string name="doyouwantToLogout">ଆପଣ ନିଶ୍ଚିତ ଲଗ୍ ଆଉଟ୍ କରିବାକୁ ଚାହାନ୍ତି କି?</string>
     <string name="districtDataAlreadyFound">ବ୍ଲକ ଡାଟା ଡାଉନ୍‌ଲୋଡ୍ ସରିଛି| ପୁନଃବାର ଡାଉନ୍‌ଲୋଡ୍ ଚାହାନ୍ତି କି?</string>
 
-    <string name="blockDataAlreadyFound">ବ୍ଲକର ଡାଟା ଡାଉନ୍‌ଲୋଡ୍ ସରିଛି| ପୁନଃବାର ଡାଉନ୍‌ଲୋଡ୍ ଚାହାନ୍ତି କି?</string>
-    <string name="blockSchoolLoading">ବ୍ଲକର ସ୍କୁଲ ଲୋଡ୍ ଚାଲିଛି...କିଛି ମିନିଟ୍ ଲାଗିବ| ଆପଣଙ୍କ ଧୈର୍ଯ୍ୟ ପାଇଁ ଧନ୍ୟବାଦ|</string>
-    <string name="blockLeveldataLoadedSchussfully">ବ୍ଲକ ଡାଟା ଲୋଡ୍ ସଫଳ</string>
+    <string name="clusterSchoolLoading">କ୍ଲଷ୍ଟର  ସ୍କୁଲ ଲୋଡ଼ ହଉଛି .ଡାଉନଲୋଡ଼ ପୁରା ହବା ପାଇଁ କିଛି ଅଧିକ ମିନିଟ ଲାଗିବ ଆପଣଙ୍କ  ଧର୍ଯ୍ୟ ପାଇଁ ଧନ୍ୟବାଦ.</string>
+
     <string name="action_logout">ଲଗ୍ ଆଉଟ୍</string>
     <string name="selectDistrict">--ଜିଲ୍ଲା ବାଛନ୍ତୁ--</string>
     <string name="clusterDataLoadingFailed">କ୍ଲଷ୍ଟର ଡାଟା ଲୋଡ୍ ଅସଫଳ... ପୁନଃବାର ଚେଷ୍ଟା କରନ୍ତୁ</string>
@@ -95,17 +93,13 @@
     <string name="noblock">ବ୍ଲକ ମିଳିଲା ନାହିଁ</string>
     <string name="noClusterfound">Cluster ମିଳିଲା ନାହିଁ</string>
     <string name="selectGrade">ଶ୍ରେଣୀ ଚୟନ କରନ୍ତୁ</string>
-    <string name="selectProgramorSubject">ପ୍ରୋଗ୍ରାମ କିମ୍ବା ବିଷୟ ବାଛନ୍ତୁ </string>
+    <string name="selectProgramorSubject">Select Program/Subject</string>
     <string name="selectGradetext">ଶ୍ରେଣୀ ଚୟନ କରନ୍ତୁ</string>
 
-    <string name="selectLanguage">ସ୍କୁଲ ସର୍ବେକ୍ଷଣ ପାଇଁ ପରିସୀମା ବାଛନ୍ତୁ</string>
-
-
+    <string name="selectLanguage">ଆପଣଙ୍କ ଭାଷା ବାଛନ୍ତୁ</string>
 
 
     <string-array name="grade">
-
-
         <item>1</item>
         <item>2</item>
         <item>3</item>
@@ -113,125 +107,47 @@
         <item>5</item>
     </string-array>
 
-    <string name="title_activity_navigation_drawer">NavigationDrawerActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
+
+
     <string name="action_settings">ସେଟିଙ୍ଗସ୍</string>
-    <string name="Profile">ଅଦ୍ୟତନ କରନ୍ତୁ</string>
-    <string name="download">ଡାଉନଲୋଡ</string>
-    <string name="changeLanguage">ଭାଷା ବାଛନ୍ତୁ-ପ୍ରୋଗ୍ରାମ</string>
-    <string name="prompt_user_role">ଉପଭୋକ୍ତାଙ୍କ ଭୂମିକା</string>
+    <string name="Profile">ପ୍ରୋଫାଇଲ</string>
+    <string name="download">ଡାଉନଲୋଡ଼</string>
+    <string name="changeLanguage">ଭାଷା - ପ୍ରୋଗ୍ରାମ ବଦଲାଓ</string>
+    <string name="prompt_user_role">ୟୁଜର ରୋଲ</string>
     <string name="update">ଅଦ୍ୟତନ କରନ୍ତୁ</string>
     <string name="updateProfile">ପ୍ରୋଫାଇଲ୍ ଅଦ୍ୟତନ</string>
     <string name="profileUpdationFailed">ପ୍ରୋଫାଇଲ୍ ଅଦ୍ୟତନ  ଅସଫଳ... ପୁନଃବାର ଚେଷ୍ଟା କରନ୍ତୁ</string>
-    <string name="profileUpdatedSuccessfully">ଆପଣଙ୍କ ପ୍ରୋଫାଇଲ୍ ଅଦ୍ୟତନ ସଫଳ ହେଲା</string>
-    <string name="updating_profile">ପ୍ରୋଫାଇଲ୍ ଅଦ୍ୟତନ ଚାଲିଛି…</string>
+    <string name="profileUpdatedSuccessfully">ପ୍ରୋଫାଇଲ ଅପଡେଟ ସଫଳ</string>
+    <string name="updating_profile">ପ୍ରୋଫାଇଲ୍ ଅଦ୍ୟତନ ଚାଲିଛି</string>
     <string name="urdu">Urdu</string>
-    <string name="selectCluster">-- କ୍ଲଷ୍ଟର ବାଛନ୍ତୁ --</string>
+    <string name="selectCluster">-- କ୍ଲଷ୍ଟର ବାଛନ୍ତୁ--</string>
+    <string name="stsid">ଏସଟିଏସ ଆଇଡି (STS ID)</string>
     <string name="stuFirstName">ପ୍ରଥମ ନାମ</string>
     <string name="stuLastName">ଶେଷ ନାମ</string>
-    <string name="male">ପୁଅ</string>
-    <string name="female">ଝିଅ</string>
-    <string name="registerStudent">ବିଦ୍ୟାର୍ଥୀ ରେଜିଷ୍ଟର କରନ୍ତୁ</string>
+    <string name="male">ପୁରୁଷ</string>
+    <string name="female">ସ୍ତ୍ରୀ</string>
+    <string name="registerStudent">ରେଜିଷ୍ଟର(ପଞ୍ଜିକୃତ) ବିଦ୍ୟାର୍ଥୀ</string>
     <string name="registerstudent">ରେଜିଷ୍ଟର</string>
-    <string name="errorFirstName">ବିଦ୍ୟାର୍ଥୀଙ୍କ ପ୍ରଥମ ନାମ ଏଣ୍ଟର କରନ୍ତୁ </string>
-    <string name="errorLastName">ବିଦ୍ୟାର୍ଥୀଙ୍କ ଶେଷ  ନାମ ଏଣ୍ଟର କରନ୍ତୁ</string>
-    <string name="errorStudentId">ବିଦ୍ୟାର୍ଥୀଙ୍କ ID  ଏଣ୍ଟର କରନ୍ତୁ</string>
-    <string name="clusterSchoolLoading">କ୍ଲଷ୍ଟର: ସ୍କୁଲ ଲୋଡ ଚାଲିଛି| କିଛି କ୍ଷଣ ଲାଗିବ</string>
-    <string name="clusterLeveldataLoadedSchussfully">କ୍ଲଷ୍ଟରର ସମସ୍ତ ସ୍କୁଲ ଲୋଡ ହୋଇ ସାରିଛି</string>
-    <string name="clusterDataAlreadyFound">କ୍ଲଷ୍ଟରର ସମସ୍ତ ସ୍କୁଲ ଲୋଡ ହୋଇ ସାରିଛି | ପୁନର୍ବାର ଡାଉନଲୋଡ କରିବାକୁ ଚାହାନ୍ତି କି?</string>
-    <string name="school">ସ୍କୁଲମାନ</string>
+    <string name="errorFirstName">ବିଦ୍ୟାର୍ଥୀର ପ୍ରଥମ ନାମ ପ୍ରବେଶ କର</string>
+    <string name="errorLastName">ବିଦ୍ୟାର୍ଥୀର ଶେଷ  ନାମ ପ୍ରବେଶ କର</string>
+    <string name="errorStudentId">ବିଦ୍ୟାର୍ଥୀର ଆଇଡି  ପ୍ରବେଶ କର </string>
+    <string name="clusterDataAlreadyFound">କ୍ଲଷ୍ଟର ସ୍କୁଲ ଗୁଡିକ ଆଗରୁହିଁ ଡାଉନଲୋଡ ହେଇସାରିଛନ୍ତି.ତୁମେ ଆଉଥରେ ଡାଉନଲୋଡ କରିବାକୁ ଚାହୁଁଛ କି ?</string>
+    <string name="school">ସ୍କୁଲ</string>
     <string name="prompt_school">ସ୍କୁଲ ବାଛନ୍ତୁ</string>
-    <string name="selectSchool">-- ସ୍କୁଲ ବାଛନ୍ତୁ --</string>
-    <string name="loadingStudent">ବିଦ୍ୟାର୍ଥୀଙ୍କ ଡାଟା ଲୋଡ ଚାଲିଛି ...</string>
-    <string name="students_downloaded">%1$s ଟି ବିଦ୍ୟାର୍ଥୀଙ୍କ ଡାଟା ଲୋଡ ସରିଛି</string>
+    <string name="selectSchool">-- ସ୍କୁଲ ବାଛନ୍ତୁ--</string>
+    <string name="schoolStudentDownloaded">ସ୍କୁଲର ଛାତ୍ର  ସଫଳତାର ସହ ଡାଉନଲୋଡ଼ ହେଇସାରିଛନ୍ତି.</string>
+    <string name="loadingStudent">ଛାତ୍ର ମାନଙ୍କର ଡିଟେଲ ଗୁଡିକ ଲୋଡିଂ ହଉଛି...</string>
+    <string name="students_downloaded">%1$s ବିଦ୍ୟାର୍ଥୀ ମାନଙ୍କର ଡିଟେଲ ଗୁଡିକ ଲୋଡ ହେଇସାରିଛି.</string>
     <string name="string_select_language">ଭାଷା ବାଛନ୍ତୁ</string>
-    <string name="downloadQuestion">ପ୍ରଶ୍ନବାଚୀ ଡାଉନଲୋଡ କରନ୍ତୁ</string>
-    <string name="string_select_subject">ବିଷୟ ବାଛନ୍ତୁ </string>
-    <string name="string_select_grade">ଶ୍ରେଣୀ ଚୟନ କରନ୍ତୁ</string>
-    <string name="string_select_AsseesmentType">ଅକଳନର ପ୍ରକାର ବାଛନ୍ତୁ</string>
+    <string name="downloadQuestion">ଡାଉନଲୋଡ଼ ପ୍ରଶ୍ନ ସେଟ</string>
+    <string name="string_select_subject">ବିଷୟର ଚୟନ କର /ବାଛ.</string>
+    <string name="string_select_grade">ଶ୍ରେଣୀର  ଚୟନ କର /ବାଛ.</string>
+    <string name="string_select_AsseesmentType">ଏଶେସମେଣ୍ଟର/ମୂଲ୍ୟାଙ୍କନର  ପ୍ରକାରକୁ  ଚୟନ କର /ବାଛ.</string>
 
 
-    <string name="schoolsnotfoundforcluster">ଏହି କ୍ଲଷ୍ଟର ପାଇଂ  ସ୍କୁଲ ନାହିଁ</string>
-    <string name="registeredblocksnotfound">ଏହି ଜିଲ୍ଲାରେ ରେଜିଷ୍ଟର ହୋଇଥିବା ବ୍ଲକମାନ ଉପଲବ୍ଧ ନାହିଁ </string>
-    <string name="noQuestionSet">%1$s ପାଇଁ ପ୍ରଶ୍ନବାଚୀ ମିଳିଲା ନାହିଁ| ଡାଉନଲୋଡ କରି ଆକଳନ ଚାଲୁ କରନ୍ତୁ  </string>
-    <string name="registration">ରେଜିଷ୍ଟ୍ରେସନ</string>
-    <string name="selectprogram">ପ୍ରୋଗ୍ରାମ ବାଛନ୍ତୁ</string>
-    <string name="pleaseSelectProgram">ପ୍ରୋଗ୍ରାମ ବାଛନ୍ତୁ</string>
-    <string name="program_header">ପ୍ରୋଗ୍ରାମ  :</string>
-    <string name="total_boys">ସମୁଦାୟ ପୁଅ</string>
-    <string name="total_girls">ସମୁଦାୟ ଝିଅ</string>
-    <string name="total">ସମୁଦାୟ</string>
-    <string name="assessment_title">ଅକଳନର ନାମ :</string>
-    <string name="language_assment">ଭାଷା :</string>
-    <string name="subject">ବିଷୟ :</string>
-    <string name="assessment_type">ଅକଳନର ପ୍ରକାର :</string>
-    <string name="stuent_name">ବିଦ୍ୟାର୍ଥୀଙ୍କ ନାମ</string>
-    <string name="score">ପ୍ରାପ୍ତଙ୍କ</string>
-    <string name="download_students">ବିଦ୍ୟାର୍ଥୀମାନ ଡାଉନଲୋଡ କରନ୍ତୁ</string>
-    <string name="assessment_header">ଆକଳନ</string>
-    <string name="student_list">ବିଦ୍ୟାର୍ଥୀଙ୍କ ତାଲିକା</string>
-    <string name="add_student">ଆଉ ଏକ ବିଦ୍ୟାର୍ଥୀଙ୍କୁ ଯୋଡ଼ନ୍ତୁ </string>
-    <string name="internal_server_error">ସେର୍ଭେର ତ୍ରୁଟି! କିଛି ସମୟ ପରେ ଚେଷ୍ଟା କରନ୍ତୁ </string>
-    <string name="student_registration_failed">ବିଦ୍ୟାର୍ଥୀ ରେଜିଷ୍ଟର ହୋଇ ପାରିଲେ ନାହିଁ</string>
-    <string name="student_registration_success">ବିଦ୍ୟାର୍ଥୀ ରେଜିଷ୍ଟର ହୋଇ ପାରିଲେ</string>
-    <string name="no_program_found">କିଛି ପ୍ରୋଗ୍ରାମ ମିଳିଲା ନାହିଁ</string>
-    <string name="all_programs_loaded">ସମସ୍ତ ପ୍ରୋଗ୍ରାମ ଲୋଡ ହୋଇପାରିଲା</string>
-    <string name="assment_loading_failed">ଆକଳନ ଲୋଡ ଅସଫଳ</string>
-    <string name="assessment_loaded">ସମସ୍ତ ଆକଳନ ଲୋଡ ହୋଇଯାଇଛି</string>
-    <string name="successfuly_Questionset">ପ୍ରଶ୍ନବାଚୀ ଡାଉନଲୋଡ ସଫଳ ହୋଇଛି</string>
-    <string name="schools_not_contains_reg_stu">ଏହି ସ୍କୁଲ ରେ ବିଦ୍ୟାର୍ଥୀ ରେଜିଷ୍ଟର ହୋଇ ନାହାନ୍ତି</string>
-    <string name="stu_downloading_failed">ସ୍କୁଲମାନ ଡାଉନଲୋଡ ଅସଫଳ</string>
-    <string name="schools_loaded_success">ସ୍କୁଲମାନ ଡାଉନଲୋଡ ସଫଳ ହୋଇଛି</string>
-    <string name="resend_otp">OTP ପୁନର୍ବାର ପଠାନ୍ତୁ</string>
-    <string name="do_you_want_resend_otp">Do you want to resend OTP?</string>
-    <string name="resend">ପୁନର୍ବାର ପଠାନ୍ତୁ</string>
-    <string name="resending_otp">OTP ପୁନର୍ବାର ପଠା ଚାଲିଛି...</string>
-    <string name="do_you_want_to_go_back">ପଛକୁ ଯିବାକୁ ଚାହାନ୍ତି କି?</string>
-    <string name="totalScore">ସର୍ବମୋଟ ପ୍ରାପ୍ତଙ୍କ</string>
-    <string name="name">ନାମ</string>
-    <string name="fatherName">ବାପାଙ୍କ ନାମ</string>
-    <string name="report">ରିପୋର୍ଟ</string>
-    <string name="studentScore">ବିଦ୍ୟାର୍ଥୀଙ୍କ ପ୍ରାପ୍ତଙ୍କ</string>
-    <string name="questionsetDownloading">Question set downloading...</string>
-    <string name="conceptName">Concept Name</string>
-    <string name="updating_program_Assessment"><![CDATA[Updating Program & Assessment...]]></string>
-    <string name="update_program">Update Program</string>
-    <string name="select_program">--- ପ୍ରୋଗ୍ରାମ ବାଛନ୍ତୁ ---</string>
-    <string name="updatedProAssessment"><![CDATA[All Programs & Assessments updated]]></string>
-    <string name="nameorstsid">Name / STS ID</string>
-    <string name="student_registering">Student registering..</string>
-    <string name="select_gender">Select gender</string>
-    <string name="assessmentAlreadyTaken">Assessment completed for selected student</string>
-    <string name="hello">Hello %1$s  !</string>
-    <string name="inst1">Welcome to Formative and Assessment Mathematics Assessment for your grade.</string>
-    <string name="inst3">You will get 45 mins to attempt all the questions.</string>
-    <string name="inst4">Make sure to have your pen / pencil and paper ready for any rough work. Please enter the answer into this tablet after you solve the problem.</string>
-    <string name="inst5">All the very best!</string>
-    <string name="inst6">- Team Ganitha Kalika Andolana</string>
-    <string name="startAssessment">Continue Assessment</string>
-    <string name="sync">ସିଂକ୍ରୋନାଇଜ୍</string>
-    <string name="dataSyncing">ସିଂକ୍ରୋନାଇଜ୍ ଚାଲିଛି..</string>
-    <string name="notauth">You are not authorized to conduct this assessment. Please contact Akshara. 9845079590</string>
-    <string name="call">Call</string>
-    <string name="telemetry_report_loading_failed">Telemetry report loading failed</string>
-    <string name="downloadAssessment">Assessment Report</string>
-    <string name="studntName">Student Name</string>
-    <string name="stscore">Score</string>
-    <string name="slno">Sl.No</string>
-    <string name="micro">Micro-concept name</string>
-    <string name="assessment_type_rep">ASSESSMENT TYPE: </string>
-    <string name="subject_rep">Subject: </string>
-
-
-    <string-array name="array_subject">
-        <item>English</item>
-        <item>Mathematics</item>
-
-    </string-array>
 
     <string-array name="array_grade">
         <item>1st Grade</item>
@@ -241,6 +157,88 @@
         <item>5th Grade</item>
 
     </string-array>
+
+
+
+    <string name="schoolsnotfoundforcluster">ଚୟନ କରାଯାଇଥିବା କ୍ଲଷ୍ଟର ପାଇଁ ସ୍କୁଲ ଉପଲବ୍ଧ ନାହିଁ.</string>
+    <string name="registeredblocksnotfound">ଚୟନ କରାଯାଇଥିବା ଜିଲା ପାଇଁ ପଂଜିକୃତ ବ୍ଲକ  ମିଳିଲା  ନାହିଁ.</string>
+    <string name="noQuestionSet"> %1$s. ପାଇଁ କୌଣସି ପ୍ରଶ୍ନ ସେଟ ମିଳିନାହିଁ.ଦୟାକରି ଡାଉନଲୋଡ କରନ୍ତୁ ଏବଂ ଏଶେଷମେଣ୍ଟ (ମୂଲ୍ୟାଙ୍କନ )ଜାରି ରଖନ୍ତୁ.</string>
+    <string name="registration">ରେଜିଷ୍ଟ୍ରେସନ(ପଞ୍ଜିକରଣ)</string>
+    <string name="selectprogram">ପ୍ରୋଗ୍ରାମକୁ ଚୟନ କର</string>
+    <string name="pleaseSelectProgram">ଦୟାକରି ପ୍ରୋଗ୍ରାମକୁ ଚୟନ କର</string>
+    <string name="program_header">ପ୍ରୋଗ୍ରାମ :</string>
+    <string name="total_boys">ସମୁଦାୟ ଛାତ୍ର ଗୁଡିକ</string>
+    <string name="total_girls">ସମୁଦାୟ ଛାତ୍ରୀ ଗୁଡିକ</string>
+    <string name="total">ସମୁଦାୟ</string>
+    <string name="assessment_title">ଏଶେସମେଣ୍ଟ ଟାଇଟଲ (ଆକଳନ ଶୀର୍ଷକ):</string>
+    <string name="language_assment">ଭାଷା :</string>
+    <string name="subject">ବିଷୟ :</string>
+    <string name="assessment_type">ଏଶେସମେଣ୍ଟ ଟାଇପ  (ମୁଲ୍ୟାଙ୍କନର ପ୍ରକାର ):</string>
+    <string name="stuent_name">ବିଦ୍ୟାର୍ଥୀଙ୍କ ନାମ</string>
+    <string name="score">ସ୍କୋର</string>
+    <string name="download_students">ଏଶେସମେଣ୍ଟ (ଆକଳନ )</string>
+    <string name="assessment_header">ଏଶେସମେଣ୍ଟ (ଆକଳନ )</string>
+    <string name="student_list">ବିଦ୍ୟାର୍ଥୀମାନଙ୍କର ସୂଚୀ </string>
+    <string name="add_student">ଛାତ୍ର ମିଶାଅ</string>
+    <string name="internal_server_error">ଇଂଟରନାଲ ସର୍ବତ୍ର ଏରର.ପରେ ଚେଷ୍ଟା କରନ୍ତୁ.</string>
+    <string name="student_registration_failed">ଛାତ୍ର ମାନଙ୍କର ପଞ୍ଜିକରଣ ବିଫଳ ହେଲା.</string>
+    <string name="student_registration_success">ଛାତ୍ର ମାନଙ୍କର ପଞ୍ଜିକରଣ ସଫଳ  ହେଲା.</string>
+    <string name="no_program_found">ପ୍ରୋଗ୍ରାମ ପାଇଲୁ ନାହିଁ.</string>
+    <string name="all_programs_loaded">ସବୁ  ପ୍ରୋଗ୍ରାମ ଲୋଡ଼ ହେଇଗଲା</string>
+    <string name="program_loading_failed">ପ୍ରୋଗ୍ରାମ ଗୁଡିକର ଲୋଡିଂ ବିଫଳ ହେଲା.</string>
+    <string name="assment_loading_failed">ଏଶେସମେଣ୍ଟ ଲୋଡିଂ ବିଫଳ ହେଲା</string>
+    <string name="assessment_loaded">ସବୁ ଏଶେସମେଣ୍ଟ ଲୋଡ ହେଇଗଲା.</string>
+    <string name="successfuly_Questionset">ସଫଳ ଭାବରେ ପ୍ରଶ୍ନ ସେଟ ଡାଉନଲୋଡ ହେଇଗଲା.</string>
+    <string name="schools_not_contains_reg_stu">ସ୍କୁଲ୍ ରେ ରେଜିଷ୍ଟର(ପଂଜିକୃତ) ହୋଇଥିବା ବିଦ୍ୟାର୍ଥୀ ନାହାନ୍ତି</string>
+    <string name="stu_downloading_failed">ବିଦ୍ୟାର୍ଥୀ ମାନଙ୍କର ଡାଉନଲୋଡ ବିଫଳ ହେଲା</string>
+    <string name="schools_loaded_success">ସ୍କୁଲ ଗୁଡିକ ସଫଳ ଭାବରେ ଲୋଡ ହେଇଗଲା.</string>
+    <string name="resend_otp">ଓଟିପିଟି ଆଉଥରେ ପଠାଓ</string>
+    <string name="do_you_want_resend_otp">ତୁମେ ଆଉଥରେ ଓଟିପିଟିକୁ  ପଠେଇବାକୁ ଚାହୁଁଛନ୍ତି କି ? </string>
+    <string name="resend">ଆଉଥରେ ପଠାଅ</string>
+    <string name="resending_otp">ଆଉଥରେ ଓଟିପି ପଠଉଛି...</string>
+    <string name="do_you_want_to_go_back">ତୁମେ ଆଉଥରେ ପଛକୁ ଯିବାକୁ ଚାହୁଁଛ କି ?</string>
+    <string name="totalScore">ଟୋଟାଲ ସ୍କୋର </string>
+    <string name="name">ନାମ</string>
+    <string name="fatherName">ବାପାଙ୍କ ନାମ</string>
+    <string name="report">ରିପୋର୍ଟ</string>
+    <string name="studentScore">ବିଦ୍ୟାର୍ଥୀଙ୍କ ସ୍କୋର</string>
+    <string name="questionsetDownloading">ପ୍ରଶ୍ନ ସେଟ ଡାଉନଲୋଡ଼ ହଉଛି.</string>
+    <string name="conceptName">କନସେପ୍ଟ ର ନାମ</string>
+
+    <string name="updating_program_Assessment"><![CDATA[ପ୍ରୋଗ୍ରାମ ଏବଂ ଏଶେସମେଣ୍ଟ ଅପଡେଟ ହଉଛି....]]></string>
+    <string name="update_program">ଅପଡେଟ ପ୍ରୋଗ୍ରାମ</string>
+    <string name="select_program">--- ପ୍ରୋଗ୍ରାମକୁ ଚୟନ କର ---</string>
+    <string name="updatedProAssessment"><![CDATA[ସବୁ ପ୍ରୋଗ୍ରାମ  ଏବଂ ଏଶେସମେଣ୍ଟ ଅପଡେଟ ହେଇଗଲା.]]></string>
+    <string name="nameorstsid">ନାମ /ଏସଟିଏସ ଆଇଡି (STS ID)</string>
+    <string name="student_registering">ବିଦ୍ୟାର୍ଥୀ ରେଜିଷ୍ଟର(ପଞ୍ଜିକରଣ) କରୁଛନ୍ତି..</string>
+    <string name="select_gender">ଲିଙ୍ଗ ଚୟନ କର /ବାଛ .</string>
+    <string name="assessmentAlreadyTaken">ଚୟନିତ ଛାତ୍ର ପାଇଁ .ଏଶେସମେଣ୍ଟ(ମୂଲ୍ୟାଙ୍କନ)ପୁରା ହେଇଗଲା.</string>
+    <string name="hello">ନମସ୍କାର %1$s  !</string>
+    <string name="inst1">ଆପଣଙ୍କ ଗ୍ରେଡ଼ ପାଇଁ ଫରମେଟିଭ ଏବଂ ଏସଏସମେଣ୍ଟ  ଗଣିତ ରେ ଆପଣଂକୁ ସ୍ୱାଗତ .</string>
+    <string name="inst2">ଆପଣଙ୍କୁ ଏହି ଏସେସମେଣ୍ଟରେ 12 ରୁ 15 ଗଣିତ ପ୍ରଶ୍ନର ଉତର ଦେବାକୁ ପ୍ରୟାସ କରିବାକୁ ପଡିବ.</string>
+    <string name="inst3">ତୁମେ ସବୁ ପ୍ରଶ୍ନର  ଉତର ଦେବା ପାଇଁ ବା ଆଟେଣ୍ଡ କରିବା ପାଇଁ 45ମିନଟ ଟାଇମ  ପାଇବ.</string>
+    <string name="inst4">ସୁନିଶ୍ଚିତ କର ଯେ କୌଣସି ଭି ଭାରି କାମ ପାଇଁ ନିଜର ପେନ  /ପେନ୍ସିଲ ଏବଂ ପେପର ପ୍ରସ୍ତୁତ ରଖ.ଅସୁବିଧାକୁ ସମାଧାନ କରିବା ପରେ ଦୟାକରି ଏହି ଟାବଲେଟ ରେ ଉତର ଦିଅ. </string>
+    <string name="inst5">ଅନେକ ଶୁଭେଚ୍ଛା </string>
+    <string name="inst6">- ଟିମ ଗଣିତ କଳିକ ଆନ୍ଦୋଳନ </string>
+    <string name="startAssessment">ଏଶେସମେଣ୍ଟ(ମୂଲ୍ୟାଙ୍କନ) ଚାଲୁ ରଖ</string>
+    <string name="sync">ସିଂକ୍ରୋନାଇଜ୍</string>
+    <string name="dataSyncing">ଆପଣଙ୍କ ଡାଟା ସିଂଙ୍କ ହେଇଯିବ</string>
+    <string name="notauth">ଏହି  ଏଶେସମେଣ୍ଟ(ମୂଲ୍ୟାଙ୍କନ)  ପାଇଁ ଅଧିକୃତ ଅଟନ୍ତି ନାହିଁ.ଦୟାକରି ଅକ୍ସରା କୁ କଂଟକେଟ କରନ୍ତୁ(9845079590)</string>
+    <string name="call">କଲ</string>
+    <string name="telemetry_report_loading_failed">ଟେଲିମେଟ୍ରି ରିପୋର୍ଟ ଲୋଡିଂ ବିଫଳ ହେଲା.</string>
+    <string name="downloadAssessment">ଏଶେସମେଣ୍ଟ (ପଂଜିକୃତ)ରିପୋର୍ଟ</string>
+    <string name="studntName">ବିଦ୍ୟାର୍ଥୀଙ୍କ ନାମ</string>
+    <string name="stscore">ସ୍କୋର</string>
+    <string name="slno">ସିରିଏଲ ନମ୍ବର</string>
+    <string name="micro">Micro-concept name</string>
+    <string name="assessment_type_rep">ଏଶେସମେଣ୍ଟ ଟାଇପ  (ମୁଲ୍ୟାଙ୍କନର ପ୍ରକାର ): </string>
+    <string name="subject_rep">ବିଷୟ: </string>
+    <string name="sln">ସିରିଏଲ ନମ୍ବର</string>
+    <string name="attemptedStudents">ଏଶେସମେଣ୍ଟ (ପଂଜିକୃତ) ଆଟେଣ୍ଡ କରିଥିବା ବିଦ୍ୟାର୍ଥୀ</string>
+    <string name="totalStudents">ସମୁଦାୟ ବିଦ୍ୟାର୍ଥୀ :</string>
+    <string name="coorect_answers">ପ୍ରଶ୍ନର ଠିକ ଉତ୍ତରର ସଂଖ୍ୟା</string>
+    <string name="kitQ">ଯଦି କୌଣସି ବି ପ୍ରଶ୍ନ ପାଇଁ ଠିକ ଉତ୍ତରର ସଂଖ୍ୟା 5 ରୁ କମ ଅଛି ,ତାହାଲେ ସେହି ବିଷୟକୁ ଅଧିକ ଭାବରେ ଗୁରୁତ୍ୱ ଦେଇ TLMs ଓ ଗଣିତ କିଟର ବ୍ୟବହାର ଯାଏ ପଢାଯିବା ଦରକାର</string>
+    <string name="synced">ସବୁ ନିଆଯାଇଥିବା ଏସଏସମେଣ୍ଟ ଗୁଡିକୁ ସମନ୍ବିତ କରାଗଲା </string>
 
 
 </resources>

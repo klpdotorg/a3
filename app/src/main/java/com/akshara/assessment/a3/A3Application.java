@@ -1,13 +1,13 @@
 package com.akshara.assessment.a3;
 
 import android.app.Application;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Context;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.database.CursorWindow;
-import android.net.ConnectivityManager;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
@@ -17,7 +17,6 @@ import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
-import java.lang.reflect.Field;
 import java.util.Locale;
 
 import io.fabric.sdk.android.Fabric;
@@ -37,24 +36,32 @@ public class A3Application extends Application {
 //test
     /*   this. registerReceiver(new NetworkChangeReceiver(),
                 new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+
 */
-      //  Fabric.with(this, new Crashlytics.Builder().core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build()).build());
-     //   fix();
+
+        Fabric.with(this, new Crashlytics.Builder().core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build()).build());
+        //   fix();
 
         initSingletons();
         updateLanguage(this);
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
+       // jobInfoSetup();
+
     }
 
-    public static void fix() {
-      /*  try {
-            Field field = CursorWindow.class.getDeclaredField("sCursorWindowSize");
-            field.setAccessible(true);
-            field.set(null, 102400 * 1024); //the 102400 is the new size added
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
+    public void jobInfoSetup()
+    {
+        ComponentName componentInfo=new ComponentName(this,SyncJobServiceScheduler.class);
+        JobInfo info=new JobInfo.Builder(153,componentInfo)
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                .setPeriodic(60*60*1000).build();
+
+        JobScheduler jobScheduler=(JobScheduler)getSystemService(JOB_SCHEDULER_SERVICE);
+        int result=     jobScheduler.schedule(info);
+
+
+
     }
 
     public static FirebaseAnalytics getAnalyticsObject()

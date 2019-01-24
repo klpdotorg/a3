@@ -81,7 +81,7 @@ public class qp_arithmetic_subtract extends AppCompatActivity {
         int randindex = 0;
         if(firstnumberset != null) {
             randindex = rand.nextInt(firstnumberset.length);
-            tvNumber1.setText(firstnumberset[randindex]);
+            tvNumber1.setText(AssessEasyKeyboard.replaceEnglishnumeralsToLocal(firstnumberset[randindex]));
         }
 
         TextView tvNumber2 = (TextView)findViewById(R.id.textViewNumber2);
@@ -89,7 +89,7 @@ public class qp_arithmetic_subtract extends AppCompatActivity {
             if (randindex >= secondnumberset.length) {
                 randindex = 0;
             }
-            tvNumber2.setText(secondnumberset[randindex]); // Choose the value for the Second Number that corresponds (same index) to the First Number value
+            tvNumber2.setText(AssessEasyKeyboard.replaceEnglishnumeralsToLocal(secondnumberset[randindex])); // Choose the value for the Second Number that corresponds (same index) to the First Number value
         }
 
         // sets the number and answer fields (when navigating backwards, fill the numbers randomly generated earlier and the answer entered before)
@@ -114,7 +114,17 @@ public class qp_arithmetic_subtract extends AppCompatActivity {
          ***/
 
         // create the keyboard
-        aekbd = new AssessEasyKeyboard(this,R.id.aenumberkbd, R.xml.assesseasynumberkbd1);
+        // aekbd = new AssessEasyKeyboard(this,R.id.aenumberkbd, R.xml.assesseasynumberkbd1);
+        String keyboardxmlname = "assesseasynumberkbd_" + globalvault.keyboardlanguage.toLowerCase();
+
+        int keyboardxmlresid = getResources().getIdentifier(keyboardxmlname, "xml", getPackageName());
+
+        if(keyboardxmlresid != 0)
+            aekbd = new AssessEasyKeyboard(this,R.id.aenumberkbd, keyboardxmlresid);
+        else  // If Failed to load the resource (keyboard XML file corresponding to the language), use default english numerals keyboard
+            aekbd = new AssessEasyKeyboard(this,R.id.aenumberkbd, R.xml.assesseasynumberkbd_english);
+
+
         //aekbd.showCustomKeyboard(findViewById(R.id.aenumberkbd));
 
         // Register the EditText box with the custom keyboard
@@ -211,12 +221,12 @@ public class qp_arithmetic_subtract extends AppCompatActivity {
                 String answerstr = firstnumber+","+secondnumber+","+answer;
 
                 try {
-                    int intFirstnum = Integer.parseInt(firstnumber.trim());
-                    int intSecondnum = Integer.parseInt(secondnumber.trim());
+                    int intFirstnum = Integer.parseInt(AssessEasyKeyboard.replaceLocalnumeralsToEnglish(firstnumber.trim()));
+                    int intSecondnum = Integer.parseInt(AssessEasyKeyboard.replaceLocalnumeralsToEnglish(secondnumber.trim()));
                     int correctAnswer = intFirstnum - intSecondnum;
                     globalvault.questions[questionid - 1].setAnswerCorrect(Integer.toString(correctAnswer));
 
-                    if (correctAnswer == Integer.parseInt(answer.trim()))
+                    if (correctAnswer == Integer.parseInt(AssessEasyKeyboard.replaceLocalnumeralsToEnglish(answer.trim())))
                         globalvault.questions[questionid - 1].setPass("P");
                     else
                         globalvault.questions[questionid - 1].setPass("F");

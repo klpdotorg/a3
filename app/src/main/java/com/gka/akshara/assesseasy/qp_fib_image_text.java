@@ -116,7 +116,16 @@ public class qp_fib_image_text extends AppCompatActivity {
 
 
         // create the keyboard
-        aekbd = new AssessEasyKeyboard(this,R.id.aenumberkbd, R.xml.assesseasynumberkbd1);
+        // aekbd = new AssessEasyKeyboard(this,R.id.aenumberkbd, R.xml.assesseasynumberkbd1);
+        String keyboardxmlname = "assesseasynumberkbd_" + globalvault.keyboardlanguage.toLowerCase();
+
+        int keyboardxmlresid = getResources().getIdentifier(keyboardxmlname, "xml", getPackageName());
+
+        if(keyboardxmlresid != 0)
+            aekbd = new AssessEasyKeyboard(this,R.id.aenumberkbd, keyboardxmlresid);
+        else  // If Failed to load the resource (keyboard XML file corresponding to the language), use default english numerals keyboard
+            aekbd = new AssessEasyKeyboard(this,R.id.aenumberkbd, R.xml.assesseasynumberkbd_english);
+
         //aekbd.showCustomKeyboard(findViewById(R.id.aenumberkbd));
 
         // Register the EditText box with the custom keyboard
@@ -189,7 +198,7 @@ public class qp_fib_image_text extends AppCompatActivity {
             }
             else {
                 try {
-                    if (globalvault.questions[questionid - 1].getAnswerCorrect().equals(answer.trim()))
+                    if (globalvault.questions[questionid - 1].getAnswerCorrect().equals(AssessEasyKeyboard.replaceLocalnumeralsToEnglish(answer.trim())))
                         globalvault.questions[questionid - 1].setPass("P");
                     else
                         globalvault.questions[questionid - 1].setPass("F");

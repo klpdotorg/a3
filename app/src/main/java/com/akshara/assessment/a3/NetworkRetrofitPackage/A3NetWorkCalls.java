@@ -640,14 +640,14 @@ public class A3NetWorkCalls {
 
     }
 
-    public void downloadStudent(String url, final long schoolId, final int flag, final SchoolStateInterface stateInterface) {
+    public void downloadStudent(String url, final long schoolId, final int flag, final String token, final SchoolStateInterface stateInterface) {
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        apiInterface.getStudentAtClusterLevel(url).enqueue(new Callback<SchoolStudentPojo>() {
+        apiInterface.getStudentAtClusterLevel(url,token).enqueue(new Callback<SchoolStudentPojo>() {
             @Override
             public void onResponse(Call<SchoolStudentPojo> call, Response<SchoolStudentPojo> response) {
 
                 if (response.isSuccessful()) {
-                    parseStudent(response.body(), schoolId, stateInterface, flag);
+                    parseStudent(response.body(), schoolId, stateInterface, flag,token);
 
                 } else if (response.code() == 500) {
                     //email or password invalid
@@ -665,7 +665,7 @@ public class A3NetWorkCalls {
         });
     }
 
-    public void parseStudent(SchoolStudentPojo response, long schoolId, SchoolStateInterface stateInterface, int flag) {
+    public void parseStudent(SchoolStudentPojo response, long schoolId, SchoolStateInterface stateInterface, int flag,String token) {
 
         int studentCount = 0;
         int particularCOunt = 0;
@@ -712,7 +712,7 @@ public class A3NetWorkCalls {
 
 
         if (response.getNext() != null) {
-            downloadStudent(response.getNext().toString(), schoolId, flag, stateInterface);
+            downloadStudent(response.getNext().toString(), schoolId, flag,token, stateInterface);
             //Toast.makeText(getApplicationContext(), "next", Toast.LENGTH_SHORT).show();
 
         } else {

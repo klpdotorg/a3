@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
+    android:keyWidth="7.1%p"
+    android:keyHeight="13.5%p">
+<!--
+    android:horizontalGap="0.50%p"
+    android:verticalGap="0.50%p"
+    NOTE When we add a horizontalGap in pixels, this interferes with keyWidth in percentages adding up to 100%
+    NOTE When we have a horizontalGap (on Keyboard level) of 0, this make the horizontalGap (on Key level) to move from after the key to before the key... (a bug?) 
+ -->
+
+    <!-- The codes assigned are adhoc numbers.
+1000 - 1009 for Kannada
+2000 - 2009 for Hindi
+3000 - 3009 for English
+4000 - 4009 for Urdu
+5000 - 5009 for Odia
+6000 - 6009 for Telugu
+7000 - 7009 for Gujarati -->
+    <Row>
+        <Key android:codes="4000"    android:keyLabel="0" android:keyEdgeFlags="left" />
+        <Key android:codes="4001"    android:keyLabel="1" />
+        <Key android:codes="4002"    android:keyLabel="2" />
+        <Key android:codes="4003"    android:keyLabel="3" />
+        <Key android:codes="4004"    android:keyLabel="4" />
+        <Key android:codes="4005"    android:keyLabel="5" />
+        <Key android:codes="4006"    android:keyLabel="6" />
+        <Key android:codes="4007"    android:keyLabel="7" />
+        <Key android:codes="4008"    android:keyLabel="8" />
+        <Key android:codes="4009"    android:keyLabel="9" />
+        <Key android:codes="158"    android:keyLabel="." />
+        <Key android:codes="55002" android:keyIcon="@drawable/sym_keyboard_left" android:isRepeatable="true" />
+        <Key android:codes="55003" android:keyIcon="@drawable/sym_keyboard_right" android:isRepeatable="true" />
+        <Key android:codes="-5"    android:keyIcon="@drawable/sym_keyboard_delete" android:isRepeatable="true" />
+        <Key android:codes="55006" android:keyLabel="CLR" android:keyEdgeFlags="right"/>
+    </Row>
+</Keyboard>

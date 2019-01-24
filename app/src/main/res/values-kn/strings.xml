@@ -83,7 +83,6 @@
     <string name="doyouwantToLogout">ಲಾಗ್ ಔಟ್ ಮಾಡಲು ನೀವು ಖಚಿತವಾಗಿ ಬಯಸುವಿರಾ?</string>
     <string name="districtDataAlreadyFound">ಜಿಲ್ಲಾ ಹಂತದ  ಬ್ಲಾಕ್ ಹಾಗು ಕ್ಲಸ್ಟರ್ ಈಗಾಗಲೇ ಡೌನ್ಲೋಡ್ ಆಗಿದೆ. ನೀವು ಪುನಃ ಡೌನ್ಲೋಡ್ ಮಾಡಲು ಇಚ್ಛಿಸುತ್ತೀರಾ?</string>
 
-     <string name="blockLeveldataLoadedSchussfully">ಬ್ಲಾಕ್ ಮಟ್ಟದ ಡೇಟಾವನ್ನು ಯಶಸ್ವಿಯಾಗಿ ಲೋಡ್ ಮಾಡಲಾಗಿದೆ</string>
     <string name="action_logout">ಲಾಗ್ ಔಟ್</string>
     <string name="selectDistrict">--ಜಿಲ್ಲೆ ಆಯ್ಕೆ ಮಾಡಿ--</string>
     <string name="clusterDataLoadingFailed">ಕ್ಲಸ್ಟರ್ ಮಾಹಿತಿ ಲೋಡ್ ಆಗಲು ವಿಫಲಗೊಂಡಿದೆ. ದಯವಿಟ್ಟು ಪುನಃ ಪ್ರಯತ್ನಿಸಿ</string>
@@ -227,6 +226,12 @@
     <string name="micro">ಪರಿಕಲ್ಪನೆ</string>
     <string name="assessment_type_rep">ಮೌಲ್ಯಮಾಪನದ ವಿಧ: </string>
     <string name="subject_rep">ವಿಷಯ: </string>
+    <string name="sln">ಕ್ರ.ಸಂ</string>
+    <string name="attemptedStudents">ಮೌಲ್ಯಮಾಪನ ಪರೀಕ್ಷೆ ಪ್ರಯತ್ನಿಸಿದ ವಿದ್ಯಾರ್ಥಿಗಳು:</string>
+    <string name="totalStudents">ಒಟ್ಟು ವಿದ್ಯಾರ್ಥಿಗಳು:</string>
+    <string name="coorect_answers">ಪ್ರಶ್ನೆಗೆ ಸರಿ ಉತ್ತರಿಸಿದವರು</string>
+    <string name="kitQ">* ಯಾವುದೇ ಪ್ರಶ್ನೆಗೆ 5 ಕ್ಕಿಂತ  ಕಡಿಮೆ ಸರಿ ಉತ್ತರಗಳು ಇದ್ದಲ್ಲಿ, ಗಣಿತ ಕಿಟ್ ನ ಕಲಿಕೋಪಕರಣದ ಬಳಕೆಗೆ ಹೆಚ್ಚು ಒತ್ತು ಕೊಟ್ಟು ಪರಿಕಲ್ಪನೆಯನ್ನು ಬೋಧಿಸುವ ಅಗತ್ಯವಿದೆ.</string>
+    <string name="synced">ತೆಗೆದುಕೊಂಡ ಎಲ್ಲಾ ಮೌಲ್ಯಮಾಪನಗಳನ್ನು ಸಿಂಕ್ ಮಾಡಲಾಗಿದೆ</string>
 
 
     <string-array name="array_subject">

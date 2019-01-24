@@ -47,6 +47,110 @@ class AssessEasyKeyboard {
     /** A link to the activity that hosts the {@link #mKeyboardView}. */
     private Activity     mHostActivity;
 
+    /* The codes assigned for numerical keys 0-9 for different languages:
+        1000 - 1009 for Kannada
+        2000 - 2009 for Hindi
+        3000 - 3009 for English
+        4000 - 4009 for Urdu
+        5000 - 5009 for Odia
+        6000 - 6009 for Telugu
+        7000 - 7009 for Gujarati
+        8000 - 8009 for Malayalam*/
+
+    /* ODIYA Numerals. Ref:  https://en.wikipedia.org/wiki/Oriya_(Unicode_block)
+      {"୦","୧","୨","୩","୪","୫","୬","୭","୮","୯"};
+    */
+    /* Do not set 'inputType' in the layout xml file to 'number' type as the local numerals would be characters instead of numbers. set only android:inputType="textNoSuggestions" and not android:inputType="textNoSuggestions|number"*/
+    public final static String[] keyboardlanguageslist = {"kannada","hindi","english","urdu","odia","telugu","gujarati","malayalam"};
+    public final int[] languagestartcodes = {1000,2000,3000,4000,5000,6000,7000,8000};
+
+    public final static String[][] numberstrings = {
+        {"0","1","2","3","4","5","6","7","8","9"},
+        {"0","1","2","3","4","5","6","7","8","9"},
+        {"0","1","2","3","4","5","6","7","8","9"},
+        {"0","1","2","3","4","5","6","7","8","9"},
+        {"୦","୧","୨","୩","୪","୫","୬","୭","୮","୯"},
+        {"0","1","2","3","4","5","6","7","8","9"},
+        {"૦","૧","૨","૩","૪","૫","૬","૭","૮","૯"},
+        {"൦","൧","൨","൩","൪","൫","൬","൭","൮","൯"}
+    };
+
+    public static int getLanguageArrayIndex(String kblanguage) {
+
+        for(int i = 0; i < keyboardlanguageslist.length-1; i++) {
+            if(keyboardlanguageslist[i].equals(kblanguage.toLowerCase())) {
+                return i;
+            }
+        }
+        return(2); // If no match, return the index of 'english'
+    }
+
+    public static String replaceLocalnumeralsToEnglish(String orgstr) {
+
+        String[] splitstr = orgstr.trim().split("");
+        String newstr = "";
+
+        int lanindex = getLanguageArrayIndex(globalvault.keyboardlanguage);
+
+        int startcount = 0;
+
+        if(splitstr[0].isEmpty())  // if splitstr[0] is an empty string
+            startcount = 1;
+        else
+            startcount = 0;
+
+        if (MainActivity.debugalerts)
+            Log.d("EASYASSESS", "AssessEasyKeyboard. replaceLocalnumeralsToEnglish. startcount:"+startcount+" splitstrlength:"+splitstr.length);
+
+        for(int i=startcount; i < splitstr.length; i++) {
+
+            if(splitstr[i].equals("."))
+                newstr += ".";
+            else {
+                for (int j = 0; j < numberstrings[lanindex].length; j++) {
+                    if (splitstr[i].equals(numberstrings[lanindex][j])) {
+                        newstr += numberstrings[2][j];
+                        break;
+                    }
+                }
+            }
+        }
+        return newstr;
+    }
+
+    public static String replaceEnglishnumeralsToLocal(String orgstr) {
+
+        String[] splitstr = orgstr.trim().split("");
+        String newstr = "";
+
+        int lanindex = getLanguageArrayIndex(globalvault.keyboardlanguage);
+
+        int startcount = 0;
+
+        if(splitstr[0].isEmpty())  // if splitstr[0] is an empty string
+            startcount = 1;
+        else
+            startcount = 0;
+
+        if (MainActivity.debugalerts)
+            Log.d("EASYASSESS", "AssessEasyKeyboard. replaceEnglishnumeralsToLocal. startcount:"+startcount+" splitstrlength:"+splitstr.length+" splitstr[1]:"+splitstr[1]);
+
+        for(int i=startcount; i < splitstr.length; i++) {
+
+            if(splitstr[i].equals("."))
+                newstr += ".";
+            else {
+                for (int j = 0; j < numberstrings[lanindex].length; j++) {
+                    if (splitstr[i].equals(numberstrings[2][j])) {
+                        newstr += numberstrings[lanindex][j];
+                        break;
+                    }
+                }
+            }
+        }
+        return newstr;
+    }
+
     /** The key (code) handler. */
     private OnKeyboardActionListener mOnKeyboardActionListener = new OnKeyboardActionListener() {
 
@@ -62,6 +166,8 @@ class AssessEasyKeyboard {
 
         public final static int CodeDot   = 158; // Keyboard.KEYCODE_NUMPAD_DOT; added for handling decimal point
 
+
+
         @Override public void onKey(int primaryCode, int[] keyCodes) {
             // NOTE We can say '<Key android:codes="49,50" ... >' in the xml file; all codes come in keyCodes, the first in this list in primaryCode
             // Get the EditText and its Editable
@@ -69,7 +175,7 @@ class AssessEasyKeyboard {
             View focusCurrent = mHostActivity.getWindow().getCurrentFocus();
             if(focusCurrent == null) return;
 
-            Log.e("EASYASSESS", "AssessEasyKeyboard. Primarycode:"+primaryCode);
+            // Log.d("EASYASSESS", "AssessEasyKeyboard. Primarycode:"+primaryCode);
             /*
             if( (focusCurrent == null) || (focusCurrent.getClass() != EditText.class) ) { // Class is android.support.v7.widget.AppCompatEditText - suresh
                 Log.d("KEY","Inside OnKey. class:"+focusCurrent.getClass());
@@ -103,10 +209,16 @@ class AssessEasyKeyboard {
                 if( focusNew!=null ) focusNew.requestFocus();
             } else if( primaryCode==CodeDot ) { // Added for dot key for decimal values
                 editable.insert(start, ".");
-            } else { // insert character
+            } else { // insert character (the number pressed)
                 // Log.d("KEY","Inside OnKey case: insert Character. Primary code:"+Integer.toString(primaryCode));
                 //editable.insert(start, Character.toString((char) primaryCode));
-                editable.insert(start, Integer.toString(primaryCode));
+
+                // editable.insert(start, Integer.toString(primaryCode));
+                int languageindex = (primaryCode / 1000) - 1; // 0 for Kannda, 1 for Hindi, 2 for English etc
+                //Log.d("EASYASSESS", "AssessEasyKeyboard. languageindex:"+languageindex);
+                int stringindex = primaryCode - languagestartcodes[languageindex]; // 0 - 9
+                //Log.d("EASYASSESS", "AssessEasyKeyboard. stringindex:"+stringindex+"char :"+numberstrings[languageindex][stringindex]);
+                editable.insert(start,numberstrings[languageindex][stringindex]);
             }
         }
 

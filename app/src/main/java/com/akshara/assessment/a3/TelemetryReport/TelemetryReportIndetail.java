@@ -12,6 +12,8 @@ import com.akshara.assessment.a3.BaseActivity;
 import com.akshara.assessment.a3.R;
 import com.akshara.assessment.a3.UtilsPackage.AppStatus;
 
+import org.apache.commons.lang3.text.WordUtils;
+
 public class TelemetryReportIndetail extends BaseActivity {
 
     RecyclerView recyReportIndi;
@@ -24,8 +26,8 @@ public class TelemetryReportIndetail extends BaseActivity {
         setContentView(R.layout.report_inditail_lay);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getResources().getString(R.string.report));
-        name=getIntent().getStringExtra("name");
-        fname=getIntent().getStringExtra("fatherName");
+        name=getIntent().getStringExtra("name").toLowerCase();
+        fname=getIntent().getStringExtra("fatherName").toLowerCase();
         stsid=getIntent().getStringExtra("stsId");
         recyReportIndi= findViewById(R.id.recyReportIndi);
         tv_stsId= findViewById(R.id.tv_stsId);
@@ -33,8 +35,8 @@ public class TelemetryReportIndetail extends BaseActivity {
         tv_fatherName= findViewById(R.id.tv_fatherName);
 
         tv_stsId.setText(stsid!=null&&!stsid.equalsIgnoreCase("")?stsid:"NA");
-        tv_fatherName.setText(fname);
-        tvFirstName.setText(name);
+        tv_fatherName.setText(WordUtils.capitalize(fname));
+        tvFirstName.setText(WordUtils.capitalize(name));
         recyReportIndi.setLayoutManager(new LinearLayoutManager(this));
         tvtotalScore=findViewById(R.id.txtScore);
         recyReportIndi.setItemAnimator(new DefaultItemAnimator());

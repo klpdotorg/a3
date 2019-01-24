@@ -1,5 +1,6 @@
 package com.gka.akshara.assesseasy;
 
+import com.akshara.assessment.a3.BuildConfig;
 import com.akshara.assessment.a3.R;
 
 /**
@@ -32,14 +33,13 @@ public class globalvault {
     public static String finalpageactivity = "com.gka.akshara.assesseasy.finalpage_boywins";
 
     // Telemetry REST API URL
+    // Telemetry REST API URL
 //  prod
-     public static String a3_telemetryapi_baseurl = "https://a3.klp.org.in/"; // "http://dev.klp.org.in/a3/";
 
-    //dev
-    // "https://dev.a3.klp.org.in:8080/";
-   // public static String a3_telemetryapi_baseurl = "http://dev.klp.org.in/a3/"; // "http://dev.klp.org.in/a3/";
- //   public static String a3_telemetryapi_baseurl = "https://dev.a3.ilp.org.in:8080/"; // "http://dev.klp.org.in/a3/";
-   // public static String a3_telemetryapi_authkey = "A3APIAKSHARAAUTHKEY#2018";
+    //public static String a3_telemetryapi_baseurl = "https://a3.klp.org.in/";
+    // public static String a3_telemetryapi_baseurl = "https://dev.a3.ilp.org.in:8080";
+    public static String a3_telemetryapi_baseurl = BuildConfig.HOST_ASSESSMENT;
+//    public static String a3_telemetryapi_baseurl = "https://dev.a3.ilp.org.in:8080/"; // "https://a3.klp.org.in/"; "https://dev.a3.ilp.org.in:8080/";
     public static String a3_telemetryapi_authkey = "A3APIAKSHARAAUTHKEY#2018";
 
     // Background images for Question Pages. An image is randomly picked from this array
@@ -64,6 +64,7 @@ public class globalvault {
     static boolean demomodeifnodb = false; // If set true, the app will run with demo questions in case it fails to read question set from the DB
     static boolean audioautoplay = true; // Play the audio file for the Question (if any) automatically when the screen is displayed initially
     static boolean integrated = true; // Integrated with ContainerApp (set to 'false' to test AssessmentApp as stand-alone (is used to decide if clicking 'back arrow' on first Question should take User to Home/Start page of AssessmentApp or Not. If this flag is true, will stay on the first Question itself
+    static String keyboardlanguage = "english"; // This is to use the keyboard with the local language numerals. Default set to english. This variable will be set to a3app_language value passed by the ContainerApp
 
     public static String[] questionTemplTypes = {
 

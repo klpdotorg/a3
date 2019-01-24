@@ -16,7 +16,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.akshara.assessment.a3.A3Application;
 import com.akshara.assessment.a3.db.KontactDatabase;
@@ -285,19 +284,14 @@ import java.util.UUID;
             // Fetch the saved Unsynced Assessment records
             JSONArray jsondata_assessment = fetchUnsyncedAssessmentRecords();
             // Invoke the txa3assessment A3 REST API to sync the telemetry data
-            if(jsondata_assessment.length() > 0) {
-
+            if(jsondata_assessment.length() > 0)
                 invokeRESTAPI(apibaseurl, "txa3assessment", jsondata_assessment);
-            }
-          //  Toast.makeText(appcontext,"sss",Toast.LENGTH_SHORT).show();
+
             // Fetch the saved Unsynced Assessment records
             JSONArray jsondata_assessmentdetail = fetchUnsyncedAssessmentDetailRecords();
             // Invoke the txa3assessmentdetail A3 REST API to sync the telemetry data
             if(jsondata_assessment.length() > 0)
                 invokeRESTAPI(apibaseurl, "txa3assessmentdetail", jsondata_assessmentdetail);
-
-
-
 
         }
 
@@ -525,20 +519,6 @@ import java.util.UUID;
 
 
 
-    /*    public  String makePlaceholders(int len) {
-            if (len < 1) {
-                // It will lead to an invalid query anyway ..
-                throw new RuntimeException("No placeholders");
-            } else {
-                StringBuilder sb = new StringBuilder(len * 2 - 1);
-                sb.append("?");
-                for (int i = 1; i < len; i++) {
-                    sb.append(",?");
-                }
-                return sb.toString();
-            }
-        }*/
-
         public ArrayList<com.akshara.assessment.a3.TelemetryReport.pojoReportData> getAllStudentsForReports(String questionsetId, ArrayList<StudentTable> studentIds, boolean flag, String assessmenttype, boolean by) {
 
             Cursor cs1 = null;
@@ -740,5 +720,38 @@ import java.util.UUID;
                 return false;
             }
             return false;
+        }
+
+
+        public boolean checkSysncedData()
+        {
+            String query = "SELECT id AS objid, id_assessment, id_child, id_questionset, score, datetime_start, datetime_submission FROM a3app_assessment_tbl WHERE synced = 0";
+            int firstCount=0;
+            int secondCound=0;
+            Cursor curs = a3appdb.rawQuery(query, null);
+            Log.d("shri",curs.getCount()+"");
+            if(curs!=null&&curs.getCount()>0)
+            {
+                firstCount=curs.getColumnCount();
+            }
+            String query2 = "SELECT id AS objid, id_assessment, id_question, answer_given, pass FROM a3app_assessmentdetail_tbl WHERE synced = 0";
+
+
+
+            Cursor curs2 = a3appdb.rawQuery(query2, null);
+            Log.d("shri",curs2.getCount()+"");
+
+            if(curs2!=null&&curs2.getCount()>0)
+            {
+                secondCound=curs2.getCount();
+            }
+
+            if(firstCount==0&&secondCound==0)
+            {
+                return false;
+            }
+            else
+                return true;
+
         }
 }
