@@ -48,7 +48,7 @@ public class TelemetryReportAdapter extends RecyclerView.Adapter<TelemetryReport
     public void onBindViewHolder(TelemetryViewHolder holder, final int position) {
         final StudentTable studentTable = data.get(position).getTable();
         String name = studentTable.getFirstName().toLowerCase();
-        Log.d("shri",studentTable.getId()+"");
+       // Log.d("shri",studentTable.getId()+"");
         try {
             if (studentTable.getMiddleName() != null && !studentTable.getMiddleName().equalsIgnoreCase("")) {
                 name = name + " " + (studentTable.getMiddleName().substring(0, 1)).toLowerCase();

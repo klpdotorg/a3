@@ -95,7 +95,7 @@ public class TelemetryRreportActivity extends BaseActivity {
             sessionManager = new SessionManager(getApplicationContext());
 //        ArrayList<QuestionTable> QuestionTitles = getAllQuestionSetTitle(EASYASSESS_QUESTIONSETID);
             reportRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-            Log.d("shri","----"+EASYASSESS_QUESTIONSETID);
+        //    Log.d("shri","----"+EASYASSESS_QUESTIONSETID);
             reportRecyclerView.setItemAnimator(new DefaultItemAnimator());
             studentIds = getStudentIds(A3APP_INSTITUTIONID, A3APP_GRADEID);
             gradeS = getResources().getStringArray(R.array.array_grade)[A3APP_GRADEID - 1];
