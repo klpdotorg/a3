@@ -39,7 +39,7 @@ public class A3Application extends Application {
 
 */
 
-        Fabric.with(this, new Crashlytics.Builder().core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build()).build());
+      //  Fabric.with(this, new Crashlytics.Builder().core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build()).build());
         //   fix();
 
         initSingletons();
@@ -50,19 +50,7 @@ public class A3Application extends Application {
 
     }
 
-    public void jobInfoSetup()
-    {
-        ComponentName componentInfo=new ComponentName(this,SyncJobServiceScheduler.class);
-        JobInfo info=new JobInfo.Builder(153,componentInfo)
-                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
-                .setPeriodic(60*60*1000).build();
 
-        JobScheduler jobScheduler=(JobScheduler)getSystemService(JOB_SCHEDULER_SERVICE);
-        int result=     jobScheduler.schedule(info);
-
-
-
-    }
 
     public static FirebaseAnalytics getAnalyticsObject()
     {

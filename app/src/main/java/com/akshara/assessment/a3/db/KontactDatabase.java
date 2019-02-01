@@ -3,6 +3,7 @@ package com.akshara.assessment.a3.db;
 import android.content.Context;
 import android.util.Log;
 
+import com.akshara.assessment.a3.UtilsPackage.SessionManager;
 import com.yahoo.squidb.android.AndroidOpenHelper;
 import com.yahoo.squidb.data.ISQLiteDatabase;
 import com.yahoo.squidb.data.ISQLiteOpenHelper;
@@ -97,13 +98,19 @@ public class KontactDatabase extends SquidDatabase {
         switch (oldVersion) {
             case 1:
             //   Log.d("shri", "dimssss:" + oldVersion);
-                tryCreateTable(Assessment_Detail_Table.TABLE);
-                tryCreateTable(Assessment_Table.TABLE);
+                recreate();
+                new SessionManager(mContext).logoutUser();
                 break;
+
 
             case 2:
                 // recreate();
+                recreate();
+                new SessionManager(mContext).logoutUser();
                 break;
+
+
+
             // These tables were added in v2
               /* tryCreateTable(Boundary.TABLE);
              tryCreateTable(State.TABLE);
@@ -130,11 +137,7 @@ public class KontactDatabase extends SquidDatabase {
     }
 
 
-    @Override
-    protected void onMigrationFailed(MigrationFailedException failure) {
-        super.onMigrationFailed(failure);
-        recreate();
-    }
+
 
     public boolean insertNew(TableModel item) {
         boolean flag = false;
@@ -161,5 +164,15 @@ public class KontactDatabase extends SquidDatabase {
             e.printStackTrace();
         }
         return jobj;
+    }
+    @Override
+    protected void onMigrationFailed(MigrationFailedException failure) {
+        super.onMigrationFailed(failure);
+        try {
+            recreate();
+        }catch (Exception e)
+        {
+
+        }
     }
 }

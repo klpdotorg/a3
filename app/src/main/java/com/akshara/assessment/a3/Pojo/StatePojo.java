@@ -8,6 +8,7 @@ public class StatePojo {
 
 
 
+
     public String getStateKey() {
         return stateKey;
     }
@@ -26,12 +27,19 @@ public class StatePojo {
     public String language;
 
 
-    public StatePojo(String state, String stateLocalText,String stateKey,String langKey,String language) {
+
+    public void setStateKey(String stateKey) {
+        this.stateKey = stateKey;
+    }
+
+    public StatePojo(String state, String stateLocalText, String stateKey, String langKey, String language) {
          this.state = state;
         this.stateLocalText = stateLocalText;
         this.stateKey = stateKey;
+
         this.langKey=langKey;
         this.language=language;
+
     }
 
     public String state;

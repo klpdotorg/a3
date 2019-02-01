@@ -211,7 +211,7 @@
             android:layout_marginLeft="8dp"
             android:background="@drawable/editboxbg"
             android:ems="10"
-            android:inputType="textNoSuggestions|number"
+            android:inputType="textNoSuggestions"
             android:singleLine="true"
             android:textAlignment="center"
             android:textColor="@color/colorPrimaryDark"

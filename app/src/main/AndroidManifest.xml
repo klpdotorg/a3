@@ -131,11 +131,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service
-            android:name=".SyncJobServiceScheduler"
-            android:permission="android.permission.BIND_JOB_SERVICE">
-
-        </service>
 
         <activity
             android:name="com.gka.akshara.assesseasy.qp_arithmetic_add"
@@ -222,6 +217,27 @@
         <activity
             android:name="com.gka.akshara.assesseasy.MainActivity"
             android:screenOrientation="landscape" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <activity android:name=".WebViewActivity"></activity>
     </application>
 

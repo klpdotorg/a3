@@ -12,6 +12,10 @@ import com.yahoo.squidb.annotations.TableModelSpec;
 @TableModelSpec(className = "SubjectTable", tableName = "Subject_Table")
 public class SubjectSpec {
     @PrimaryKey
+    @ColumnSpec(name = "id_")
+    long id_;
+
+
     @ColumnSpec(name = "id_subject")
     long id_subject;
 
@@ -20,14 +24,11 @@ public class SubjectSpec {
     public String subject_name;
 
 
-
     @ColumnSpec(name = "program_name")
     public String program_name;
 
     @ColumnSpec(name = "id_program")
     long id_program;
-
-
 
 
 }

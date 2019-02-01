@@ -35,6 +35,7 @@ public class TelemetryReportAdapter extends RecyclerView.Adapter<TelemetryReport
         this.titles = titles;
         this.questionTables = questionTables;
 
+
     }
 
     @Override
@@ -65,9 +66,9 @@ public class TelemetryReportAdapter extends RecyclerView.Adapter<TelemetryReport
         Map<Long, ArrayList<CombinePojo>> listData = data.get(position).getDetailReportsMap();
         if (listData.get(studentTable.getId()) != null && listData.get(studentTable.getId()).size() > 0) {
             ArrayList<CombinePojo> combinePojos = listData.get(studentTable.getId());
-            for (CombinePojo cd : listData.get(studentTable.getId())) {
+           /* for (CombinePojo cd : listData.get(studentTable.getId())) {
                 //Log.d("shri",cd.getPojoAssessment().getScore()+"!!!!");
-            }
+            }*/
             if (combinePojos.size() > 1) {
                 int size = combinePojos.size();
                 holder.tvMarks.setText(combinePojos.get((size - 1)).getPojoAssessment().getScore() + "/" + questionTables.size());

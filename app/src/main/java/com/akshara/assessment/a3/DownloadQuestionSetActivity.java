@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -35,25 +36,27 @@ public class DownloadQuestionSetActivity extends BaseActivity {
     com.akshara.assessment.a3.UtilsPackage.SessionManager smanger;
     private KontactDatabase db;
     ArrayList<SubjectTempPojo> subjectList;
-    int A3APP_GRADEID=0;
+    int A3APP_GRADEID = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_download_question_set);
         db = ((A3Application) getApplicationContext().getApplicationContext()).getDb();
-        A3APP_GRADEID=getIntent().getIntExtra("A3APP_GRADEID",0);
+        A3APP_GRADEID = getIntent().getIntExtra("A3APP_GRADEID", 0);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(getResources().getString(R.string.downloadQuestion));
         smanger = new com.akshara.assessment.a3.UtilsPackage.SessionManager(getApplicationContext());
         btnDownloadQuestion = findViewById(R.id.btnDownloadQuestion);
-        subjectList=RolesUtils.getSubjectForProgram(db,smanger.getProgramIdFromSession());
+     //   Log.d("shri", smanger.getProgramIdFromSession() + ":" + smanger.getProgramFromSession());
+        subjectList = RolesUtils.getSubjectForProgram(db, smanger.getProgramIdFromSession());
         ArrayList<AssessmentTempPojo> listAssessmentData = RolesUtils.getAssessmentType(smanger.getProgramFromSession(), smanger.getProgramIdFromSession(), db);
-       // spn_language = findViewById(R.id.spn_language);
+        // spn_language = findViewById(R.id.spn_language);
         spn_subject = findViewById(R.id.spn_subject);
         spn_selectGrade = findViewById(R.id.spn_selectGrade);
         spn_subject.setAdapter(new ArrayAdapter(DownloadQuestionSetActivity.this, R.layout.spinnertextview, subjectList));
-        if(A3APP_GRADEID!=0) {
-            spn_selectGrade.setSelection(A3APP_GRADEID-1);
+        if (A3APP_GRADEID != 0) {
+            spn_selectGrade.setSelection(A3APP_GRADEID - 1);
         }
         spn_selectAssessment = findViewById(R.id.spn_selectAssessment);
         spn_selectAssessment.setAdapter(new ArrayAdapter(DownloadQuestionSetActivity.this, R.layout.spinnertextview, listAssessmentData));
@@ -63,17 +66,20 @@ public class DownloadQuestionSetActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
 
-               // String language = spn_language.getSelectedItem().toString().trim();
-              String language = smanger.getLanguage();
-             // Toast.makeText(getApplicationContext(),language,Toast.LENGTH_SHORT).show();
-                String subject = spn_subject.getSelectedItem().toString().trim();
-                String grade = spn_selectGrade.getSelectedItem().toString().trim();
-                String assessment = spn_selectAssessment.getSelectedItem().toString().trim();
-                QuestionSetPojo qestionPojo = new QuestionSetPojo(language, subject, grade, assessment, smanger.getProgramFromSession(), A3Services.AUTH_KEY);
+                // String language = spn_language.getSelectedItem().toString().trim();
+                try {
+                    String language = smanger.getLanguage();
+                    String subject = spn_subject.getSelectedItem().toString().trim();
+                    String grade = spn_selectGrade.getSelectedItem().toString().trim();
+                    String assessment = spn_selectAssessment.getSelectedItem().toString().trim();
+                    QuestionSetPojo qestionPojo = new QuestionSetPojo(language, subject, grade, assessment, smanger.getProgramFromSession(), A3Services.AUTH_KEY, smanger.getStateKey().toUpperCase());
 
-                String analyticsEvent=language+"_S_"+subject+"_"+grade+"_"+assessment+"_"+smanger.getProgramFromSession();
+                    String analyticsEvent = language + "_S_" + subject + "_" + grade + "_" + assessment + "_" + smanger.getProgramFromSession();
 
-                  downloadQuestion(qestionPojo, analyticsEvent, subject, grade, assessment);
+                    downloadQuestion(qestionPojo, analyticsEvent, subject, grade, assessment);
+                } catch (Exception e) {
+
+                }
 
             }
         });
@@ -99,7 +105,7 @@ public class DownloadQuestionSetActivity extends BaseActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
                                 try {
-                               //     A3Application.getAnalyticsObject().setUserProperty("DOWNLOAD_Q_SET_SUCCESS","DOWNLOAD_QUESTION_SET_SUCCESS");
+                                    //     A3Application.getAnalyticsObject().setUserProperty("DOWNLOAD_Q_SET_SUCCESS","DOWNLOAD_QUESTION_SET_SUCCESS");
                                     Bundle bundle = new Bundle();
                                     bundle.putString(AnalyticsConstants.State, smanger.getState());
                                     bundle.putString(AnalyticsConstants.Language, smanger.getLanguage());
@@ -108,12 +114,11 @@ public class DownloadQuestionSetActivity extends BaseActivity {
                                     bundle.putString(AnalyticsConstants.Grade, grade);
                                     bundle.putString(AnalyticsConstants.Assessment, assessment);
                                     bundle.putString(AnalyticsConstants.Download_Assessments, event);
-                                   // A3Application.getAnalyticsObject().logEvent("DOWNLOAD_QUESTION_SET_SUCCESS", bundle);
+                                    // A3Application.getAnalyticsObject().logEvent("DOWNLOAD_QUESTION_SET_SUCCESS", bundle);
                                     A3Application.getAnalyticsObject().logEvent("DOWNLOAD_QUESTION_SET_SUCCESS", bundle);
 
 
-                                }catch (Exception e)
-                                {
+                                } catch (Exception e) {
                                     Crashlytics.log("Exception while downloading question set");
                                 }
                             }

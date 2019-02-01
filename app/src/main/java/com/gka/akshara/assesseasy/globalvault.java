@@ -33,13 +33,8 @@ public class globalvault {
     public static String finalpageactivity = "com.gka.akshara.assesseasy.finalpage_boywins";
 
     // Telemetry REST API URL
-    // Telemetry REST API URL
-//  prod
-
-    //public static String a3_telemetryapi_baseurl = "https://a3.klp.org.in/";
-    // public static String a3_telemetryapi_baseurl = "https://dev.a3.ilp.org.in:8080";
     public static String a3_telemetryapi_baseurl = BuildConfig.HOST_ASSESSMENT;
-//    public static String a3_telemetryapi_baseurl = "https://dev.a3.ilp.org.in:8080/"; // "https://a3.klp.org.in/"; "https://dev.a3.ilp.org.in:8080/";
+    //public static String a3_telemetryapi_baseurl = "https://dev.a3.ilp.org.in:8080/"; // "https://a3.klp.org.in/"; "https://dev.a3.ilp.org.in:8080/";
     public static String a3_telemetryapi_authkey = "A3APIAKSHARAAUTHKEY#2018";
 
     // Background images for Question Pages. An image is randomly picked from this array

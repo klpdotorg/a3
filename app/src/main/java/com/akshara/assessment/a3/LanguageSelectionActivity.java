@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -65,15 +66,11 @@ public class LanguageSelectionActivity extends BaseActivity {
         spnSelectLanguage = findViewById(R.id.spnSelectLanguage);
         spnSelectStae = findViewById(R.id.spnSelectStae);
         db = ((A3Application) getApplicationContext().getApplicationContext()).getDb();
-
-        ArrayList<ProgramPojo> dataList = RolesUtils.getProgramData(db);
-        ProgramPojo pojo = new ProgramPojo();
-        pojo.setId(0);
-        pojo.setProgramName(getResources().getString(R.string.select_program));
-        dataList.add(0, pojo);
         spnProgram = findViewById(R.id.spnProgram);
-        spnProgram.setAdapter(new ArrayAdapter(LanguageSelectionActivity.this, R.layout.spinnertextview, dataList));
-        getSupportActionBar().setTitle("Select Language");
+
+
+
+        getSupportActionBar().setTitle(getResources().getString(R.string.string_select_language));
         tv1 = findViewById(R.id.tv1);
         tv2 = findViewById(R.id.tv2);
         tv1.setText(getResources().getString(R.string.selectStateForLanguage));
@@ -307,6 +304,19 @@ public class LanguageSelectionActivity extends BaseActivity {
         }
 
     }
+public void setProgramToSpinner()
+{
+    String stateKey=stateList.get(spnSelectStae.getSelectedItemPosition()).getStateKey();
+    //Toast.makeText(getApplicationContext(),stateKey,Toast.LENGTH_SHORT).show();
+    ArrayList<ProgramPojo> dataList = RolesUtils.getProgramData(db,stateKey);
+    ProgramPojo pojo = new ProgramPojo();
+    pojo.setId(0);
+    pojo.setProgramName(getResources().getString(R.string.select_program));
+    dataList.add(0, pojo);
+    spnProgram.setAdapter(new ArrayAdapter(LanguageSelectionActivity.this, R.layout.spinnertextview, dataList));
+
+}
+
 
     public void getLanguage(String stateKey, String langName, String langLocName, String langKey, boolean b) {
 
@@ -320,9 +330,10 @@ public class LanguageSelectionActivity extends BaseActivity {
         languageList.add(0, pojo);
         pojo = new LanguagePojo("", getResources().getString(R.string.english), getResources().getString(R.string.english), "en");
         languageList.add(1, pojo);
-        pojo = new LanguagePojo("", getResources().getString(R.string.urdu), getResources().getString(R.string.urdu), "eng");
+       /* pojo = new LanguagePojo("", getResources().getString(R.string.urdu), getResources().getString(R.string.urdu), "eng");
         languageList.add(2, pojo);
-        spnSelectLanguage.setAdapter(new ArrayAdapter(this, R.layout.spinnertextview, languageList));
+     */   spnSelectLanguage.setAdapter(new ArrayAdapter(this, R.layout.spinnertextview, languageList));
+        setProgramToSpinner();
 
         if (b)
 
@@ -336,6 +347,7 @@ public class LanguageSelectionActivity extends BaseActivity {
                     // Toast.makeText(getApplicationContext(), i + "mm", Toast.LENGTH_SHORT).show();
                     spnSelectLanguage.setSelection(i);
                     A3Application.setLanguage(getApplicationContext(), sessionManager.getLanguageKey());
+
                     btnNext.setEnabled(true);
                     break;
                 }

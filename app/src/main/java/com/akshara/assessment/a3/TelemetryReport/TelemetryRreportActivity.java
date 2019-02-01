@@ -93,15 +93,12 @@ public class TelemetryRreportActivity extends BaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setTitle(getResources().getString(R.string.studentScore));
             sessionManager = new SessionManager(getApplicationContext());
-//        ArrayList<QuestionTable> QuestionTitles = getAllQuestionSetTitle(EASYASSESS_QUESTIONSETID);
             reportRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        //    Log.d("shri","----"+EASYASSESS_QUESTIONSETID);
             reportRecyclerView.setItemAnimator(new DefaultItemAnimator());
             studentIds = getStudentIds(A3APP_INSTITUTIONID, A3APP_GRADEID);
             gradeS = getResources().getStringArray(R.array.array_grade)[A3APP_GRADEID - 1];
             dataInternal = a3dsapiobj.getAllStudentsForReports(EASYASSESS_QUESTIONSETID + "", studentIds, true, ConstantsA3.assessmenttype, true);
             Collections.sort(dataInternal);
-
             titles = getAllQuestionSetTitle(EASYASSESS_QUESTIONSETID);
             questionTables = getAllQuestions(EASYASSESS_QUESTIONSETID);
             adapter = new TelemetryReportAdapter(this, dataInternal, questionTables, titles);
@@ -145,7 +142,7 @@ public class TelemetryRreportActivity extends BaseActivity {
                 //   requestStoragePermission();
                 //  generatePDFData();
                 if (AppStatus.isConnected(getApplicationContext())) {
-                     downloadStudentsFirst();
+                    downloadStudentsFirst();
 
                 } else {
                     DailogUtill.showDialog(getResources().getString(R.string.netWorkError), getSupportFragmentManager(), TelemetryRreportActivity.this);
@@ -171,7 +168,7 @@ public class TelemetryRreportActivity extends BaseActivity {
         initPorgresssDialogForSchool();
         String URL = BuildConfig.HOST + "/api/v1/institutions/" + A3APP_INSTITUTIONID + "/students/";
         //   String URL =  BuildConfig.HOST +"/api/v1/institutestudents/?institution_id="+schoolId;
-        new A3NetWorkCalls(TelemetryRreportActivity.this).downloadStudent(URL, A3APP_INSTITUTIONID, A3APP_GRADEID,sessionManager.getToken(), new SchoolStateInterface() {
+        new A3NetWorkCalls(TelemetryRreportActivity.this).downloadStudent(URL, A3APP_INSTITUTIONID, A3APP_GRADEID, sessionManager.getToken(), new SchoolStateInterface() {
             @Override
             public void success(String message) {
                 //  finishProgress();
@@ -180,13 +177,15 @@ public class TelemetryRreportActivity extends BaseActivity {
                 for (StudentTable child : studentIds) {
                     childIds.add(child.getId() + "");
                 }
-
+//Log.d("shri",childIds.toString());
                 if (childIds.size() > 0) {
                     //   ArrayList<String> temp = new ArrayList<>();
                     //  temp.add("5455736");
 
-                    TelemetryPojo pojo = new TelemetryPojo(sessionManager.getLanguage(), ConstantsA3.subject, gradeS, sessionManager.getProgramFromSession(), ConstantsA3.assessmenttype, "", "", A3Services.AUTH_KEY, childIds);
+                    TelemetryPojo pojo = new TelemetryPojo(sessionManager.getLanguage(), ConstantsA3.subject, gradeS, sessionManager.getProgramFromSession(), ConstantsA3.assessmenttype, "", "", A3Services.AUTH_KEY, childIds,sessionManager.getStateKey().toUpperCase());
                     //TelemetryPojo pojo = new TelemetryPojo(sessionManager.getLanguage(), ConstantsA3.subject, gradeS, sessionManager.getProgramFromSession(), ConstantsA3.assessmenttype, "2017:08:01", "2018:08:16", A3Services.AUTH_KEY, temp);
+                   // Log.d("shri", EASYASSESS_QUESTIONSETID + "---" + studentIds.toString() + "----" + ConstantsA3.assessmenttype);
+
                     new A3NetWorkCalls(TelemetryRreportActivity.this).getTelmetryData(pojo, new CurrentStateInterface() {
                         @Override
                         public void setSuccess(String message) {
@@ -196,7 +195,7 @@ public class TelemetryRreportActivity extends BaseActivity {
                             //a3dsapiobj.initializeDS(TelemetryRreportActivity.this);
                             //   Log.d("shri",dataInternal.size()+"Internal");
                             dataInternal = a3dsapiobj.getAllStudentsForReports(EASYASSESS_QUESTIONSETID + "", studentIds, true, ConstantsA3.assessmenttype, true);
-                            Log.d("shri",EASYASSESS_QUESTIONSETID+"---"+studentIds.toString()+"----" +ConstantsA3.assessmenttype);
+                         //   Log.d("shri", EASYASSESS_QUESTIONSETID + "---" + studentIds.toString() + "----" + ConstantsA3.assessmenttype);
                             Collections.sort(dataInternal);
                             GenerateHtmlString();
                             //    final ArrayList<pojoReportData> data2=data;
@@ -237,6 +236,7 @@ public class TelemetryRreportActivity extends BaseActivity {
 
 
                 } else {
+                    finishProgress();
                     Toast.makeText(getApplicationContext(), "No Childrens info found", Toast.LENGTH_SHORT).show();
                 }
 
@@ -259,12 +259,12 @@ public class TelemetryRreportActivity extends BaseActivity {
     }
 
     public void GenerateHtmlString() {
-        int totalAssessmentAttemptedStu=0;
-        int totalStudents=0;
+        int totalAssessmentAttemptedStu = 0;
+        int totalStudents = 0;
         Map<Integer, Integer> freq = new HashMap<Integer, Integer>();
 
 
-        final String thStyle=" ";
+        final String thStyle = " ";
         final String dataTillBodyTagOpen = "<!DOCTYPE html>\n" +
                 "<html>\n" +
                 "<meta charset=\"UTF-8\"/>\n" +
@@ -292,60 +292,56 @@ public class TelemetryRreportActivity extends BaseActivity {
         final String bodyEnd = "</body></html>";
 
         String title = ConstantsA3.subject + " " + "Assessment for " + ConstantsA3.schoolName;
-        String assessmenttype = getResources().getString(R.string.assessment_type_rep)+" "+ ConstantsA3.assessmenttype+" , "+gradeS;
+        String assessmenttype = getResources().getString(R.string.assessment_type_rep) + " " + ConstantsA3.assessmenttype + " , " + gradeS;
         String userName = sessionManager.getUserType() + ": " + sessionManager.getFirstName();
-       // String language = "Language: " + sessionManager.getLanguage();
-        String subject = getResources().getString(R.string.subject_rep) +" "+ ConstantsA3.subject;
+        // String language = "Language: " + sessionManager.getLanguage();
+        String subject = getResources().getString(R.string.subject_rep) + " " + ConstantsA3.subject;
         //String grade = "Grade: " +gradeS ;
 
         String headers1 = "<h2><center>" + title + "</center></h2>";
         String headers2 = "<h2><center>" + assessmenttype + "</center></h2>";
         String Print1 = "<h3>" + userName + "</h3>";
-       // String Print2 = "<h3>" + grade + "</h3>";
-       // String Print3 = "<h3>" + language + "</h3>";
+        // String Print2 = "<h3>" + grade + "</h3>";
+        // String Print3 = "<h3>" + language + "</h3>";
         String Print4 = "<h3>" + subject + "</h3>";
 
 
-
-        StringBuilder firstTable =new StringBuilder();
+        StringBuilder firstTable = new StringBuilder();
 
         firstTable.append("<table style=\\\"width:100%\\\"> <tr>");
 
         for (int i = 0; i < mConceptList.size(); i++) {
 
             if (i == 0) {
-                String tableheader1 =" <th style='text-align:center;vertical-align:middle;font-weight:bold;background-color:#cccccc';width=\"20%\">"+getResources().getString(R.string.slno)+"</th><th style='font-weight:bold;background-color:#cccccc';width=\\\"80%\\\">"+getResources().getString(R.string.micro)+"</th></tr>";
+                String tableheader1 = " <th style='text-align:center;vertical-align:middle;font-weight:bold;background-color:#cccccc';width=\"20%\">" + getResources().getString(R.string.slno) + "</th><th style='font-weight:bold;background-color:#cccccc';width=\\\"80%\\\">" + getResources().getString(R.string.micro) + "</th></tr>";
                 firstTable.append(tableheader1);
             }
 
 
-             String mconcept= mConceptList.get(i).split("@@")[0];
-             String tableheader1 ="<tr><th style='text-align:center;vertical-align:middle'; width=\"20%\">"+(i+1)+"</th><th width=\"80%\">"+mconcept+"</th></tr>";
-             firstTable.append(tableheader1);
-
+            String mconcept = mConceptList.get(i).split("@@")[0];
+            String tableheader1 = "<tr><th style='text-align:center;vertical-align:middle'; width=\"20%\">" + (i + 1) + "</th><th width=\"80%\">" + mconcept + "</th></tr>";
+            firstTable.append(tableheader1);
 
 
             if (i == mConceptList.size() - 1) {
-             //   document.add(pdfPTableforContent);
-              //  document.newPage();
+                //   document.add(pdfPTableforContent);
+                //  document.newPage();
                 firstTable.append("</table><p style=\"page-break-before: always\">");
             }
 
         }
 
 
-
-
-        final String tableStart="<table style=\"width:100%\";page-break-before: always> <tr>";
+        final String tableStart = "<table style=\"width:100%\";page-break-before: always> <tr>";
         //  StringBuilder htmlData = new StringBuilder(dataTillBodyTagOpen+ headers1 + headers2 + Print1  + Print4 +firstTable+tableStart);
-         StringBuilder htmlData = new StringBuilder();
-         //StringBuilder htmlData = new StringBuilder(dataTillBodyTagOpen + headers1 + headers2 + Print1  + Print4 +firstTable+tableStart);
-        String tempSize = (70 / mConceptList.size())+"%";
+        StringBuilder htmlData = new StringBuilder();
+        //StringBuilder htmlData = new StringBuilder(dataTillBodyTagOpen + headers1 + headers2 + Print1  + Print4 +firstTable+tableStart);
+        String tempSize = (70 / mConceptList.size()) + "%";
         for (int m = 0; m < mConceptList.size(); m++) {
 
             if (m == 0) {
-                String tableheader1 =" <th style='font-weight:bold;background-color:#cccccc';width=\"15%\">"+ getResources().getString(R.string.studntName)+"</th>";
-                String tableheader2 =" <th style='font-weight:bold;background-color:#cccccc';width=\"5%\">"+getResources().getString(R.string.sln)+"</th>";
+                String tableheader1 = " <th style='font-weight:bold;background-color:#cccccc';width=\"15%\">" + getResources().getString(R.string.studntName) + "</th>";
+                String tableheader2 = " <th style='font-weight:bold;background-color:#cccccc';width=\"5%\">" + getResources().getString(R.string.sln) + "</th>";
                 htmlData.append(tableheader2);
                 htmlData.append(tableheader1);
 
@@ -354,30 +350,29 @@ public class TelemetryRreportActivity extends BaseActivity {
             //0 index mconcept,1 index will have question id,2 will have qtitle& 3 concept
 
             //
-            String concept=mConceptList.get(m).split("@@")[3];
+            String concept = mConceptList.get(m).split("@@")[3];
             try {
                 concept = concept.split("-", 2)[1];
-            }catch (Exception e)
-            {
+            } catch (Exception e) {
 
             }
-           // String tablemconceptsheader="<th style='text-align:center;vertical-align:middle';width="+tempSize+">"+String.valueOf(m + 1)+"</th>";
-            String tablemconceptsheader="<th style='text-align:center;vertical-align:middle;font-weight:bold;background-color:#cccccc';width="+tempSize+">("+(m+1)+")"+concept+"</th>";
+            // String tablemconceptsheader="<th style='text-align:center;vertical-align:middle';width="+tempSize+">"+String.valueOf(m + 1)+"</th>";
+            String tablemconceptsheader = "<th style='text-align:center;vertical-align:middle;font-weight:bold;background-color:#cccccc';width=" + tempSize + ">(" + (m + 1) + ")" + concept + "</th>";
             htmlData.append(tablemconceptsheader);
             //Phrase phrase = new Phrase(String.valueOf(mConceptList.get(m).split("@@")[0]),getFont());
 
             if (m == (mConceptList.size() - 1)) {
-                String sizetemp="10%";
-                htmlData.append("<th style='text-align:center;vertical-align:middle;font-weight:bold;background-color:#cccccc' width="+sizetemp+">"+getResources().getString(R.string.stscore)+"</th> </tr>");
+                String sizetemp = "10%";
+                htmlData.append("<th style='text-align:center;vertical-align:middle;font-weight:bold;background-color:#cccccc' width=" + sizetemp + ">" + getResources().getString(R.string.stscore) + "</th> </tr>");
             }
         }
-         //first header completed
+        //first header completed
 
 
         for (int j = 0; j < dataInternal.size(); j++) {
             StudentTable table = dataInternal.get(j).getTable();
-            String name = " "+table.getFirstName().toLowerCase();
-            Log.d("shri",table.getFirstName()+"--"+table.getId());
+            String name = " " + table.getFirstName().toLowerCase();
+           // Log.d("shri", table.getFirstName() + "--" + table.getId());
             try {
                 if (table.getMiddleName() != null && !table.getMiddleName().equalsIgnoreCase("")) {
                     name = name + " " + (table.getMiddleName().substring(0, 1)).toLowerCase();
@@ -389,27 +384,32 @@ public class TelemetryRreportActivity extends BaseActivity {
 
 
             //pdfPTable.addCell(new PdfPCell(new Phrase(name)));
-            String startDataH = "<tr><th style='text-align:center;vertical-align:middle'>"+(j+1)+"</th><th>" + WordUtils.capitalize(name) + "</th>";
+            String startDataH = "<tr><th style='text-align:center;vertical-align:middle'>" + (j + 1) + "</th><th>" + WordUtils.capitalize(name) + "</th>";
             htmlData.append(startDataH);
 
             for (int k = 0; k < mConceptList.size(); k++) {
                 if (dataInternal.get(j).getDetailReportsMap().get(table.getId()) != null) {
                     int size = dataInternal.get(j).getDetailReportsMap().get(table.getId()).size();
-                    Log.d("shri",size+"---------------------");
-                    CombinePojo pojo = dataInternal.get(j).getDetailReportsMap().get(table.getId()).get(size - 1);
-                    int marks = getAnswer(mConceptList.get(k), pojo, j, table.getId(), (size - 1));
+                    //Log.d("shri",size+"---------------------");
+                    int marks = 0;
+                    try {
+                        CombinePojo pojo = dataInternal.get(j).getDetailReportsMap().get(table.getId()).get(size - 1);
+                        marks = getAnswer(mConceptList.get(k), pojo, j, table.getId(), (size - 1));
+
+                    } catch (Exception e) {
+                        marks = 0;
+                    }
                     htmlData.append("<th style='text-align:center;vertical-align:middle'>" + marks + "</th>");
 
                     // getAnswer(mConceptList.get(k),pojo);
-                   // if(marks!=0) {
-                        Integer count = freq.get(k);
-                        if (count == null) {
-                            freq.put(k, marks);
-                        } else {
-                            freq.put(k, count + marks);
-                        }
-                   // }
-
+                    // if(marks!=0) {
+                    Integer count = freq.get(k);
+                    if (count == null) {
+                        freq.put(k, marks);
+                    } else {
+                        freq.put(k, count + marks);
+                    }
+                    // }
 
 
                 } else {
@@ -425,10 +425,31 @@ public class TelemetryRreportActivity extends BaseActivity {
                     if (dataInternal.get(j).getDetailReportsMap().get(table.getId()) != null) {
                         totalAssessmentAttemptedStu++;
                         totalStudents++;
-                        int size = dataInternal.get(j).getDetailReportsMap().get(table.getId()).size();
-                        int score = dataInternal.get(j).getDetailReportsMap().get(table.getId()).get(size - 1).getPojoAssessment().getScore();
-                        htmlData.append("<th style='text-align:center;vertical-align:middle'>" + score + "</th></tr>");
+                        // int size = dataInternal.get(j).getDetailReportsMap().get(table.getId()).size();
+                        int score = 0;
+                       /* if(size>0) {
+                             score= dataInternal.get(j).getDetailReportsMap().get(table.getId()).get(size - 1).getPojoAssessment().getScore();
+                        }*/
 
+                        ArrayList<CombinePojo> combinePojos = dataInternal.get(j).getDetailReportsMap().get(table.getId());
+           /* for (CombinePojo cd : listData.get(studentTable.getId())) {
+                //Log.d("shri",cd.getPojoAssessment().getScore()+"!!!!");
+            }*/
+                        try {
+                            if (combinePojos.size() > 1) {
+                                int size1 = combinePojos.size();
+                                score = combinePojos.get((size1 - 1)).getPojoAssessment().getScore();
+
+                            } else {
+                                score = combinePojos.get(0).getPojoAssessment().getScore();
+
+                            }
+                        } catch (Exception e) {
+                            score = dataInternal.get(j).getScore();
+                        }
+
+
+                        htmlData.append("<th style='text-align:center;vertical-align:middle'>" + score + "</th></tr>");
                         //end score
                     } else {
                         String score = "-";
@@ -442,47 +463,43 @@ public class TelemetryRreportActivity extends BaseActivity {
             }
 
 
-
             if (j == dataInternal.size() - 1) {
-                String Print5 = "<h3>" + getResources().getString(R.string.attemptedStudents) +""+totalAssessmentAttemptedStu+ "</h3>";
-                String Print6 = "<h3>" + getResources().getString(R.string.totalStudents) +""+totalStudents+ "</h3>";
+                String Print5 = "<h3>" + getResources().getString(R.string.attemptedStudents) + "" + totalAssessmentAttemptedStu + "</h3>";
+                String Print6 = "<h3>" + getResources().getString(R.string.totalStudents) + "" + totalStudents + "</h3>";
 
-                StringBuilder htmlData2 = new StringBuilder(dataTillBodyTagOpen+ headers1 + headers2 + Print1  + Print4 +Print6+Print5+firstTable+tableStart);
+                StringBuilder htmlData2 = new StringBuilder(dataTillBodyTagOpen + headers1 + headers2 + Print1 + Print4 + Print6 + Print5 + firstTable + tableStart);
                 htmlData2.append(htmlData);
 
-                if(freq!=null&&freq.size()>0) {
-                    String lastTotlalString = "<tr><th style='text-align:center;vertical-align:middle;font-weight:bold;background-color:#cccccc'>  </th><th style='text-align:center;vertical-align:middle;font-weight:bold;background-color:#cccccc'>"+ getResources().getString(R.string.coorect_answers)+"</th>";
+                if (freq != null && freq.size() > 0) {
+                    String lastTotlalString = "<tr><th style='text-align:center;vertical-align:middle;font-weight:bold;background-color:#cccccc'>  </th><th style='text-align:center;vertical-align:middle;font-weight:bold;background-color:#cccccc'>" + getResources().getString(R.string.coorect_answers) + "</th>";
                     StringBuilder builder = new StringBuilder(lastTotlalString);
                     for (Integer val : freq.values()) {
-                       // if (val <= 4) {
-                      //      builder.append("<th style='text-align:center;vertical-align:middle;font-weight:bold;background-color:#F00'><font color=\"#FFDF00\">" + val + "</font></th>");
+                        // if (val <= 4) {
+                        //      builder.append("<th style='text-align:center;vertical-align:middle;font-weight:bold;background-color:#F00'><font color=\"#FFDF00\">" + val + "</font></th>");
 
-                      //  } else {
-                            builder.append("<th style='text-align:center;vertical-align:middle;font-weight:bold;background-color:#cccccc'>" + val + "</th>");
-                      //  }
+                        //  } else {
+                        builder.append("<th style='text-align:center;vertical-align:middle;font-weight:bold;background-color:#cccccc'>" + val + "</th>");
+                        //  }
                     }
                     builder.append("<th style='text-align:center;vertical-align:middle;font-weight:bold;background-color:#cccccc'> </th></tr>");
 
 
                     htmlData2.append(builder);
-                    String s="</table><h4><left>" + getResources().getString(R.string.kitQ) + "</left></h4>";
+                    String s = "</table><h4><left>" + getResources().getString(R.string.kitQ) + "</left></h4>";
                     htmlData2.append(s);
                 }
                 htmlData2.append(bodyEnd);
 
 
-
-            // Log.d("shri",freq.toString());
-              //  genPdfFile(htmlData.toString());
+                // Log.d("shri",freq.toString());
+                //  genPdfFile(htmlData.toString());
                 Intent intent = new Intent(getApplicationContext(), WebViewActivity.class);
                 intent.putExtra("data", htmlData2.toString());
                 startActivity(intent);
 
 
-
             }
         }
-
 
 
     }
@@ -557,32 +574,32 @@ public class TelemetryRreportActivity extends BaseActivity {
             File storageDir = getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
             File file = File.createTempFile(
                     fileName,  */
-/* prefix *//*
+    /* prefix *//*
 
                     ".pdf",         */
-/* suffix *//*
+    /* suffix *//*
 
                     storageDir      */
-/* directory *//*
+    /* directory *//*
 
             );
 
            */
 /* File file = File.createTempFile(
                     fileName,  *//*
-*/
-/* prefix *//*
-*/
+     */
+    /* prefix *//*
+     */
 /*
                     ".pdf",         *//*
-*/
-/* suffix *//*
-*/
+     */
+    /* suffix *//*
+     */
 /*
                     dir      *//*
-*/
-/* directory *//*
-*/
+     */
+    /* directory *//*
+     */
 /*
             );*//*
 
@@ -1004,7 +1021,7 @@ public class TelemetryRreportActivity extends BaseActivity {
                     if (!qIDtemp.contains(questionTable.getIdQuestion())) {
                         qIDtemp.add(questionTable.getIdQuestion());
                         //if (!mConceptList.contains(questionTable.getMconceptName())) {
-                        mConceptList.add(questionTable.getMconceptName() + "@@" + questionTable.getIdQuestion() + "@@" + questionTable.getQuestionTitle()+"@@"+questionTable.getConceptName());
+                        mConceptList.add(questionTable.getMconceptName() + "@@" + questionTable.getIdQuestion() + "@@" + questionTable.getQuestionTitle() + "@@" + questionTable.getConceptName());
                         // mConceptList2nd.add(questionTable.getIdQuestion() );
                         //  }
                         listAllQuestions.add(questionTable);

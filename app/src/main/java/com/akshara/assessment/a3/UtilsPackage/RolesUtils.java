@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.akshara.assessment.a3.AssessmentPojoPack.AssessmentTempPojo;
 import com.akshara.assessment.a3.Pojo.ProgramPojo;
-import com.akshara.assessment.a3.Pojo.Subject;
 import com.akshara.assessment.a3.Pojo.SubjectTempPojo;
 import com.akshara.assessment.a3.db.AssessmentTypeTable;
 import com.akshara.assessment.a3.db.KontactDatabase;
@@ -66,9 +65,9 @@ public class RolesUtils {
         return ressponse;
     }
 
-    public static ArrayList<ProgramPojo> getProgramData(KontactDatabase db) {
+    public static ArrayList<ProgramPojo> getProgramData(KontactDatabase db, String stateKey) {
         ArrayList<ProgramPojo> programPojoArrayList = new ArrayList<>();
-        Query listProgramQuery = Query.select().from(ProgramTable.TABLE)
+        Query listProgramQuery = Query.select().from(ProgramTable.TABLE).where(ProgramTable.STATECODE.eq(stateKey))
                 .orderBy(ProgramTable.ID.asc());
         SquidCursor<ProgramTable> programCursor = db.query(ProgramTable.class, listProgramQuery);
         if (programCursor != null && programCursor.getCount() > 0) {
@@ -106,10 +105,12 @@ public class RolesUtils {
     }
 
 
-    public static ArrayList<AssessmentTempPojo> getAssessmentType(String name, long id, KontactDatabase db) {
+    public static ArrayList<AssessmentTempPojo> getAssessmentType(String program_name, long program_id, KontactDatabase db) {
         ArrayList<AssessmentTempPojo> listData = new ArrayList<>();
         Query listAssessmentQuery = Query.select().from(AssessmentTypeTable.TABLE)
-                .orderBy(AssessmentTypeTable.ASSESSTYPE_NAME.asc()).where(AssessmentTypeTable.ID_PROGRAM.eq(id).and(AssessmentTypeTable.PROGRAM_NAME.eqCaseInsensitive(name)));
+                .orderBy(AssessmentTypeTable.ASSESSTYPE_NAME.asc())
+                .where(AssessmentTypeTable.ID_PROGRAM.eq(program_id)
+                        .and(AssessmentTypeTable.PROGRAM_NAME.eqCaseInsensitive(program_name)));
         SquidCursor<AssessmentTypeTable> assessmentTypeTableSquidCursor = db.query(AssessmentTypeTable.class, listAssessmentQuery);
 
         if (assessmentTypeTableSquidCursor != null && assessmentTypeTableSquidCursor.getCount() > 0) {

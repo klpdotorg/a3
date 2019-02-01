@@ -200,6 +200,7 @@ public class RegisterStudentActivity extends android.support.v4.app.Fragment {
 
 
     public boolean gradeIdvalidation() {
+       // Log.d("shri",gradeIdCursor.getCount()+"---"+grade);
         if (gradeIdCursor != null) {
             return gradeIdCursor.getCount() > 0 && grade > 0;
             //  Log.d("shri", "kkkk" + gradeIdCursor.getCount() + ":" + grade);

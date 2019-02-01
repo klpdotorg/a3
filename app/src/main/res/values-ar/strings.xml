@@ -118,6 +118,7 @@
     <string name="action_settings">Settings</string>
     <string name="Profile">Profile</string>
     <string name="download">Download</string>
+    <string name="download1">Download Education Boundaries</string>
     <string name="changeLanguage">Change language</string>
     <string name="prompt_user_role">USER ROLE</string>
     <string name="update">Update</string>

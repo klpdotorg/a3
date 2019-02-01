@@ -15,11 +15,18 @@ public class ProgramSpec {
     @ColumnSpec(name = "id_program")
     long Id;
 
+
+    @ColumnSpec(name = "statecode")
+    String statecode;
+
     @ColumnSpec(name = "program_name")
     public String program_name;
 
     @ColumnSpec(name = "program_descr")
     public String program_descr;
+
+    @ColumnSpec(name = "program_descr3")
+    public String program_descr3;
 
 
 

@@ -39,12 +39,12 @@ android {
     productFlavors {
         dev {
             applicationId 'com.akshara.assessment.a3.dev'
-           // resValue "string", "app_name", "Akshara Assessment"
+            resValue "string", "app_name", "Akshara Assessment"
            buildConfigField 'String', 'HOST', '"https://staging.ilp.org.in"'
              // buildConfigField 'String', 'HOST', '"http://next.ilp.org.in"'
           //  buildConfigField 'String', 'HOST', '"https://prod.ilp.org.in"'
 
-          buildConfigField 'String', 'HOST', '"https://dev.ilp.org.in"'
+        //   buildConfigField 'String', 'HOST', '"https://dev.ilp.org.in"'
           //  buildConfigField 'String', 'HOST_ASSESSMENT', '"http://dev.klp.org.in"'
             buildConfigField 'String', 'HOST_ASSESSMENT', '"https://dev.a3.ilp.org.in:8080"'
           //  buildConfigField 'String', 'HOST_ASSESSMENT', '"https://a3.klp.org.in"'

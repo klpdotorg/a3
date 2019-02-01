@@ -1,6 +1,8 @@
 package com.akshara.assessment.a3.NetworkRetrofitPackage;
 
 import com.akshara.assessment.a3.BuildConfig;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.concurrent.TimeUnit;
 import java.security.cert.CertificateException;
@@ -19,6 +21,8 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
+
 
 public class ApiClient {
 
@@ -30,10 +34,11 @@ public class ApiClient {
     public static Retrofit getClient() {
         if (retrofit == null) {
 
-
             OkHttpClient client = new OkHttpClient.Builder()
                     .connectTimeout(60, TimeUnit.SECONDS)
                     .readTimeout(60, TimeUnit.SECONDS).build();
+
+
 
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
@@ -42,6 +47,12 @@ public class ApiClient {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
             ;
+/*
+            Gson gson = new GsonBuilder().setLenient().create();
+             retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(gson))
+                    .client(client)
+                    .baseUrl(BASE_URL)
+                    .build();*/
 
         }
         return retrofit;

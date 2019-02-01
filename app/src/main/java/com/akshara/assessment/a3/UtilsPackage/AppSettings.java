@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.akshara.assessment.a3.A3Application;
 import com.akshara.assessment.a3.BaseActivity;
-import com.akshara.assessment.a3.LanguageSelectionActivity;
 import com.akshara.assessment.a3.NavigationDrawerActivity;
 import com.akshara.assessment.a3.Pojo.LanguagePojo;
 import com.akshara.assessment.a3.Pojo.ProgramPojo;
@@ -65,7 +64,7 @@ public class AppSettings extends BaseActivity {
         spnSelectProgram = findViewById(R.id.spnSelectProgram);
         db = ((A3Application) getApplicationContext().getApplicationContext()).getDb();
 
-        ArrayList<ProgramPojo> dataList = RolesUtils.getProgramData(db);
+        ArrayList<ProgramPojo> dataList = RolesUtils.getProgramData(db, sessionManager.getStateKey());
         ProgramPojo pojo = new ProgramPojo();
         pojo.setId(0);
         pojo.setProgramName(getResources().getString(R.string.select_program));
@@ -156,6 +155,7 @@ public class AppSettings extends BaseActivity {
 
                             sessionManager.setLanguage(state, language, languagekey, stateKeyString);
                             sessionManager.setStateSelection(stateKeyString);
+
                             sessionManager.setProgram(spnSelectProgram.getSelectedItem().toString().trim());
                             sessionManager.setProgramId(((ProgramPojo) spnSelectProgram.getSelectedItem()).getId());
 
@@ -312,9 +312,9 @@ public class AppSettings extends BaseActivity {
         languageList.add(0, pojo);
         pojo = new LanguagePojo("", getResources().getString(R.string.english), getResources().getString(R.string.english), "en");
         languageList.add(1, pojo);
-        pojo = new LanguagePojo("", getResources().getString(R.string.urdu), getResources().getString(R.string.urdu), "eng");
+       /* pojo = new LanguagePojo("", getResources().getString(R.string.urdu), getResources().getString(R.string.urdu), "eng");
         languageList.add(2, pojo);
-
+*/
         spnSelectLanguage.setAdapter(new ArrayAdapter(this, R.layout.spinnertextview, languageList));
 
         if (b)

@@ -8,8 +8,23 @@ public class Program {
     @SerializedName("id_program")
     @Expose
     private String idProgram;
+
+
+    @SerializedName("statecode")
+    @Expose
+    private String statecode;
+
+    public String getStatecode() {
+        return statecode;
+    }
+
+    public void setStatecode(String statecode) {
+        this.statecode = statecode;
+    }
+
     @SerializedName("program_name")
     @Expose
+
     private String programName;
     @SerializedName("program_descr")
     @Expose
